@@ -1,0 +1,54 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "react-hooks", "jsx-a11y"],
+    "rules": {
+        "react/function-component-definition": "off",
+        "react/require-default-props": "warn",
+        "react/prop-types": ["warn"],
+        "import/prefer-default-export": "off",
+        "no-unused-vars": ["warn"],
+        "eqeqeq": "warn",
+        "no-shadow": "warn",
+        "no-param-reassign": "warn",
+        "react/forbid-prop-types": "warn",
+        "react/button-has-type": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/jsx-filename-extension": ["off", "always"],
+        "import/no-extraneous-dependencies": ["off", "always"],
+        "react/destructuring-assignment": ["warn", "always"],
+        "no-use-before-define": "off",
+        "react/jsx-one-expression-per-line": ["off", "always"],
+        "curly": ["error", "all"],
+        "object-curly-newline": ["off"],
+        "space-before-function-paren": ["off", "always"],
+        "linebreak-style": ["error", "unix"],
+        "comma-dangle": ["off", "always"],
+        "arrow-body-style": ["error", "always"]
+    },
+    "overrides": [
+        {
+            "files": ["src/**"],
+            "globals": {
+                "document": true,
+                "window": true,
+                "event": true,
+                "fetch": true,
+                "expect": true,
+                "process": true,
+                "test": true
+            }
+        }
+    ]
+}
