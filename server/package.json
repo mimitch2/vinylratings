@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "dev": "DEBUG=server:* && npm run start"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
+    "express": "4.17.2",
+    "http-errors": "^2.0.0",
+    "jade": "^1.11.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.15",
+    "pug": "2.0.0-beta11"
+  }
+}
