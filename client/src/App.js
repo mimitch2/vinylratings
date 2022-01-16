@@ -3,8 +3,6 @@ import 'scss/main.scss';
 import Discogs from 'components/discogs/discogs'
 
 const App = () => {
-
-
   return (
     <div className="App">
       <Discogs />
