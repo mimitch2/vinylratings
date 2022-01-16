@@ -1,0 +1,56 @@
+@import 'scss/_variables.scss';
+
+$checkbox-size: 1.8rem;
+$indicator-difference: 0.4rem;
+$checkbox-indicator-size: $checkbox-size - $indicator-difference;
+
+.checkboxes-container {
+    .checkboxes-inner-wrapper {
+        margin-bottom: 1rem;
+    }
+    .checkbox {
+        position: relative;
+        cursor: pointer;
+
+        input {
+            height: $checkbox-size;
+            width: $checkbox-size;
+            position: absolute;
+            left: -0.2rem;
+            top: -0.1rem;
+            opacity: 0;
+            cursor: pointer;
+            // make sure actual checkbox input is above custom
+            z-index: 10;
+        }
+    }
+
+    .checkbox-custom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: $checkbox-size;
+        width: $checkbox-size;
+    }
+
+    .checkbox-custom-indicator {
+        transition: all 0.1s ease-out;
+        background-color: transparent;
+        position: absolute;
+        top: $indicator-difference / 2;
+        left: $indicator-difference / 2;
+        display: block;
+        height: $checkbox-indicator-size;
+        width: $checkbox-indicator-size;
+    }
+
+    input:checked ~ .checkbox-custom .checkbox-custom-indicator {
+        background-color: $green;
+    }
+
+    label {
+        margin-left: 2.8rem;
+        font-size: 1.8rem;
+        line-height: 1.8rem;
+    }
+}

@@ -1,0 +1,32 @@
+@import 'scss/_variables.scss';
+
+.section {
+    position: relative;
+    overflow: hidden;
+
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        &.no-tabs {
+            justify-content: flex-end;
+        }
+    }
+    border-radius: $border-radius;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+
+    .section-tabs {
+        width: max-content;
+        display: grid;
+        grid-auto-columns: max-width;
+        grid-column-gap: 1rem;
+        grid-auto-flow: column;
+    }
+
+    // @media (max-width: 99.2rem) {
+    //     flex-direction: column !important;
+    // }
+}

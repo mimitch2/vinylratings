@@ -1,0 +1,99 @@
+@import 'scss/_variables.scss';
+
+$filter-width: 40rem;
+
+.discogs-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: $eggshell;
+    overflow: hidden;
+
+    h3,
+    select,
+    label {
+        color: $darker-grey;
+    }
+
+    h3,
+    input {
+        margin-right: 0.9rem;
+    }
+
+    .discogs-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .discogs-title-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        select {
+            margin-left: 1rem;
+        }
+    }
+
+    .discogs-list-wrapper {
+        border-radius: $border-radius;
+        height: 35rem;
+        overflow-y: scroll;
+        background-color: $background-color;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .discogs-filters {
+        padding: 2rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $eggshell;
+        height: 100%;
+        width: $filter-width;
+        transform: translateX(-($filter-width + 4rem));
+        transition: transform 0.3s ease-in-out;
+        z-index: 3;
+
+        .discogs-filters-checkboxs {
+            display: flex;
+        }
+
+        &.active {
+            transform: translateX(0rem);
+        }
+    }
+}
+
+.discogs-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(238, 225, 225);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+    pointer-events: none;
+
+    &.active {
+        opacity: 0.5;
+        pointer-events: unset;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

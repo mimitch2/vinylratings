@@ -1,0 +1,14 @@
+.button-custom {
+    button {
+        // border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 1.6rem;
+
+        &:hover:not(:disabled),
+        &.current {
+            color: $light-blue;
+        }
+    }
+}

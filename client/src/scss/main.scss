@@ -1,0 +1,70 @@
+@import 'scss/_variables.scss';
+
+html {
+    background-color: $background-color;
+    font-family: 'Oswald', sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    height: 100%;
+}
+
+.App {
+    padding: 5rem;
+    font-size: 1.6rem;
+    height: 100%;
+
+    > div {
+        margin: 0 0 2.5rem;
+    }
+
+    button.control {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 1.6rem;
+
+        &:hover:not(:disabled),
+        &.current {
+            color: $light-blue;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: $scroll-width;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: $light-grey;
+        border-right: 0.1rem solid $grey;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: $grey;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: $dark-grey;
+    }
+
+    select {
+        background-color: $light-grey;
+        border: 0.1rem solid $darker-grey;
+        outline: none;
+        padding: 0.1rem 0 0.1rem 0.3rem;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+
+        &.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}

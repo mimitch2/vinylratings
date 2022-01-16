@@ -1,0 +1,30 @@
+// font-weights
+$light: 200;
+$regular: 300;
+$semi-bold: 500;
+$bold: 700;
+
+// colors
+// keep in sync with /constants/colors.js
+$light-blue: rgb(78, 78, 253);
+$dark-blue: #233d4d;
+$blue-grey: #4d5d73;
+$orange: #a64833;
+$yellow: #fcca46;
+$moss-green: #619b8a;
+$green: #608c54;
+$rust: #a64833;
+$eggshell: #e0e0da;
+$light-grey: #e9ecef;
+$grey: #adb5bd;
+$dark-grey: #495057;
+$darker-grey: #1e2124;
+
+$background-color: $dark-blue;
+
+// z-index
+$overlay: 2;
+$menu: 3;
+
+$border-radius: 0.4rem;
+$scroll-width: 1rem;

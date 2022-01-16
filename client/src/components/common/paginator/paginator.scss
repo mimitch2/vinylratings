@@ -1,0 +1,27 @@
+@import 'scss/_variables.scss';
+
+.paginator {
+    display: flex;
+    flex-direction: column;
+    color: $darker-grey;
+    font-weight: $semi-bold;
+    padding-top: 1rem;
+
+    .paginator-controls {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    button,
+    .fa-ellipsis-h {
+        margin-right: 0.5rem;
+    }
+
+    .fa-ellipsis-h {
+        font-weight: $regular;
+    }
+
+    .paginator-status {
+        margin-top: 1rem;
+    }
+}
