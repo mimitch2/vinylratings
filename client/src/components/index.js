@@ -1,1 +1,1 @@
-export { default as Discogs } from './discogs/discogs';
+export { default as Header } from './header/Header';

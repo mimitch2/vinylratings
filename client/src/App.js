@@ -1,11 +1,18 @@
 import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import { About, Discogs } from 'views'
+import { Header } from 'components'
 import 'scss/main.scss';
-import Discogs from 'components/discogs/discogs'
+
 
 const App = () => {
   return (
     <div className="App">
-      <Discogs />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Discogs />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   );
 }

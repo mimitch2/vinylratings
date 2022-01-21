@@ -1,0 +1,15 @@
+@import 'scss/_variables.scss';
+
+
+.header {
+    display: flex;
+    background-color: $eggshell;
+    padding: 2rem;
+
+     a {
+        &:not(:last-of-type) {
+            margin-right: 1rem;
+        }
+    }
+
+}

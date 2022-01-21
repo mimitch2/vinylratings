@@ -34,9 +34,8 @@ const Section = ({
 
                             return (
                                 <button
-                                    className={`control ${
-                                        isCurrent ? 'current' : ''
-                                    }`}
+                                    className={`control ${isCurrent ? 'current' : ''
+                                        }`}
                                     key={value}
                                     onClick={() => {
                                         setCurrentTab(value);
@@ -83,7 +82,7 @@ Section.defaultProps = {
     logo: '',
     logoSize: 90,
     minHeight: 300,
-    setCurrentTab: () => {}
+    setCurrentTab: () => { }
 };
 
 export default Section;
