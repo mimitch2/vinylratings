@@ -37,7 +37,7 @@ const WantList = () => {
       minHeight={520}
     >
       <div className="wrapper">
-        <h3>Want List</h3>
+        <h3>Wants</h3>
         <div className="list-wrapper">{renderWantList()}</div>
         <Paginator
           pagination={wantList?.pagination ?? {

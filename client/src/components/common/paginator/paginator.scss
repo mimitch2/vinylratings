@@ -1,6 +1,7 @@
 @import 'scss/_variables.scss';
 
 .paginator {
+    font-family: 'Roboto Mono', sans-serif;
     display: flex;
     flex-direction: column;
     color: $darker-grey;
