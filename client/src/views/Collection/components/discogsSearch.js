@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import '../discogs.scss';
+import '../collection.scss';
 import { DiscogsList } from '.';
 import { Paginator, Loading, Checkboxes, Button } from 'components/common';
 import { CHECKBOXES } from '../discogsConstants';

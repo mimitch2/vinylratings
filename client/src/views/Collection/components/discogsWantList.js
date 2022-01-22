@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../discogs.scss';
-import { DiscogsList } from './';
+import '../collection.scss';
+import { DiscogsList } from '.';
 import { Paginator, Loading } from 'components/common';
 
 const DiscogsWantList = ({

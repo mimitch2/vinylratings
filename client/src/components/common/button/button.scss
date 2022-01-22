@@ -10,5 +10,17 @@
         &.current {
             color: $light-blue;
         }
+
+        &.control {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1.6rem;
+
+            &:hover:not(:disabled),
+            &.current {
+                color: $light-blue;
+            }
+        }
     }
 }

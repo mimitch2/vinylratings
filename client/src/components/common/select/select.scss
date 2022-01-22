@@ -1,5 +1,19 @@
+@import 'scss/_variables.scss';
+
 .custom-select {
     select {
-        border: 0.1rem solid black;
+        background-color: $light-grey;
+        border: 0.1rem solid $darker-grey;
+        outline: none;
+        padding: 0.1rem 0 0.1rem 0.3rem;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+
+        &.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     }
 }

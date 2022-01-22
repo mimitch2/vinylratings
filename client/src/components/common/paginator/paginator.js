@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../index'
 import _ from 'lodash';
 import './paginator.scss';
 
@@ -71,9 +72,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         const disabled = isLeftArrow ? isFirstPage : isLastPage;
 
         return (
-            <button
-                className="pagination control"
-                key={className}
+            <Button
                 onClick={() => {
                     onClick({
                         page: isLeftArrow ? currentPage - 1 : currentPage + 1
@@ -82,7 +81,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
                 disabled={disabled || isLoading}
             >
                 <i className={className} />
-            </button>
+            </Button>
         );
     };
 
@@ -90,8 +89,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         const isCurrentPage = pageNumber === currentPage;
 
         return (
-            <button
-                className={`control ${isCurrentPage ? 'current' : ''}`}
+            <Button
                 key={pageNumber}
                 onClick={() => {
                     onClick({
@@ -101,8 +99,8 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
                 disabled={isCurrentPage || isLoading}
             >
                 {pageNumber}
-            </button>
-        );
+            </Button>
+        )
     };
 
     const renderPages = () => {
