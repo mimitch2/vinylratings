@@ -6,8 +6,12 @@ import './header.scss'
 const Header = () => {
     return (
         <header className="header">
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/">Main</NavLink>
+            <div>
+                <NavLink to="/about">About</NavLink>
+                <NavLink to="/">Main</NavLink>
+            </div>
+            <i className="fal fa-turntable"></i>
+            <i className="fal fa-album-collection"></i>
         </header>
     );
 }
