@@ -14,15 +14,26 @@ body {
     height: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: $dark-blue;
+    
+    &.active {
+        text-decoration: underline;
+    }
+}
+
 .App {
     font-weight: $light;
-    padding: 5rem;
+    padding: 5rem $side-padding;
     font-size: 1.6rem;
     height: 100%;
 
     > div {
         margin: 0 0 2.5rem;
     }
+
+
 
     ::-webkit-scrollbar {
         width: $scroll-width;

@@ -4,19 +4,13 @@
     display: flex;
     justify-content: space-between;
     background-color: $eggshell;
-    padding: 2rem;
+    padding: 2rem $side-padding;
 
-     a {
+    a {
         font-size: 2rem;
-        text-decoration: none;
-        color: $dark-blue;
-
+        
         &:not(:last-of-type) {
             margin-right: 1rem;
-        }
-
-        &.active {
-            text-decoration: underline;
         }
     }
 

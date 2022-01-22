@@ -120,12 +120,12 @@ const DiscogsSearch = ({
     };
 
     return (
-        <div className="discogs-wrapper">
+        <div className="wrapper">
             <form
-                className={`discogs-filters${showFilters ? ' active' : ''}`}
+                className={`filters${showFilters ? ' active' : ''}`}
                 onSubmit={onSearchSubmit}
             >
-                <div className="discogs-filters-checkboxs">
+                <div className="filters-checkboxs">
                     {CHECKBOXES.map(({ key, values, label }) => {
                         return (
                             <Checkboxes
@@ -145,8 +145,8 @@ const DiscogsSearch = ({
                 </div>
                 <Button type="submit" />
             </form>
-            <div className="discogs-search">
-                <div className="discogs-title-group">
+            <div className="search">
+                <div className="title-group">
                     <h3>Search</h3>
                     <form onSubmit={onSearchSubmit}>
                         <input
@@ -166,13 +166,13 @@ const DiscogsSearch = ({
                 </div>
                 <div>{renderFilterStatus()}</div>
             </div>
-            <div className="discogs-list-wrapper">{renderSearch()}</div>
+            <div className="list-wrapper">{renderSearch()}</div>
             <Paginator
                 pagination={discogsSearch.pagination}
                 changePage={onSearchPageChange}
             />
             <div
-                className={`discogs-overlay${showFilters ? ' active' : ''}`}
+                className={`overlay${showFilters ? ' active' : ''}`}
                 onClick={onFiltersDismiss}
             />
         </div>

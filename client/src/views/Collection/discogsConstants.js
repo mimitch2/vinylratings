@@ -1,9 +1,3 @@
-export const TABS = [
-    { value: 1, label: 'COLLECTION' },
-    { value: 2, label: 'WANTS' },
-    { value: 3, label: 'SEARCH' }
-];
-
 export const GENRES = [
     {
         value: 'rock',

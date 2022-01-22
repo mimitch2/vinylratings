@@ -36,9 +36,9 @@ const WantList = () => {
       bgColor="eggshell"
       minHeight={520}
     >
-      <div className="discogs-wrapper">
+      <div className="wrapper">
         <h3>Want List</h3>
-        <div className="discogs-list-wrapper">{renderWantList()}</div>
+        <div className="list-wrapper">{renderWantList()}</div>
         <Paginator
           pagination={wantList?.pagination ?? {
             page: 1,

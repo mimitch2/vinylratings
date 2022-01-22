@@ -1,17 +1,17 @@
 @import 'scss/_variables.scss';
 
-.discogs-list {
-    .discogs-list-row {
+.list {
+    .list-row {
         display: flex;
         padding: 1rem;
 
-        .discogs-list-info {
+        .list-info {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             padding-left: 1rem;
 
-            .discogs-list-artist {
+            .list-artist {
                 font-style: italic;
                 font-size: 1.4rem;
             }

@@ -10,25 +10,25 @@ const List = ({ items }) => {
     }
 
     return (
-        <div className="discogs-list">
+        <div className="list">
             {items.map(
                 ({ basic_information: { id, title, thumb, artists } }) => {
                     const artist = _.get(artists, '[0].name');
 
                     return (
-                        <div key={id} className="discogs-list-row">
+                        <div key={id} className="list-row">
                             <img
                                 src={thumb || vinylSVG}
                                 alt="cover"
                                 width="60px"
                                 height="60px"
                             />
-                            <div className="discogs-list-info">
-                                <span className="discogs-list-titile">
+                            <div className="list-info">
+                                <span className="list-titile">
                                     {title}
                                 </span>
                                 {artists ? (
-                                    <span className="discogs-list-artist">
+                                    <span className="list-artist">
                                         {artist}
                                     </span>
                                 ) : null}

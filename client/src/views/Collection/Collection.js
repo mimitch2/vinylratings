@@ -135,12 +135,12 @@ const Discogs = () => {
             minHeight={520}
         >
             <div>
-                <div className="discogs-wrapper">
-                    <div className="discogs-title-group">
+                <div className="wrapper">
+                    <div className="title-group">
                         <h3>Collection</h3>
                         <div>{renderSelect()}</div>
                     </div>
-                    <div className="discogs-list-wrapper">{renderCollection()}</div>
+                    <div className="list-wrapper">{renderCollection()}</div>
                     <Paginator
                         pagination={collection?.pagination ?? {
                             page: 1,

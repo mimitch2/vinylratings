@@ -2,7 +2,7 @@
 
 $filter-width: 40rem;
 
-.discogs-wrapper {
+.wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -20,13 +20,13 @@ $filter-width: 40rem;
         margin-right: 0.9rem;
     }
 
-    .discogs-search {
+    .search {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .discogs-title-group {
+    .title-group {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
@@ -36,7 +36,7 @@ $filter-width: 40rem;
         }
     }
 
-    .discogs-list-wrapper {
+    .list-wrapper {
         border-radius: $border-radius;
         height: 35rem;
         overflow-y: scroll;
@@ -45,7 +45,7 @@ $filter-width: 40rem;
         flex-direction: column;
     }
 
-    .discogs-filters {
+    .filters {
         padding: 2rem;
         position: absolute;
         top: 0;
@@ -57,7 +57,7 @@ $filter-width: 40rem;
         transition: transform 0.3s ease-in-out;
         z-index: 3;
 
-        .discogs-filters-checkboxs {
+        .filters-checkboxs {
             display: flex;
         }
 
@@ -67,7 +67,7 @@ $filter-width: 40rem;
     }
 }
 
-.discogs-overlay {
+.overlay {
     position: absolute;
     top: 0;
     left: 0;
