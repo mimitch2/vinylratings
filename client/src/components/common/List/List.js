@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import './discogsList.scss';
+import './list.scss';
 import vinylSVG from 'images/vinyl.svg';
 
-const DiscogsList = ({ items }) => {
+const List = ({ items }) => {
     if (!items) {
         return null;
     }
@@ -41,7 +41,7 @@ const DiscogsList = ({ items }) => {
     );
 };
 
-DiscogsList.propTypes = {
+List.propTypes = {
     items: PropTypes.arrayOf(
         PropTypes.shape({
             basic_information: PropTypes.shape({
@@ -57,4 +57,4 @@ DiscogsList.propTypes = {
         })
     ).isRequired
 };
-export default DiscogsList;
+export default List;

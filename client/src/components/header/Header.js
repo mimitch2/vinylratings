@@ -3,10 +3,6 @@ import { NavLink } from "react-router-dom";
 import { links } from './headerConstants'
 import './header.scss'
 
-const activeStyle = {
-    textDecoration: "underline"
-};
-
 const Header = () => {
     return (
         <header className="header">
@@ -25,8 +21,8 @@ const Header = () => {
                     )
                 })}
             </div>
-            <i className="fal fa-turntable"></i>
-            {/* <i className="fal fa-album-collection"></i> */}
+            {/* <i className="fal fa-turntable"></i> */}
+            <i className="fal fa-album-collection"></i>
         </header>
     );
 }

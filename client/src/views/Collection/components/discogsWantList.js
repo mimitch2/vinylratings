@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../collection.scss';
-import { DiscogsList } from '.';
+import { List } from 'components/common';
 import { Paginator, Loading } from 'components/common';
 
 const DiscogsWantList = ({
@@ -22,7 +22,7 @@ const DiscogsWantList = ({
 
         const { wants } = discogsWantList;
 
-        return <DiscogsList items={wants} />;
+        return <List items={wants} />;
     };
 
     return (

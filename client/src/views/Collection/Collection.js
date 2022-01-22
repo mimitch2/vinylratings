@@ -1,46 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { useApiService } from 'services';
-import { Section, Paginator, Select, Loading } from 'components/common';
-import { DiscogsList } from './components';
+import React, { useState } from 'react';
+import { apiService } from 'services';
+import { useQuery } from 'react-query'
+import { Section, Paginator, Select, Loading, List } from 'components/common';
 import './collection.scss';
-import {
-    DiscogsCollection,
-    DiscogsWantList,
-    DiscogsSearch
-} from './components';
 
 const Discogs = () => {
     // general
     // const [showFilters, setShowFilters] = useState(false);
     // const [currentTab, setCurrentTab] = useState(1);
+    const [page, setPage] = useState(1);
+    const [folder, setFolder] = useState(0);
 
-    // folders
-    const [
-        {
-            fetchedData: discogsFolders,
-            isLoading: foldersLoading,
-            error: foldersError
-        },
-        setFolders
-    ] = useApiService({
-        route: 'discogs/folders'
-    });
+    const { isLoading: foldersLoading, error: foldersError, data: folders } = useQuery('folders', () =>
+        apiService.request({
+            route: 'discogs/folders'
+        }), { keepPreviousData: true }
+    )
+
+    const { isLoading, error, data: collection, isFetching, isPreviousData } = useQuery(['collection', page, folder], () =>
+        apiService.request({
+            route: 'discogs/collection',
+            params: { folder, page }
+        }), { keepPreviousData: true }
+    )
+
+    // // folders
+    // const [
+    //     {
+    //         fetchedData: discogsFolders,
+    //         isLoading: foldersLoading,
+    //         error: foldersError
+    //     },
+    //     setFolders
+    // ] = useApiService({
+    //     route: 'discogs/folders'
+    // });
 
     // collection
-    const [discogsCollectionPage, setDiscogsCollectionPage] = useState(1);
-    const [discogsFolder, setDiscogsFolder] = useState(0);
-    const [
-        {
-            fetchedData: discogsCollection,
-            isLoading,
-            error: collectionError
-        },
-        setDiscogsCollection
-    ] = useApiService({
-        route: 'discogs/collection',
-        params: { folder: discogsFolder, page: discogsCollectionPage },
-        dependencies: [discogsFolder, discogsCollectionPage]
-    });
+
+    // const [
+    //     {
+    //         fetchedData: discogsCollection,
+    //         isLoading,
+    //         error: collectionError
+    //     },
+    //     setDiscogsCollection
+    // ] = useApiService({
+    //     route: 'discogs/collection',
+    //     params: { folder: discogsFolder, page: discogsCollectionPage },
+    //     dependencies: [discogsFolder, discogsCollectionPage]
+    // });
 
     // // want list
     // const [discogsWantListPage, setDiscogsWantListPage] = useState(1);
@@ -88,24 +97,24 @@ const Discogs = () => {
     // }, [discogsSearchPage]);
 
     const onFolderChange = (value) => {
-        setDiscogsCollectionPage(1);
-        setDiscogsFolder(value);
+        setPage(1);
+        setFolder(value);
     };
 
     const renderSelect = () => {
-        const { folders } = discogsFolders;
-
         return (
             <Select
                 onChange={onFolderChange}
-                values={folders}
+                values={folders?.folders ?? [
+                    { id: 0, name: '         ', count: 0 }
+                ]}
                 disabled={isLoading}
             />
         );
     };
 
     const renderCollection = () => {
-        if (isLoading) {
+        if (isLoading || (isFetching && isPreviousData)) {
             return (
                 <Loading
                     spinnerClassName="loading-vinyl"
@@ -115,25 +124,10 @@ const Discogs = () => {
             );
         }
 
-        const { releases } = discogsCollection;
+        const { releases } = collection;
 
-        return <DiscogsList items={releases} />;
+        return <List items={releases} />;
     };
-
-    // return (
-    //     <div className="discogs-wrapper">
-    //         <div className="discogs-title-group">
-    //             <h3>Collection</h3>
-    //             <div>{renderSelect()}</div>
-    //         </div>
-    //         <div className="discogs-list-wrapper">{renderCollection()}</div>
-    //         <Paginator
-    //             pagination={discogsCollection.pagination}
-    //             changePage={setDiscogsCollectionPage}
-    //             isLoading={isLoading}
-    //         />
-    //     </div>
-    // );
 
     return (
         <Section
@@ -141,21 +135,23 @@ const Discogs = () => {
             minHeight={520}
         >
             <div>
-                {discogsFolders && discogsCollection && (
-                    <div className="discogs-wrapper">
-                        <div className="discogs-title-group">
-                            <h3>Collection</h3>
-                            <div>{renderSelect()}</div>
-                        </div>
-                        <div className="discogs-list-wrapper">{renderCollection()}</div>
-                        <Paginator
-                            pagination={discogsCollection.pagination}
-                            changePage={setDiscogsCollectionPage}
-                            isLoading={isLoading}
-                        />
+                <div className="discogs-wrapper">
+                    <div className="discogs-title-group">
+                        <h3>Collection</h3>
+                        <div>{renderSelect()}</div>
                     </div>
-
-                )}
+                    <div className="discogs-list-wrapper">{renderCollection()}</div>
+                    <Paginator
+                        pagination={collection?.pagination ?? {
+                            page: 1,
+                            items: 100,
+                            pages: 2,
+                            per_page: 50
+                        }}
+                        changePage={setPage}
+                        isLoading={isLoading}
+                    />
+                </div>
             </div>
 
             {/* {currentTab == 2 && (
