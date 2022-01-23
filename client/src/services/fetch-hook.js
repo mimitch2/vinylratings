@@ -10,6 +10,7 @@ export const useApiService = ({
     payload = null,
     dependencies = []
 }) => {
+    console.log("🚀 ~ file: fetch-hook.js ~ line 13 ~ payload", payload)
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [fetchedData, setFetchedData] = useState(null);

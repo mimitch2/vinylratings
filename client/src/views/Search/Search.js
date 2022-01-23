@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiService } from 'services';
 import { useQuery } from 'react-query'
+import { useSearchParams } from "react-router-dom";
 import _ from 'lodash';
 import '../Collection/collection.scss';
 import { Paginator, Loading, Checkboxes, Button, List, Section } from 'components/common';
@@ -12,26 +13,27 @@ const Search = () => {
   const DEFAULT_PARAMS = {
     page,
     genre: [],
-    style: [],
+    style: ["indie+rock", "indie+pop"],
     type: 'release',
-    artist: '',
     sort: 'nfm',
     q: '',
     format: 'vinyl'
   };
   const [paramCollector, setParamCollector] = useState(DEFAULT_PARAMS);
-  const [params, setParams] = useState(DEFAULT_PARAMS);
+  const [params, setParams] = useSearchParams();
+  // let [searchParams, setSearchParams] = useSearchParams();
+
 
   const { isLoading, error, data: search, isFetching, isPreviousData } = useQuery(['search', params], () =>
     apiService.request({
       route: 'discogs/search',
-      params,
+      params: paramCollector,
     }), { keepPreviousData: true }
   )
 
   useEffect(() => {
     setParams(paramCollector);
-  }, [page]);
+  }, [paramCollector, page]);
 
   const onParamCollector = ({ key, value }) => {
     setParamCollector((currentValues) => {
@@ -62,7 +64,7 @@ const Search = () => {
     const filtersToShow = ['genre', 'style', 'format'];
 
     return _.reduce(
-      params,
+      paramCollector,
       (result, val, key) => {
         if (filtersToShow.includes(key)) {
           if (_.isArray(val) && val.length) {
@@ -163,7 +165,9 @@ const Search = () => {
               );
             })}
           </div>
-          <Button type="submit" />
+          <Button type="submit">
+            Go!
+          </Button>
         </form>
         <div className="search">
           <div className="title-group">
@@ -179,9 +183,12 @@ const Search = () => {
                   });
                 }}
               />
-              <button type="submit" className="control">
+              <Button
+                type="submit"
+                className="control"
+              >
                 Go!
-              </button>
+              </Button>
             </form>
           </div>
           <div>{renderFilterStatus()}</div>

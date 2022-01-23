@@ -27,13 +27,13 @@ recordRoutes.route("/rating").get(function (req, res) {
 // This section will help you get a single record by id
 recordRoutes.route("/rating/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId( req.params.id )};
+  let myquery = { _id: ObjectId(req.params.id) };
   db_connect
-      .collection("records")
-      .findOne(myquery, function (err, result) {
-        if (err) throw err;
-        res.json(result);
-      });
+    .collection("records")
+    .findOne(myquery, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
 });
 
 // This section will help you create a new record.
@@ -53,7 +53,7 @@ recordRoutes.route("/rating/add").post(function (req, response) {
 // This section will help you update a record by id.
 recordRoutes.route("/update/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId( req.params.id )};
+  let myquery = { _id: ObjectId(req.params.id) };
   let newvalues = {
     $set: {
       person_name: req.body.person_name,
@@ -73,7 +73,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 // This section will help you delete a record
 recordRoutes.route("/:id").delete((req, response) => {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId( req.params.id )};
+  let myquery = { _id: ObjectId(req.params.id) };
   db_connect.collection("ratings").deleteOne(myquery, function (err, obj) {
     if (err) throw err;
     console.log("1 document deleted");

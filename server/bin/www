@@ -7,9 +7,38 @@
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
+const User = require('../models/UserModel')
 
 require("dotenv").config({ path: ".env" });
-var dbo = require("../db/conn");
+const mongoose = require('mongoose');
+const DB = process.env.REACT_APP_MONGO_DB;
+
+const connectToDB = async () => {
+  try {
+    await mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true });
+    const db = mongoose.connection;
+    console.log("👍🏻 Successfully connected to MongoDB: ", db.name, "👍🏻");
+
+    // try {
+    //   const user = await User.create({
+    //     userName: 'mrNewGuy',
+    //     email: 'newGuy@mac.com',
+    //     password: '4433433'
+    //   })
+    //   console.warn('xxx', user);
+
+    // } catch (error) {
+    //   console.warn('⚠️ ', error);
+    // }
+    // const user = await User.findOne({ user_name: 'mimitch' }).exec()
+    // console.log("🚀 ~ file: www ~ line 34 ~ connectToDB ~ user", user)
+
+  } catch (error) {
+    console.warn('⚠️ ', error);
+  }
+}
+connectToDB();
+
 
 /**
  * Get port from environment and store in Express.
@@ -90,10 +119,6 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
 
   console.log(`🚀 Listening on port ${port} 🚀`);
 }

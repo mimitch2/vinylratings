@@ -3,4 +3,5 @@ export const links = [
   { text: 'Collection', to: '/collection' },
   { text: 'Wants', to: '/wants' },
   { text: 'About', to: '/about' },
+  { text: 'Login', to: '/login' },
 ];
