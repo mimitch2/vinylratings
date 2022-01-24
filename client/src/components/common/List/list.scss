@@ -1,6 +1,9 @@
 @import 'scss/_variables.scss';
 
 .list {
+    a {
+        color: $eggshell;
+    }
     .list-row {
         display: flex;
         padding: 1rem;

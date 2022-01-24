@@ -5,8 +5,8 @@ import { UserContext } from 'App'
 import './header.scss'
 
 const Header = () => {
-    const user = useContext(UserContext)
-    console.log("🚀 ~ file: Header.js ~ line 9 ~ Header ~ user", user)
+    const { user } = useContext(UserContext)
+
     return (
         <header className="header">
             <div>

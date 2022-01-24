@@ -89,4 +89,21 @@ router.get('/collection', (req, res, next) => {
         });
 });
 
+router.get('/releases/:id', async (req, res, next) => {
+    const { id } = req.params
+    fetch(
+        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${id}`,
+        {
+            headers
+        }
+    )
+        .then((res) => res.json())
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            console.log('err', err);
+        });
+});
+
 module.exports = router;

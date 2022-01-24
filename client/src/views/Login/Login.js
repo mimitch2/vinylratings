@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import { UserContext } from 'App'
 import { apiService } from 'services';
 import './login.scss'
+
 const Login = () => {
   const [user, setUser] = useState({
     userName: '',
@@ -29,11 +30,9 @@ const Login = () => {
     } catch (error) {
       console.log("🚀 ~ file: Login.js ~ line 30 ~ submit ~ error", error)
     }
-
   }
 
   const onChange = (e) => {
-
     setUser((currentValues) => {
       return {
         ...currentValues,

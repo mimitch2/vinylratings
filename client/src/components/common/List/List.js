@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import _ from 'lodash';
 import './list.scss';
 import vinylSVG from 'images/vinyl.svg';
@@ -16,7 +17,7 @@ const List = ({ items }) => {
                     const artist = _.get(artists, '[0].name');
 
                     return (
-                        <div key={id} className="list-row">
+                        <Link to={`/releases/${id}`} key={id} className="list-row">
                             <img
                                 src={thumb || vinylSVG}
                                 alt="cover"
@@ -33,7 +34,7 @@ const List = ({ items }) => {
                                     </span>
                                 ) : null}
                             </div>
-                        </div>
+                        </Link>
                     );
                 }
             )}
