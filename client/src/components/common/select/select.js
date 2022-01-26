@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './select.scss';
 
-const Select = ({ onChange, values, disabled = false, label = '' }) => {
+const Select = ({ onChange, values, selectedValue, disabled = false, label = '' }) => {
   return (
     <div className="custom-select">
       <label htmlFor="select">{label}</label>
@@ -14,6 +14,7 @@ const Select = ({ onChange, values, disabled = false, label = '' }) => {
           onChange(e.target.value);
         }}
         disabled={disabled}
+        value={selectedValue}
       >
         {values.map(({ id, name, count }) => {
           return (
@@ -35,6 +36,7 @@ Select.propTypes = {
       count: PropTypes.number.isRequired
     })
   ).isRequired,
+  selectedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   disabled: PropTypes.bool,
   label: PropTypes.string
 };
