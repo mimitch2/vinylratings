@@ -8,13 +8,20 @@ import './collection.scss';
 const Collection = () => {
     const [params, setParams] = useSearchParams();
 
-    const { data: folders } = useQuery('folders', () =>
+    useEffect(() => {
+        setParams({
+            page: params.get('page') ?? 1,
+            folder: params.get('folder') ?? 0,
+        })
+    }, [])
+
+    const { data: folders, error: foldersError } = useQuery('folders', () =>
         apiService.request({
             route: 'discogs/folders'
         }), { keepPreviousData: true }
     )
 
-    const { isLoading, data: collection, isFetching, isPreviousData } = useQuery(['collection', params.get('page'), params.get('folder')], () =>
+    const { isLoading, data: collection, error: collectionError, isFetching, isPreviousData } = useQuery(['collection', params.get('page'), params.get('folder')], () =>
         apiService.request({
             route: 'discogs/collection',
             params: {
