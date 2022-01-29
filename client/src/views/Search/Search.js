@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiService } from 'services';
 import { useQuery } from 'react-query'
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, createSearchParams } from "react-router-dom";
 import _ from 'lodash';
 import '../Collection/collection.scss';
 import { Paginator, Loading, Checkboxes, Button, List, Section } from 'components/common';
@@ -9,11 +9,10 @@ import { CHECKBOXES } from '../Collection/discogsConstants';
 
 const Search = () => {
   const [showFilters, setShowFilters] = useState(false);
-  const [page, setPage] = useState(1);
   const DEFAULT_PARAMS = {
-    page,
-    genre: [],
-    style: ["indie+rock", "indie+pop"],
+    page: 1,
+    genre: ['rock', 'jazz'],
+    style: [],
     type: 'release',
     sort: 'nfm',
     q: '',
@@ -21,19 +20,53 @@ const Search = () => {
   };
   const [paramCollector, setParamCollector] = useState(DEFAULT_PARAMS);
   const [params, setParams] = useSearchParams();
-  // let [searchParams, setSearchParams] = useSearchParams();
+  // Somehow lodash's _.isArray function resolves to undefined when used
+  // inside lodash's _.reduce, so just assign it outside of the reduce.
+  const isArray = _.isArray;
 
 
-  const { isLoading, error, data: search, isFetching, isPreviousData } = useQuery(['search', params], () =>
-    apiService.request({
-      route: 'discogs/search',
-      params: paramCollector,
-    }), { keepPreviousData: true }
-  )
+  const setInitialParams = () => {
+    return _.reduce(DEFAULT_PARAMS, (result, _, key) => {
+      const value = params.get(key);
+
+      // if (isArray(DEFAULT_PARAMS[key]) && value) {
+      //   DEFAULT_PARAMS[key].push(value)
+      // }
+
+      if (value) {
+        result[key] = value;
+      }
+
+      return result;
+    }, {})
+  };
 
   useEffect(() => {
-    setParams(paramCollector);
-  }, [paramCollector, page]);
+    setParamCollector({
+      page: params.get('page') || 1,
+      genre: params.getAll('genre') || [],
+      style: params.getAll('style') || [],
+      type: params.get('type') || 'release',
+      q: params.get('q') || '',
+      sort: params.get('sort') || 'nfm'
+    })
+  }, []);
+
+
+
+  const { isLoading, error, data: search, isFetching, isPreviousData } = useQuery(
+    ['search',
+      params.get('page'),
+      params.getAll('genre'),
+      params.getAll('style'),
+      params.get('type'),
+      params.get('q'),
+    ], () =>
+    apiService.request({
+      route: 'discogs/search',
+      params: { ...paramCollector, format: 'vinyl' },
+    }), { keepPreviousData: true })
+
 
   const onParamCollector = ({ key, value }) => {
     setParamCollector((currentValues) => {
@@ -42,11 +75,10 @@ const Search = () => {
         [key]: value
       };
     });
-  };
 
-  const onSearchPageChange = (value) => {
-    onParamCollector({ key: 'page', value });
-    setPage(value);
+    if (key === 'page') {
+      setParams({ ...paramCollector, page: value })
+    }
   };
 
   const onSearchSubmit = (e) => {
@@ -57,7 +89,14 @@ const Search = () => {
 
   const onFiltersDismiss = () => {
     setShowFilters(false);
-    setParamCollector(params);
+    setParamCollector({
+      page: params.get('page') || 1,
+      genre: params.getAll('genre') || [],
+      style: params.getAll('style') || [],
+      type: params.get('type') || 'release',
+      q: params.get('q') || '',
+      sort: params.get('sort') || 'nfm'
+    });
   };
 
   const getFilterStatusValues = () => {
@@ -201,7 +240,11 @@ const Search = () => {
             pages: 2,
             per_page: 50
           }}
-          changePage={onSearchPageChange}
+          changePage={(page) => {
+            onParamCollector({
+              key: 'page', value: page
+            })
+          }}
         />
         <div
           className={`overlay${showFilters ? ' active' : ''}`}
