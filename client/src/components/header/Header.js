@@ -6,6 +6,7 @@ import './header.scss'
 
 const Header = () => {
     const { user } = useContext(UserContext)
+    console.log("🚀 ~ file: Header.js ~ line 9 ~ Header ~ user", user)
 
     return (
         <header className="header">
@@ -24,9 +25,11 @@ const Header = () => {
                     )
                 })}
             </div>
-            {/* <i className="fal fa-turntable"></i> */}
-            {user && <span>{user.userName}</span>}
-            <i className="fal fa-album-collection"></i>
+            <div>
+                {user && <span>{user.user_name}</span>}
+                {/* <i className="fal fa-album-collection"></i> */}
+                <i className="fal fa-turntable"></i>
+            </div>
         </header>
     );
 }

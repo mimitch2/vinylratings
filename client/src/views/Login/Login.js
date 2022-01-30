@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useMutation } from 'react-query'
+import { useNavigate } from "react-router-dom";
 import { UserContext } from 'App'
 import { apiService } from 'services';
 import './login.scss'
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     userName: '',
     password: '',
@@ -13,7 +15,7 @@ const Login = () => {
   const { setUser: serUserContext } = useContext(UserContext)
 
 
-  const { mutateAsync, isLoading, error, data, onSuccess } = useMutation(() =>
+  const { mutateAsync, isLoaading } = useMutation(() =>
     apiService.request({
       route: 'users/login',
       method: 'POST',
@@ -23,6 +25,7 @@ const Login = () => {
     mutationKey: 'login',
     onSuccess: (data) => {
       serUserContext(data)
+      navigate('/search')
     }
   }
   )
