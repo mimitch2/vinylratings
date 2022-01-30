@@ -10,23 +10,26 @@ const Login = () => {
     password: '',
     email: ''
   });
-  const { setUser: setContextUser } = useContext(UserContext)
+  const { setUser: serUserContext } = useContext(UserContext)
 
 
-  const { mutateAsync, isLoading, error, data } = useMutation(() =>
+  const { mutateAsync, isLoading, error, data, onSuccess } = useMutation(() =>
     apiService.request({
       route: 'users/login',
       method: 'POST',
       payload: JSON.stringify(user),
       headers: { 'Content-Type': 'application/json' },
-    }), { mutationKey: 'login' }
+    }), {
+    mutationKey: 'login',
+    onSuccess: (data) => {
+      serUserContext(data)
+    }
+  }
   )
 
   const submit = async () => {
     try {
       await mutateAsync();
-      setContextUser(data)
-
     } catch (error) {
       console.log("🚀 ~ file: Login.js ~ line 30 ~ submit ~ error", error)
     }
