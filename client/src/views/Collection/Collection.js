@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { apiService } from 'services';
 import { useQuery } from 'react-query'
 import { useSearchParams } from "react-router-dom";
