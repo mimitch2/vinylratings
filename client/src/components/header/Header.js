@@ -6,7 +6,6 @@ import './header.scss'
 
 const Header = () => {
     const { user } = useContext(UserContext)
-    console.log("🚀 ~ file: Header.js ~ line 9 ~ Header ~ user", user)
 
     return (
         <header className="header">

@@ -14,7 +14,21 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+
+// const whitelist = ['http://localhost:3000', 'http://localhost:5000']
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
+
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(express.json());
