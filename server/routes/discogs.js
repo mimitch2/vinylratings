@@ -11,31 +11,6 @@ const headers = {
     'User-Agent': 'MJMHomepage/0.1 +http://my-homepage.com'
 };
 
-// router.get('/token', async (req, res, next) => {
-//     const timestamp = new Date()
-//     try {
-//         const response = await fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/oauth/request_token`,
-//             {
-//                 headers:
-//                 {
-//                     'Content-Type': 'application/x-www-form-urlencoded',
-//                     'Authorization': 'OAth oauth_consumer_key="' + process.env.REACT_APP_DISCOGS_API_KEY + '",' +
-//                         'oauth_nonce="random_string_or_timestamp",' +
-//                         'oauth_signature="' + process.env.REACT_APP_DISCOGS_SECRET + '&",' +
-//                         'oauth_signature_method="PLAINTEXT",' +
-//                         'oauth_timestamp="' + Date.now() + '",' +
-//                         'oauth_callback="your_callback"'
-//                 }
-//             }
-//         )
-//         console.log(response);
-
-//     } catch (error) {
-//         console.log("🚀 ~ file: discogs.js ~ line 31 ~ router.get ~ error", error)
-
-//     }
-// })
-
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
     throw new Error('No Discogs Consumer Key available');
 }
@@ -57,7 +32,7 @@ let oAuthRequestToken;
 let oAuthAccessTokenSecret;
 let oAuthAccessToken;
 
-router.get('/token', async (request, response, next) => {
+router.get('/auth', async (request, response, next) => {
     try {
         const tokenResponse = await fetch(
             'https://api.discogs.com/oauth/request_token',
@@ -132,6 +107,12 @@ router.get('/return', async (request, response, next) => {
     }
 });
 
+const saveUser = async ({ userName, password, email }) => {
+    const user = await User.create({ user_name: userName, password, email });
+    console.log("Saving the user");
+    return user;
+}
+
 router.get('/search', (req, res, next) => {
     const query = helpers.generateQueryParams({ params: req.query });
 
@@ -196,6 +177,12 @@ router.get('/folders', (req, res, next) => {
 
 router.get('/collection', (req, res, next) => {
     const { folder, page } = req.query;
+
+    const authCookie = req.cookies ?? 'NOPE';
+    console.log("🚀 ~ file: discogs.js ~ line 182 ~ router.get ~ authCookie", authCookie)
+
+    // const token = jwt.verify(authCookie.token, JWT_SECRET);
+    // const secret = jwt.verify(authCookie.secret, JWT_SECRET);
 
     fetch(
         `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${userName}/collection/folders/${folder}/releases?page=${page}`,

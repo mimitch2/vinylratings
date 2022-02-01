@@ -71,11 +71,9 @@ const Login = () => {
     //   </div>
     // </form>
     <button type="button" onClick={async () => {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/discogs/token`);
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/discogs/auth`);
       const redirectTo = await response.text()
       window.location = redirectTo;
-
-
     }}>
       CLICK
     </button>
