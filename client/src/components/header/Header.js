@@ -25,7 +25,7 @@ const Header = () => {
                 })}
             </div>
             <div>
-                {user && <span>{user.user_name}</span>}
+                {user && <span>{user.username}</span>}
                 {/* <i className="fal fa-album-collection"></i> */}
                 <i className="fal fa-turntable"></i>
             </div>

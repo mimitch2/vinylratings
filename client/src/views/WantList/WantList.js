@@ -7,13 +7,11 @@ import { Paginator, Loading, Section, List } from 'components/common';
 const WantList = () => {
   const [page, setPage] = useState(1);
 
-
   const { isLoading, error, data: wantList, isFetching, isPreviousData } = useQuery(['wantlist', page], () =>
     apiService.request({
       route: 'discogs/wantlist'
     }), { keepPreviousData: true }
   )
-
 
   const renderWantList = () => {
     if (isLoading || (isFetching && isPreviousData)) {

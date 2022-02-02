@@ -5,12 +5,6 @@ const helpers = require('../helpers/helpers.js');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const userName = process.env.REACT_APP_DISCOGS_USER_NAME;
-const headers = {
-    Authorization: `Discogs token=${process.env.REACT_APP_DISCOGS_TOKEN}`,
-    'User-Agent': 'MJMHomepage/0.1 +http://my-homepage.com'
-};
-
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
     throw new Error('No Discogs Consumer Key available');
 }
@@ -27,10 +21,21 @@ if (!JWT_SECRET) {
 const consumerKey = process.env.REACT_APP_DISCOGS_API_KEY;
 const consumerSecret = process.env.REACT_APP_DISCOGS_SECRET;
 
-let oAuthRequestTokenSecret;
-let oAuthRequestToken;
-let oAuthAccessTokenSecret;
-let oAuthAccessToken;
+let discogsAuthTokenSecret;
+let discogsAuthRequestToken;
+let discogsAccessTokenSecret;
+let discogsAccessToken;
+
+router.get('/me', async (request, response, next) => {
+    const auth = request?.cookies?.auth;
+    if (!auth) {
+        response.send({ username: null })
+    }
+    const parsedAuth = JSON.parse(auth)
+    const username = jwt.verify(parsedAuth.username, JWT_SECRET);
+
+    response.send({ username })
+});
 
 router.get('/auth', async (request, response, next) => {
     try {
@@ -48,10 +53,10 @@ router.get('/auth', async (request, response, next) => {
 
         const token = await tokenResponse.text();
         const params = new URLSearchParams(token);
-        oAuthRequestToken = params.get('oauth_token');
-        oAuthRequestTokenSecret = params.get('oauth_token_secret');
+        discogsAuthRequestToken = params.get('oauth_token');
+        discogsAuthTokenSecret = params.get('oauth_token_secret');
         authorizedHeaders =
-            response.send(`https://discogs.com/oauth/authorize?oauth_token=${oAuthRequestToken}`)
+            response.send(`https://discogs.com/oauth/authorize?oauth_token=${discogsAuthRequestToken}`)
     } catch (error) {
         next(response.status(500).send('Internal Server Error'));
     }
@@ -67,30 +72,31 @@ router.get('/return', async (request, response, next) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    Authorization: `OAuth oauth_consumer_key="${consumerKey}",oauth_nonce="${Date.now()}",oauth_token="${oAuthRequestToken}", oauth_signature=${consumerSecret}&${oAuthRequestTokenSecret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}",oauth_verifier="${oAuthVerifier}"`,
+                    Authorization: `OAuth oauth_consumer_key="${consumerKey}",oauth_nonce="${Date.now()}",oauth_token="${discogsAuthRequestToken}", oauth_signature=${consumerSecret}&${discogsAuthTokenSecret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}",oauth_verifier="${oAuthVerifier}"`,
                 },
             }
         );
 
         const responseToken = await tokenResponse.text();
         const params = new URLSearchParams(responseToken);
-        oAuthAccessToken = params.get('oauth_token');
-        oAuthAccessTokenSecret = params.get('oauth_token_secret');
+        discogsAccessToken = params.get('oauth_token');
+        discogsAccessTokenSecret = params.get('oauth_token_secret');
 
         const identityResponse = await fetch(
             'https://api.discogs.com/oauth/identity',
             {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${oAuthAccessToken}", oauth_signature="${consumerSecret}&${oAuthAccessTokenSecret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`,
+                    Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${discogsAccessToken}", oauth_signature="${consumerSecret}&${discogsAccessTokenSecret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`,
                 },
             }
         );
         const identity = await identityResponse.json();
+
         const username = jwt.sign(identity.username, JWT_SECRET);
-        if (oAuthAccessToken && oAuthAccessTokenSecret) {
-            const token = jwt.sign(oAuthAccessToken, JWT_SECRET);
-            const secret = jwt.sign(oAuthAccessTokenSecret, JWT_SECRET);
+        if (discogsAccessToken && discogsAccessTokenSecret) {
+            const token = jwt.sign(discogsAccessToken, JWT_SECRET);
+            const secret = jwt.sign(discogsAccessTokenSecret, JWT_SECRET);
             response.cookie(
                 'auth',
                 JSON.stringify({
@@ -117,43 +123,47 @@ const saveUser = async ({ userName, password, email }) => {
 
 router.get('/search', (req, res, next) => {
     const { auth } = req.cookies;
+    const { Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
+
     const query = helpers.generateQueryParams({ params: req.query });
 
     fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/database/search${query}`, {
-        headers: helpers.generateDiscogsHeaders({ consumerKey, consumerSecret, auth })
+        headers: { Authorization }
     })
         .then((res) => res.json())
         .then((data) => {
             res.send(data);
         })
         .catch((err) => {
-            console.log('err', err);
+            console.log('xxxx');
+            console.warn('err', err);
         });
 });
 
-router.get('/ratings', (req, res, next) => {
-    const { releaseId } = req.query;
+// router.get('/ratings', (req, res, next) => {
+//     const { releaseId } = req.query;
 
-    fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${releaseId}/rating`,
-        {
-            headers
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            console.log('err', err);
-        });
-});
+//     fetch(
+//         `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${releaseId}/rating`,
+//         {
+//             headers
+//         }
+//     )
+//         .then((res) => res.json())
+//         .then((data) => {
+//             res.send(data);
+//         })
+//         .catch((err) => {
+//             console.log('err', err);
+//         });
+// });
 
 router.get('/wantlist', (req, res, next) => {
     const { auth } = req.cookies;
+    const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
 
-    fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${userName}/wants`, {
-        headers: helpers.generateDiscogsHeaders({ consumerKey, consumerSecret, auth })
+    fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/wants`, {
+        headers: { Authorization }
     })
         .then((res) => res.json())
         .then((data) => {
@@ -166,11 +176,13 @@ router.get('/wantlist', (req, res, next) => {
 
 router.get('/folders', (req, res, next) => {
     const { auth } = req.cookies;
+    const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
+
 
     fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${userName}/collection/folders`,
+        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders`,
         {
-            headers: helpers.generateDiscogsHeaders({ consumerKey, consumerSecret, auth })
+            headers: { Authorization }
         }
     )
         .then((res) => res.json())
@@ -185,11 +197,13 @@ router.get('/folders', (req, res, next) => {
 router.get('/collection', async (req, res, next) => {
     const { folder, page } = req.query;
     const { auth } = req.cookies;
+    const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
+
 
     fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${userName}/collection/folders/${folder}/releases?page=${page}`,
+        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders/${folder}/releases?page=${page}`,
         {
-            headers: helpers.generateDiscogsHeaders({ consumerKey, consumerSecret, auth })
+            headers: { Authorization }
         }
     )
         .then((res) => res.json())
@@ -204,11 +218,12 @@ router.get('/collection', async (req, res, next) => {
 router.get('/releases/:id', async (req, res, next) => {
     const { id } = req.params
     const { auth } = req.cookies;
+    const { Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
 
     fetch(
         `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${id}`,
         {
-            headers: helpers.generateDiscogsHeaders({ consumerKey, consumerSecret, auth })
+            headers: { Authorization }
         }
     )
         .then((res) => res.json())

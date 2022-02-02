@@ -8,24 +8,8 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="search" element={<Search />} />
-          <Route path="collection" element={<Collection />} />
-          <Route path="wants" element={<WantList />} />
-          <Route path="releases/:id" element={<Release />} />
-          <Route path="about" element={<About />} />
-          <Route path="login" element={<Login />} />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Nothing here!</p>
-              </main>
-            }
-          />
-        </Route>
-      </Routes>
+      <App />
+
     </BrowserRouter>
   </React.StrictMode >,
   document.getElementById('root')
