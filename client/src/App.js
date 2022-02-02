@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { Outlet, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Outlet, Routes, Route, Navigate, useLocation, } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import Header from 'components/Header/Header'
@@ -11,11 +11,11 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [user, setUser] = useState({
-    username: null
+    username: 'mimitch'
   });
 
 
-  const RequireAuth = ({ children }) => {
+  const RequireAuth = () => {
     // let auth = useAuth();
     let location = useLocation();
 
@@ -27,18 +27,34 @@ const App = () => {
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    return children;
+    return <Outlet />;
+  }
+
+  const Layout = () => {
+    return <Outlet />
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user }}>
         <Header />
         <div className="App">
           <Routes>
-            <Route
-              path="*"
+            <Route element={<Layout />}>
+              <Route path="/" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route element={<RequireAuth />}>
+                <Route path="search" element={<Search />} />
+                <Route path="collection" element={<Collection />} />
+                <Route path="wants" element={<WantList />} />
+                <Route path="releases/:id" element={<Release />} />
+              </Route>
+            </Route>
+            {/* <Route path="*" element={<NotFound />} /> */}
+
+
+            {/* <Route
+              path="/"
               element={
                 <RequireAuth>
                   <Routes>
@@ -59,7 +75,7 @@ const App = () => {
                   <p>Nothing here!</p>
                 </main>
               }
-            />
+            /> */}
           </Routes>
         </div>
       </UserContext.Provider>

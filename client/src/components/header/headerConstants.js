@@ -1,7 +1,7 @@
 export const links = [
-  { text: 'Search', to: '/search' },
-  { text: 'Collection', to: '/collection' },
-  { text: 'Wants', to: '/wants' },
-  { text: 'About', to: '/about' },
+  { text: 'Search', to: '/search', authRoute: true },
+  { text: 'Collection', to: '/collection', authRoute: true },
+  { text: 'Wants', to: '/wants', authRoute: true },
+  { text: 'About', to: '/' },
   { text: 'Login', to: '/login' },
 ];

@@ -10,7 +10,10 @@ const Header = () => {
     return (
         <header className="header">
             <div>
-                {links.map(({ text, to }) => {
+                {links.map(({ text, to, authRoute }) => {
+                    if (authRoute && !user.username) {
+                        return null;
+                    }
                     return (
                         <NavLink
                             key={text}
@@ -25,7 +28,7 @@ const Header = () => {
                 })}
             </div>
             <div>
-                {user && <span>{user.username}</span>}
+                {user.username && <span>{user.username}</span>}
                 {/* <i className="fal fa-album-collection"></i> */}
                 <i className="fal fa-turntable"></i>
             </div>
