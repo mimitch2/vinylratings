@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     generateQueryParams: ({ params }) => {
@@ -24,5 +25,14 @@ module.exports = {
             },
             ''
         );
+    },
+    generateDiscogsHeaders: ({ consumerKey, consumerSecret, auth }) => {
+        const parsedAuth = JSON.parse(auth)
+        const token = jwt.verify(parsedAuth.token, process.env.JWT_SECRET);
+        const secret = jwt.verify(parsedAuth.secret, process.env.JWT_SECRET);
+
+        return {
+            Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${token}", oauth_signature="${consumerSecret}&${secret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`,
+        };
     }
 };
