@@ -14,8 +14,10 @@ const request = async ({
         const requestUrl = `${baseUrl}/${route}${generateQueryParams({
             params
         })}`;
+
         const requestOptions = {
             method,
+            credentials: "include",
             headers
         };
 

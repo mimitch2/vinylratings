@@ -178,7 +178,7 @@ router.get('/folders', (req, res, next) => {
 router.get('/collection', (req, res, next) => {
     const { folder, page } = req.query;
 
-    const authCookie = req.cookies ?? 'NOPE';
+    const authCookie = req.cookies?.auth ?? 'NOPE';
     console.log("🚀 ~ file: discogs.js ~ line 182 ~ router.get ~ authCookie", authCookie)
 
     // const token = jwt.verify(authCookie.token, JWT_SECRET);
