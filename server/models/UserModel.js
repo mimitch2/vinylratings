@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     required: true
   },
-  user_id: {
+  discogs_id: {
     type: Number,
     unique: true,
     required: true,

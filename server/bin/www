@@ -12,6 +12,7 @@ const User = require('../models/UserModel')
 require("dotenv").config({ path: ".env" });
 const mongoose = require('mongoose');
 const DB = process.env.REACT_APP_MONGO_DB;
+mongoose.Promise = global.Promise;
 
 const connectToDB = async () => {
   try {

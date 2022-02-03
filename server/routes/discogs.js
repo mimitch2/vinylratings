@@ -4,6 +4,8 @@ const fetch = require('cross-fetch');
 const helpers = require('../helpers/helpers.js');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const User = require('../models/UserModel')
+console.log("🚀 ~ file: discogs.js ~ line 8 ~ User", User)
 
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
     throw new Error('No Discogs Consumer Key available');
@@ -91,15 +93,29 @@ router.get('/return', async (req, res, next) => {
             }
         );
         const identity = await identityResponse.json();
-        const username = jwt.sign(identity.username, JWT_SECRET);
+        const username = identity.username;
+        const discogs_id = identity.id;
 
         if (discogsAccessToken && discogsAccessTokenSecret) {
             const token = jwt.sign(discogsAccessToken, JWT_SECRET);
             const secret = jwt.sign(discogsAccessTokenSecret, JWT_SECRET);
+            const signedUsername = jwt.sign(identity.username, JWT_SECRET);
+
+            const user = await User.findOne({ username });
+
+            if (!user) {
+                try {
+                    await User.create({ username, discogs_id });
+                } catch (error) {
+                    console.log("🚀 ~ file: discogs.js ~ line 110 ~ router.get ~ error", error)
+                    res.status(500).send(error)
+                }
+            }
+
             res.cookie(
                 'auth',
                 JSON.stringify({
-                    username: username,
+                    username: signedUsername,
                     token: token,
                     secret: secret,
                 }),
@@ -113,8 +129,8 @@ router.get('/return', async (req, res, next) => {
     }
 });
 
-const saveUser = async ({ username, email }) => {
-    const user = await User.create({ username });
+const saveUser = async ({ username, discogs_id }) => {
+    const user = await User.create({ username, discogs_id });
     console.log("Saving the user");
     return user;
 }
