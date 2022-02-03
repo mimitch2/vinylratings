@@ -71,7 +71,7 @@ const Collection = () => {
 
         const { releases } = collection;
 
-        return <List items={releases} />;
+        return <List items={releases || []} />;
     };
 
     return (

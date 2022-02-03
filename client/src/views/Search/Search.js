@@ -146,7 +146,7 @@ const Search = () => {
       return { basic_information: { ...result } };
     });
 
-    return <List items={formatedResults} />;
+    return <List items={formatedResults || []} />;
   };
 
   const renderFilterStatus = () => {

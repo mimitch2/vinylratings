@@ -26,7 +26,7 @@ const WantList = () => {
 
     const { wants } = wantList;
 
-    return <List items={wants} />;
+    return <List items={wants || []} />;
   };
 
   return (

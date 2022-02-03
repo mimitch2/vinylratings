@@ -26,18 +26,18 @@ let discogsAuthRequestToken;
 let discogsAccessTokenSecret;
 let discogsAccessToken;
 
-router.get('/me', async (request, response, next) => {
-    const auth = request?.cookies?.auth;
+router.get('/me', async (req, res) => {
+    const auth = req?.cookies?.auth;
     if (!auth) {
-        response.send({ username: null })
+        res.send({ username: null })
     }
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
 
-    response.send({ username })
+    res.send({ username })
 });
 
-router.get('/auth', async (request, response, next) => {
+router.get('/auth', async (req, res, next) => {
     try {
         const tokenResponse = await fetch(
             'https://api.discogs.com/oauth/request_token',
@@ -45,7 +45,7 @@ router.get('/auth', async (request, response, next) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    Authorization: `OAuth oauth_consumer_key="${consumerKey}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}",oauth_nonce="${Date.now()}",oauth_version="1.0",oauth_signature="${consumerSecret}&", oauth_callback="http://${request.hostname
+                    Authorization: `OAuth oauth_consumer_key="${consumerKey}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}",oauth_nonce="${Date.now()}",oauth_version="1.0",oauth_signature="${consumerSecret}&", oauth_callback="http://${req.hostname
                         }:${process.env.PORT}/discogs/return"`,
                 },
             }
@@ -55,15 +55,14 @@ router.get('/auth', async (request, response, next) => {
         const params = new URLSearchParams(token);
         discogsAuthRequestToken = params.get('oauth_token');
         discogsAuthTokenSecret = params.get('oauth_token_secret');
-        authorizedHeaders =
-            response.send(`https://discogs.com/oauth/authorize?oauth_token=${discogsAuthRequestToken}`)
+        res.send(`https://discogs.com/oauth/authorize?oauth_token=${discogsAuthRequestToken}`)
     } catch (error) {
-        next(response.status(500).send('Internal Server Error'));
+        next(res.status(500).send('Internal Server Error'));
     }
 });
 
-router.get('/return', async (request, response, next) => {
-    const { oauth_verifier: oAuthVerifier } = request.query;
+router.get('/return', async (req, res, next) => {
+    const { oauth_verifier: oAuthVerifier } = req.query;
 
     try {
         const tokenResponse = await fetch(
@@ -92,12 +91,12 @@ router.get('/return', async (request, response, next) => {
             }
         );
         const identity = await identityResponse.json();
-
         const username = jwt.sign(identity.username, JWT_SECRET);
+
         if (discogsAccessToken && discogsAccessTokenSecret) {
             const token = jwt.sign(discogsAccessToken, JWT_SECRET);
             const secret = jwt.sign(discogsAccessTokenSecret, JWT_SECRET);
-            response.cookie(
+            res.cookie(
                 'auth',
                 JSON.stringify({
                     username: username,
@@ -106,38 +105,35 @@ router.get('/return', async (request, response, next) => {
                 }),
                 { httpOnly: true }
             );
-            authorizedHeaders = `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${token}", oauth_signature="${consumerSecret}&${secret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`
 
-            response.redirect(`http://localhost:3000/search`);
+            res.redirect(`http://localhost:3000/search`);
         }
     } catch (error) {
-        next(response.status(500).send('Internal Server Error'));
+        next(res.status(500).send('Internal Server Error'));
     }
 });
 
-const saveUser = async ({ userName, password, email }) => {
-    const user = await User.create({ user_name: userName, password, email });
+const saveUser = async ({ username, email }) => {
+    const user = await User.create({ username });
     console.log("Saving the user");
     return user;
 }
 
-router.get('/search', (req, res, next) => {
+router.get('/search', async (req, res) => {
     const { auth } = req.cookies;
     const { Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
-
     const query = helpers.generateQueryParams({ params: req.query });
 
-    fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/database/search${query}`, {
-        headers: { Authorization }
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            console.log('xxxx');
-            console.warn('err', err);
+    try {
+        const response = await fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/database/search${query}`, {
+            headers: { Authorization }
         });
+        const data = await response.json();
+
+        res.send(data);
+    } catch (error) {
+        console.warn('err', error);
+    };
 });
 
 // router.get('/ratings', (req, res, next) => {
@@ -158,81 +154,73 @@ router.get('/search', (req, res, next) => {
 //         });
 // });
 
-router.get('/wantlist', (req, res, next) => {
+router.get('/wantlist', async (req, res) => {
     const { auth } = req.cookies;
     const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
 
-    fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/wants`, {
-        headers: { Authorization }
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            console.log('err', err);
-        });
-});
-
-router.get('/folders', (req, res, next) => {
-    const { auth } = req.cookies;
-    const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
-
-
-    fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders`,
-        {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/wants`, {
             headers: { Authorization }
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
         })
-        .catch((err) => {
-            console.log('err', err);
-        });
+        const wants = await response.json()
+
+        res.send(wants);
+    } catch (error) {
+        console.log('err', error);
+    };
 });
 
-router.get('/collection', async (req, res, next) => {
+router.get('/folders', async (req, res) => {
+    const { auth } = req.cookies;
+    const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
+
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders`,
+            { headers: { Authorization } }
+        );
+        const folders = await response.json();
+
+        res.send(folders);
+    } catch (error) {
+        console.log('err', error);
+    };
+});
+
+router.get('/collection', async (req, res) => {
     const { folder, page } = req.query;
     const { auth } = req.cookies;
     const { username, Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
 
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders/${folder}/releases?page=${page}`,
+            { headers: { Authorization } }
+        );
+        const collection = await response.json();
 
-    fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/users/${username}/collection/folders/${folder}/releases?page=${page}`,
-        {
-            headers: { Authorization }
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            console.log('err', err);
-        });
+        res.send(collection);
+    } catch (error) {
+        console.log('err', error);
+    };
 });
 
-router.get('/releases/:id', async (req, res, next) => {
+router.get('/releases/:id', async (req, res) => {
     const { id } = req.params
     const { auth } = req.cookies;
     const { Authorization } = helpers.getDiscogsHeadersAndUsername({ consumerKey, consumerSecret, auth });
 
-    fetch(
-        `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${id}`,
-        {
-            headers: { Authorization }
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            console.log('err', err);
-        });
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${id}`,
+            { headers: { Authorization } }
+        );
+        const release = await response.json();
+
+        res.send(release);
+    } catch (error) {
+        console.log('err', error);
+    };
 });
 
 module.exports = router;
