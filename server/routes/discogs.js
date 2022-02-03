@@ -30,13 +30,16 @@ let discogsAccessToken;
 
 router.get('/me', async (req, res) => {
     const auth = req?.cookies?.auth;
+
     if (!auth) {
-        res.send({ username: null })
+        return res.send({ username: null })
     }
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
 
-    res.send({ username })
+    const user = await User.findOne({ username });
+
+    res.send(user)
 });
 
 router.get('/auth', async (req, res, next) => {
@@ -107,8 +110,9 @@ router.get('/return', async (req, res, next) => {
                 try {
                     await User.create({ username, discogs_id });
                 } catch (error) {
-                    console.log("🚀 ~ file: discogs.js ~ line 110 ~ router.get ~ error", error)
-                    res.status(500).send(error)
+                    const errorMessage = `Failed to create new user: ${error}`
+                    console.error(errorMessage)
+                    res.status(500).send(errorMessage)
                 }
             }
 
@@ -122,7 +126,7 @@ router.get('/return', async (req, res, next) => {
                 { httpOnly: true }
             );
 
-            res.redirect(`http://localhost:3000/search`);
+            res.redirect(`http://localhost:3000/home`);
         }
     } catch (error) {
         next(res.status(500).send('Internal Server Error'));

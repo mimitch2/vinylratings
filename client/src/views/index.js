@@ -1,4 +1,4 @@
-export { default as About } from './About/About';
+export { default as Home } from './Home/Home';
 export { default as Collection } from './Collection/Collection';
 export { default as Login } from './Login/Login';
 export { default as Release } from './Release/Release';

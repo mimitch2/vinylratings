@@ -3,7 +3,7 @@ import { Outlet, Routes, Route, Navigate, useLocation, } from "react-router-dom"
 import { useQuery } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Header from 'components/Header/Header';
-import { Login, About, Collection, WantList, Release, Search } from 'views';
+import { Login, Home, Collection, WantList, Release, Search } from 'views';
 import { apiService } from 'services';
 import 'scss/main.scss';
 
@@ -31,7 +31,7 @@ const App = () => {
     let location = useLocation();
 
     if (!user.username) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
+      return <Navigate to="/home" state={{ from: location }} replace />;
     }
 
     return <Outlet />;
@@ -48,7 +48,7 @@ const App = () => {
         <div className="App">
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<About />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route element={<RequireAuth />}>
                 <Route path="search" element={<Search />} />

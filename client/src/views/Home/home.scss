@@ -1,0 +1,10 @@
+@import 'scss/_variables.scss';
+
+
+.home--wrapper {
+  color: $eggshell;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - $header-height);
+}
