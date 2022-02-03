@@ -14,12 +14,16 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   notes: String,
-  user_name: {
+  username: {
     type: String,
     unique: true,
     lowercase: true,
     required: true
   },
+  rated_by_user_count: {
+    type: Number,
+    max: 3,
+  }
 
 });
 

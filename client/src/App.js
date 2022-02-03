@@ -17,14 +17,12 @@ const App = () => {
   const { isLoading, error, data: user, isFetching } = useQuery(['me'], () =>
     apiService.request({
       route: 'discogs/me'
-    })
+    }), { keepPreviousData: true }
   )
 
   if (!user || isLoading) {
     return null;
   }
-
-
 
   const RequireAuth = () => {
     // let auth = useAuth();
@@ -48,8 +46,8 @@ const App = () => {
         <div className="App">
           <Routes>
             <Route element={<Layout />}>
+              <Route path="/" element={<Navigate to="/home" />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/login" element={<Login />} />
               <Route element={<RequireAuth />}>
                 <Route path="search" element={<Search />} />
                 <Route path="collection" element={<Collection />} />

@@ -5,7 +5,6 @@ const helpers = require('../helpers/helpers.js');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel')
-console.log("🚀 ~ file: discogs.js ~ line 8 ~ User", User)
 
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
     throw new Error('No Discogs Consumer Key available');
