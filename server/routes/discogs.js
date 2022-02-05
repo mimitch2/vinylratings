@@ -39,7 +39,12 @@ router.get('/me', async (req, res) => {
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).populate({
+        path: 'vinyl_ratings',
+        populate: {
+            path: 'user',
+        },
+    });
 
     res.send(user)
 });
@@ -170,7 +175,25 @@ router.post('/rating', async (req, res) => {
 
         res.status(200).json({ success: true, data: rating })
     } catch (error) {
-        const errorMessage = `Failed to create release: ${error}`
+        const errorMessage = `Failed to create rating: ${error}`
+        console.error(errorMessage)
+        res.status(500).send(errorMessage)
+    }
+});
+
+router.put('/rating', async (req, res) => {
+    const { release_id, ratings } = req.body;
+
+    const filter = { release_id };
+
+    try {
+        const newRating = await Rating.findOneAndUpdate(filter, ratings, {
+            new: true
+        });
+
+        res.status(200).json({ success: true, data: newRating })
+    } catch (error) {
+        const errorMessage = `Failed to update rating: ${error}`
         console.error(errorMessage)
         res.status(500).send(errorMessage)
     }
@@ -261,9 +284,10 @@ router.get('/releases/:id', async (req, res) => {
 
 router.post('/releases/:id', async (req, res) => {
     const { id } = req.params
+    const { title, artist } = req.body
 
     try {
-        const release = await Release.create({ release_id: id });
+        const release = await Release.create({ release_id: id, title, artist });
         res.status(200).json({ success: true, data: release })
     } catch (error) {
         const errorMessage = `Failed to create release: ${error}`

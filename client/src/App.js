@@ -13,7 +13,7 @@ const App = () => {
   const { isLoading, error, data: user, isFetching } = useQuery(['me'], () =>
     apiService.request({
       route: 'discogs/me'
-    }), { keepPreviousData: true }
+    }), { keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
   if (!user || isLoading) {

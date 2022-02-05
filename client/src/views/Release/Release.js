@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { QueryClient, QueryClientProvider, useQuery, useMutation } from 'react-query'
+import React, { useState, useContext } from 'react'
+import { useQuery, useMutation } from 'react-query'
 import { apiService } from 'services';
-import { Routes, Route, Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { UserContext } from 'App'
 import './release.scss'
 
 const Release = () => {
+  const { user: { username } } = useContext(UserContext)
   const { id } = useParams();
   const [ratings, setRatings] = useState({
     quietness: '',
@@ -22,11 +24,18 @@ const Release = () => {
     apiService.request({
       method: 'POST',
       route: `discogs/releases/${id}`,
+      payload: {
+        artist: data?.artists[0]?.name,
+        title: data.title
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      }
     }), { mutationKey: 'rate' });
 
   const { mutateAsync: rateRelease } = useMutation(() =>
     apiService.request({
-      method: 'POST',
+      method: userHasRatedThisRelease ? 'PUT' : 'POST',
       route: `discogs/rating`,
       payload: { release_id: id, ratings },
       headers: {
@@ -54,9 +63,13 @@ const Release = () => {
 
   if (isLoading) { return 'Loading...' }
 
+  const userHasRatedThisRelease = data?.vinyl_ratings ? data.vinyl_ratings.find((rating) => {
+    return rating.user.username === username;
+  }) : false
+
   return (
     <div className="release">
-      <h1>{data?.artists[0]?.name ?? 'Placeholder'} - {data.title}</h1>
+      <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
         <div>

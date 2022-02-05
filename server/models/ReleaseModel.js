@@ -6,6 +6,14 @@ const releaseSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  artist: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  }
 
 }, { timestamps: true });
 
