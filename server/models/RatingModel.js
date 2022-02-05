@@ -14,12 +14,13 @@ const ratingSchema = new mongoose.Schema({
   release: {
     type: Schema.Types.ObjectId,
     ref: 'Release',
+    required: true,
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   }
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: true,
-  // }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Rating", ratingSchema);

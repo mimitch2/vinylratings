@@ -162,12 +162,14 @@ router.post('/rating', async (req, res) => {
 
     // if (!release) {
     try {
-        // const release = await Release.create({ release_id: 1158751 });
+        const user = await User.findOne({ username: 'mimitch' });
+
         const rating = await Rating.create({
             quietness: 5,
             clarity: 4,
             notes: 'Sweet',
             release,
+            user
         });
 
         res.status(200).json({ success: true, data: rating })
@@ -243,11 +245,13 @@ router.get('/releases/:id', async (req, res) => {
         const discogsRelease = await response.json();
 
         const release = await Release.findOne({ release_id: id })
-            .populate({ path: 'vinyl_ratings', select: 'quietness clarity notes' });
-        console.log("🚀 ~ file: discogs.js ~ line 246 ~ router.get ~ release", release)
+            .populate({
+                path: 'vinyl_ratings', populate: {
+                    path: 'user',
+                }
+            });
 
-
-        res.send(discogsRelease);
+        res.send({ ...discogsRelease, vinyl_ratings: release.vinyl_ratings });
     } catch (error) {
         console.log('err', error);
     };

@@ -13,10 +13,16 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  // ratings: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Rating'
-  // }]
 }, { timestamps: true });
+
+userSchema.virtual('vinyl_ratings', {
+  ref: 'Rating', //The Model to use
+  localField: '_id', //Find in Model, where localField 
+  foreignField: 'user', // is equal to foreignField
+});
+
+// Set Object and Json property to true. Default is set to false
+userSchema.set('toObject', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model("User", userSchema);
