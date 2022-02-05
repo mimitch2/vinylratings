@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -7,11 +8,15 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     required: true
   },
-  discogs_id: {
+  discogs_user_id: {
     type: Number,
     unique: true,
     required: true,
-  }
-});
+  },
+  // ratings: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Rating'
+  // }]
+}, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

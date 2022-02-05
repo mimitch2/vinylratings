@@ -4,7 +4,9 @@ const fetch = require('cross-fetch');
 const helpers = require('../helpers/helpers.js');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel')
+const User = require('../models/UserModel');
+const Rating = require('../models/RatingModel');
+const Release = require('../models/ReleaseModel');
 
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
     throw new Error('No Discogs Consumer Key available');
@@ -96,7 +98,7 @@ router.get('/return', async (req, res, next) => {
         );
         const identity = await identityResponse.json();
         const username = identity.username;
-        const discogs_id = identity.id;
+        const discogs_user_id = identity.id;
 
         if (discogsAccessToken && discogsAccessTokenSecret) {
             const token = jwt.sign(discogsAccessToken, JWT_SECRET);
@@ -107,7 +109,7 @@ router.get('/return', async (req, res, next) => {
 
             if (!user) {
                 try {
-                    await User.create({ username, discogs_id });
+                    await User.create({ username, discogs_user_id });
                 } catch (error) {
                     const errorMessage = `Failed to create new user: ${error}`
                     console.error(errorMessage)
@@ -155,23 +157,27 @@ router.get('/search', async (req, res) => {
     };
 });
 
-// router.get('/ratings', (req, res, next) => {
-//     const { releaseId } = req.query;
+router.post('/rating', async (req, res) => {
+    const release = await Release.findOne({ release_id: 1158751 });
 
-//     fetch(
-//         `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${releaseId}/rating`,
-//         {
-//             headers
-//         }
-//     )
-//         .then((res) => res.json())
-//         .then((data) => {
-//             res.send(data);
-//         })
-//         .catch((err) => {
-//             console.log('err', err);
-//         });
-// });
+    // if (!release) {
+    try {
+        // const release = await Release.create({ release_id: 1158751 });
+        const rating = await Rating.create({
+            quietness: 5,
+            clarity: 4,
+            notes: 'Sweet',
+            release,
+        });
+
+        res.status(200).json({ success: true, data: rating })
+    } catch (error) {
+        const errorMessage = `Failed to create release: ${error}`
+        console.error(errorMessage)
+        res.status(500).send(errorMessage)
+    }
+    // }
+});
 
 router.get('/wantlist', async (req, res) => {
     const { auth } = req.cookies;
@@ -234,9 +240,14 @@ router.get('/releases/:id', async (req, res) => {
             `${process.env.REACT_APP_DISCOGS_ENDPOINT}/releases/${id}`,
             { headers: { Authorization } }
         );
-        const release = await response.json();
+        const discogsRelease = await response.json();
 
-        res.send(release);
+        const release = await Release.findOne({ release_id: id })
+            .populate({ path: 'vinyl_ratings', select: 'quietness clarity notes' });
+        console.log("🚀 ~ file: discogs.js ~ line 246 ~ router.get ~ release", release)
+
+
+        res.send(discogsRelease);
     } catch (error) {
         console.log('err', error);
     };

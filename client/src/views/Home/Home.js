@@ -22,7 +22,16 @@ const Home = () => {
 
     const renderAuthorized = () => {
         return (
-            <h1>Sweeet! Now you should rate some vinyl!</h1>
+            <div>
+                <h1>Sweeet! Now you should rate some vinyl!</h1>
+                <button type="button" onClick={async () => {
+                    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/discogs/rating`, {
+                        method: 'POST'
+                    });
+                }}>
+                    RATE
+                </button>
+            </div>
         )
     }
     return (

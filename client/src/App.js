@@ -37,7 +37,7 @@ const App = () => {
         <div className="App">
           <Routes>
             <Route element={<Outlet />}>
-              <Route path="/" element={<Navigate to="/home" />} />
+              <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
               <Route element={<RequireAuth />}>
                 <Route path="search" element={<Search />} />

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './loading.scss';
 import vinylSVG from '../../../images/vinyl.svg';
+import recordPNG from '../../../images/record.png';
 
 const Loading = ({ position, spinnerClassName, spinnerColor, spinnerSize }) => {
   return (
