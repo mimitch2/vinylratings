@@ -22,7 +22,7 @@ const request = async ({
         };
 
         if (payload) {
-            requestOptions.body = payload;
+            requestOptions.body = JSON.stringify(payload);
         }
 
         const data = await fetch(requestUrl, requestOptions);

@@ -154,7 +154,7 @@ router.get('/search', async (req, res) => {
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id } = req.body;
+    const { release_id, ratings } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
@@ -163,9 +163,7 @@ router.post('/rating', async (req, res) => {
 
     try {
         const rating = await Rating.create({
-            quietness: 4,
-            clarity: 3,
-            notes: 'Not bad',
+            ...ratings,
             release,
             user
         });
@@ -263,16 +261,15 @@ router.get('/releases/:id', async (req, res) => {
 
 router.post('/releases/:id', async (req, res) => {
     const { id } = req.params
-    console.log("🚀 ~ file: discogs.js ~ line 266 ~ router.post ~ id", id)
 
-    // try {
-    //     const release = await Release.create({ release_id: id });
-    //     res.status(200).json({ success: true, data: release })
-    // } catch (error) {
-    //     const errorMessage = `Failed to create release: ${error}`
-    //     console.error(errorMessage)
-    //     res.status(500).send(errorMessage)
-    // }
+    try {
+        const release = await Release.create({ release_id: id });
+        res.status(200).json({ success: true, data: release })
+    } catch (error) {
+        const errorMessage = `Failed to create release: ${error}`
+        console.error(errorMessage)
+        res.status(500).send(errorMessage)
+    }
 })
 
 module.exports = router;
