@@ -29,26 +29,6 @@ let discogsAuthRequestToken;
 let discogsAccessTokenSecret;
 let discogsAccessToken;
 
-router.get('/me', async (req, res) => {
-    const auth = req?.cookies?.auth;
-
-    if (!auth) {
-        return res.send({ username: null })
-    }
-
-    const parsedAuth = JSON.parse(auth)
-    const username = jwt.verify(parsedAuth.username, JWT_SECRET);
-
-    const user = await User.findOne({ username }).populate({
-        path: 'vinyl_ratings',
-        populate: {
-            path: 'user',
-        },
-    });
-
-    res.send(user)
-});
-
 router.get('/auth', async (req, res, next) => {
     try {
         const tokenResponse = await fetch(

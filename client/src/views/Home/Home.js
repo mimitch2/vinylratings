@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from 'App'
-import { apiService } from 'services';
 import './home.scss'
 const Home = () => {
     const { user } = useContext(UserContext);
@@ -23,14 +22,7 @@ const Home = () => {
     const renderAuthorized = () => {
         return (
             <div>
-                <h1>Sweeet! Now you should rate some vinyl!</h1>
-                <button type="button" onClick={async () => {
-                    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/discogs/rating`, {
-                        method: 'POST'
-                    });
-                }}>
-                    RATE
-                </button>
+                <h1>Welcome {user.username} ! Now you should rate some vinyl!</h1>
             </div>
         )
     }

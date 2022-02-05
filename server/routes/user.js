@@ -1,26 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel')
 require('dotenv').config();
 
 
-router.post('/login', async (req, res, next) => {
-  const { userName, email, password } = req.body;
+router.get('/me', async (req, res) => {
+  const auth = req?.cookies?.auth;
 
-  const user = await User.findOne({ user_name: userName })
-
-  if (user) {
-    res.send(user);
-    return;
+  if (!auth) {
+    return res.code(404).send({ username: null })
   }
-  saveUser({ userName, password, email });
-})
 
+  const parsedAuth = JSON.parse(auth)
+  const username = jwt.verify(parsedAuth.username, process.env.JWT_SECRET);
 
-const saveUser = async ({ userName, password, email }) => {
-  const user = await User.create({ user_name: userName, password, email });
-  console.log("Saving the user");
-  return user;
-}
+  const user = await User.findOne({ username }).populate({
+    path: 'vinyl_ratings',
+    populate: {
+      path: 'user',
+    },
+  });
+
+  res.send(user)
+});
 
 module.exports = router;

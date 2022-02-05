@@ -30,8 +30,7 @@ const request = async ({
 
         return response;
     } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn('error', error);
+        console.error('error', error);
     }
 
     return null;

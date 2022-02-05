@@ -12,7 +12,7 @@ export const UserContext = createContext(null);
 const App = () => {
   const { isLoading, error, data: user, isFetching } = useQuery(['me'], () =>
     apiService.request({
-      route: 'discogs/me'
+      route: 'user/me'
     }), { keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
