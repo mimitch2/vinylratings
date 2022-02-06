@@ -95,7 +95,7 @@ router.get('/return', async (req, res, next) => {
 
             if (!user) {
                 try {
-                    await User.create({ username, discogs_user_id });
+                    await User.create({ username, discogs_user_id, releases_rated: 0 });
                 } catch (error) {
                     const errorMessage = `Failed to create new user: ${error}`
                     console.error(errorMessage)
@@ -154,6 +154,8 @@ router.post('/rating', async (req, res) => {
             user
         });
         helpers.updateRelease({ quietness, clarity, release });
+        user.releases_rated = user.releases_rated += 1;
+        await user.save();
 
         res.status(200).json({ success: true, data: rating })
     } catch (error) {

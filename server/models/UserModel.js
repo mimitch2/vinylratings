@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  releases_rated: {
+    type: Number,
+    required: true,
+  }
 }, { timestamps: true });
 
 userSchema.virtual('vinyl_ratings', {

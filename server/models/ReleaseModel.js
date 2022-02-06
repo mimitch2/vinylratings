@@ -21,8 +21,7 @@ const releaseSchema = new mongoose.Schema({
   overall_rating_average: {
     type: Float,
     required: true
-
-  }
+  },
 
 }, { timestamps: true });
 

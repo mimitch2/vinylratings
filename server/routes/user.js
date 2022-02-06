@@ -9,7 +9,7 @@ router.get('/me', async (req, res) => {
   const auth = req?.cookies?.auth;
 
   if (!auth) {
-    return res.code(404).send({ username: null })
+    return res.send({ username: null })
   }
 
   const parsedAuth = JSON.parse(auth)

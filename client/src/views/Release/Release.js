@@ -63,8 +63,8 @@ const Release = () => {
 
   if (isLoading) { return 'Loading...' }
 
-  const userHasRatedThisRelease = data?.vinyl_ratings ? data.vinyl_ratings.find((rating) => {
-    return rating.user.username === username;
+  const userHasRatedThisRelease = data?.vinyl_ratings ? data.vinyl_ratings.find(({ user: { username: nameFromRating } }) => {
+    return nameFromRating === username;
   }) : false
 
   return (

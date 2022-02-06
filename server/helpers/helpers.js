@@ -41,7 +41,6 @@ module.exports = {
         const { overall_rating_average, ratings_count } = release;
         const newRatingsOverallAverage = (+quietness + +clarity) / 2;
         const average = ratings_count ? (+overall_rating_average + newRatingsOverallAverage) / +ratings_count : newRatingsOverallAverage;
-        // console.log("🚀 ~ file: helpers.js ~ line 44 ~ updateRelease: ~ average", quietness, clarity)
 
         if (isNew) {
             release.ratings_count = release.ratings_count += 1;
