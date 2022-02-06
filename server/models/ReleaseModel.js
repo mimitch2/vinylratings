@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Schema } = require('mongoose');
+const Float = require('mongoose-float').loadType(mongoose);
 
 const releaseSchema = new mongoose.Schema({
   release_id: {
@@ -13,6 +13,15 @@ const releaseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+  },
+  ratings_count: {
+    type: Number,
+    required: true,
+  },
+  overall_rating_average: {
+    type: Float,
+    required: true
+
   }
 
 }, { timestamps: true });

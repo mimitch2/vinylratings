@@ -139,19 +139,21 @@ router.get('/search', async (req, res) => {
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id, ratings } = req.body;
+    const { release_id, ratings: { quietness, clarity, notes } } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
-
     const release = await Release.findOne({ release_id });
 
     try {
         const rating = await Rating.create({
-            ...ratings,
+            quietness,
+            clarity,
+            notes,
             release,
             user
         });
+        helpers.updateRelease({ quietness, clarity, release });
 
         res.status(200).json({ success: true, data: rating })
     } catch (error) {
@@ -162,20 +164,22 @@ router.post('/rating', async (req, res) => {
 });
 
 router.put('/rating', async (req, res) => {
-    const { release_id, ratings } = req.body;
-
-    const filter = { release_id };
+    const { release_id, ratings: { quietness, clarity, notes } } = req.body;
+    const release = await Release.findOne({ release_id });
 
     try {
-        const newRating = await Rating.findOneAndUpdate(filter, ratings, {
-            new: true
+        const rating = await Rating.findOneAndUpdate({ release_id }, {
+            quietness,
+            clarity,
+            notes,
         });
+        helpers.updateRelease({ quietness, clarity, release, isNew: false });
 
-        res.status(200).json({ success: true, data: newRating })
+        res.status(200).json({ success: true, data: rating });
     } catch (error) {
-        const errorMessage = `Failed to update rating: ${error}`
-        console.error(errorMessage)
-        res.status(500).send(errorMessage)
+        const errorMessage = `Failed to update rating: ${error}`;
+        console.error(errorMessage);
+        res.status(500).send(errorMessage);
     }
 });
 
@@ -267,7 +271,7 @@ router.post('/releases/:id', async (req, res) => {
     const { title, artist } = req.body
 
     try {
-        const release = await Release.create({ release_id: id, title, artist });
+        const release = await Release.create({ release_id: id, title, artist, ratings_count: 0, overall_rating_average: 0.0 });
         res.status(200).json({ success: true, data: release })
     } catch (error) {
         const errorMessage = `Failed to create release: ${error}`

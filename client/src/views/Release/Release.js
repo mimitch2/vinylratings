@@ -38,16 +38,16 @@ const Release = () => {
       method: userHasRatedThisRelease ? 'PUT' : 'POST',
       route: `discogs/rating`,
       payload: { release_id: id, ratings },
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      headers: { 'Content-Type': 'application/json' }
     }), { mutationKey: 'rate' });
 
   const handleForm = (e) => {
+    const { name, value } = e.target;
+
     setRatings((prevData) => {
       return {
         ...prevData,
-        [e.target.name]: e.target.value
+        [name]: value
       }
     })
   }
