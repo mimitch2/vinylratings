@@ -10,7 +10,8 @@ const Release = () => {
   const { id } = useParams();
   const [ratings, setRatings] = useState({
     quietness: '',
-    clarity: '',
+    flatness: '',
+    physical_condition: '',
     notes: ''
   })
 
@@ -65,15 +66,37 @@ const Release = () => {
 
   const userHasRatedThisRelease = data?.vinyl_ratings ? data.vinyl_ratings.find(({ user: { username: nameFromRating } }) => {
     return nameFromRating === username;
-  }) : false
+  }) : false;
+
+  const inputs = [
+    { name: 'quietness', onChange: handleForm, type: 'number' },
+    { name: 'flatness', onChange: handleForm, type: 'number' },
+    { name: 'physical_condition', onChange: handleForm, type: 'number' },
+    { name: 'notes', onChange: handleForm, type: 'textarea' },
+  ]
 
   return (
     <div className="release">
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
+
         <div>
-          <label htmlFor="quietness">Quietness</label>
+          {
+            inputs.map(({ name, onChange, type }) => {
+              return (
+                <div key={name}>
+                  <label htmlFor={name}>{name}</label>
+                  {
+                    type === 'textarea' ? <textarea name={name} onChange={onChange} /> :
+                      <input type={type} name={name} onChange={onChange} />
+                  }
+                  <br />
+                </div>
+              )
+            })
+          }
+          {/* <label htmlFor="quietness">Quietness</label>
           <input type="number" name="quietness" onChange={handleForm} />
           <br />
           <label htmlFor="calrity">Clarity</label>
@@ -81,7 +104,7 @@ const Release = () => {
           <br />
           <label htmlFor="calrity">Notes</label>
           <input type="text-area" name="notes" onChange={handleForm} />
-          <br />
+          <br /> */}
         </div>
         <button>
           Submit

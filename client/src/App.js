@@ -10,42 +10,40 @@ import 'scss/main.scss';
 export const UserContext = createContext(null);
 
 const App = () => {
-  const { isLoading, error, data: user, isFetching } = useQuery(['me'], () =>
+  const { isLoading, error, data: user, isFetching } = useQuery('me', () =>
     apiService.request({
       route: 'user/me'
-    }), { keepPreviousData: true, refetchOnWindowFocus: false }
-  )
-
-  if (!user || isLoading) {
-    return null;
-  }
+    }), { refetchOnWindowFocus: false }
+  );
 
   const RequireAuth = () => {
     let location = useLocation();
 
-    if (!user.username) {
+    if (error || !user.username) {
       return <Navigate to="/home" state={{ from: location }} replace />;
     }
 
     return <Outlet />;
-  }
+  };
 
   return (
     <>
-      <UserContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user: user || { username: null } }}>
         <Header />
         <div className="App">
           <Routes>
             <Route element={<Outlet />}>
               <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
-              <Route element={<RequireAuth />}>
-                <Route path="search" element={<Search />} />
-                <Route path="collection" element={<Collection />} />
-                <Route path="wants" element={<WantList />} />
-                <Route path="releases" element={<Navigate to="/collection" />} />
-                <Route path="releases/:id" element={<Release />} />
-              </Route>
+              {user?.username && !isLoading && (
+                <Route element={<RequireAuth />}>
+                  <Route path="search" element={<Search />} />
+                  <Route path="collection" element={<Collection />} />
+                  <Route path="wants" element={<WantList />} />
+                  <Route path="releases" element={<Navigate to="/collection" />} />
+                  <Route path="releases/:id" element={<Release />} />
+                </Route>
+              )}
             </Route>
           </Routes>
         </div>

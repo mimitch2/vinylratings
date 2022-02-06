@@ -12,17 +12,28 @@ router.get('/me', async (req, res) => {
     return res.send({ username: null })
   }
 
-  const parsedAuth = JSON.parse(auth)
-  const username = jwt.verify(parsedAuth.username, process.env.JWT_SECRET);
+  try {
+    const parsedAuth = JSON.parse(auth)
+    const username = jwt.verify(parsedAuth.username, process.env.JWT_SECRET);
 
-  const user = await User.findOne({ username }).populate({
-    path: 'vinyl_ratings',
-    populate: {
-      path: 'user',
-    },
-  });
+    const user = await User.findOne({ username }).populate({
+      path: 'vinyl_ratings',
+      populate: {
+        path: 'user',
+      },
+    });
 
-  res.send(user)
+    // if (!user) {
+    //   res.cookie("auth", { expires: Date.now() });
+    //   return res.send({ username: null });
+    // }
+    return res.status(200).send(user);
+
+  } catch (error) {
+    const errorMessage = `Failed to find user: ${error}`;
+    await res.cookie("auth", { expires: Date.now() });
+    return res.status(401).send(errorMessage);
+  }
 });
 
 module.exports = router;

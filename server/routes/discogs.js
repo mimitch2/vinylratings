@@ -90,7 +90,6 @@ router.get('/return', async (req, res, next) => {
             const token = jwt.sign(discogsAccessToken, JWT_SECRET);
             const secret = jwt.sign(discogsAccessTokenSecret, JWT_SECRET);
             const signedUsername = jwt.sign(identity.username, JWT_SECRET);
-
             const user = await User.findOne({ username });
 
             if (!user) {
@@ -139,7 +138,7 @@ router.get('/search', async (req, res) => {
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id, ratings: { quietness, clarity, notes } } = req.body;
+    const { release_id, ratings: { quietness, flatness, physical_condition, notes } } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
@@ -148,12 +147,13 @@ router.post('/rating', async (req, res) => {
     try {
         const rating = await Rating.create({
             quietness,
-            clarity,
+            flatness,
+            physical_condition,
             notes,
             release,
             user
         });
-        helpers.updateRelease({ quietness, clarity, release });
+        helpers.updateRelease({ quietness, flatness, physical_condition, release });
         user.releases_rated = user.releases_rated += 1;
         await user.save();
 
@@ -166,16 +166,17 @@ router.post('/rating', async (req, res) => {
 });
 
 router.put('/rating', async (req, res) => {
-    const { release_id, ratings: { quietness, clarity, notes } } = req.body;
+    const { release_id, ratings: { quietness, flatness, physical_condition, notes } } = req.body;
     const release = await Release.findOne({ release_id });
 
     try {
         const rating = await Rating.findOneAndUpdate({ release_id }, {
             quietness,
-            clarity,
+            flatness,
+            physical_condition,
             notes,
         });
-        helpers.updateRelease({ quietness, clarity, release, isNew: false });
+        helpers.updateRelease({ quietness, flatness, physical_condition, release, isNew: false });
 
         res.status(200).json({ success: true, data: rating });
     } catch (error) {

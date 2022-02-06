@@ -6,7 +6,11 @@ const ratingSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  clarity: {
+  flatness: {
+    type: Number,
+    required: true
+  },
+  physical_condition: {
     type: Number,
     required: true
   },

@@ -37,9 +37,9 @@ module.exports = {
             Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${token}", oauth_signature="${consumerSecret}&${secret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`,
         };
     },
-    updateRelease: async ({ quietness, clarity, release, isNew = true }) => {
+    updateRelease: async ({ quietness, flatness, physical_condition, release, isNew = true }) => {
         const { overall_rating_average, ratings_count } = release;
-        const newRatingsOverallAverage = (+quietness + +clarity) / 2;
+        const newRatingsOverallAverage = (+quietness + +flatness + +physical_condition) / 3;
         const average = ratings_count ? (+overall_rating_average + newRatingsOverallAverage) / +ratings_count : newRatingsOverallAverage;
 
         if (isNew) {
