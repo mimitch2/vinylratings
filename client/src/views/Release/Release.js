@@ -78,7 +78,7 @@ const Release = () => {
 
   return (
     <div className="release">
-      <Rating rating={'3.8'} />
+      <Rating />
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>

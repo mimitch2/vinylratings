@@ -3,68 +3,85 @@ import PropTypes from 'prop-types';
 
 const HALF_STAR_LOW = 3;
 const HALF_STAR_HIGH = 7;
+const FULL_STAR_CLASS = "fas fa-star";
+const HALF_STAR_CLASS = "fad fa-star-half-alt";
+const EMPTY_STAR_CLASS = "far fa-star";
 
 const Rating = ({ rating, onClick }) => {
   const splitRating = rating.split('.');
   const wholeNumber = +splitRating[0];
   const partialNumber = splitRating.length === 2 ? +splitRating[1] : null;
-  const [localRating, setLocalRating] = useState();
+  const [localRating, setLocalRating] = useState(0);
 
-  // const renderFullStar = () => {
-  //   return <i className="fas fa-star"></i>
-  // }
+  const handleStarClick = ({ rating }) => {
+    setLocalRating(rating)
+  }
 
-  // const renderHalfStar = () => {
-  //   return <i className="fad fa-star-half-alt"></i>
-  // }
-
-  // const renderEmptyStar = () => {
-  //   return <i className="far fa-star"></i>
-  // }
-
-  const buildFullStarComponents = () => {
-    const components = [];
+  const renderFullStars = () => {
+    const stars = [];
 
     for (let index = 0; index < wholeNumber; index++) {
-      components.push(<i className="fas fa-star" key={index}></i>)
+      stars.push(FULL_STAR_CLASS)
     }
 
     if (partialNumber && partialNumber >= HALF_STAR_HIGH) {
-      components.push(<i className="fas fa-star" key={999}></i>)
+      stars.push(FULL_STAR_CLASS)
     }
 
-    return components;
+    return stars.map((className, idx) => {
+      return <i className={className} key={`${className}-${idx}`}></i>
+    });
   }
 
   const renderHalfOrEmptyStars = () => {
-    const fullStarsLength = buildFullStarComponents().length
+    const fullStarsLength = renderFullStars().length
     if (fullStarsLength === 5) {
       return null;
     }
 
-    const remainingComponents = [];
+    const remainingStars = [];
 
     if (partialNumber && partialNumber >= HALF_STAR_LOW && partialNumber < HALF_STAR_HIGH) {
-      remainingComponents.push(<i className="fad fa-star-half-alt" key={6}></i>);
+      remainingStars.push(HALF_STAR_CLASS);
     } else {
-      remainingComponents.push(<i className="far fa-star" key={987}></i>)
+      remainingStars.push(EMPTY_STAR_CLASS)
     }
 
     const remainingStarCount = 5 - (fullStarsLength + 1);
 
     if (remainingStarCount) {
       for (let index = 0; index < remainingStarCount; index++) {
-        remainingComponents.push(<i className="far fa-star" key={index}></i>)
+        remainingStars.push(EMPTY_STAR_CLASS)
       }
     }
 
-    return remainingComponents;
+    return remainingStars.map((className, idx) => {
+      return <i className={className} key={`${className}-${idx}`}></i>
+    });
+  }
+
+  const renderDisplayStars = () => {
+    return (
+      <>
+        {renderFullStars()}
+        {renderHalfOrEmptyStars()}
+      </>
+    )
+  }
+
+  const renderInputStars = () => {
+    return [1, 2, 3, 4, 5].map((rating) => {
+      const className = localRating && rating <= localRating ? FULL_STAR_CLASS : EMPTY_STAR_CLASS;
+
+      return <i className={className} key={`${className}-${rating}`} onClick={() => {
+        handleStarClick({ rating })
+      }}></i>
+    })
   }
 
   return (
     <div>
-      {buildFullStarComponents().map(star => star)}
-      {renderHalfOrEmptyStars().map(star => star)}
+      {rating ? renderDisplayStars() : renderInputStars()}
     </div>
   );
 };
