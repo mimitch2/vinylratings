@@ -10,9 +10,11 @@ const Release = () => {
   const { user: { username } } = useContext(UserContext)
   const { id } = useParams();
   const [ratings, setRatings] = useState({
-    quietness: '',
-    flatness: '',
-    physical_condition: '',
+    stars: {
+      quietness: '',
+      flatness: '',
+      physical_condition: '',
+    },
     notes: ''
   })
 
@@ -44,9 +46,20 @@ const Release = () => {
     }), { mutationKey: 'rate' });
 
   const handleForm = (e) => {
+    const isRatingInput = ['quietness', 'flatness', 'physical_condition']
     const { name, value } = e.target;
 
     setRatings((prevData) => {
+      if (isRatingInput.includes(name)) {
+        return {
+          ...prevData,
+          stars: {
+            ...prevData.stars,
+            [name]: value
+          }
+        }
+      }
+
       return {
         ...prevData,
         [name]: value
