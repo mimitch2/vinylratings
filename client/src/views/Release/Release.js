@@ -3,6 +3,7 @@ import { useQuery, useMutation } from 'react-query'
 import { apiService } from 'services';
 import { useParams } from "react-router-dom";
 import { UserContext } from 'App'
+import { Rating } from 'components/common'
 import './release.scss'
 
 const Release = () => {
@@ -77,6 +78,7 @@ const Release = () => {
 
   return (
     <div className="release">
+      <Rating rating={'3.8'} />
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
