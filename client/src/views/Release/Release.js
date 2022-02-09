@@ -45,6 +45,18 @@ const Release = () => {
       headers: { 'Content-Type': 'application/json' }
     }), { mutationKey: 'rate' });
 
+  const onRatingClick = ({ key, value }) => {
+    setRatings((prevData) => {
+      return {
+        ...prevData,
+        stars: {
+          ...prevData.stars,
+          [key]: value
+        }
+      }
+    })
+  }
+
   const handleForm = (e) => {
     const isRatingInput = ['quietness', 'flatness', 'physical_condition']
     const { name, value } = e.target;
@@ -87,15 +99,18 @@ const Release = () => {
     { name: 'flatness', onChange: handleForm, type: 'number' },
     { name: 'physical_condition', onChange: handleForm, type: 'number' },
     { name: 'notes', onChange: handleForm, type: 'textarea' },
-  ]
+  ];
 
   return (
     <div className="release">
       <Rating />
+      {/* <div className="star-wrapper">
+        <div className="clip background" />
+        <div className="clip half" />
+      </div> */}
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
-
         <div>
           {
             inputs.map(({ name, onChange, type }) => {
@@ -111,15 +126,6 @@ const Release = () => {
               )
             })
           }
-          {/* <label htmlFor="quietness">Quietness</label>
-          <input type="number" name="quietness" onChange={handleForm} />
-          <br />
-          <label htmlFor="calrity">Clarity</label>
-          <input type="number" name="clarity" onChange={handleForm} />
-          <br />
-          <label htmlFor="calrity">Notes</label>
-          <input type="text-area" name="notes" onChange={handleForm} />
-          <br /> */}
         </div>
         <button>
           Submit

@@ -138,7 +138,7 @@ router.get('/search', async (req, res) => {
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id, ratings: { quietness, flatness, physical_condition, notes } } = req.body;
+    const { release_id, ratings: { notes, stars: { quietness, flatness, physical_condition } } } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
@@ -166,7 +166,7 @@ router.post('/rating', async (req, res) => {
 });
 
 router.put('/rating', async (req, res) => {
-    const { release_id, ratings: { quietness, flatness, physical_condition, notes } } = req.body;
+    const { release_id, ratings: { notes, stars: { quietness, flatness, physical_condition } } } = req.body;
     const release = await Release.findOne({ release_id });
 
     try {

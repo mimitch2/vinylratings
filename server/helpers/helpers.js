@@ -45,6 +45,7 @@ module.exports = {
         if (isNew) {
             release.ratings_count = release.ratings_count += 1;
         }
+
         release.overall_rating_average = average;
 
         await release.save();

@@ -1,0 +1,36 @@
+@import 'scss/_variables.scss';
+
+.stars {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  cursor: pointer;
+
+  .star-wrapper {
+    // position: relative;
+    height: 20px;
+    width: 20px;
+
+    .clip {
+        margin: 0 .5rem;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        background-color: $eggshell;
+
+        &.half {
+          clip-path: polygon(50% 0%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+  
+        &.background {
+          top: 0;
+          left:0;
+          position: absolute;
+          opacity: 0.2;
+        }
+
+        &:hover {
+          opacity: 1.0;
+        }
+    }
+  }
+}
+
