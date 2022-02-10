@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash'
 
 const HALF_STAR_LOW = 3;
 const HALF_STAR_HIGH = 7;
@@ -9,32 +10,31 @@ const EMPTY_STAR_CLASS = "far fa-star";
 import './rating.scss'
 
 const Rating = ({ rating, name, onClick }) => {
-  const splitRating = rating.split('.');
-  const wholeNumber = +splitRating[0];
-  const partialNumber = splitRating.length === 2 ? +splitRating[1] : null;
-  const [localRating, setLocalRating] = useState(0);
+  // const splitRating = rating.split('.');
+  // const wholeNumber = +splitRating[0];
+  // const partialNumber = splitRating.length === 2 ? +splitRating[1] : null;
+  // const [localRating, setLocalRating] = useState(0);
   const [isHovered, setIsHovered] = useState(0);
 
-  const handleStarClick = ({ rating }) => {
-    onClick({ key: name, value: rating })
-    setLocalRating(rating)
+  const handleStarClick = ({ inputRating }) => {
+    onClick({ key: name, value: inputRating })
   }
 
-  const renderFullStars = () => {
-    const stars = [];
+  // const renderFullStars = () => {
+  //   const stars = [];
 
-    for (let index = 0; index < wholeNumber; index++) {
-      stars.push(FULL_STAR_CLASS)
-    }
+  //   for (let index = 0; index < wholeNumber; index++) {
+  //     stars.push(FULL_STAR_CLASS)
+  //   }
 
-    if (partialNumber && partialNumber >= HALF_STAR_HIGH) {
-      stars.push(FULL_STAR_CLASS)
-    }
+  //   if (partialNumber && partialNumber >= HALF_STAR_HIGH) {
+  //     stars.push(FULL_STAR_CLASS)
+  //   }
 
-    return stars.map((className, idx) => {
-      return <i className={className} key={`${className}-${idx}`}></i>
-    });
-  }
+  //   return stars.map((className, idx) => {
+  //     return <i className={className} key={`${className}-${idx}`}></i>
+  //   });
+  // }
 
   // const renderHalfOrEmptyStars = () => {
   //   const fullStarsLength = renderFullStars().length
@@ -63,54 +63,59 @@ const Rating = ({ rating, name, onClick }) => {
   //   });
   // }
 
-  const handleHover = ({ idx }) => {
-    setIsHovered(idx);
+  const isActive = ({ inputRating }) => {
+    if (rating && isHovered && isHovered < inputRating) {
+      return false
+    }
+    return isHovered >= inputRating || rating >= inputRating
+
   }
 
-  const renderDisplayStars = () => {
-    return (
-      <>
-        {renderFullStars()}
-        {/* {renderHalfOrEmptyStars()} */}
-      </>
-    )
-  }
+  // const renderDisplayStars = () => {
+  //   return (
+  //     <>
+  //       {renderFullStars()}
+  //       {/* {renderHalfOrEmptyStars()} */}
+  //     </>
+  //   )
+  // }
 
   const renderInputStars = () => {
     return (
-      <div className="stars" onMouseLeave={() => { setIsHovered(0) }}>
-        {[1, 2, 3, 4, 5].map((rating) => {
-          return (
-            <div
-              className="star-wrapper"
-              key={rating}
-              onMouseEnter={() => { setIsHovered(rating) }}
-            >
-              <div className={`clip ${isHovered >= rating ? '' : 'background'}`} />
-            </div>
-          );
-        })}
+      <div className="rating--stars-row">
+        <span>{_.startCase(name)}</span>
+        <div className="rating--stars" onMouseLeave={() => { setIsHovered(0) }}>
+          {[1, 2, 3, 4, 5].map((inputRating) => {
+            return (
+              <div
+                className="star-wrapper"
+                key={inputRating}
+                onMouseEnter={() => { setIsHovered(inputRating) }}
+                onClick={() => {
+                  handleStarClick({ inputRating })
+                }}
+              >
+                <div className={`clip ${isActive({ inputRating }) ? '' : 'background'}`} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     )
   }
 
   return (
     <div>
-      {rating ? renderDisplayStars() : renderInputStars()}
+      {/* {rating ? renderDisplayStars() : renderInputStars()} */}
+      {renderInputStars()}
     </div>
   );
 };
 
 Rating.propTypes = {
-  rating: PropTypes.string,
-  onClick: PropTypes.func,
+  rating: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
   name: PropTypes.string
 };
-
-Rating.defaultProps = {
-  rating: '',
-  onClick: () => { }
-}
-
 
 export default Rating;

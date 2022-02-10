@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useQuery, useMutation } from 'react-query'
 import { apiService } from 'services';
 import { useParams } from "react-router-dom";
+import _ from 'lodash'
 import { UserContext } from 'App'
 import { Rating } from 'components/common'
 import './release.scss'
@@ -11,9 +12,9 @@ const Release = () => {
   const { id } = useParams();
   const [ratings, setRatings] = useState({
     stars: {
-      quietness: '',
-      flatness: '',
-      physical_condition: '',
+      quietness: 0,
+      flatness: 0,
+      physical_condition: 0,
     },
     notes: ''
   })
@@ -103,7 +104,20 @@ const Release = () => {
 
   return (
     <div className="release">
-      <Rating />
+      {
+        _.map(ratings.stars, (__, key) => {
+          return (
+
+            <Rating
+              key={key}
+              name={key}
+              onClick={onRatingClick}
+              rating={ratings.stars[key]}
+            />
+          )
+        })
+      }
+
       {/* <div className="star-wrapper">
         <div className="clip background" />
         <div className="clip half" />
