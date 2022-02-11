@@ -46,7 +46,7 @@ const Release = () => {
       headers: { 'Content-Type': 'application/json' }
     }), { mutationKey: 'rate' });
 
-  const onRatingClick = ({ key, value }) => {
+  const handleRatingClick = ({ key, value }) => {
     setRatings((prevData) => {
       return {
         ...prevData,
@@ -96,27 +96,14 @@ const Release = () => {
   }) : false;
 
   const inputs = [
-    { name: 'quietness', onChange: handleForm, type: 'number' },
-    { name: 'flatness', onChange: handleForm, type: 'number' },
-    { name: 'physical_condition', onChange: handleForm, type: 'number' },
+    { name: 'quietness', onChange: handleRatingClick, type: 'rating' },
+    { name: 'flatness', onChange: handleRatingClick, type: 'rating' },
+    { name: 'physical_condition', onChange: handleRatingClick, type: 'rating' },
     { name: 'notes', onChange: handleForm, type: 'textarea' },
   ];
 
   return (
     <div className="release">
-      {
-        _.map(ratings.stars, (__, key) => {
-          return (
-
-            <Rate
-              key={key}
-              name={key}
-              onClick={onRatingClick}
-              rating={ratings.stars[key]}
-            />
-          )
-        })
-      }
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
@@ -125,10 +112,13 @@ const Release = () => {
             inputs.map(({ name, onChange, type }) => {
               return (
                 <div key={name}>
-                  <label htmlFor={name}>{name}</label>
                   {
                     type === 'textarea' ? <textarea name={name} onChange={onChange} /> :
-                      <input type={type} name={name} onChange={onChange} />
+                      <Rate
+                        name={name}
+                        onClick={onChange}
+                        rating={ratings.stars[name]}
+                      />
                   }
                   <br />
                 </div>
@@ -140,7 +130,7 @@ const Release = () => {
           Submit
         </button>
       </form>
-      <Rating rating="1.3" name="quitness" />
+      <Rating rating="1.3" name="quietness" />
     </div>
   )
 }

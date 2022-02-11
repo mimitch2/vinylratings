@@ -4,7 +4,6 @@ import _ from 'lodash'
 import './rate.scss'
 
 const Rate = ({ rating, name, onClick }) => {
-
   const [isHovered, setIsHovered] = useState(0);
 
   const handleStarClick = ({ inputRating }) => {
@@ -19,33 +18,25 @@ const Rate = ({ rating, name, onClick }) => {
     return isHovered >= inputRating || rating >= inputRating
   }
 
-  const renderInputStars = () => {
-    return (
-      <div className="rating--stars-row">
-        <span>{_.startCase(name)}</span>
-        <div className="rating--stars" onMouseLeave={() => { setIsHovered(0) }}>
-          {[1, 2, 3, 4, 5].map((inputRating) => {
-            return (
-              <div
-                className="star-wrapper"
-                key={inputRating}
-                onMouseEnter={() => { setIsHovered(inputRating) }}
-                onClick={() => {
-                  handleStarClick({ inputRating })
-                }}
-              >
-                <div className={`clip interactive ${isActive({ inputRating }) ? '' : 'background'}`} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div>
-      {renderInputStars()}
+    <div className="rating--stars-row">
+      <span>{_.startCase(name)}</span>
+      <div className="rating--stars" onMouseLeave={() => { setIsHovered(0) }}>
+        {[1, 2, 3, 4, 5].map((inputRating) => {
+          return (
+            <div
+              className="star-wrapper"
+              key={inputRating}
+              onMouseEnter={() => { setIsHovered(inputRating) }}
+              onClick={() => {
+                handleStarClick({ inputRating })
+              }}
+            >
+              <div className={`clip interactive ${isActive({ inputRating }) ? '' : 'background'}`} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
