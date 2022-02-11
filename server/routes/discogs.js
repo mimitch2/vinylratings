@@ -138,7 +138,7 @@ router.get('/search', async (req, res) => {
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id, ratings: { notes, stars: { quietness, flatness, physical_condition } } } = req.body;
+    const { release_id, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
@@ -148,12 +148,12 @@ router.post('/rating', async (req, res) => {
         const rating = await Rating.create({
             quietness,
             flatness,
-            physical_condition,
+            physicalCondition,
             notes,
             release,
             user
         });
-        helpers.updateRelease({ quietness, flatness, physical_condition, release });
+        helpers.updateRelease({ quietness, flatness, physicalCondition, release });
         user.releases_rated = user.releases_rated += 1;
         await user.save();
 
@@ -166,17 +166,17 @@ router.post('/rating', async (req, res) => {
 });
 
 router.put('/rating', async (req, res) => {
-    const { release_id, ratings: { notes, stars: { quietness, flatness, physical_condition } } } = req.body;
+    const { release_id, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
     const release = await Release.findOne({ release_id });
 
     try {
         const rating = await Rating.findOneAndUpdate({ release_id }, {
             quietness,
             flatness,
-            physical_condition,
+            physicalCondition,
             notes,
         });
-        helpers.updateRelease({ quietness, flatness, physical_condition, release, isNew: false });
+        helpers.updateRelease({ quietness, flatness, physicalCondition, release, isNew: false });
 
         res.status(200).json({ success: true, data: rating });
     } catch (error) {

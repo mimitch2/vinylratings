@@ -8,3 +8,4 @@ export { default as Select } from './Select/Select';
 export { default as Slider } from './slider/slider';
 export { default as Rate } from './Rate/Rate';
 export { default as Rating } from './Rate/Rating';
+export { default as RatingsOverview } from './RatingsOverview/RatingsOverview';

@@ -10,7 +10,7 @@ const ratingSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  physical_condition: {
+  physicalCondition: {
     type: Number,
     required: true
   },

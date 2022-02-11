@@ -4,7 +4,7 @@ import { apiService } from 'services';
 import { useParams } from "react-router-dom";
 import _ from 'lodash'
 import { UserContext } from 'App'
-import { Rate, Rating } from 'components/common'
+import { Rate, Rating, RatingsOverview } from 'components/common'
 import './release.scss'
 
 const Release = () => {
@@ -14,7 +14,7 @@ const Release = () => {
     stars: {
       quietness: 0,
       flatness: 0,
-      physical_condition: 0,
+      physicalCondition: 0,
     },
     notes: ''
   })
@@ -59,7 +59,7 @@ const Release = () => {
   }
 
   const handleForm = (e) => {
-    const isRatingInput = ['quietness', 'flatness', 'physical_condition']
+    const isRatingInput = ['quietness', 'flatness', 'physicalCondition']
     const { name, value } = e.target;
 
     setRatings((prevData) => {
@@ -98,7 +98,7 @@ const Release = () => {
   const inputs = [
     { name: 'quietness', onChange: handleRatingClick, type: 'rating' },
     { name: 'flatness', onChange: handleRatingClick, type: 'rating' },
-    { name: 'physical_condition', onChange: handleRatingClick, type: 'rating' },
+    { name: 'physicalCondition', onChange: handleRatingClick, type: 'rating' },
     { name: 'notes', onChange: handleForm, type: 'textarea' },
   ];
 
