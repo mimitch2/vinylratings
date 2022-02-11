@@ -9,16 +9,17 @@ const Rate = ({ rating, name }) => {
     const ratingFractional = splitRating.length === 2 ? +splitRating[1] : null;
 
     const getClassName = ({ inputRating }) => {
-        const shouldRenderFillStar = ratingInteger >= inputRating || (ratingInteger + 1 === inputRating && ratingFractional >= 7)
+        const shouldRenderFillStar = ratingInteger >= inputRating || (ratingInteger + 1 === inputRating && ratingFractional >= 7);
+
         if (shouldRenderFillStar) {
             return '';
         }
 
         if (ratingFractional && (ratingFractional >= 3 && ratingFractional <= 7) && ratingInteger === inputRating - 1) {
-            return 'half'
+            return 'half';
         }
 
-        return 'background'
+        return 'background';
     }
 
     return (

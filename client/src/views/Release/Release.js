@@ -117,11 +117,6 @@ const Release = () => {
           )
         })
       }
-
-      {/* <div className="star-wrapper">
-        <div className="clip background" />
-        <div className="clip half" />
-      </div> */}
       <h1>{data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}</h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>
