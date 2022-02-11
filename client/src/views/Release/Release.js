@@ -4,7 +4,7 @@ import { apiService } from 'services';
 import { useParams } from "react-router-dom";
 import _ from 'lodash'
 import { UserContext } from 'App'
-import { Rating } from 'components/common'
+import { Rate, Rating } from 'components/common'
 import './release.scss'
 
 const Release = () => {
@@ -108,7 +108,7 @@ const Release = () => {
         _.map(ratings.stars, (__, key) => {
           return (
 
-            <Rating
+            <Rate
               key={key}
               name={key}
               onClick={onRatingClick}
@@ -145,6 +145,7 @@ const Release = () => {
           Submit
         </button>
       </form>
+      <Rating rating="1.3" name="quitness" />
     </div>
   )
 }

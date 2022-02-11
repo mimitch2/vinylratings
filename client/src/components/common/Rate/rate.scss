@@ -47,8 +47,9 @@
           opacity: 0.2;
         }
 
-        &:hover {
+        &.interactive:hover {
           opacity: 1;
+          transition: opactity 0.3s ease-in-out;
         }
       }
     }
