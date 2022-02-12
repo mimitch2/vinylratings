@@ -269,7 +269,7 @@ router.get('/collection', async (req, res) => {
 router.get('/releases/:id', async (req, res) => {
   const { id } = req.params;
   const { auth } = req.cookies;
-  const { Authorization } = helpers.getDiscogsHeadersAndUsername({
+  const { Authorization, username } = helpers.getDiscogsHeadersAndUsername({
     consumerKey,
     consumerSecret,
     auth
@@ -290,14 +290,15 @@ router.get('/releases/:id', async (req, res) => {
           path: 'user'
         }
       });
+      const user = await User.findOne({ username });
+      const userRating = await Rating.findOne({ user });
+
       return res.send({
         ...discogsRelease,
         vinylRatings: release.vinylRatings,
-        has_been_rated: true
+        currentUserRating: userRating || null
       });
     }
-
-    res.send({ ...discogsRelease, has_been_rated: false });
   } catch (error) {
     console.log('err', error);
   }

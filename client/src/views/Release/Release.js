@@ -107,8 +107,8 @@ const Release = () => {
 
   const userHasRatedThisRelease = data?.vinylRatings
     ? data.vinylRatings.find(({ user: { username: nameFromRating } }) => {
-      return nameFromRating === username;
-    })
+        return nameFromRating === username;
+      })
     : false;
 
   const inputs = [
