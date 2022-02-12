@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "DEBUG=server:* && npm run start"
+    "dev": "DEBUG=server:* && npm run start",
+    "lint": "eslint .",
+"lint:fix": "eslint --fix",
+"format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -25,5 +28,11 @@
     "nodemon": "^2.0.15",
     "pug": "2.0.0-beta11",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
   }
 }

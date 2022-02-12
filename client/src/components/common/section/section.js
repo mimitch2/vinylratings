@@ -24,8 +24,7 @@ const Section = ({
         backgroundColor: colors[bgColor],
         color: colors[color],
         minHeight
-      }}
-    >
+      }}>
       <header className={hasTabs ? '' : 'no-tabs'}>
         {hasTabs ? (
           <div className="section-tabs">
@@ -38,8 +37,7 @@ const Section = ({
                   key={value}
                   onClick={() => {
                     setCurrentTab(value);
-                  }}
-                >
+                  }}>
                   {label}
                 </button>
               );
@@ -80,7 +78,7 @@ Section.defaultProps = {
   logo: '',
   logoSize: 90,
   minHeight: 300,
-  setCurrentTab: () => {}
+  setCurrentTab: () => { }
 };
 
 export default Section;
