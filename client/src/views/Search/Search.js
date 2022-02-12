@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiService } from 'services';
-import { useQuery } from 'react-query'
-import { useSearchParams, createSearchParams } from "react-router-dom";
+import { useQuery } from 'react-query';
+import { useSearchParams, createSearchParams } from 'react-router-dom';
 import _ from 'lodash';
 import '../Collection/collection.scss';
 import { Paginator, Loading, Checkboxes, Button, List, Section } from 'components/common';
@@ -24,21 +24,24 @@ const Search = () => {
   // inside lodash's _.reduce, so just assign it outside of the reduce.
   const isArray = _.isArray;
 
-
   const setInitialParams = () => {
-    return _.reduce(DEFAULT_PARAMS, (result, _, key) => {
-      const value = params.get(key);
+    return _.reduce(
+      DEFAULT_PARAMS,
+      (result, _, key) => {
+        const value = params.get(key);
 
-      // if (isArray(DEFAULT_PARAMS[key]) && value) {
-      //   DEFAULT_PARAMS[key].push(value)
-      // }
+        // if (isArray(DEFAULT_PARAMS[key]) && value) {
+        //   DEFAULT_PARAMS[key].push(value)
+        // }
 
-      if (value) {
-        result[key] = value;
-      }
+        if (value) {
+          result[key] = value;
+        }
 
-      return result;
-    }, {})
+        return result;
+      },
+      {}
+    );
   };
 
   useEffect(() => {
@@ -49,24 +52,31 @@ const Search = () => {
       type: params.get('type') || 'release',
       q: params.get('q') || '',
       sort: params.get('sort') || 'nfm'
-    })
+    });
   }, []);
 
-
-
-  const { isLoading, error, data: search, isFetching, isPreviousData } = useQuery(
-    ['search',
+  const {
+    isLoading,
+    error,
+    data: search,
+    isFetching,
+    isPreviousData
+  } = useQuery(
+    [
+      'search',
       params.get('page'),
       params.getAll('genre'),
       params.getAll('style'),
       params.get('type'),
-      params.get('q'),
-    ], () =>
-    apiService.request({
-      route: 'discogs/search',
-      params: { ...paramCollector, format: 'vinyl' },
-    }), { keepPreviousData: true })
-
+      params.get('q')
+    ],
+    () =>
+      apiService.request({
+        route: 'discogs/search',
+        params: { ...paramCollector, format: 'vinyl' }
+      }),
+    { keepPreviousData: true }
+  );
 
   const onParamCollector = ({ key, value }) => {
     setParamCollector((currentValues) => {
@@ -77,7 +87,7 @@ const Search = () => {
     });
 
     if (key === 'page') {
-      setParams({ ...paramCollector, page: value })
+      setParams({ ...paramCollector, page: value });
     }
   };
 
@@ -131,13 +141,7 @@ const Search = () => {
 
   const renderSearch = () => {
     if (isLoading || (isFetching && isPreviousData)) {
-      return (
-        <Loading
-          spinnerClassName="loading-vinyl"
-          spinnerSize={60}
-          position="relative"
-        />
-      );
+      return <Loading spinnerClassName="loading-vinyl" spinnerSize={60} position="relative" />;
     }
 
     const { results } = search;
@@ -161,9 +165,7 @@ const Search = () => {
       >
         {_.map(values, ({ param, value }, idx) => {
           const realValue =
-            idx + 1 === values.length
-              ? value.substring(0, value.length - 2)
-              : value;
+            idx + 1 === values.length ? value.substring(0, value.length - 2) : value;
 
           return (
             <span key={param}>
@@ -177,15 +179,9 @@ const Search = () => {
   };
 
   return (
-    <Section
-      bgColor="eggshell"
-      minHeight={520}
-    >
+    <Section bgColor="eggshell" minHeight={520}>
       <div className="wrapper">
-        <form
-          className={`filters${showFilters ? ' active' : ''}`}
-          onSubmit={onSearchSubmit}
-        >
+        <form className={`filters${showFilters ? ' active' : ''}`} onSubmit={onSearchSubmit}>
           <div className="filters-checkboxs">
             {CHECKBOXES.map(({ key, values, label }) => {
               return (
@@ -204,9 +200,7 @@ const Search = () => {
               );
             })}
           </div>
-          <Button type="submit">
-            Go!
-          </Button>
+          <Button type="submit">Go!</Button>
         </form>
         <div className="search">
           <div className="title-group">
@@ -222,10 +216,7 @@ const Search = () => {
                   });
                 }}
               />
-              <Button
-                type="submit"
-                className="control"
-              >
+              <Button type="submit" className="control">
                 Go!
               </Button>
             </form>
@@ -234,22 +225,22 @@ const Search = () => {
         </div>
         <div className="list-wrapper">{renderSearch()}</div>
         <Paginator
-          pagination={search?.pagination ?? {
-            page: 1,
-            items: 100,
-            pages: 2,
-            per_page: 50
-          }}
+          pagination={
+            search?.pagination ?? {
+              page: 1,
+              items: 100,
+              pages: 2,
+              per_page: 50
+            }
+          }
           changePage={(page) => {
             onParamCollector({
-              key: 'page', value: page
-            })
+              key: 'page',
+              value: page
+            });
           }}
         />
-        <div
-          className={`overlay${showFilters ? ' active' : ''}`}
-          onClick={onFiltersDismiss}
-        />
+        <div className={`overlay${showFilters ? ' active' : ''}`} onClick={onFiltersDismiss} />
       </div>
     </Section>
   );

@@ -35,10 +35,10 @@ Slider.propTypes = {
   disabled: PropTypes.bool,
   range: PropTypes.shape({
     min: PropTypes.string.isRequired,
-    max: PropTypes.string.isRequired,
+    max: PropTypes.string.isRequired
   }),
   label: PropTypes.string,
-  showValue: PropTypes.bool,
+  showValue: PropTypes.bool
 };
 
 Slider.defaultProps = {
@@ -47,10 +47,10 @@ Slider.defaultProps = {
   disabled: false,
   range: {
     min: '0',
-    max: '100',
+    max: '100'
   },
   label: '',
-  showValue: false,
+  showValue: false
 };
 
 export default Slider;

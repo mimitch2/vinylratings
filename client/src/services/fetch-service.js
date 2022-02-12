@@ -3,62 +3,60 @@ import _ from 'lodash';
 const apiBaseUrl = process.env.REACT_APP_SERVER_ENDPOINT;
 
 const request = async ({
-    route,
-    baseUrl = apiBaseUrl,
-    method = 'GET',
-    headers = {},
-    params = {},
-    payload = null
+  route,
+  baseUrl = apiBaseUrl,
+  method = 'GET',
+  headers = {},
+  params = {},
+  payload = null
 }) => {
-    try {
-        const requestUrl = `${baseUrl}/${route}${generateQueryParams({
-            params
-        })}`;
+  try {
+    const requestUrl = `${baseUrl}/${route}${generateQueryParams({
+      params
+    })}`;
 
-        const requestOptions = {
-            method,
-            credentials: "include",
-            headers
-        };
+    const requestOptions = {
+      method,
+      credentials: 'include',
+      headers
+    };
 
-        if (payload) {
-            requestOptions.body = JSON.stringify(payload);
-        }
-
-        const data = await fetch(requestUrl, requestOptions);
-        const response = await data.json();
-
-        return response;
-    } catch (error) {
-        console.error('error', error);
+    if (payload) {
+      requestOptions.body = JSON.stringify(payload);
     }
 
-    return null;
+    const data = await fetch(requestUrl, requestOptions);
+    const response = await data.json();
+
+    return response;
+  } catch (error) {
+    console.error('error', error);
+  }
+
+  return null;
 };
 
 const generateQueryParams = ({ params }) => {
-    return _.reduce(
-        params,
-        (result, val, key) => {
-            let encodedKeyValue = '';
-            const dividerSymbol = result ? '&' : '?';
+  return _.reduce(
+    params,
+    (result, val, key) => {
+      let encodedKeyValue = '';
+      const dividerSymbol = result ? '&' : '?';
 
-            if (_.isArray(val) && val.length) {
-                const arrayString = `[${val.join(',').replace(',', '||')}]`;
+      if (_.isArray(val) && val.length) {
+        const arrayString = `[${val.join(',').replace(',', '||')}]`;
 
-                encodedKeyValue = `${encodeURIComponent(key)}=${arrayString}`;
-            } else {
-                encodedKeyValue = `${encodeURIComponent(
-                    key
-                )}=${encodeURIComponent(val)}`;
-            }
+        encodedKeyValue = `${encodeURIComponent(key)}=${arrayString}`;
+      } else {
+        encodedKeyValue = `${encodeURIComponent(key)}=${encodeURIComponent(val)}`;
+      }
 
-            return `${result}${dividerSymbol}${encodedKeyValue}`;
-        },
-        ''
-    );
+      return `${result}${dividerSymbol}${encodedKeyValue}`;
+    },
+    ''
+  );
 };
 
 export const apiService = {
-    request
+  request
 };

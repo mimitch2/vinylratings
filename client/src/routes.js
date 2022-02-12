@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { Login, About, Collection, WantList, Release, Search } from 'views'
-
+import { Login, About, Collection, WantList, Release, Search } from 'views';
 
 const routes = (isLoggedIn) => [
   {
@@ -16,19 +15,19 @@ const routes = (isLoggedIn) => [
         element: <Outlet />,
         children: [
           { path: '/', element: <MemberGrid /> },
-          { path: '/add', element: <AddMember /> },
-        ],
-      },
-    ],
+          { path: '/add', element: <AddMember /> }
+        ]
+      }
+    ]
   },
   {
     path: '/',
     element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
       { path: 'login', element: <Login /> },
-      { path: '/', element: <Navigate to="/login" /> },
-    ],
-  },
+      { path: '/', element: <Navigate to="/login" /> }
+    ]
+  }
 ];
 
 export default routes;

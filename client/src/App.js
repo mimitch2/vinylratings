@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { Outlet, Routes, Route, Navigate, useLocation, } from "react-router-dom";
+import { Outlet, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Header from 'components/Header/Header';
@@ -10,10 +10,18 @@ import 'scss/main.scss';
 export const UserContext = createContext(null);
 
 const App = () => {
-  const { isLoading, error, data: user, isFetching } = useQuery('me', () =>
-    apiService.request({
-      route: 'user/me'
-    }), { refetchOnWindowFocus: false }
+  const {
+    isLoading,
+    error,
+    data: user,
+    isFetching
+  } = useQuery(
+    'me',
+    () =>
+      apiService.request({
+        route: 'user/me'
+      }),
+    { refetchOnWindowFocus: false }
   );
 
   const RequireAuth = () => {
@@ -51,6 +59,6 @@ const App = () => {
       <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
-}
+};
 
 export default App;

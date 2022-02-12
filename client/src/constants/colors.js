@@ -11,5 +11,5 @@ export const colors = {
   'dark-grey': '#495057',
   'darker-grey': '#1e2124',
   rust: '#a64833',
-  eggshell: '#e0e0da',
+  eggshell: '#e0e0da'
 };
