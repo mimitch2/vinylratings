@@ -9,6 +9,7 @@ const Rating = require('../models/RatingModel');
 const Release = require('../models/ReleaseModel');
 
 if (!process.env.REACT_APP_DISCOGS_API_KEY) {
+
     throw new Error('No Discogs Consumer Key available');
 }
 if (!process.env.REACT_APP_DISCOGS_SECRET) {
@@ -84,7 +85,7 @@ router.get('/return', async (req, res, next) => {
         );
         const identity = await identityResponse.json();
         const username = identity.username;
-        const discogs_user_id = identity.id;
+        const discogsUserId = identity.id;
 
         if (discogsAccessToken && discogsAccessTokenSecret) {
             const token = jwt.sign(discogsAccessToken, JWT_SECRET);
@@ -94,7 +95,7 @@ router.get('/return', async (req, res, next) => {
 
             if (!user) {
                 try {
-                    await User.create({ username, discogs_user_id, releases_rated: 0 });
+                    await User.create({ username, discogsUserId, releasesRated: 0 });
                 } catch (error) {
                     const errorMessage = `Failed to create new user: ${error}`
                     console.error(errorMessage)
@@ -133,16 +134,16 @@ router.get('/search', async (req, res) => {
         res.send(data);
     } catch (error) {
         console.warn('err', error);
-    };
+    }
 });
 
 router.post('/rating', async (req, res) => {
     const { auth } = req.cookies;
-    const { release_id, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
+    const { releaseId, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
     const parsedAuth = JSON.parse(auth)
     const username = jwt.verify(parsedAuth.username, JWT_SECRET);
     const user = await User.findOne({ username });
-    const release = await Release.findOne({ release_id });
+    const release = await Release.findOne({ releaseId });
 
     try {
         const rating = await Rating.create({
@@ -154,7 +155,7 @@ router.post('/rating', async (req, res) => {
             user
         });
         helpers.updateRelease({ quietness, flatness, physicalCondition, release });
-        user.releases_rated = user.releases_rated += 1;
+        user.releasesRated = user.releasesRated += 1;
         await user.save();
 
         res.status(200).json({ success: true, data: rating })
@@ -166,11 +167,11 @@ router.post('/rating', async (req, res) => {
 });
 
 router.put('/rating', async (req, res) => {
-    const { release_id, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
-    const release = await Release.findOne({ release_id });
+    const { releaseId, ratings: { notes, stars: { quietness, flatness, physicalCondition } } } = req.body;
+    const release = await Release.findOne({ releaseId });
 
     try {
-        const rating = await Rating.findOneAndUpdate({ release_id }, {
+        const rating = await Rating.findOneAndUpdate({ releaseId }, {
             quietness,
             flatness,
             physicalCondition,
@@ -200,7 +201,7 @@ router.get('/wantlist', async (req, res) => {
         res.send(wants);
     } catch (error) {
         console.log('err', error);
-    };
+    }
 });
 
 router.get('/folders', async (req, res) => {
@@ -217,7 +218,7 @@ router.get('/folders', async (req, res) => {
         res.send(folders);
     } catch (error) {
         console.log('err', error);
-    };
+    }
 });
 
 router.get('/collection', async (req, res) => {
@@ -235,7 +236,7 @@ router.get('/collection', async (req, res) => {
         res.send(collection);
     } catch (error) {
         console.log('err', error);
-    };
+    }
 });
 
 router.get('/releases/:id', async (req, res) => {
@@ -250,31 +251,30 @@ router.get('/releases/:id', async (req, res) => {
         );
         const discogsRelease = await response.json();
 
-        const release = await Release.findOne({ release_id: id })
+        const release = await Release.findOne({ releaseId: id })
 
         if (release) {
             await release.populate({
-                path: 'vinyl_ratings',
+                path: 'vinylRatings',
                 populate: {
                     path: 'user',
                 },
             })
-            return res.send({ ...discogsRelease, vinyl_ratings: release.vinyl_ratings, has_been_rated: true });
+            return res.send({ ...discogsRelease, vinylRatings: release.vinylRatings, has_been_rated: true });
         }
 
         res.send({ ...discogsRelease, has_been_rated: false });
 
     } catch (error) {
         console.log('err', error);
-    };
+    }
 });
 
-router.post('/releases/:id', async (req, res) => {
-    const { id } = req.params
-    const { title, artist } = req.body
+router.post('/releases', async (req, res) => {
+    const { title, artist, id } = req.body
 
     try {
-        const release = await Release.create({ release_id: id, title, artist, ratings_count: 0, overall_rating_average: 0.0 });
+        const release = await Release.create({ releaseId: id, title, artist, ratingsCount: 0, overallRatingAverage: 0.0 });
         res.status(200).json({ success: true, data: release })
     } catch (error) {
         const errorMessage = `Failed to create release: ${error}`

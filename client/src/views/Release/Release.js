@@ -28,10 +28,11 @@ const Release = () => {
   const { mutateAsync: createRelease } = useMutation(() =>
     apiService.request({
       method: 'POST',
-      route: `discogs/releases/${id}`,
+      route: `discogs/releases`,
       payload: {
         artist: data?.artists[0]?.name,
-        title: data.title
+        title: data.title,
+        id,
       },
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ const Release = () => {
     apiService.request({
       method: userHasRatedThisRelease ? 'PUT' : 'POST',
       route: `discogs/rating`,
-      payload: { release_id: id, ratings },
+      payload: { releaseId: id, ratings },
       headers: { 'Content-Type': 'application/json' }
     }), { mutationKey: 'rate' });
 
@@ -91,7 +92,7 @@ const Release = () => {
 
   if (isLoading) { return 'Loading...' }
 
-  const userHasRatedThisRelease = data?.vinyl_ratings ? data.vinyl_ratings.find(({ user: { username: nameFromRating } }) => {
+  const userHasRatedThisRelease = data?.vinylRatings ? data.vinylRatings.find(({ user: { username: nameFromRating } }) => {
     return nameFromRating === username;
   }) : false;
 

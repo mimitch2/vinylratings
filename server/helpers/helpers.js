@@ -38,15 +38,15 @@ module.exports = {
         };
     },
     updateRelease: async ({ quietness, flatness, physicalCondition, release, isNew = true }) => {
-        const { overall_rating_average, ratings_count } = release;
+        const { overallRatingAverage, ratingsCount } = release;
         const newRatingsOverallAverage = (+quietness + +flatness + +physicalCondition) / 3;
-        const average = ratings_count ? (+overall_rating_average + newRatingsOverallAverage) / +ratings_count : newRatingsOverallAverage;
+        const average = ratingsCount ? (+overallRatingAverage + newRatingsOverallAverage) / +ratingsCount : newRatingsOverallAverage;
 
         if (isNew) {
-            release.ratings_count = release.ratings_count += 1;
+            release.ratingsCount = release.ratingsCount += 1;
         }
 
-        release.overall_rating_average = average;
+        release.overallRatingAverage = average;
 
         await release.save();
     }

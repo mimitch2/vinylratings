@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Float = require('mongoose-float').loadType(mongoose);
 
 const releaseSchema = new mongoose.Schema({
-  release_id: {
+  releaseId: {
     type: Number,
     required: true
   },
@@ -14,24 +14,28 @@ const releaseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ratings_count: {
+  ratingsCount: {
     type: Number,
     required: true,
   },
-  overall_rating_average: {
+  overallRatingAverage: {
     type: Float,
     required: true
   },
-
 }, { timestamps: true });
 
-releaseSchema.virtual('vinyl_ratings', {
-  ref: 'Rating', //The Model to use
-  localField: '_id', //Find in Model, where localField 
-  foreignField: 'release', // is equal to foreignField
+releaseSchema.virtual('vinylRatings', {
+  ref: 'Rating',
+  localField: '_id',
+  foreignField: 'release',
 });
 
-// Set Object and Json property to true. Default is set to false
+releaseSchema.virtual('currentUserRating', {
+  ref: 'Rating',
+  localField: '_id',
+  foreignField: 'release',
+});
+
 releaseSchema.set('toObject', { virtuals: true });
 releaseSchema.set('toJSON', { virtuals: true });
 

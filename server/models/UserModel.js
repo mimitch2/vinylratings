@@ -8,24 +8,23 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     required: true
   },
-  discogs_user_id: {
+  discogsUserId: {
     type: Number,
     unique: true,
     required: true,
   },
-  releases_rated: {
+  releasesRated: {
     type: Number,
     required: true,
   }
 }, { timestamps: true });
 
-userSchema.virtual('vinyl_ratings', {
-  ref: 'Rating', //The Model to use
-  localField: '_id', //Find in Model, where localField 
-  foreignField: 'user', // is equal to foreignField
+userSchema.virtual('vinylRatings', {
+  ref: 'Rating',
+  localField: '_id',
+  foreignField: 'user',
 });
 
-// Set Object and Json property to true. Default is set to false
 userSchema.set('toObject', { virtuals: true });
 userSchema.set('toJSON', { virtuals: true });
 

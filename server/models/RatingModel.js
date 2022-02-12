@@ -27,4 +27,14 @@ const ratingSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+// releaseSchema.virtual('currentUserRating', {
+//   ref: 'Release', //The Model to use
+//   localField: '_id', //Find in Model, where localField 
+//   foreignField: 'rating', // is equal to foreignField
+// });
+
+// // Set Object and Json property to true. Default is set to false
+// releaseSchema.set('toObject', { virtuals: true });
+// releaseSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model("Rating", ratingSchema);

@@ -34,7 +34,7 @@ const RatingsOverview = ({ release, userRating }) => {
 };
 
 RatingsOverview.propTypes = {
-  release: PropTypes.shape({}).isRequired,
+  release: PropTypes.shape({}),
   userRating: PropTypes.shape({}),
 };
 

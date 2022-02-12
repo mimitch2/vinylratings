@@ -17,7 +17,7 @@ router.get('/me', async (req, res) => {
     const username = jwt.verify(parsedAuth.username, process.env.JWT_SECRET);
 
     const user = await User.findOne({ username }).populate({
-      path: 'vinyl_ratings',
+      path: 'vinylRatings',
       populate: {
         path: 'user',
       },
