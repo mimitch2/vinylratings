@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import _ from 'lodash';
 import './section.scss';
 import { colors } from 'constants';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const Section = ({
   color,
@@ -78,7 +79,7 @@ Section.defaultProps = {
   logo: '',
   logoSize: 90,
   minHeight: 300,
-  setCurrentTab: () => { }
+  setCurrentTab: _.noop
 };
 
 export default Section;

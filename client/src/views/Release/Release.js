@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { useQuery, useMutation } from 'react-query';
-import { apiService } from 'services';
-import { useParams } from 'react-router-dom';
 import _ from 'lodash';
-import { UserContext } from 'App';
-import { Rate, Rating, RatingsOverview } from 'components/common';
 import './release.scss';
+import { apiService } from 'services';
+import { Rate, Rating, RatingsOverview } from 'components/common';
+import { useParams } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-query';
+import { UserContext } from 'App';
+import React, { useState, useContext } from 'react';
 
 const Release = () => {
   const {
@@ -21,7 +21,7 @@ const Release = () => {
     notes: ''
   });
 
-  const { isLoading, error, data, isFetching, isPreviousData } = useQuery(
+  const { isLoading, data } = useQuery(
     ['release', id],
     () =>
       apiService.request({
@@ -107,8 +107,8 @@ const Release = () => {
 
   const userHasRatedThisRelease = data?.vinylRatings
     ? data.vinylRatings.find(({ user: { username: nameFromRating } }) => {
-        return nameFromRating === username;
-      })
+      return nameFromRating === username;
+    })
     : false;
 
   const inputs = [
