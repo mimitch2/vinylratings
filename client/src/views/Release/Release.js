@@ -4,13 +4,11 @@ import { apiService } from 'services';
 import { Rate, Rating, RatingsOverview } from 'components/common';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
-import { UserContext } from 'App';
 import { useQueryClient } from 'react-query';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 const Release = () => {
   const queryClient = useQueryClient();
-  // const { user } = useContext(UserContext);
   const { id } = useParams();
   const [ratings, setRatings] = useState({
     stars: {
@@ -117,31 +115,52 @@ const Release = () => {
     { name: 'notes', onChange: handleForm, type: 'textarea' }
   ];
 
+  const renderReleaseDetails = () => {
+    return (
+      <div className="release--details">
+        <h1>
+          {data.artists?.length ? _.get(data.artists, '[0].name') : 'Unkown Artist'} -{' '}
+          {data.title ?? 'Unkown Title'}
+        </h1>
+        <img src={data.thumb} />
+        <form onSubmit={submit}>
+          <div>
+            {inputs.map(({ name, onChange, type }) => {
+              return (
+                <div key={name}>
+                  {type === 'textarea' ? (
+                    <textarea name={name} onChange={onChange} />
+                  ) : (
+                    <Rate name={name} onClick={onChange} rating={ratings.stars[name]} />
+                  )}
+                  <br />
+                </div>
+              );
+            })}
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+  };
+
+  const renderReleaseRatings = () => {
+    return (
+      <div className="release--ratings">
+        <RatingsOverview vinylRatingsRelease={data.vinylRatingsRelease} />
+      </div>
+    );
+  };
+
   return (
-    <div className="release">
-      <h1>
+    <div className="release--container">
+      {renderReleaseDetails()}
+      {renderReleaseRatings()}
+      {/* <h1>
         {data.artists?.length ? _.get(data.artists, '[0].name') : 'Unkown Artist'} -{' '}
         {data.title ?? 'Unkown Title'}
       </h1>
-      <img src={data.thumb} />
-      <form onSubmit={submit}>
-        <div>
-          {inputs.map(({ name, onChange, type }) => {
-            return (
-              <div key={name}>
-                {type === 'textarea' ? (
-                  <textarea name={name} onChange={onChange} />
-                ) : (
-                  <Rate name={name} onClick={onChange} rating={ratings.stars[name]} />
-                )}
-                <br />
-              </div>
-            );
-          })}
-        </div>
-        <button>Submit</button>
-      </form>
-      <Rating rating="1.3" name="quietness" />
+      <img src={data.thumb} /> */}
     </div>
   );
 };

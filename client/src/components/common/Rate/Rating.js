@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import './rate.scss';
+import './rating.scss';
 
-const Rate = ({ rating, name }) => {
-  const splitRating = rating.split('.');
+const Rating = ({ rating, name }) => {
+  const splitRating = rating.toString().split('.');
   const ratingInteger = +splitRating[0];
   const ratingFractional = splitRating.length === 2 ? +splitRating[1] : null;
 
@@ -42,9 +42,9 @@ const Rate = ({ rating, name }) => {
   );
 };
 
-Rate.propTypes = {
-  rating: PropTypes.string.isRequired,
+Rating.propTypes = {
+  rating: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired
 };
 
-export default Rate;
+export default Rating;

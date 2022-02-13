@@ -19,10 +19,10 @@ const Rate = ({ rating, name, onClick }) => {
   };
 
   return (
-    <div className="rating--stars-row">
+    <div className="rate--stars-row">
       <span>{_.startCase(name)}</span>
       <div
-        className="rating--stars"
+        className="rate--stars"
         onMouseLeave={() => {
           setIsHovered(0);
         }}
@@ -39,9 +39,7 @@ const Rate = ({ rating, name, onClick }) => {
                 handleStarClick({ inputRating });
               }}
             >
-              <div
-                className={`clip interactive ${isActive({ inputRating }) ? '' : 'background'}`}
-              />
+              <div className={`clip ${isActive({ inputRating }) ? '' : 'background'}`} />
             </div>
           );
         })}

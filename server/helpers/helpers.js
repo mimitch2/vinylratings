@@ -1,10 +1,6 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 
-// const calculateAverages = ({ stars,  }) => {
-//   console.log('🚀 ~ file: helpers.js ~ line 5 ~ calculateAverages ~ args', args);
-// };
-
 module.exports = {
   generateQueryParams: ({ params }) => {
     return _.reduce(
