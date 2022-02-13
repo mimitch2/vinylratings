@@ -3,8 +3,16 @@
 .release--container {
   color: $eggshell;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 
   > div {
     padding: 0 3rem;
+    width: 50%;
+  }
+
+  > div:last-of-type {
+    overflow-y: scroll;
+    max-height: 80vh;
   }
 }
