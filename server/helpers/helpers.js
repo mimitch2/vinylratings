@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 
+// const calculateAverages = ({ stars,  }) => {
+//   console.log('🚀 ~ file: helpers.js ~ line 5 ~ calculateAverages ~ args', args);
+// };
+
 module.exports = {
   generateQueryParams: ({ params }) => {
     return _.reduce(
@@ -33,16 +37,23 @@ module.exports = {
       Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${token}", oauth_signature="${consumerSecret}&${secret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`
     };
   },
-  updateRelease: async ({ quietness, flatness, physicalCondition, release, isNew = true }) => {
+  updateRelease: async ({ stars, release }) => {
+    release.ratingsCount = release.ratingsCount += 1;
     const { overallRatingAverage, ratingsCount } = release;
-    const newRatingsOverallAverage = (+quietness + +flatness + +physicalCondition) / 3;
-    const average = ratingsCount
-      ? (+overallRatingAverage + newRatingsOverallAverage) / +ratingsCount
-      : newRatingsOverallAverage;
+    const { quietness, flatness, physicalCondition } = stars;
 
-    if (isNew) {
-      release.ratingsCount = release.ratingsCount += 1;
-    }
+    const newRatingsOverallAverage = (+quietness + +flatness + +physicalCondition) / 3;
+    const average =
+      ratingsCount > 1
+        ? (+overallRatingAverage + +newRatingsOverallAverage) / +ratingsCount
+        : newRatingsOverallAverage;
+
+    _.forEach(stars, (value, key) => {
+      const averageKey = `${key}Average`;
+      const average = ratingsCount > 1 ? (value + release[averageKey]) / ratingsCount : value;
+
+      release[averageKey] = average;
+    });
 
     release.overallRatingAverage = average;
 

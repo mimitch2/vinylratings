@@ -5,12 +5,12 @@ import { Rate, Rating, RatingsOverview } from 'components/common';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { UserContext } from 'App';
+import { useQueryClient } from 'react-query';
 import React, { useState, useContext } from 'react';
 
 const Release = () => {
-  const {
-    user: { username }
-  } = useContext(UserContext);
+  const queryClient = useQueryClient();
+  // const { user } = useContext(UserContext);
   const { id } = useParams();
   const [ratings, setRatings] = useState({
     stars: {
@@ -50,12 +50,17 @@ const Release = () => {
   const { mutateAsync: rateRelease } = useMutation(
     () =>
       apiService.request({
-        method: userHasRatedThisRelease ? 'PUT' : 'POST',
+        method: 'POST',
         route: `discogs/rating`,
         payload: { releaseId: id, ratings },
         headers: { 'Content-Type': 'application/json' }
       }),
-    { mutationKey: 'rate' }
+    {
+      mutationKey: 'rate',
+      onSuccess: () => {
+        queryClient.invalidateQueries('release');
+      }
+    }
   );
 
   const handleRatingClick = ({ key, value }) => {
@@ -95,7 +100,7 @@ const Release = () => {
   const submit = async (e) => {
     e.preventDefault();
 
-    if (!data.has_been_rated) {
+    if (!data.vinylRatingsRelease?.ratingsCount) {
       await createRelease();
     }
     await rateRelease();
@@ -104,12 +109,6 @@ const Release = () => {
   if (isLoading) {
     return 'Loading...';
   }
-
-  const userHasRatedThisRelease = data?.vinylRatings
-    ? data.vinylRatings.find(({ user: { username: nameFromRating } }) => {
-        return nameFromRating === username;
-      })
-    : false;
 
   const inputs = [
     { name: 'quietness', onChange: handleRatingClick, type: 'rating' },
@@ -121,7 +120,8 @@ const Release = () => {
   return (
     <div className="release">
       <h1>
-        {data.artists.length ? data.artists[0].name : 'Unkown Artist'} - {data.title}
+        {data.artists?.length ? _.get(data.artists, '[0].name') : 'Unkown Artist'} -{' '}
+        {data.title ?? 'Unkown Title'}
       </h1>
       <img src={data.thumb} />
       <form onSubmit={submit}>

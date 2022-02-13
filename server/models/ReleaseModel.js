@@ -22,6 +22,18 @@ const releaseSchema = new mongoose.Schema(
     overallRatingAverage: {
       type: Float,
       required: true
+    },
+    flatnessAverage: {
+      type: Float,
+      required: true
+    },
+    quietnessAverage: {
+      type: Float,
+      required: true
+    },
+    physicalConditionAverage: {
+      type: Float,
+      required: true
     }
   },
   { timestamps: true }
