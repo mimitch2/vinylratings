@@ -25,7 +25,8 @@ const Rate = ({ rating, name, onClick }) => {
         className="rating--stars"
         onMouseLeave={() => {
           setIsHovered(0);
-        }}>
+        }}
+      >
         {[1, 2, 3, 4, 5].map((inputRating) => {
           return (
             <div
@@ -36,7 +37,8 @@ const Rate = ({ rating, name, onClick }) => {
               }}
               onClick={() => {
                 handleStarClick({ inputRating });
-              }}>
+              }}
+            >
               <div
                 className={`clip interactive ${isActive({ inputRating }) ? '' : 'background'}`}
               />
