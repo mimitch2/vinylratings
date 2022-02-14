@@ -20,4 +20,17 @@ const FONT_WEIGHTS = {
   bold: 700
 };
 
-export { COLORS, FONT_WEIGHTS };
+// in rem
+const SIZES = {
+  borderRadius: 0.4,
+  scrollWidth: 1,
+  headerHeight: 7,
+  sidePadding: 4
+};
+
+const Z_INDEX = {
+  overlay: 2,
+  menu: 3
+};
+
+export { COLORS, FONT_WEIGHTS, SIZES, Z_INDEX };
