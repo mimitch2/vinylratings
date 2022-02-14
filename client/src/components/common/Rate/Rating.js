@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import './rating.scss';
 import { generateArrayForRating } from 'helpers';
 import {
   StyledStarsRow,

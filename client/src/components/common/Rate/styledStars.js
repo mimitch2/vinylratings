@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { colors } from 'constants/colors';
+import styled from 'styled-components';
 
 const StyledStarsRow = styled.div`
   display: flex;

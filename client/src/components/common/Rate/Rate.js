@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import './rate.scss';
 import { generateArrayForRating } from 'helpers';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -42,14 +41,6 @@ const Rate = ({ rating, name, onClick }) => {
     }
 
     return <StyledHoverableStar />;
-  };
-
-  const isActive = ({ inputRating }) => {
-    if (rating && isHovered && isHovered < inputRating) {
-      return false;
-    }
-
-    return isHovered >= inputRating || rating >= inputRating;
   };
 
   return (
