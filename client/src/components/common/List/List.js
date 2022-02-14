@@ -2,8 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import './list.scss';
 import vinylSVG from 'images/vinyl.svg';
+import { COLORS } from 'styles';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  color: ${COLORS.eggshell};
+  display: flex;
+  padding: 1rem;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 1rem;
+`;
+
+const Artist = styled.span`
+  font-style: italic;
+  font-size: 1.4rem;
+`;
 
 const List = ({ items }) => {
   if (!items) {
@@ -11,18 +30,18 @@ const List = ({ items }) => {
   }
 
   return (
-    <div className="list">
+    <div>
       {items.map(({ basic_information: { id, title, thumb, artists } }) => {
         const artist = _.get(artists, '[0].name');
 
         return (
-          <Link to={`/releases/${id}`} key={id} className="list-row">
+          <StyledLink to={`/releases/${id}`} key={id}>
             <img src={thumb || vinylSVG} alt="cover" width="60px" height="60px" />
-            <div className="list-info">
-              <span className="list-titile">{title}</span>
-              {artists ? <span className="list-artist">{artist}</span> : null}
-            </div>
-          </Link>
+            <Info>
+              <span>{title}</span>
+              {artists ? <Artist>{artist}</Artist> : null}
+            </Info>
+          </StyledLink>
         );
       })}
     </div>
