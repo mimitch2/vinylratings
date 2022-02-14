@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Button } from '../index';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { colors, FONT_STYLES } from 'constants';
+import { COLORS, FONT_WEIGHTS } from 'styles';
 
 const PaginatorContainer = styled.div`
   font-family: 'Roboto Mono', sans-serif;
   display: flex;
   flex-direction: column;
-  color: ${colors.darkerGray};
-  font-weight: ${FONT_STYLES.semiBold};
+  color: ${COLORS.darkerGray};
+  font-weight: ${FONT_WEIGHTS.semiBold};
   padding-top: 1rem;
 `;
 

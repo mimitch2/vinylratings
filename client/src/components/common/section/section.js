@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './section.scss';
-import { colors } from 'constants';
+import { COLORS } from 'styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -22,8 +22,8 @@ const Section = ({
     <div
       className="section"
       style={{
-        backgroundColor: colors[bgColor],
-        color: colors[color],
+        backgroundColor: COLORS[bgColor],
+        color: COLORS[color],
         minHeight
       }}
     >

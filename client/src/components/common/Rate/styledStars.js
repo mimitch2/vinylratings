@@ -1,4 +1,4 @@
-import { colors } from 'constants/colors';
+import { COLORS } from 'styles';
 import styled from 'styled-components';
 
 const StyledStarsRow = styled.div`
@@ -40,7 +40,7 @@ const StyledStarFull = styled.div`
     2% 35%,
     39% 35%
   );
-  background-color: ${colors.eggshell};
+  background-color: ${COLORS.eggshell};
 `;
 
 const StyledStarHalf = styled(StyledStarFull)`

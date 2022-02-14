@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { colors } from 'constants';
+import { COLORS } from 'styles';
 import './checkboxes.scss';
 
 const Checkboxes = ({ label, items, onChange, parentState, color, border }) => {
@@ -69,7 +69,7 @@ const Checkboxes = ({ label, items, onChange, parentState, color, border }) => {
               <span
                 className="checkbox-custom"
                 style={{
-                  border: `0.1rem solid ${colors[border]}`
+                  border: `0.1rem solid ${COLORS[border]}`
                 }}
               >
                 <span className="checkbox-custom-indicator" />
@@ -77,7 +77,7 @@ const Checkboxes = ({ label, items, onChange, parentState, color, border }) => {
               <label
                 htmlFor={value}
                 style={{
-                  color: colors[color]
+                  color: COLORS[color]
                 }}
               >
                 {label}
