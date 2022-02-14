@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { apiService } from 'services';
-import '../Collection/collection.scss';
 import { Paginator, Loading, Section, List } from 'components/common';
+import {
+  StyledWrapper,
+  StyledTitle,
+  StyledListWrapper
+} from 'views/StyledComponents/listViewWrappers';
 
 const WantList = () => {
   const [page, setPage] = useState(1);
@@ -34,9 +38,9 @@ const WantList = () => {
 
   return (
     <Section>
-      <div className="wrapper">
-        <h3>Wants</h3>
-        <div className="list-wrapper">{renderWantList()}</div>
+      <StyledWrapper>
+        <StyledTitle>Wants</StyledTitle>
+        <StyledListWrapper>{renderWantList()}</StyledListWrapper>
         <Paginator
           pagination={
             wantList?.pagination ?? {
@@ -48,7 +52,7 @@ const WantList = () => {
           }
           changePage={setPage}
         />
-      </div>
+      </StyledWrapper>
     </Section>
   );
 };

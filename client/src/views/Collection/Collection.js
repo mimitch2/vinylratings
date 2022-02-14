@@ -3,8 +3,22 @@ import { apiService } from 'services';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import { Section, Paginator, Select, Loading, List } from 'components/common';
-import './collection.scss';
-import { COLORS } from 'styles';
+import styled from 'styled-components';
+import {
+  StyledWrapper,
+  StyledTitle,
+  StyledListWrapper
+} from 'views/StyledComponents/listViewWrappers';
+
+const TitleGroup = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  select {
+    margin-left: 1rem;
+  }
+`;
 
 const Collection = () => {
   const [params, setParams] = useSearchParams();
@@ -81,12 +95,12 @@ const Collection = () => {
 
   return (
     <Section>
-      <div className="wrapper">
-        <div className="title-group">
-          <h3>Collection</h3>
-          <div>{renderSelect()}</div>
-        </div>
-        <div className="list-wrapper">{renderCollection()}</div>
+      <StyledWrapper>
+        <TitleGroup>
+          <StyledTitle>Collection</StyledTitle>
+          {renderSelect()}
+        </TitleGroup>
+        <StyledListWrapper>{renderCollection()}</StyledListWrapper>
         <Paginator
           pagination={
             collection?.pagination ?? {
@@ -99,7 +113,7 @@ const Collection = () => {
           changePage={onPageChange}
           isLoading={isLoading}
         />
-      </div>
+      </StyledWrapper>
     </Section>
   );
 };

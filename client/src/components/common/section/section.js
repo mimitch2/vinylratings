@@ -18,7 +18,7 @@ const SectionContainer = styled.div`
 const Section = ({ color, bgColor, minHeight, children }) => {
   return (
     <SectionContainer bgColor={bgColor} color={color} minHeight={minHeight}>
-      <div>{children}</div>
+      {children}
     </SectionContainer>
   );
 };
