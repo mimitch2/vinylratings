@@ -6,6 +6,7 @@ import _ from 'lodash';
 import '../Collection/collection.scss';
 import { Paginator, Loading, Checkboxes, Button, List, Section } from 'components/common';
 import { CHECKBOXES } from '../Collection/discogsConstants';
+import { COLORS } from 'styles';
 
 const Search = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -179,7 +180,7 @@ const Search = () => {
   };
 
   return (
-    <Section bgColor="eggshell" minHeight={520}>
+    <Section>
       <div className="wrapper">
         <form className={`filters${showFilters ? ' active' : ''}`} onSubmit={onSearchSubmit}>
           <div className="filters-checkboxs">

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { COLORS, SIZES } from 'styles';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -33,9 +32,8 @@ Section.propTypes = {
 
 Section.defaultProps = {
   color: COLORS.darkerGray,
-  bgColor: COLORS.green,
-  minHeight: 300,
-  setCurrentTab: _.noop
+  bgColor: COLORS.eggshell,
+  minHeight: 520
 };
 
 export default Section;

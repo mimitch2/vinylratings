@@ -33,7 +33,7 @@ const WantList = () => {
   };
 
   return (
-    <Section bgColor="eggshell" minHeight={520}>
+    <Section>
       <div className="wrapper">
         <h3>Wants</h3>
         <div className="list-wrapper">{renderWantList()}</div>

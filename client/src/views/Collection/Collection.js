@@ -80,7 +80,7 @@ const Collection = () => {
   };
 
   return (
-    <Section bgColor={COLORS.eggshell} minHeight={520}>
+    <Section>
       <div className="wrapper">
         <div className="title-group">
           <h3>Collection</h3>
