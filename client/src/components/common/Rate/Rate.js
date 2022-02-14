@@ -1,13 +1,47 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import './rate.scss';
+import { generateArrayForRating } from 'helpers';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import {
+  StyledName,
+  StyledStarBackground,
+  StyledStarFull,
+  StyledStars,
+  StyledStarsRow,
+  StyledStarWrapper
+} from './styledStars';
+import styled from 'styled-components';
+
+const StyledHoverableStars = styled(StyledStars)`
+  cursor: pointer;
+`;
+
+const StyledHoverableStar = styled(StyledStarBackground)`
+  &:hover {
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+  }
+`;
 
 const Rate = ({ rating, name, onClick }) => {
   const [isHovered, setIsHovered] = useState(0);
 
   const handleStarClick = ({ inputRating }) => {
     onClick({ key: name, value: inputRating });
+  };
+
+  const renderStar = ({ inputRating }) => {
+    if (rating && isHovered && isHovered < inputRating) {
+      return <StyledStarBackground />;
+    }
+
+    if (isHovered >= inputRating || rating >= inputRating) {
+      return <StyledStarFull />;
+    }
+
+    return <StyledHoverableStar />;
   };
 
   const isActive = ({ inputRating }) => {
@@ -19,18 +53,16 @@ const Rate = ({ rating, name, onClick }) => {
   };
 
   return (
-    <div className="rate--stars-row">
-      <span>{_.startCase(name)}</span>
-      <div
-        className="rate--stars"
+    <StyledStarsRow>
+      <StyledName>{_.startCase(name)}</StyledName>
+      <StyledHoverableStars
         onMouseLeave={() => {
           setIsHovered(0);
         }}
       >
-        {[1, 2, 3, 4, 5].map((inputRating) => {
+        {generateArrayForRating().map((inputRating) => {
           return (
-            <div
-              className="star-wrapper"
+            <StyledStarWrapper
               key={inputRating}
               onMouseEnter={() => {
                 setIsHovered(inputRating);
@@ -39,12 +71,12 @@ const Rate = ({ rating, name, onClick }) => {
                 handleStarClick({ inputRating });
               }}
             >
-              <div className={`clip ${isActive({ inputRating }) ? '' : 'background'}`} />
-            </div>
+              {renderStar({ inputRating })}
+            </StyledStarWrapper>
           );
         })}
-      </div>
-    </div>
+      </StyledHoverableStars>
+    </StyledStarsRow>
   );
 };
 

@@ -2,18 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import './rating.scss';
+import { generateArrayForRating } from 'helpers';
+import {
+  StyledStarsRow,
+  StyledName,
+  StyledStars,
+  StyledStarWrapper,
+  StyledStarFull,
+  StyledStarHalf,
+  StyledStarBackground
+} from './styledStars';
 
 const Rating = ({ rating, name }) => {
   const splitRating = rating.toString().split('.');
   const ratingInteger = +splitRating[0];
   const ratingFractional = splitRating.length === 2 ? +splitRating[1] : null;
 
-  const getClassName = ({ inputRating }) => {
-    const shouldRenderFillStar =
+  const renderStar = ({ inputRating }) => {
+    const shouldRenderFullStar =
       ratingInteger >= inputRating || (ratingInteger + 1 === inputRating && ratingFractional >= 7);
 
-    if (shouldRenderFillStar) {
-      return '';
+    if (shouldRenderFullStar) {
+      return <StyledStarFull />;
     }
 
     if (
@@ -22,23 +32,21 @@ const Rating = ({ rating, name }) => {
       ratingFractional <= 7 &&
       ratingInteger === inputRating - 1
     ) {
-      return 'half';
+      return <StyledStarHalf />;
     }
 
-    return 'background';
+    return <StyledStarBackground />;
   };
 
   return (
-    <div className="rating--stars-row">
-      <span>{_.startCase(name)}</span>
-      <div className="rating--stars">
-        {[1, 2, 3, 4, 5].map((inputRating) => (
-          <div className="star-wrapper" key={inputRating}>
-            <div className={`clip ${getClassName({ inputRating })}`} />
-          </div>
+    <StyledStarsRow>
+      <StyledName>{_.startCase(name)}</StyledName>
+      <StyledStars>
+        {generateArrayForRating().map((inputRating) => (
+          <StyledStarWrapper key={inputRating}>{renderStar({ inputRating })}</StyledStarWrapper>
         ))}
-      </div>
-    </div>
+      </StyledStars>
+    </StyledStarsRow>
   );
 };
 
