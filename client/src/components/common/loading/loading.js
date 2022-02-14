@@ -1,34 +1,46 @@
-import React from 'react';
+import { COLORS } from 'styles';
 import PropTypes from 'prop-types';
-import './loading.scss';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 import vinylSVG from '../../../images/vinyl.svg';
-import recordPNG from '../../../images/record.png';
 
-const Loading = ({ position, spinnerClassName, spinnerColor, spinnerSize }) => {
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: ${(props) => props.position};
+`;
+
+const Icon = styled.i`
+  font-size: 4rem;
+  color: ${(props) => props.spinnerColor};
+  font-size: ${(props) => props.spinnerSize}rem;
+`;
+
+const LoadingVinyl = styled.img`
+  animation: ${spin} 2s linear infinite;
+`;
+
+const Loading = ({ spinnerClassName, spinnerSize }) => {
   return (
-    <div
-      className="loading--container"
-      style={{
-        position
-      }}
-    >
+    <LoadingContainer>
       {spinnerClassName === 'loading-vinyl' ? (
-        <img
-          src={vinylSVG}
-          className={spinnerClassName}
-          width={`${spinnerSize}px`}
-          height={`${spinnerSize}px`}
-        />
+        <LoadingVinyl src={vinylSVG} width={`${spinnerSize}px`} height={`${spinnerSize}px`} />
       ) : (
-        <i
-          className={spinnerClassName}
-          style={{
-            color: spinnerColor,
-            fontSize: spinnerSize
-          }}
-        />
+        <Icon className="fas fa-spinner fa-spin" />
       )}
-    </div>
+    </LoadingContainer>
   );
 };
 
@@ -42,8 +54,8 @@ Loading.propTypes = {
 Loading.defaultProps = {
   position: 'absolute',
   spinnerClassName: 'fas fa-spinner fa-spin',
-  spinnerColor: 'white',
-  spinnerSize: 40
+  spinnerColor: COLORS.eggshell,
+  spinnerSize: 6
 };
 
 export default Loading;
