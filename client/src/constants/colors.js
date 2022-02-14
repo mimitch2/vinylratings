@@ -8,7 +8,7 @@ export const colors = {
   green: '#608C54',
   'light-grey': '#e9ecef',
   grey: '#adb5bd',
-  'dark-grey': '#495057',
+  darkerGray: '#495057',
   'darker-grey': '#1e2124',
   rust: '#a64833',
   eggshell: '#e0e0da'

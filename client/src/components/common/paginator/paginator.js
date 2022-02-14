@@ -2,7 +2,30 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../index';
 import _ from 'lodash';
-import './paginator.scss';
+import styled from 'styled-components';
+import { colors, FONT_STYLES } from 'constants';
+
+const StyledPaginatorContainer = styled.div`
+  font-family: 'Roboto Mono', sans-serif;
+  display: flex;
+  flex-direction: column;
+  color: ${colors.darkerGray};
+  font-weight: ${FONT_STYLES.semiBold};
+  padding-top: 1rem;
+`;
+
+const StyledPaginatorControls = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
+const StyledIcon = styled.i`
+  margin-right: 0.5rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-right: 0.5rem;
+`;
 
 const PAGES_BEFORE_AND_AFTER_CURRENT = 3;
 
@@ -72,7 +95,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const disabled = isLeftArrow ? isFirstPage : isLastPage;
 
     return (
-      <Button
+      <StyledButton
         onClick={() => {
           onClick({
             page: isLeftArrow ? currentPage - 1 : currentPage + 1
@@ -80,8 +103,8 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         }}
         disabled={disabled || isLoading}
       >
-        <i className={className} />
-      </Button>
+        <StyledIcon className={className} />
+      </StyledButton>
     );
   };
 
@@ -89,7 +112,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const isCurrentPage = pageNumber === currentPage;
 
     return (
-      <Button
+      <StyledButton
         key={pageNumber}
         onClick={() => {
           onClick({
@@ -99,7 +122,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         disabled={isCurrentPage || isLoading}
       >
         {pageNumber}
-      </Button>
+      </StyledButton>
     );
   };
 
@@ -114,11 +137,11 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         {pages >= 10 && (
           <>
             {hasFirst() && renderPageButton({ pageNumber: 1 })}
-            {hasFirstEllipsis() && <i className="fal fa-ellipsis-h" />}
+            {hasFirstEllipsis() && <StyledIcon className="fal fa-ellipsis-h" />}
             {getCenterPages().map((pageNumber) => {
               return renderPageButton({ pageNumber });
             })}
-            {hasLastEllipsis() && <i className="fal fa-ellipsis-h" />}
+            {hasLastEllipsis() && <StyledIcon className="fal fa-ellipsis-h" />}
             {hasLast() && renderPageButton({ pageNumber: pages })}
           </>
         )}
@@ -134,21 +157,21 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const end = !isLastPage ? perPage * page : items;
 
     return (
-      <span className="paginator-status">{`${start}-${end} of ${items.toLocaleString(
-        'en-US'
-      )}`}</span>
+      <span className="paginator-status">
+        {`${start}-${end} of ${items.toLocaleString('en-US')}`}
+      </span>
     );
   };
 
   return (
-    <div className="paginator">
-      <div className="paginator-controls">
+    <StyledPaginatorContainer>
+      <StyledPaginatorControls>
         {renderArrow({ className: 'far fa-chevron-left' })}
         {renderPages()}
         {renderArrow({ className: 'far fa-chevron-right' })}
-      </div>
+      </StyledPaginatorControls>
       {renderStatus()}
-    </div>
+    </StyledPaginatorContainer>
   );
 };
 
