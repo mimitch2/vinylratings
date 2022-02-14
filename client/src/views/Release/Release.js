@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import './release.scss';
 import { apiService } from 'services';
-import { Rate, Rating, RatingsOverview } from 'components/common';
+import { Rate } from 'components/common';
+import RatingsOverview from 'components/RatingsOverview/RatingsOverview';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';

@@ -59,7 +59,7 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
   };
 
   return (
-    <div className="ratings-overview--container">
+    <div>
       {renderCurrentUserRating()}
       {renderAllRatings()}
     </div>

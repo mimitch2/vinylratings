@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import { Section, Paginator, Select, Loading, List } from 'components/common';
 import './collection.scss';
+import { COLORS } from 'styles';
 
 const Collection = () => {
   const [params, setParams] = useSearchParams();
@@ -79,7 +80,7 @@ const Collection = () => {
   };
 
   return (
-    <Section bgColor="eggshell" minHeight={520}>
+    <Section bgColor={COLORS.eggshell} minHeight={520}>
       <div className="wrapper">
         <div className="title-group">
           <h3>Collection</h3>

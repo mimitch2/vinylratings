@@ -1,85 +1,39 @@
 import _ from 'lodash';
-import './section.scss';
-import { COLORS } from 'styles';
+import { COLORS, SIZES } from 'styles';
 import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 
-const Section = ({
-  color,
-  bgColor,
-  flexDirection,
-  tabs,
-  currentTab,
-  setCurrentTab,
-  logo,
-  logoSize,
-  minHeight,
-  children
-}) => {
-  const hasTabs = Boolean(tabs.length);
+const SectionContainer = styled.div`
+  position: relative;
+  overflow: hidden;
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  min-height: ${(props) => props.minHeight};
+  border-radius: ${SIZES.borderRadius};
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+`;
 
+const Section = ({ color, bgColor, minHeight, children }) => {
   return (
-    <div
-      className="section"
-      style={{
-        backgroundColor: COLORS[bgColor],
-        color: COLORS[color],
-        minHeight
-      }}
-    >
-      <header className={hasTabs ? '' : 'no-tabs'}>
-        {hasTabs ? (
-          <div className="section-tabs">
-            {tabs.map(({ value, label }) => {
-              const isCurrent = currentTab === value;
-
-              return (
-                <button
-                  className={`control ${isCurrent ? 'current' : ''}`}
-                  key={value}
-                  onClick={() => {
-                    setCurrentTab(value);
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        ) : null}
-        {logo ? <img src={logo} alt="logo" width={logoSize} /> : null}
-      </header>
-      <div style={{ flexDirection }}>{children}</div>
-    </div>
+    <SectionContainer bgColor={bgColor} color={color} minHeight={minHeight}>
+      <div>{children}</div>
+    </SectionContainer>
   );
 };
 
 Section.propTypes = {
   color: PropTypes.string,
   bgColor: PropTypes.string,
-  flexDirection: PropTypes.string,
   children: PropTypes.node.isRequired,
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      label: PropTypes.string.isRequired
-    })
-  ),
-  currentTab: PropTypes.number,
-  setCurrentTab: PropTypes.func,
-  logo: PropTypes.any,
-  logoSize: PropTypes.number,
   minHeight: PropTypes.number
 };
 
 Section.defaultProps = {
-  color: 'darker-grey',
-  bgColor: 'green',
-  flexDirection: 'row',
-  tabs: [],
-  currentTab: 1,
-  logo: '',
-  logoSize: 90,
+  color: COLORS.darkerGray,
+  bgColor: COLORS.green,
   minHeight: 300,
   setCurrentTab: _.noop
 };
