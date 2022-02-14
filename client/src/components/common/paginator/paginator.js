@@ -5,7 +5,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import { colors, FONT_STYLES } from 'constants';
 
-const StyledPaginatorContainer = styled.div`
+const PaginatorContainer = styled.div`
   font-family: 'Roboto Mono', sans-serif;
   display: flex;
   flex-direction: column;
@@ -14,12 +14,13 @@ const StyledPaginatorContainer = styled.div`
   padding-top: 1rem;
 `;
 
-const StyledPaginatorControls = styled.div`
+const PaginatorControls = styled.div`
   display: flex;
   align-items: flex-end;
+  margin: 0.6rem 0;
 `;
 
-const StyledIcon = styled.i`
+const Icon = styled.i`
   margin-right: 0.5rem;
 `;
 
@@ -103,7 +104,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         }}
         disabled={disabled || isLoading}
       >
-        <StyledIcon className={className} />
+        <Icon className={className} />
       </StyledButton>
     );
   };
@@ -137,11 +138,11 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         {pages >= 10 && (
           <>
             {hasFirst() && renderPageButton({ pageNumber: 1 })}
-            {hasFirstEllipsis() && <StyledIcon className="fal fa-ellipsis-h" />}
+            {hasFirstEllipsis() && <Icon className="fal fa-ellipsis-h" />}
             {getCenterPages().map((pageNumber) => {
               return renderPageButton({ pageNumber });
             })}
-            {hasLastEllipsis() && <StyledIcon className="fal fa-ellipsis-h" />}
+            {hasLastEllipsis() && <Icon className="fal fa-ellipsis-h" />}
             {hasLast() && renderPageButton({ pageNumber: pages })}
           </>
         )}
@@ -156,22 +157,18 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const start = perPage * (page - 1) + 1;
     const end = !isLastPage ? perPage * page : items;
 
-    return (
-      <span className="paginator-status">
-        {`${start}-${end} of ${items.toLocaleString('en-US')}`}
-      </span>
-    );
+    return <span>{`${start}-${end} of ${items.toLocaleString('en-US')}`}</span>;
   };
 
   return (
-    <StyledPaginatorContainer>
-      <StyledPaginatorControls>
+    <PaginatorContainer>
+      <PaginatorControls>
         {renderArrow({ className: 'far fa-chevron-left' })}
         {renderPages()}
         {renderArrow({ className: 'far fa-chevron-right' })}
-      </StyledPaginatorControls>
+      </PaginatorControls>
       {renderStatus()}
-    </StyledPaginatorContainer>
+    </PaginatorContainer>
   );
 };
 
