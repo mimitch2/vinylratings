@@ -40,7 +40,7 @@ const StyledStarFull = styled.div`
     2% 35%,
     39% 35%
   );
-  background-color: ${COLORS.eggshell};
+  background-color: ${COLORS.yellow};
 `;
 
 const StyledStarHalf = styled(StyledStarFull)`
@@ -52,6 +52,7 @@ const StyledStarBackground = styled(StyledStarFull)`
   left: 0;
   position: absolute;
   opacity: 0.2;
+  background-color: ${COLORS.eggshell};
 `;
 
 export {

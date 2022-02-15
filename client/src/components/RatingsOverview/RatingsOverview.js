@@ -68,6 +68,11 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
 
 RatingsOverview.propTypes = {
   vinylRatingsRelease: PropTypes.shape({
+    ratingsCount: PropTypes.number,
+    overallRatingAverage: PropTypes.number,
+    flatnessAverage: PropTypes.number,
+    quietnessAverage: PropTypes.number,
+    physicalConditionAverage: PropTypes.number,
     currentUserRating: PropTypes.shape({
       quietness: PropTypes.number.isRequired,
       flatness: PropTypes.number.isRequired,

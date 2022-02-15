@@ -106,8 +106,8 @@ Checkboxes.propTypes = {
 
 Checkboxes.defaultProps = {
   label: '',
-  color: 'darker-grey',
-  border: 'grey'
+  color: 'darkerGray',
+  border: 'gray'
 };
 
 export default Checkboxes;

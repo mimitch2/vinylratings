@@ -3,10 +3,68 @@ import { apiService } from 'services';
 import { useQuery } from 'react-query';
 import { useSearchParams, createSearchParams } from 'react-router-dom';
 import _ from 'lodash';
-import '../Collection/collection.scss';
 import { Paginator, Loading, Checkboxes, Button, List, Section } from 'components/common';
 import { CHECKBOXES } from '../Collection/discogsConstants';
 import { COLORS } from 'styles';
+import styled from 'styled-components';
+
+const filterWidth = 40;
+const filtersClosed = `translateX(-${filterWidth + 4}rem)`;
+const filtersOpen = `translateX(0rem))`;
+
+import {
+  StyledWrapper,
+  StyledTitle,
+  StyledListWrapper
+} from 'views/StyledComponents/listViewWrappers';
+
+const TitleGroup = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  input {
+    margin: 0 1rem;
+  }
+`;
+
+const Filters = styled.form`
+  padding: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: ${COLORS.eggshell};
+  height: 100%;
+  width: ${filterWidth}rem;
+  transform: ${(props) => (props.showFilters ? filtersOpen : filtersClosed)};
+  transition: transform 0.3s ease-in-out;
+  z-index: 3;
+`;
+
+const FilterCheckboxWrapper = styled.div`
+  display: flex;
+  color: ${COLORS.darkerGray};
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(238, 225, 225);
+  z-index: 2;
+  opacity: ${(props) => (props.showFilters ? 0.5 : 0)};
+  pointer-events: ${(props) => (props.showFilters ? 'unset' : 'none')};
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+`;
+
+const SearchRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const Search = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -181,9 +239,9 @@ const Search = () => {
 
   return (
     <Section>
-      <div className="wrapper">
-        <form className={`filters${showFilters ? ' active' : ''}`} onSubmit={onSearchSubmit}>
-          <div className="filters-checkboxs">
+      <StyledWrapper>
+        <Filters showFilters={showFilters} onSubmit={onSearchSubmit}>
+          <FilterCheckboxWrapper>
             {CHECKBOXES.map(({ key, values, label }) => {
               return (
                 <Checkboxes
@@ -191,40 +249,34 @@ const Search = () => {
                   label={label}
                   items={values}
                   onChange={({ value }) => {
-                    onParamCollector({
-                      key,
-                      value
-                    });
+                    onParamCollector({ key, value });
                   }}
                   parentState={paramCollector[key]}
                 />
               );
             })}
-          </div>
+          </FilterCheckboxWrapper>
           <Button type="submit">Go!</Button>
-        </form>
-        <div className="search">
-          <div className="title-group">
-            <h3>Search</h3>
+        </Filters>
+        <SearchRow>
+          <TitleGroup>
+            <StyledTitle>Search</StyledTitle>
             <form onSubmit={onSearchSubmit}>
               <input
                 type="search"
                 value={paramCollector.q}
                 onChange={({ target: { value } }) => {
-                  onParamCollector({
-                    key: 'q',
-                    value
-                  });
+                  onParamCollector({ key: 'q', value });
                 }}
               />
               <Button type="submit" className="control">
                 Go!
               </Button>
             </form>
-          </div>
+          </TitleGroup>
           <div>{renderFilterStatus()}</div>
-        </div>
-        <div className="list-wrapper">{renderSearch()}</div>
+        </SearchRow>
+        <StyledListWrapper>{renderSearch()}</StyledListWrapper>
         <Paginator
           pagination={
             search?.pagination ?? {
@@ -241,8 +293,8 @@ const Search = () => {
             });
           }}
         />
-        <div className={`overlay${showFilters ? ' active' : ''}`} onClick={onFiltersDismiss} />
-      </div>
+        <Overlay showFilters={showFilters} onClick={onFiltersDismiss} />
+      </StyledWrapper>
     </Section>
   );
 };
