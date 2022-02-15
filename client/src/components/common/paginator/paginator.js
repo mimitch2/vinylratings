@@ -150,14 +150,27 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     );
   };
 
+  const numberToLocalString = ({ number }) => {
+    return number.toLocaleString('en-US');
+  };
+
   const renderStatus = () => {
     const { per_page: perPage, items } = pagination;
 
     const isLastPage = page === pages;
     const start = perPage * (page - 1) + 1;
-    const end = !isLastPage ? perPage * page : items;
+    let end = !isLastPage ? perPage * page : items;
+    const highestPossibleCount = 10000;
 
-    return <span>{`${start}-${end} of ${items.toLocaleString('en-US')}`}</span>;
+    if (items > highestPossibleCount && isLastPage) {
+      end = highestPossibleCount;
+    }
+
+    return (
+      <span>{`${numberToLocalString({ number: start })}-${numberToLocalString({
+        number: end
+      })} of ${numberToLocalString({ number: items })}`}</span>
+    );
   };
 
   return (
