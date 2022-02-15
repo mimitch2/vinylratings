@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Button } from '../index';
 import _ from 'lodash';
-import styled from 'styled-components';
+import { Button } from '../index';
 import { COLORS, FONT_WEIGHTS } from 'styles';
+import { generateArrayOfNumbers } from 'helpers';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 const PaginatorContainer = styled.div`
   font-family: 'Roboto Mono', sans-serif;
@@ -38,11 +39,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
 
   useEffect(() => {
     setCurrentPage(page);
-    setPageArray(
-      _.times(pages, (propsPage) => {
-        return propsPage + 1;
-      })
-    );
+    setPageArray(generateArrayOfNumbers({ length: pages }));
   }, [page, pages]);
 
   const isFirstPage = currentPage === 1;
@@ -139,9 +136,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
           <>
             {hasFirst() && renderPageButton({ pageNumber: 1 })}
             {hasFirstEllipsis() && <Icon className="fal fa-ellipsis-h" />}
-            {getCenterPages().map((pageNumber) => {
-              return renderPageButton({ pageNumber });
-            })}
+            {getCenterPages().map((pageNumber) => renderPageButton({ pageNumber }))}
             {hasLastEllipsis() && <Icon className="fal fa-ellipsis-h" />}
             {hasLast() && renderPageButton({ pageNumber: pages })}
           </>

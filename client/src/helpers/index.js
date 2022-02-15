@@ -1,3 +1,3 @@
-export const generateArrayForRating = () => {
-  return Array.from({ length: 5 }, (_, i) => i + 1);
+export const generateArrayOfNumbers = ({ length }) => {
+  return Array.from({ length }, (_, idx) => idx + 1);
 };

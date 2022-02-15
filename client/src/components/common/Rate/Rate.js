@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { generateArrayForRating } from 'helpers';
+import { generateArrayOfNumbers } from 'helpers';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -51,7 +51,7 @@ const Rate = ({ rating, name, onClick }) => {
           setIsHovered(0);
         }}
       >
-        {generateArrayForRating().map((inputRating) => {
+        {generateArrayOfNumbers({ length: 5 }).map((inputRating) => {
           return (
             <StyledStarWrapper
               key={inputRating}

@@ -15,7 +15,9 @@
   "plugins": ["react"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off"
   },
   "globals": {
     "document": true,

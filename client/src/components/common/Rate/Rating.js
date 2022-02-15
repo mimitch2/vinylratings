@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { generateArrayForRating } from 'helpers';
+import { generateArrayOfNumbers } from 'helpers';
 import {
   StyledStarsRow,
   StyledName,
@@ -41,7 +41,7 @@ const Rating = ({ rating, name }) => {
     <StyledStarsRow>
       <StyledName>{_.startCase(name)}</StyledName>
       <StyledStars>
-        {generateArrayForRating().map((inputRating) => (
+        {generateArrayOfNumbers({ length: 5 }).map((inputRating) => (
           <StyledStarWrapper key={inputRating}>{renderStar({ inputRating })}</StyledStarWrapper>
         ))}
       </StyledStars>
