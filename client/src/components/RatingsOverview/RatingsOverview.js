@@ -36,8 +36,6 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
   };
 
   const renderAllRatings = () => {
-    // const { vinylRatings } = vinylRatingsRelease;
-
     return vinylRatingsRelease?.vinylRatings?.length ? (
       <>
         {vinylRatingsRelease.vinylRatings.map(
