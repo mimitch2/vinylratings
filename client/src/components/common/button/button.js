@@ -4,24 +4,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  border: 1px solid ${COLORS.eggshell};
   background: ${COLORS.darkBlue};
-  opacity: 0.8;
-  padding: 0.3rem 1.5rem;
-  cursor: pointer;
-  height: 3.2rem;
   border-radius: 1.6rem;
-  font-size: 1.6rem;
+  border: 1px solid ${COLORS.eggshell};
   color: ${COLORS.eggshell};
-  width: 60px
+  cursor: pointer;
+  font-size: 1.6rem;
+  height: 3.2rem;
+  opacity: 0.8;
+  padding: 0.3rem 1.7rem;
+  transition: opacity 0.1s ease-in-out;
 
   &:hover {
     opacity: 1;
   }
 
   &:disabled {
-    opacity: 0.4;
     cursor: unset;
+    opacity: 0.4;
   }
 `;
 
@@ -43,10 +43,10 @@ Button.propTypes = {
 
 Button.defaultProps = {
   children: 'Go!',
+  className: '',
   disabled: false,
   onClick: () => {},
-  type: 'button',
-  className: ''
+  type: 'button'
 };
 
 export default Button;

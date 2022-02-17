@@ -17,9 +17,10 @@ const StyledHoverableStars = styled(StyledStars)`
 `;
 
 const StyledHoverableStar = styled(StyledStarBackground)`
+  transition: opacity 0.2s ease-in-out;
+
   &:hover {
     opacity: 1;
-    transition: all 0.2s ease-in-out;
     transform: scale(1.1);
   }
 `;
@@ -47,6 +48,7 @@ const Rate = ({ rating, name, onClick }) => {
     <StyledStarsRow>
       <StyledName>{_.startCase(name)}</StyledName>
       <StyledHoverableStars
+        className="hover"
         onMouseLeave={() => {
           setIsHovered(0);
         }}

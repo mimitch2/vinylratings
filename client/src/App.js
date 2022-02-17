@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
   a {
       text-decoration: none;
       color: ${COLORS.darkerGray};
+      transition: opacity 0.1s ease-in-out;
 
       &.active {
           text-decoration: underline;

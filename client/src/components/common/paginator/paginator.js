@@ -6,33 +6,35 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+const Icon = styled.i`
+  font-size: 1.5rem;
+  font-weight: ${FONT_WEIGHTS.bold};
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+`;
+
+const PaginatorButton = styled(Button)`
+  border-radius: 1.3rem;
+  font-size: 1.4rem;
+  height: 2.6rem;
+  margin-right: 0.5rem;
+  padding: 0.3rem ${(props) => props.paddingHorizontal || 1.6}rem;
+  width: ${(props) => (props.small ? 4 : 5.7)}rem;
+`;
+
 const PaginatorContainer = styled.div`
-  font-family: 'Roboto Mono', sans-serif;
+  color: ${COLORS.darkerGray};
   display: flex;
   flex-direction: column;
-  color: ${COLORS.darkerGray};
+  font-family: 'Roboto Mono', sans-serif;
   font-weight: ${FONT_WEIGHTS.semiBold};
   padding-top: 1rem;
 `;
 
 const PaginatorControls = styled.div`
-  display: flex;
   align-items: flex-end;
+  display: flex;
   margin: 0.6rem 0;
-`;
-
-const Icon = styled.i`
-  margin-right: 0.5rem;
-  padding-left: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: ${FONT_WEIGHTS.bold};
-`;
-
-const PaginatorButton = styled(Button)`
-  margin-right: 0.5rem;
-  height: 2.6rem;
-  font-size: 1.4rem;
-  padding: 0.3rem ${(props) => props.paddingHorizontal || 1.5}rem;
 `;
 
 const PAGES_BEFORE_AND_AFTER_CURRENT = 3;
@@ -100,6 +102,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
 
     return (
       <PaginatorButton
+        small
         className="paginator-button"
         paddingHorizontal={0.5}
         onClick={() => {
