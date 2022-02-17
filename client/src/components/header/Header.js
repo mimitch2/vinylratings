@@ -62,7 +62,7 @@ const Header = () => {
       <div>
         {user.username ? (
           <AvatarWrapper>
-            {/* <img src={user.avatarUrl} alt="avatar" height="45px" width="45sytlespx" /> */}
+            <img src={user.avatarUrl} alt="avatar" height="45px" width="45sytlespx" />
             <span>{user.username}</span>
           </AvatarWrapper>
         ) : (
