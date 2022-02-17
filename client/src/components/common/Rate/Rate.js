@@ -11,16 +11,18 @@ import {
   StyledStarWrapper
 } from './styledStars';
 import styled from 'styled-components';
+import { COLORS } from 'styles';
 
 const StyledHoverableStars = styled(StyledStars)`
   cursor: pointer;
 `;
 
 const StyledHoverableStar = styled(StyledStarBackground)`
-  transition: opacity 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     opacity: 1;
+    background-color: ${COLORS.yellow};
     transform: scale(1.1);
   }
 `;
@@ -32,12 +34,14 @@ const Rate = ({ rating, name, onClick }) => {
     onClick({ key: name, value: inputRating });
   };
 
-  const renderStar = ({ inputRating }) => {
-    if (rating && isHovered && isHovered < inputRating) {
-      return <StyledStarBackground />;
-    }
+  // if
 
-    if (isHovered >= inputRating || rating >= inputRating) {
+  const renderStar = ({ inputRating }) => {
+    // if (rating && isHovered && isHovered < inputRating) {
+    //   return <StyledHoverableStar />;
+    // }
+
+    if ((isHovered && isHovered > inputRating) || (!isHovered && rating >= inputRating)) {
       return <StyledStarFull />;
     }
 
