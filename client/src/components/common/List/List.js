@@ -30,7 +30,7 @@ const List = ({ items }) => {
   }
 
   return (
-    <div>
+    <>
       {items.map(({ basic_information: { id, title, thumb, artists } }) => {
         const artist = _.get(artists, '[0].name');
 
@@ -44,7 +44,7 @@ const List = ({ items }) => {
           </StyledLink>
         );
       })}
-    </div>
+    </>
   );
 };
 

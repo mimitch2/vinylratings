@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Button } from '../index';
+import { Button } from '../';
 import { COLORS, FONT_WEIGHTS } from 'styles';
 import { generateArrayOfNumbers } from 'helpers';
 import PropTypes from 'prop-types';
@@ -23,10 +23,18 @@ const PaginatorControls = styled.div`
 
 const Icon = styled.i`
   margin-right: 0.5rem;
+  /* margin-left: ${(props) => (props.leftMargin ? 0.5 : 0)}rem; */
+  padding-left: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: ${FONT_WEIGHTS.bold};
 `;
 
-const StyledButton = styled(Button)`
+const PaginatorButton = styled(Button)`
   margin-right: 0.5rem;
+  /* width: 5rem; */
+  height: 2.6rem;
+  font-size: 1.4rem;
+  padding: 0.3rem ${(props) => props.paddingHorizontal || 1.5}rem;
 `;
 
 const PAGES_BEFORE_AND_AFTER_CURRENT = 3;
@@ -93,7 +101,9 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const disabled = isLeftArrow ? isFirstPage : isLastPage;
 
     return (
-      <StyledButton
+      <PaginatorButton
+        className="paginator-button"
+        paddingHorizontal={0.5}
         onClick={() => {
           onClick({
             page: isLeftArrow ? currentPage - 1 : currentPage + 1
@@ -102,7 +112,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         disabled={disabled || isLoading}
       >
         <Icon className={className} />
-      </StyledButton>
+      </PaginatorButton>
     );
   };
 
@@ -110,7 +120,8 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     const isCurrentPage = pageNumber === currentPage;
 
     return (
-      <StyledButton
+      <PaginatorButton
+        className="paginator-button"
         key={pageNumber}
         onClick={() => {
           onClick({
@@ -120,7 +131,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         disabled={isCurrentPage || isLoading}
       >
         {pageNumber}
-      </StyledButton>
+      </PaginatorButton>
     );
   };
 
@@ -135,9 +146,9 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
         {pages >= 10 && (
           <>
             {hasFirst() && renderPageButton({ pageNumber: 1 })}
-            {hasFirstEllipsis() && <Icon className="fal fa-ellipsis-h" />}
+            {hasFirstEllipsis() && <Icon className="fal fa-ellipsis-h" leftMargin />}
             {getCenterPages().map((pageNumber) => renderPageButton({ pageNumber }))}
-            {hasLastEllipsis() && <Icon className="fal fa-ellipsis-h" />}
+            {hasLastEllipsis() && <Icon className="fal fa-ellipsis-h" leftMargin />}
             {hasLast() && renderPageButton({ pageNumber: pages })}
           </>
         )}
@@ -162,9 +173,11 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
     }
 
     return (
-      <span>{`${numberToLocalString({ number: start })}-${numberToLocalString({
-        number: end
-      })} of ${numberToLocalString({ number: items })}`}</span>
+      <span>
+        {`${numberToLocalString({ number: start })}-${numberToLocalString({
+          number: end
+        })} of ${numberToLocalString({ number: items })}`}
+      </span>
     );
   };
 

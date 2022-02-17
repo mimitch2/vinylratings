@@ -20,7 +20,7 @@ const FONT_WEIGHTS = {
   bold: 700
 };
 
-// in rem
+// in rems
 const SIZES = {
   borderRadius: 0.4,
   scrollWidth: 1,

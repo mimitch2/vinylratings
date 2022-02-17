@@ -15,7 +15,7 @@ const StyledTitle = styled.h3`
 
 const StyledListWrapper = styled.span`
   border-radius: ${SIZES.borderRadius};
-  height: 35rem;
+  height: 65vh;
   overflow-y: scroll;
   background-color: ${COLORS.darkBlue};
   display: flex;
