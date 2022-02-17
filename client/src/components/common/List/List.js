@@ -5,7 +5,7 @@ import _ from 'lodash';
 import vinylSVG from 'images/vinyl.svg';
 import { COLORS } from 'styles';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router-dom';
 const StyledLink = styled(Link)`
   color: ${COLORS.eggshell};
   display: flex;
@@ -25,6 +25,8 @@ const Artist = styled.span`
 `;
 
 const List = ({ items }) => {
+  const location = useLocation();
+
   if (!items) {
     return null;
   }
@@ -35,7 +37,7 @@ const List = ({ items }) => {
         const artist = _.get(artists, '[0].name');
 
         return (
-          <StyledLink to={`/releases/${id}`} key={id}>
+          <StyledLink to={`${location.pathname}/releases/${id}`} key={id}>
             <img src={thumb || vinylSVG} alt="cover" width="60px" height="60px" />
             <Info>
               <span>{title}</span>

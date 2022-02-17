@@ -41,13 +41,16 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
       <>
         <h2>All ratings</h2>
         {vinylRatingsRelease.vinylRatings.map(
-          ({ quietness, flatness, physicalCondition, notes, _id }) => {
+          ({ quietness, flatness, physicalCondition, notes, user: { username }, _id }) => {
             return (
               <div key={_id}>
-                {_.map({ quietness, flatness, physicalCondition }, (value, key) => {
-                  return renderRatingRow({ key, value });
-                })}
-                {renderNotes({ notes })}
+                <h3>{username}</h3>
+                <div>
+                  {_.map({ quietness, flatness, physicalCondition }, (value, key) => {
+                    return renderRatingRow({ key, value });
+                  })}
+                  {renderNotes({ notes })}
+                </div>
               </div>
             );
           }

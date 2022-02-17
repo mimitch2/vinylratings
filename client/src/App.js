@@ -78,6 +78,7 @@ const App = () => {
     return <Outlet />;
   };
 
+  /* TODO: refactor to make them nested */
   return (
     <>
       <UserContext.Provider value={{ user: user || { username: null } }}>
@@ -91,14 +92,17 @@ const App = () => {
               {user?.username && !isLoading && (
                 <Route element={<RequireAuth />}>
                   <Route path="search" element={<Search />} />
+                  <Route path="search/releases/:id" element={<Release />} />
                   <Route path="collection" element={<Collection />} />
+                  <Route path="collection/releases/:id" element={<Release />} />
                   <Route path="wants" element={<WantList />} />
+                  <Route path="wants/releases/:id" element={<Release />} />
                   <Route path="releases" element={<Navigate to="/collection" />} />
-                  <Route path="releases/:id" element={<Release />} />
                 </Route>
               )}
             </Route>
           </Routes>
+          <Outlet />
         </AppContainer>
       </UserContext.Provider>
       <ReactQueryDevtools initialIsOpen={false} />
