@@ -1,4 +1,4 @@
-import { COLORS, SIZES } from 'styles';
+import { COLORS, SIZES, FONT_WEIGHTS } from 'styles';
 import { links } from './headerConstants';
 import { NavLink } from 'react-router-dom';
 import { UserContext } from 'App';
@@ -30,16 +30,16 @@ const Icon = styled.i`
 const AvatarWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 
   span {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: ${FONT_WEIGHTS.bold}rem;
   }
 `;
 
 const Header = () => {
   const { user } = useContext(UserContext);
-  console.log('🚀 ~ file: Header.js ~ line 32 ~ Header ~ user', user);
 
   return (
     <StyledHeader>
@@ -62,14 +62,12 @@ const Header = () => {
       <div>
         {user.username ? (
           <AvatarWrapper>
-            <img src={user.avatarUrl} alt="avatar" height="45px" width="45sytlespx" />
+            <img src={user.avatarUrl} alt="avatar" height={`${SIZES.headerHeight * 10 - 25}px`} />
             <span>{user.username}</span>
           </AvatarWrapper>
         ) : (
-          <Icon className="fal fa-album-collection" />
+          <Icon className="fal fa-turntable" />
         )}
-
-        {/* <i className="fal fa-turntable"></i> */}
       </div>
     </StyledHeader>
   );
