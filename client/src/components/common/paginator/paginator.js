@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Button } from '../';
+import { Button } from '..';
 import { COLORS, FONT_WEIGHTS } from 'styles';
 import { generateArrayOfNumbers } from 'helpers';
 import PropTypes from 'prop-types';
@@ -23,7 +23,6 @@ const PaginatorControls = styled.div`
 
 const Icon = styled.i`
   margin-right: 0.5rem;
-  /* margin-left: ${(props) => (props.leftMargin ? 0.5 : 0)}rem; */
   padding-left: 0.5rem;
   font-size: 1.5rem;
   font-weight: ${FONT_WEIGHTS.bold};
@@ -31,7 +30,6 @@ const Icon = styled.i`
 
 const PaginatorButton = styled(Button)`
   margin-right: 0.5rem;
-  /* width: 5rem; */
   height: 2.6rem;
   font-size: 1.4rem;
   padding: 0.3rem ${(props) => props.paddingHorizontal || 1.5}rem;
