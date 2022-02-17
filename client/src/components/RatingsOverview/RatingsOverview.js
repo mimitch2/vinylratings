@@ -14,6 +14,7 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
 
     return (
       <>
+        <h2>Your rating</h2>
         {_.map({ quietness, flatness, physicalCondition }, (value, key) => {
           return <Rating rating={value} name={key} key={key} />;
         })}
@@ -24,28 +25,6 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
 
   const renderRatingRow = ({ key, value }) => {
     return <Rating rating={value} name={key} key={key} />;
-  };
-
-  const renderOverallAverages = () => {
-    if (!vinylRatingsRelease) {
-      return null;
-    }
-    const { overallRatingAverage, quietnessAverage, flatnessAverage, physicalConditionAverage } =
-      vinylRatingsRelease;
-    const rating = {
-      overallRatingAverage,
-      quietnessAverage,
-      flatnessAverage,
-      physicalConditionAverage
-    };
-
-    return (
-      <div style={{ padding: '50px 0' }}>
-        {_.map(rating, (value, key) => {
-          return <div key={key}>{renderRatingRow({ key, value })} </div>;
-        })}
-      </div>
-    );
   };
 
   const renderNotes = ({ notes }) => {
@@ -60,6 +39,7 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
   const renderAllRatings = () => {
     return vinylRatingsRelease?.vinylRatings?.length ? (
       <>
+        <h2>All ratings</h2>
         {vinylRatingsRelease.vinylRatings.map(
           ({ quietness, flatness, physicalCondition, notes, _id }) => {
             return (
@@ -80,7 +60,6 @@ const RatingsOverview = ({ vinylRatingsRelease }) => {
 
   return (
     <div>
-      {renderOverallAverages()}
       {renderCurrentUserRating()}
       {renderAllRatings()}
     </div>

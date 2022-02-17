@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import './release.scss';
 import { apiService } from 'services';
-import { Rate } from 'components/common';
+import { Rate, Rating } from 'components/common';
 import RatingsOverview from 'components/RatingsOverview/RatingsOverview';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
@@ -116,6 +116,33 @@ const Release = () => {
     { name: 'notes', onChange: handleForm, type: 'textarea' }
   ];
 
+  const renderRatingRow = ({ key, value }) => {
+    return <Rating rating={value} name={key} key={key} />;
+  };
+
+  const renderOverallAverages = () => {
+    if (!data?.vinylRatingsRelease) {
+      return null;
+    }
+    const { overallRatingAverage, quietnessAverage, flatnessAverage, physicalConditionAverage } =
+      data.vinylRatingsRelease;
+    const rating = {
+      overallRatingAverage,
+      quietnessAverage,
+      flatnessAverage,
+      physicalConditionAverage
+    };
+
+    return (
+      <div style={{ paddingBottom: '50px' }}>
+        <h2>Release Rating</h2>
+        {_.map(rating, (value, key) => {
+          return <div key={key}>{renderRatingRow({ key, value })} </div>;
+        })}
+      </div>
+    );
+  };
+
   const renderReleaseDetails = () => {
     return (
       <div className="release--details">
@@ -124,6 +151,7 @@ const Release = () => {
           {data.title ?? 'Unkown Title'}
         </h1>
         <img src={data.thumb} />
+        {renderOverallAverages()}
         <form onSubmit={submit}>
           <div>
             {inputs.map(({ name, onChange, type }) => {
