@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { UserContext } from 'App';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { logDOM } from '@testing-library/react';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -23,19 +24,17 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const Icon = styled.i`
-  font-size: 3rem;
+const AvatarWrapper = styled.div`
+  clip-path: circle(50%);
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
 `;
 
-const AvatarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  span {
-    font-size: 1.4rem;
-    font-weight: ${FONT_WEIGHTS.bold}rem;
-  }
+const Icon = styled.i`
+  font-size: 3rem;
 `;
 
 const Header = () => {
@@ -61,9 +60,13 @@ const Header = () => {
       </div>
       <div>
         {user.username ? (
-          <AvatarWrapper>
-            <img src={user.avatarUrl} alt="avatar" height={`${SIZES.headerHeight * 10 - 25}px`} />
-            <span>{user.username}</span>
+          <AvatarWrapper
+            onClick={() => {
+              // TODO: make a menu, also fix the damn cut-off circle
+              console.log('MAKE DAMN MENU, also fix the damn cut-off circle');
+            }}
+          >
+            <img src={user.avatarUrl} alt="avatar" height={`${SIZES.headerHeight * 10 - 30}px`} />
           </AvatarWrapper>
         ) : (
           <Icon className="fal fa-turntable" />

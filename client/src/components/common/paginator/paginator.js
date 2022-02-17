@@ -19,7 +19,7 @@ const PaginatorButton = styled(Button)`
   height: 2.6rem;
   margin-right: 0.5rem;
   padding: 0.3rem ${(props) => props.paddingHorizontal || 1.6}rem;
-  width: ${(props) => (props.small ? 4 : 5.7)}rem;
+  /* width: ${(props) => (props.small ? 4 : 5.7)}rem; */
 `;
 
 const PaginatorContainer = styled.div`
@@ -175,7 +175,7 @@ const Paginator = ({ pagination, changePage, isLoading }) => {
 
     return (
       <span>
-        {`${numberToLocalString({ number: start })}-${numberToLocalString({
+        {`${numberToLocalString({ number: start })}->${numberToLocalString({
           number: end
         })} of ${numberToLocalString({ number: items })}`}
       </span>
