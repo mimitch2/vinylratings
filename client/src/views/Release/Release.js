@@ -8,17 +8,19 @@ import { useQuery, useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import React, { useState } from 'react';
 
+const RATINGS_INITIAL_STATE = {
+  stars: {
+    quietness: 0,
+    flatness: 0,
+    physicalCondition: 0
+  },
+  notes: ''
+};
+
 const Release = () => {
   const queryClient = useQueryClient();
   const { id } = useParams();
-  const [ratings, setRatings] = useState({
-    stars: {
-      quietness: 0,
-      flatness: 0,
-      physicalCondition: 0
-    },
-    notes: ''
-  });
+  const [ratings, setRatings] = useState(RATINGS_INITIAL_STATE);
 
   const { isLoading, data } = useQuery(
     ['release', id],
@@ -103,6 +105,7 @@ const Release = () => {
       await createRelease();
     }
     await rateRelease();
+    setRatings(RATINGS_INITIAL_STATE);
   };
 
   if (isLoading) {

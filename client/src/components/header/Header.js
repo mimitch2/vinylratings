@@ -27,8 +27,19 @@ const Icon = styled.i`
   font-size: 3rem;
 `;
 
+const AvatarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  span {
+    font-size: 1.2rem;
+  }
+`;
+
 const Header = () => {
   const { user } = useContext(UserContext);
+  console.log('🚀 ~ file: Header.js ~ line 32 ~ Header ~ user', user);
 
   return (
     <StyledHeader>
@@ -49,8 +60,15 @@ const Header = () => {
         })}
       </div>
       <div>
-        {user.username && <span>{user.username}</span>}
-        <Icon className="fal fa-album-collection" />
+        {user.username ? (
+          <AvatarWrapper>
+            <img src={user.avatarUrl} alt="avatar" height="45px" width="45px" />
+            <span>{user.username}</span>
+          </AvatarWrapper>
+        ) : (
+          <Icon className="fal fa-album-collection" />
+        )}
+
         {/* <i className="fal fa-turntable"></i> */}
       </div>
     </StyledHeader>

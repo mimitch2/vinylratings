@@ -78,6 +78,15 @@ router.get('/return', async (req, res, next) => {
     const username = identity.username;
     const discogsUserId = identity.id;
 
+    const userResponse = await fetch(`https://api.discogs.com/users/${username}`, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_nonce="${Date.now()}", oauth_token="${discogsAccessToken}", oauth_signature="${consumerSecret}&${discogsAccessTokenSecret}",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Date.now()}"`
+      }
+    });
+
+    const userData = await userResponse.json();
+
     if (discogsAccessToken && discogsAccessTokenSecret) {
       const token = jwt.sign(discogsAccessToken, JWT_SECRET);
       const secret = jwt.sign(discogsAccessTokenSecret, JWT_SECRET);
@@ -86,7 +95,12 @@ router.get('/return', async (req, res, next) => {
 
       if (!user) {
         try {
-          await User.create({ username, discogsUserId, releasesRated: 0 });
+          await User.create({
+            username,
+            discogsUserId,
+            releasesRated: 0,
+            avatarUrl: userData.avatar_url || null
+          });
         } catch (error) {
           const errorMessage = `Failed to create new user: ${error}`;
           console.error(errorMessage);

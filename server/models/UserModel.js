@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       required: true
     },
+    avatarUrl: {
+      type: String
+    },
     discogsUserId: {
       type: Number,
       unique: true,

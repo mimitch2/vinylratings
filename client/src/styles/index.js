@@ -24,7 +24,7 @@ const FONT_WEIGHTS = {
 const SIZES = {
   borderRadius: 0.4,
   scrollWidth: 1,
-  headerHeight: 7,
+  headerHeight: 8,
   sidePadding: 4
 };
 
