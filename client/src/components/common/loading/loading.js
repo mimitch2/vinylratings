@@ -1,4 +1,4 @@
-import { COLORS } from 'styles';
+import { COLORS, SIZES } from 'styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
@@ -17,7 +17,7 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 80vh;
   width: 100%;
   position: ${(props) => props.position};
 `;
@@ -35,7 +35,7 @@ const LoadingVinyl = styled.img`
 const Loading = ({ spinnerClassName, spinnerSize }) => {
   return (
     <LoadingContainer>
-      {spinnerClassName === 'loading-vinyl' ? (
+      {spinnerClassName === 'vinyl' ? (
         <LoadingVinyl src={vinylSVG} width={`${spinnerSize}px`} height={`${spinnerSize}px`} />
       ) : (
         <Icon className="fas fa-spinner fa-spin" />

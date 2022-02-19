@@ -85,7 +85,7 @@ const Collection = () => {
 
   const renderCollection = () => {
     if (isLoading || (isFetching && isPreviousData)) {
-      return <Loading spinnerClassName="loading-vinyl" spinnerSize={60} position="relative" />;
+      return <Loading spinnerClassName="vinyl" spinnerSize={60} position="relative" />;
     }
 
     const { releases } = collection;

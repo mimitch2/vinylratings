@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import './release.scss';
 import { apiService } from 'services';
-import { Rate, Rating } from 'components/common';
+import { Rate, Rating, Loading } from 'components/common';
 import RatingsOverview from 'components/RatingsOverview/RatingsOverview';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
@@ -109,7 +109,7 @@ const Release = () => {
   };
 
   if (isLoading) {
-    return 'Loading...';
+    return <Loading spinnerClassName="vinyl" spinnerSize={60} />;
   }
 
   const inputs = [

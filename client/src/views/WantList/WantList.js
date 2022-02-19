@@ -28,7 +28,7 @@ const WantList = () => {
 
   const renderWantList = () => {
     if (isLoading || (isFetching && isPreviousData)) {
-      return <Loading spinnerClassName="loading-vinyl" spinnerSize={60} position="relative" />;
+      return <Loading spinnerClassName="vinyl" spinnerSize={60} position="relative" />;
     }
 
     const { wants } = wantList;

@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
+const fetch = require('cross-fetch');
 
 module.exports = {
   generateQueryParams: ({ params }) => {
@@ -54,5 +55,8 @@ module.exports = {
     release.overallRatingAverage = average;
 
     await release.save();
+  },
+  getUser: async ({username, Authourization}) => {
+    
   }
 };
