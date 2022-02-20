@@ -13,11 +13,11 @@ import {
 import styled from 'styled-components';
 import { COLORS } from 'styles';
 
-const StyledHoverableStars = styled(StyledStars)`
+const HoverableStars = styled(StyledStars)`
   cursor: pointer;
 `;
 
-const StyledHoverableStarWrapper = styled(StyledStarWrapper)`
+const HoverableStarWrapper = styled(StyledStarWrapper)`
   &:hover div {
     opacity: 1;
     background-color: ${COLORS.yellow};
@@ -25,7 +25,7 @@ const StyledHoverableStarWrapper = styled(StyledStarWrapper)`
   }
 `;
 
-const StyledHoverableStar = styled(StyledStarBackground)`
+const HoverableStar = styled(StyledStarBackground)`
   transition: all 0.2s ease-in-out;
 `;
 
@@ -41,20 +41,20 @@ const Rate = ({ rating, name, onClick }) => {
       return <StyledStarFull />;
     }
 
-    return <StyledHoverableStar />;
+    return <HoverableStar />;
   };
 
   return (
     <StyledStarsRow>
       <StyledName>{_.startCase(name)}</StyledName>
-      <StyledHoverableStars
+      <HoverableStars
         onMouseLeave={() => {
           setIsHovered(0);
         }}
       >
         {generateArrayOfNumbers({ length: 5 }).map((inputRating) => {
           return (
-            <StyledHoverableStarWrapper
+            <HoverableStarWrapper
               key={inputRating}
               onMouseEnter={() => {
                 setIsHovered(inputRating);
@@ -62,12 +62,20 @@ const Rate = ({ rating, name, onClick }) => {
               onClick={() => {
                 handleStarClick({ inputRating });
               }}
+              tabIndex="0"
+              role="input"
+              aria-pressed="false"
+              onKeyDown={(e) => {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                  handleStarClick({ inputRating });
+                }
+              }}
             >
               {renderStar({ inputRating })}
-            </StyledHoverableStarWrapper>
+            </HoverableStarWrapper>
           );
         })}
-      </StyledHoverableStars>
+      </HoverableStars>
     </StyledStarsRow>
   );
 };
