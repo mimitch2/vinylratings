@@ -41,16 +41,16 @@ module.exports = {
     const { overallRatingTotal, ratingsCount } = release;
     const { quietness, flatness, physicalCondition } = stars;
 
-    const newRatingsTotal = (quietness + flatness + physicalCondition).toFixed(1);
-
+    const newRatingsTotal = quietness + flatness + physicalCondition;
     const newRatingsOverallAverage = (newRatingsTotal / numberOfStars).toFixed(1);
+
     const overallAverage =
       ratingsCount > 1
-        ? ((overallRatingTotal + newRatingsTotal) / numberOfStars / ratingsCount).toFixed(1)
+        ? ((overallRatingTotal + newRatingsTotal) / ratingsCount / numberOfStars).toFixed(1)
         : newRatingsOverallAverage;
 
     release.overallRatingAverage = overallAverage;
-    release.overallRatingTotal = release.overallRatingTotal += newRatingsTotal;
+    release.overallRatingTotal = release.overallRatingTotal + newRatingsTotal;
 
     _.forEach(stars, (value, key) => {
       const averageKey = `${key}Average`;
