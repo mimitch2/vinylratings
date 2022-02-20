@@ -35,28 +35,37 @@ module.exports = {
     };
   },
   updateRelease: async ({ stars, release }) => {
+    const numberOfStars = Object.keys(stars).length;
+
     release.ratingsCount = release.ratingsCount += 1;
-    const { overallRatingAverage, ratingsCount } = release;
+    const { overallRatingTotal, ratingsCount } = release;
     const { quietness, flatness, physicalCondition } = stars;
 
-    const newRatingsOverallAverage = (+quietness + +flatness + +physicalCondition) / 3;
-    const average =
+    const newRatingsTotal = (quietness + flatness + physicalCondition).toFixed(1);
+
+    const newRatingsOverallAverage = (newRatingsTotal / numberOfStars).toFixed(1);
+    const overallAverage =
       ratingsCount > 1
-        ? (+overallRatingAverage + +newRatingsOverallAverage) / +ratingsCount
+        ? ((overallRatingTotal + newRatingsTotal) / numberOfStars / ratingsCount).toFixed(1)
         : newRatingsOverallAverage;
+
+    release.overallRatingAverage = overallAverage;
+    release.overallRatingTotal = release.overallRatingTotal += newRatingsTotal;
 
     _.forEach(stars, (value, key) => {
       const averageKey = `${key}Average`;
-      const average = ratingsCount > 1 ? (value + release[averageKey]) / ratingsCount : value;
+      const totalKey = `${key}Total`;
+      const average = (
+        ratingsCount > 1 ? (value + release[totalKey]) / ratingsCount : value
+      ).toFixed(1);
 
       release[averageKey] = average;
+      release[totalKey] = release[totalKey] += value;
     });
 
-    release.overallRatingAverage = average;
-
     await release.save();
-  },
-  getUser: async ({username, Authourization}) => {
-    
   }
+  // getUser: async ({username, Authourization}) => {
+
+  // }
 };

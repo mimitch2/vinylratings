@@ -17,9 +17,8 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 100%;
   width: 100%;
-  position: ${(props) => props.position};
 `;
 
 const Icon = styled.i`
@@ -30,6 +29,9 @@ const Icon = styled.i`
 
 const LoadingVinyl = styled.img`
   animation: ${spin} 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 `;
 
 const Loading = ({ spinnerClassName, spinnerSize }) => {
@@ -45,14 +47,12 @@ const Loading = ({ spinnerClassName, spinnerSize }) => {
 };
 
 Loading.propTypes = {
-  position: PropTypes.string,
   spinnerClassName: PropTypes.string,
   spinnerColor: PropTypes.string,
   spinnerSize: PropTypes.number
 };
 
 Loading.defaultProps = {
-  position: 'absolute',
   spinnerClassName: 'fas fa-spinner fa-spin',
   spinnerColor: COLORS.eggshell,
   spinnerSize: 6

@@ -17,23 +17,47 @@ const releaseSchema = new mongoose.Schema(
     },
     ratingsCount: {
       type: Number,
-      required: true
+      required: true,
+      default: 0
     },
     overallRatingAverage: {
       type: Float,
       required: true
     },
+    overallRatingTotal: {
+      type: Float,
+      required: true,
+      default: 0
+    },
     flatnessAverage: {
       type: Float,
-      required: true
+      required: true,
+      default: 0
+    },
+    flatnessTotal: {
+      type: Float,
+      required: true,
+      default: 0
     },
     quietnessAverage: {
       type: Float,
-      required: true
+      required: true,
+      default: 0
+    },
+    quietnessTotal: {
+      type: Float,
+      required: true,
+      default: 0
     },
     physicalConditionAverage: {
       type: Float,
-      required: true
+      required: true,
+      default: 0
+    },
+    physicalConditionTotal: {
+      type: Float,
+      required: true,
+      default: 0
     }
   },
   { timestamps: true }

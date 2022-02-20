@@ -17,14 +17,16 @@ const StyledHoverableStars = styled(StyledStars)`
   cursor: pointer;
 `;
 
-const StyledHoverableStar = styled(StyledStarBackground)`
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
+const StyledHoverableStarWrapper = styled(StyledStarWrapper)`
+  &:hover div {
     opacity: 1;
     background-color: ${COLORS.yellow};
     transform: scale(1.1);
   }
+`;
+
+const StyledHoverableStar = styled(StyledStarBackground)`
+  transition: all 0.2s ease-in-out;
 `;
 
 const Rate = ({ rating, name, onClick }) => {
@@ -34,13 +36,7 @@ const Rate = ({ rating, name, onClick }) => {
     onClick({ key: name, value: inputRating });
   };
 
-  // if
-
   const renderStar = ({ inputRating }) => {
-    // if (rating && isHovered && isHovered < inputRating) {
-    //   return <StyledHoverableStar />;
-    // }
-
     if ((isHovered && isHovered > inputRating) || (!isHovered && rating >= inputRating)) {
       return <StyledStarFull />;
     }
@@ -52,14 +48,13 @@ const Rate = ({ rating, name, onClick }) => {
     <StyledStarsRow>
       <StyledName>{_.startCase(name)}</StyledName>
       <StyledHoverableStars
-        className="hover"
         onMouseLeave={() => {
           setIsHovered(0);
         }}
       >
         {generateArrayOfNumbers({ length: 5 }).map((inputRating) => {
           return (
-            <StyledStarWrapper
+            <StyledHoverableStarWrapper
               key={inputRating}
               onMouseEnter={() => {
                 setIsHovered(inputRating);
@@ -69,7 +64,7 @@ const Rate = ({ rating, name, onClick }) => {
               }}
             >
               {renderStar({ inputRating })}
-            </StyledStarWrapper>
+            </StyledHoverableStarWrapper>
           );
         })}
       </StyledHoverableStars>
