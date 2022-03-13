@@ -2,5 +2,6 @@
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "prettier.configPath": ".prettierrc",
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "cSpell.words": ["DISCOGS", "Hoverable", "Roboto", "wantlist"]
 }

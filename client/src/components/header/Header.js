@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { UserContext } from 'App';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { logDOM } from '@testing-library/react';
 
 const StyledHeader = styled.header`
   display: flex;

@@ -21,12 +21,12 @@ const HoverableStarWrapper = styled(StyledStarWrapper)`
   &:hover div {
     opacity: 1;
     background-color: ${COLORS.yellow};
-    transform: scale(1.1);
   }
 `;
 
 const HoverableStar = styled(StyledStarBackground)`
   transition: all 0.2s ease-in-out;
+  transform: scale(1.1);
 `;
 
 const Rate = ({ rating, name, onClick }) => {
