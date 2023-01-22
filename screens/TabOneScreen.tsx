@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { useQuery, gql } from '@apollo/client';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
-import { VRIcon } from '../components';
+import EditScreenInfo from 'components/EditScreenInfo';
+import { Text, View } from 'components/Themed';
+import { RootTabScreenProps } from 'types';
+import { VRIcon } from 'components/';
+import { COLORS, FONTS } from 'constants';
 
 export const GET_FOLDERS = gql`
     query GetFolders {

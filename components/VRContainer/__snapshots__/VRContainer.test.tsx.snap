@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VRContainer should render refresh 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "rgb(242, 242, 242)",
+        "flex": 1,
+        "fontFamily": "ArchivoNarrow-Regular",
+      },
+      {
+        "opacity": 0.6,
+      },
+    ]
+  }
+  testID="scroll"
+>
+  <RCTScrollView
+    collapsable={false}
+    contentInsetAdjustmentBehavior="automatic"
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          [
+            undefined,
+          ]
+        }
+        onRefresh={[Function]}
+        refreshing={true}
+      />
+    }
+    scrollEventThrottle={0.0001}
+    style={
+      {
+        "opacity": 0,
+        "padding": 20,
+      }
+    }
+  >
+    <RCTRefreshControl />
+    <View>
+      <View>
+        <Text>
+          Testing this yo
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

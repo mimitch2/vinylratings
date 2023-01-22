@@ -20,7 +20,7 @@ module.exports = {
                 // 'no-undef': 'off'
                 'import/no-unresolved': [1, { commonjs: true, amd: true }],
                 // 'import/named': 2,
-                'import/namespace': 1,
+                // 'import/namespace': 1,
                 // 'import/default': 2,
                 // 'import/export': 2
                 'no-unused-vars': 'off'
