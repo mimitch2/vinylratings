@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import type { FlatList } from 'react-native';
 import { useLazyQuery, DocumentNode } from '@apollo/client';
 
-import { Pagination, SortOrder, Releases } from '../types';
-import { runHapticFeedback } from '../';
+import { Pagination, SortOrder, Releases } from 'types';
+import { runHapticFeedback } from 'helpers';
 
 const PER_PAGE = 25;
 const PAGINATION_DEFAULT = {

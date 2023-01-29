@@ -9,8 +9,8 @@ module.exports = {
     //     'plugin:import/warnings',
     //     'plugin:import/typescript'
     // ],
-    // parser: '@typescript-eslint/parser',
-    // plugins: ['@typescript-eslint'],
+    parser: '@typescript-eslint/parser',
+    plugins: ['@typescript-eslint'],
     overrides: [
         {
             files: ['*.ts', '*.tsx', '*.js'],
@@ -19,7 +19,7 @@ module.exports = {
                 // 'no-shadow': 'off'
                 // 'no-undef': 'off'
                 'import/no-unresolved': [1, { commonjs: true, amd: true }],
-                // 'import/named': 2,
+                'import/named': 2,
                 // 'import/namespace': 1,
                 // 'import/default': 2,
                 // 'import/export': 2

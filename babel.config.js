@@ -18,11 +18,12 @@ module.exports = function (api) {
                     ],
                     alias: {
                         components: './components',
-                        hooks: './hooks',
                         constants: './constants',
                         helpers: './helpers',
-                        screens: './screens',
+                        hooks: './hooks',
                         navigation: './navigation',
+                        screens: './screens',
+                        svgs: './svgs',
                         test: './test'
                     }
                 }

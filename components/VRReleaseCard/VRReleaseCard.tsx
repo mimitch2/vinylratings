@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { useRoute, useTheme } from '@react-navigation/native';
 
 import { Theme, ThemeColors } from '../../constants';
-import { Releases, VoidFuncNoParams } from '../../types';
+import { Releases, VoidFuncNoParams } from 'types';
 import {
     VRIcon,
     VRText,
@@ -11,8 +11,8 @@ import {
     VRListIndicator,
     VRRatingsStars,
     VRPressable
-} from '../';
-import { Vinyl } from '../../svgs';
+} from 'components';
+import { Vinyl } from 'svgs';
 
 const VRReleaseCard = ({
     artist = null,

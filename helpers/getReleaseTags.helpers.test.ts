@@ -1,9 +1,5 @@
 import { getReleaseTags } from './getReleaseTags.helpers';
-import {
-    basicInformationMock,
-    discogsVersionMock,
-    releaseMock
-} from 'src/test';
+import { basicInformationMock, discogsVersionMock, releaseMock } from 'test';
 
 describe('getReleaseTags', () => {
     it.each([

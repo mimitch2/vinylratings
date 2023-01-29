@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import * as navigation from '@react-navigation/native';
 
 import VRReleaseCard from './VRReleaseCard';
-import { collectionItemMock } from 'src/test';
+import { collectionItemMock } from 'test';
 
 describe('VRReleaseCard', () => {
     const onPressMock = jest.fn();

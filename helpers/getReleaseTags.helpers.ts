@@ -1,4 +1,4 @@
-import type { BasicInformation, DiscogsVersion } from '../../types';
+import type { BasicInformation, DiscogsVersion } from 'types';
 
 const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     const { released, format, country } = item;

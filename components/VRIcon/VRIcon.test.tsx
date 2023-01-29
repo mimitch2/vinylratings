@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import VRIcon, { SVG_MAP } from './VRIcon';
 import { IconType } from '../../types';
 
-describe('getReleaseTags', () => {
+describe('VRIcon', () => {
     const iconTypes = Object.keys(SVG_MAP).map((type) => ({
         type
     })) as { type: IconType }[];

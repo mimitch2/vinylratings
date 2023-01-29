@@ -3,7 +3,6 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 
 import { useGetFolders, GET_FOLDERS } from './useGetFolders';
 import { foldersMock } from 'test';
-console.log('🚀 ~ file: useGetFolders.test.tsx:6 ~ foldersMock', foldersMock);
 
 describe('useGetFolders', () => {
     const getFoldersMock = [
