@@ -1,53 +1,199 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+// import { StatusBar } from 'expo-status-bar';
+// import { SafeAreaProvider } from 'react-native-safe-area-context';
+// import {
+//     ApolloClient,
+//     InMemoryCache,
+//     ApolloProvider,
+//     createHttpLink
+// } from '@apollo/client';
+// import fetch from 'cross-fetch';
+// import { setContext } from '@apollo/client/link/context';
+// import VRTabs from 'navigation/VRTabs/VRTabs';
+
+// import useCachedResources from './hooks/useCachedResources';
+// import useColorScheme from './hooks/useColorScheme';
+// import Navigation from './navigation';
+
+// const authLink = setContext(async (_, { headers }) => {
+//     return {
+//         headers: {
+//             ...headers,
+//             authorization: `Bearer {"username":"eyJhbGciOiJIUzI1NiJ9.bWltaXRjaA.cqHFesLmzh1Bw1inSQ2pXg3jbx8Wk3qgRHwNj5UekPM","token":"eyJhbGciOiJIUzI1NiJ9.ZWdZbnpoQ1RkV2tjb3ZTcXRidk50ZXhoWk56TnlhaW94Q09GQ2hLWg.inqF_0Y1TN5zXee0dpppbrwp-5wPGo7rR917xi6mumQ","secret":"eyJhbGciOiJIUzI1NiJ9.cGpxcE9MRExockF4eWJ2ekJiSGJsaWdVbFpIeXJvT0l2amJTR0h1Vw.OLt6TKklMdiqplJhJMTd-K05F0EjfVycOyAI2X_Fs54"}`
+//         }
+//     };
+// });
+
+// const httpLink = createHttpLink({
+//     uri: `http://localhost:8080/graphql`,
+//     fetch
+// });
+
+// export const client = new ApolloClient({
+//     link: authLink.concat(httpLink),
+//     cache: new InMemoryCache()
+// });
+
+// export default function App() {
+//     const isLoadingComplete = useCachedResources();
+//     const colorScheme = useColorScheme();
+
+//     if (!isLoadingComplete) {
+//         return null;
+//     } else {
+//         return (
+//             <SafeAreaProvider>
+//                 <ApolloProvider client={client}>
+//                     <VRTabs />
+//                 </ApolloProvider>
+//                 <StatusBar />
+//             </SafeAreaProvider>
+//         );
+//     }
+// }
+
+import React from 'react';
 import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    createHttpLink
 } from '@apollo/client';
 import fetch from 'cross-fetch';
-import { setContext } from '@apollo/client/link/context';
+import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import VRTabs from 'navigation/VRTabs/VRTabs';
+import { DarkTheme, DefaultTheme } from './styles';
+
+import { setContext } from '@apollo/client/link/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Config from 'react-native-config';
+
+// import App from './src/App';
 
 const authLink = setContext(async (_, { headers }) => {
-  return {
-      headers: {
-          ...headers,
-          authorization: `Bearer {"username":"eyJhbGciOiJIUzI1NiJ9.bWltaXRjaA.cqHFesLmzh1Bw1inSQ2pXg3jbx8Wk3qgRHwNj5UekPM","token":"eyJhbGciOiJIUzI1NiJ9.ZWdZbnpoQ1RkV2tjb3ZTcXRidk50ZXhoWk56TnlhaW94Q09GQ2hLWg.inqF_0Y1TN5zXee0dpppbrwp-5wPGo7rR917xi6mumQ","secret":"eyJhbGciOiJIUzI1NiJ9.cGpxcE9MRExockF4eWJ2ekJiSGJsaWdVbFpIeXJvT0l2amJTR0h1Vw.OLt6TKklMdiqplJhJMTd-K05F0EjfVycOyAI2X_Fs54"}`
-      }
-  };
+    const auth = await AsyncStorage.getItem('auth');
+
+    return {
+        headers: {
+            ...headers,
+            authorization: auth ? `Bearer ${auth}` : ''
+        }
+    };
 });
 
 const httpLink = createHttpLink({
-  uri: `http://localhost:8080/graphql`,
-  fetch
+    uri: `http://localhost:8080/graphql`,
+    fetch
 });
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache({
+        typePolicies: {
+            Query: {
+                fields: {
+                    getCollection: {
+                        keyArgs: false,
+                        merge(existing = null, incoming) {
+                            if (!existing) {
+                                return incoming;
+                            }
+
+                            return {
+                                ...incoming,
+                                releases: [
+                                    ...existing.releases,
+                                    ...incoming.releases
+                                ]
+                            };
+                        }
+                    },
+                    getWantList: {
+                        keyArgs: false,
+                        merge(existing = null, incoming) {
+                            if (!existing) {
+                                return incoming;
+                            }
+
+                            return {
+                                ...incoming,
+                                wants: [...existing.wants, ...incoming.wants]
+                            };
+                        }
+                    },
+                    getSearch: {
+                        keyArgs: false,
+                        merge(existing = null, incoming) {
+                            if (!existing) {
+                                return incoming;
+                            }
+
+                            return {
+                                ...incoming,
+                                results: [
+                                    ...existing.results,
+                                    ...incoming.results
+                                ]
+                            };
+                        }
+                    },
+                    getMasterReleaseVersions: {
+                        keyArgs: false,
+                        merge(existing = null, incoming) {
+                            if (!existing) {
+                                return incoming;
+                            }
+
+                            return {
+                                ...incoming,
+                                versions: [
+                                    ...existing.versions,
+                                    ...incoming.versions
+                                ]
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    })
 });
 
+export const linking = {
+    prefixes: ['vinylratings://'],
+    config: {
+        screens: {
+            Home: 'home'
+        }
+    }
+};
 
+const App = () => {
+    const scheme = useColorScheme();
 
-export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
     return (
-      <SafeAreaProvider>
+        // <React.StrictMode>
         <ApolloProvider client={client}>
-          <Navigation colorScheme={colorScheme} />
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor:
+                        scheme === 'dark'
+                            ? DarkTheme.colors.background
+                            : DefaultTheme.colors.background
+                }}
+            >
+                <NavigationContainer
+                    linking={linking}
+                    theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+                >
+                    <VRTabs />
+                </NavigationContainer>
+            </SafeAreaView>
         </ApolloProvider>
-        <StatusBar />
-      </SafeAreaProvider>
+        // </React.StrictMode>
     );
-  }
-}
+};
+
+export default App;

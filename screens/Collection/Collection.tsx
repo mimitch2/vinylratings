@@ -1,0 +1,113 @@
+import React, { useRef, useEffect } from 'react';
+import { FlatList } from 'react-native';
+
+import { useList, useGetFolders } from 'hooks';
+import {
+    VRContainer,
+    VRReleaseOptionsModal,
+    VRError,
+    VRLoading,
+    VRReleasesList
+} from 'components';
+import { Nav } from 'types';
+import { GET_COLLECTION } from './collectionQueries';
+
+const Collection = ({ navigation }: { navigation: Nav }) => {
+    const scrollViewRef = useRef<FlatList>(null);
+    const { folders, folder, setFolder, foldersLoading } = useGetFolders();
+
+    const {
+        initialLoading,
+        loading,
+        reloading,
+        loadingMore,
+        data,
+        error,
+        sort,
+        setSort,
+        onRefresh,
+        onLoadMore,
+        sortOrder,
+        setSortOrder
+    } = useList({
+        scrollViewRef,
+        QUERY: GET_COLLECTION,
+        queryKey: 'getCollection',
+        folder
+    });
+
+    useEffect(() => {
+        if (data) {
+            navigation.setOptions({
+                title: `Collection:${folder.name}(${data?.getCollection?.pagination.items})`
+            });
+        }
+    }, [data, folder, navigation]);
+
+    if (initialLoading || foldersLoading) {
+        return <VRLoading />;
+    }
+
+    const releases = data?.getCollection?.releases ?? [];
+
+    return (
+        <VRContainer
+            startAnimation={!!data || !!error}
+            scrollable={false}
+            styleOverride={{
+                paddingBottom: 35
+            }}
+        >
+            {error && (
+                <VRError
+                    error={error}
+                    trackID="collection_screen-error"
+                    level="error"
+                    styleOverride={{
+                        opacity: loading ? 0.5 : 1
+                    }}
+                />
+            )}
+
+            {(loading || foldersLoading) && !loadingMore && !reloading && (
+                <VRLoading />
+            )}
+
+            <VRReleaseOptionsModal
+                sort={sort}
+                setSort={setSort}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+                folders={folders}
+                folder={folder}
+                setFolder={setFolder}
+            />
+
+            {releases?.length ? (
+                <VRReleasesList
+                    innerRef={scrollViewRef}
+                    data={releases}
+                    loading={loading || false}
+                    reloading={reloading}
+                    loadingMore={loadingMore}
+                    onRefresh={onRefresh}
+                    onLoadMore={onLoadMore}
+                    navigation={navigation}
+                    sort={sort}
+                />
+            ) : null}
+
+            {!releases.length && !error ? (
+                <VRError
+                    message="There do not seem to be any items here"
+                    level="warning"
+                    styleOverride={{
+                        opacity: loading ? 0.5 : 1
+                    }}
+                />
+            ) : null}
+        </VRContainer>
+    );
+};
+
+export default Collection;

@@ -24,7 +24,9 @@ module.exports = function (api) {
                         navigation: './navigation',
                         screens: './screens',
                         svgs: './svgs',
-                        test: './test'
+                        test: './test',
+                        styles: './styles',
+                        images: './images'
                     }
                 }
             ]

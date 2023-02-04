@@ -8,7 +8,7 @@ module.exports = {
         'react-native-restart': '<rootDir>/__mocks__/react-native-restart.js'
     },
     transformIgnorePatterns: [
-        'node_modules/(?!((jest-)?react-native-image-zoom-viewer|react-native-haptic-feedback|react-native-swipe-gestures|react-native-calendars|react-native|@react-native(-community)?)/)'
+        'node_modules/(?!((jest-)?react-native-image-pan-zoom|react-native-image-zoom-viewer|react-native-haptic-feedback|react-native-swipe-gestures|react-native-calendars|react-native|@react-native(-community)?)/)'
     ],
     // setupFiles: ['<rootDir>/jest.setup.js'],
     setupFilesAfterEnv: [

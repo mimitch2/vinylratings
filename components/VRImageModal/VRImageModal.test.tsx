@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react-native';
 
 import VRImageModal from './VRImageModal';
-import { DiscogsImage } from '../../types';
+import { DiscogsImage } from 'types';
 
 describe('VRImageModal', () => {
     const images: DiscogsImage[] = [

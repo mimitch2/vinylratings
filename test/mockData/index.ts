@@ -5,7 +5,7 @@ import {
     Releases,
     Pagination,
     Data
-} from 'src/types';
+} from 'types';
 
 export const foldersMock = [
     { id: 0, name: 'All', count: 3 },

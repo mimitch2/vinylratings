@@ -7,10 +7,10 @@ import {
     StatusBar,
     ActivityIndicator
 } from 'react-native';
-import { VRIcon } from '../';
+import { VRIcon } from 'components';
 
-import { COLORS } from '../../constants';
-import { DiscogsImage } from '../../types';
+import { COLORS } from 'constants';
+import { DiscogsImage } from 'types';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 const VRImageModal = ({
