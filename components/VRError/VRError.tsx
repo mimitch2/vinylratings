@@ -5,7 +5,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText, VRButton } from 'components';
 import type { IconType } from 'types';
-import type { Theme, ThemeColors } from 'constants';
+import type { Theme, ThemeColors } from 'constants/index';
 
 type Levels = 'error' | 'warning' | 'info';
 type IconMap = {

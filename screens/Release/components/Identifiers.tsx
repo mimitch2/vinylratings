@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 import { DiscogsIdentifiers } from 'types';
 import { VRText } from 'components';
-import { COLORS } from '../../../styles';
+import { COLORS } from 'styles';
 
 const Identifiers = ({
     identifiers

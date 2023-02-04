@@ -10,7 +10,6 @@
 // import { setContext } from '@apollo/client/link/context';
 // import VRTabs from 'navigation/VRTabs/VRTabs';
 
-// import useCachedResources from './hooks/useCachedResources';
 // import useColorScheme from './hooks/useColorScheme';
 // import Navigation from './navigation';
 
@@ -61,12 +60,14 @@ import {
 import fetch from 'cross-fetch';
 import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Linking from 'expo-linking';
 
 import VRTabs from 'navigation/VRTabs/VRTabs';
-import { DarkTheme, DefaultTheme } from './styles';
-
+import { DarkTheme, DefaultTheme } from 'styles';
 import { setContext } from '@apollo/client/link/context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useCachedResources from './hooks/useCachedResources';
+
 // import Config from 'react-native-config';
 
 // import App from './src/App';
@@ -161,7 +162,7 @@ export const client = new ApolloClient({
 });
 
 export const linking = {
-    prefixes: ['vinylratings://'],
+    prefixes: [Linking.createURL('/')],
     config: {
         screens: {
             Home: 'home'
@@ -170,30 +171,31 @@ export const linking = {
 };
 
 const App = () => {
+    const isLoadingComplete = useCachedResources();
     const scheme = useColorScheme();
 
-    return (
-        // <React.StrictMode>
-        <ApolloProvider client={client}>
-            <SafeAreaView
-                style={{
-                    flex: 1,
-                    backgroundColor:
-                        scheme === 'dark'
-                            ? DarkTheme.colors.background
-                            : DefaultTheme.colors.background
-                }}
-            >
-                <NavigationContainer
-                    linking={linking}
-                    theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+    return isLoadingComplete ? (
+        <React.StrictMode>
+            <ApolloProvider client={client}>
+                <SafeAreaView
+                    style={{
+                        flex: 1,
+                        backgroundColor:
+                            scheme === 'dark'
+                                ? DarkTheme.colors.background
+                                : DefaultTheme.colors.background
+                    }}
                 >
-                    <VRTabs />
-                </NavigationContainer>
-            </SafeAreaView>
-        </ApolloProvider>
-        // </React.StrictMode>
-    );
+                    <NavigationContainer
+                        linking={linking}
+                        theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+                    >
+                        <VRTabs />
+                    </NavigationContainer>
+                </SafeAreaView>
+            </ApolloProvider>
+        </React.StrictMode>
+    ) : null;
 };
 
 export default App;

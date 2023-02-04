@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import { VRText, VRPressable } from 'components';
-import { Theme, ColorsKeys } from 'constants';
+import { Theme, ColorsKeys } from 'constants/index';
 import { VoidFuncNoParams } from 'types';
 
 type ButtonVariants = 'primary' | 'secondary' | 'tertiary' | 'danger';

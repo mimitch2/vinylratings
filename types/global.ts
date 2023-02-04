@@ -1,4 +1,4 @@
-import { COLORS_MAP } from 'constants';
+import { COLORS_MAP } from 'constants/index';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {

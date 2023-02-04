@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, DateData } from 'react-native-calendars';
 import { Pressable } from 'react-native';
 import { VRModal, VRText, VRLoading } from 'components';
-import { COLORS, FONTS } from 'constants';
+import { COLORS, FONTS } from 'constants/index';
 
 const VRCalendarModal = ({
     onDatePress,

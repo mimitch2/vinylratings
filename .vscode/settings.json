@@ -1,5 +1,6 @@
 {
-  "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#148157"
-  }
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#148157"
+    },
+    "cSpell.words": ["svgs", "vinylratings"]
 }

@@ -41,12 +41,12 @@ import {
 } from 'components';
 import type { Route, DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
-import { WIDTH } from 'constants';
+import { WIDTH } from 'constants/index';
 import { TrackList, Identifiers } from './components';
 import { Vinyl } from 'svgs';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../App';
-import { ThemeColors, Theme } from '../../styles';
+import { ThemeColors, Theme } from 'styles';
 
 const IMAGE_STYLE = {
     borderRadius: 4,

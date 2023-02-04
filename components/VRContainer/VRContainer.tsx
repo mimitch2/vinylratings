@@ -9,7 +9,7 @@ import {
 import { useTheme } from '@react-navigation/native';
 
 import { VRLoading } from 'components';
-import { FONTS, Theme, ThemeColors } from 'constants';
+import { FONTS, Theme, ThemeColors } from 'constants/index';
 
 interface Props {
     children: React.ReactNode;

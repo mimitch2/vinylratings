@@ -8,8 +8,8 @@ import {
     VRReleaseOptionsModal,
     VRError,
     VRLoading,
-    VRReleasesList,
-    VRSearchInput
+    VRReleasesList
+    // VRSearchInput
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
 import { Nav } from 'types';
@@ -97,11 +97,11 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
             />
-            <VRSearchInput
+            {/* <VRSearchInput
                 runQuery={runSearchQuery}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-            />
+            /> */}
 
             {error ? (
                 <VRError

@@ -4,7 +4,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { DiscogsTrackList } from 'types';
 import { VRText } from 'components';
-import { ThemeColors } from '../../../styles';
+import { ThemeColors } from 'styles';
 
 const TrackList = ({ tracklist }: { tracklist: DiscogsTrackList[] }) => {
     const { colors } = useTheme();

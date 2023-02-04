@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { VRIcon } from 'components';
 
-import { COLORS } from 'constants';
+import { COLORS } from 'constants/index';
 import { DiscogsImage } from 'types';
 import ImageViewer from 'react-native-image-zoom-viewer';
 

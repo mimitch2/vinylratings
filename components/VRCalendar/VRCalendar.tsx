@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar } from 'react-native-calendars';
 
-import { COLORS, FONTS } from 'constants';
+import { COLORS, FONTS } from 'constants/index';
 
 const VRCalendar = ({
     onDatePress

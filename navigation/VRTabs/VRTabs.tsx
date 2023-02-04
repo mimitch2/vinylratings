@@ -10,7 +10,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText } from 'components';
 import { Collection, Home, Search, WantList, Release, Versions } from 'screens';
-import { ThemeColors, Theme, FONTS } from '../../styles';
+import { ThemeColors, Theme, FONTS } from 'styles';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
 interface Context {

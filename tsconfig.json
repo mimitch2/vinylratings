@@ -1,19 +1,9 @@
 {
     "extends": "expo/tsconfig.base",
+    "moduleResolution": "classic",
     "compilerOptions": {
         "strict": true,
-        "baseUrl": ".",
-        "paths": {
-            "components": ["components/*"],
-            "constants": ["constants/*"],
-            "helpers": ["helpers/*"],
-            "hooks": ["hooks/*"],
-            "navigation": ["navigation/*"],
-            "screens": ["screens/*"],
-            "svgs": ["svgs/*"],
-            "test": ["test/*"],
-            "styles": ["styles/*"],
-            "images": ["images/*"]
-        }
-    }
+        "baseUrl": "."
+    },
+    "include": ["."]
 }
