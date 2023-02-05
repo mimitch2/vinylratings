@@ -1,8 +1,8 @@
 import { render, fireEvent } from '@testing-library/react-native';
 
-import { Folder } from '../../types';
+import { Folder } from 'types';
 import VRReleaseOptionsModal from './VRReleaseOptionsModal';
-import { SORT_BY_OPTIONS_WANT_LIST } from '../../constants';
+import { SORT_BY_OPTIONS_WANT_LIST } from 'constants/index';
 
 describe('VRReleaseOptionsModal', () => {
     const setSortMock = jest.fn();
@@ -63,7 +63,7 @@ describe('VRReleaseOptionsModal', () => {
         });
 
         it.each(SORT_BY_OPTIONS_WANT_LIST)(
-            'should render $label sort option',
+            `should render $label sort option`,
             ({ label }) => {
                 const { getByText } = view;
 

@@ -3,8 +3,8 @@ import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 import { renderHook, waitFor, act } from '@testing-library/react-native';
 
 import { useList } from './useList';
-import { GET_COLLECTION } from 'src/screens/authorized/Collection/collectionQueries';
-import { foldersMock, flushPromises, collectionMock } from 'src/test';
+import { GET_COLLECTION } from 'screens/Collection/collectionQueries';
+import { foldersMock, flushPromises, collectionMock } from 'test';
 import { GraphQLError } from 'graphql';
 
 describe('useList', () => {

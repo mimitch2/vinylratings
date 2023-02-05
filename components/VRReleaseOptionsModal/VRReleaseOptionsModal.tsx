@@ -5,8 +5,8 @@ import {
     ModalControlBar,
     SortModalContent
 } from './components';
-import { VRModal } from '../';
-import { Folder, SortOrder } from '../../types';
+import { VRModal } from 'components';
+import { Folder, SortOrder } from 'types';
 
 const VRReleaseOptionsModal = ({
     sort,
