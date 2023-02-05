@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import { Alert, Linking, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import Config from 'react-native-config';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
+// @ts-ignore
+import { REACT_APP_SERVER_ENDPOINT } from '@env';
 
 import { VRContainer, VRLoading, VRText, VRButton } from 'components';
 import { DisabledContext } from 'navigation/VRTabs/VRTabs';
@@ -31,7 +32,7 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
 
     const handleLogin = async () => {
         const redirectTo = await getFetchResponse({
-            url: `http://192.168.4.89:8080/auth`,
+            url: `${REACT_APP_SERVER_ENDPOINT}/auth`,
             type: 'text'
         });
 

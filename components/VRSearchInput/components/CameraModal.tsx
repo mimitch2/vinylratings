@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, Modal, View, StyleSheet, Platform } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Camera, FlashMode } from 'expo-camera';
 
 import { ThemeColors, Theme } from 'styles';
 import { VRIcon, VRPressable } from 'components';
@@ -32,7 +33,19 @@ const CameraModal = ({
     const renderCamera = () => {
         return (
             <View style={styles(colors).cameraContainer}>
-                <BarCodeScanner
+                <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}
+                >
+                    <Camera
+                        style={{ width: '100%', height: '60%' }}
+                        barCodeScannerSettings={{
+                            barCodeTypes: [code39, code128, itf14, upc_e, ean13]
+                        }}
+                        onBarCodeScanned={handleReadCode}
+                        flashMode={torchMode ? FlashMode.torch : FlashMode.off}
+                    />
+                </View>
+                {/* <BarCodeScanner
                     onBarCodeScanned={handleReadCode}
                     // style={{ width: '100%', height: '20%' }}
                     barCodeTypes={[code39, code128, itf14, upc_e, ean13]}
@@ -57,7 +70,7 @@ const CameraModal = ({
                             }}
                         />
                     </View>
-                </BarCodeScanner>
+                </BarCodeScanner> */}
             </View>
         );
     };

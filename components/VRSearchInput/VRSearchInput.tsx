@@ -90,11 +90,7 @@ const VRSearchInput = ({
     };
 
     const handleBarCodeRead = ({ data }: { data: string | undefined }) => {
-        console.log(
-            '🚀 ~ file: VRSearchInput.tsx:93 ~ handleBarCodeRead ~ data',
-            data
-        );
-        // setSearchTerm(barcode.toString());
+        setSearchTerm(data || '');
         runHapticFeedback();
     };
 

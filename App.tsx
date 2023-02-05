@@ -49,7 +49,6 @@
 //         );
 //     }
 // }
-
 import React from 'react';
 import {
     ApolloClient,
@@ -62,6 +61,8 @@ import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
+// @ts-ignore
+import { REACT_APP_SERVER_ENDPOINT } from '@env';
 
 import VRTabs from 'navigation/VRTabs/VRTabs';
 import { DarkTheme, DefaultTheme } from 'styles';
@@ -80,7 +81,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-    uri: `http://192.168.4.89:8080/graphql`,
+    uri: `${REACT_APP_SERVER_ENDPOINT}/graphql`,
     fetch
 });
 
@@ -171,26 +172,24 @@ const App = () => {
     const scheme = useColorScheme();
 
     return isLoadingComplete ? (
-        <React.StrictMode>
-            <ApolloProvider client={client}>
-                <SafeAreaView
-                    style={{
-                        flex: 1,
-                        backgroundColor:
-                            scheme === 'dark'
-                                ? DarkTheme.colors.background
-                                : DefaultTheme.colors.background
-                    }}
+        <ApolloProvider client={client}>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor:
+                        scheme === 'dark'
+                            ? DarkTheme.colors.background
+                            : DefaultTheme.colors.background
+                }}
+            >
+                <NavigationContainer
+                    linking={linking}
+                    theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
                 >
-                    <NavigationContainer
-                        linking={linking}
-                        theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
-                    >
-                        <VRTabs />
-                    </NavigationContainer>
-                </SafeAreaView>
-            </ApolloProvider>
-        </React.StrictMode>
+                    <VRTabs />
+                </NavigationContainer>
+            </SafeAreaView>
+        </ApolloProvider>
     ) : null;
 };
 

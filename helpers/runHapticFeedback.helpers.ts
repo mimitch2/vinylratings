@@ -1,14 +1,7 @@
-import ReactNativeHapticFeedback, {
-    HapticFeedbackTypes
-} from 'react-native-haptic-feedback';
-
-const options = {
-    enableVibrateFallback: true,
-    ignoreAndroidSystemSettings: false
-};
+import * as Haptics from 'expo-haptics';
 
 export const runHapticFeedback = (
-    level: HapticFeedbackTypes = 'impactMedium'
+    level: Haptics.ImpactFeedbackStyle = Haptics.ImpactFeedbackStyle.Heavy
 ) => {
-    ReactNativeHapticFeedback.trigger(level, options);
+    Haptics.impactAsync(level);
 };
