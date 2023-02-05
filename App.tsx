@@ -68,10 +68,6 @@ import { DarkTheme, DefaultTheme } from 'styles';
 import { setContext } from '@apollo/client/link/context';
 import useCachedResources from './hooks/useCachedResources';
 
-// import Config from 'react-native-config';
-
-// import App from './src/App';
-
 const authLink = setContext(async (_, { headers }) => {
     const auth = await AsyncStorage.getItem('auth');
 

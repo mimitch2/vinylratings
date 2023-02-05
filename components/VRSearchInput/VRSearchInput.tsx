@@ -7,11 +7,11 @@ import {
     Linking,
     Platform
 } from 'react-native';
-import { check, PERMISSIONS } from 'react-native-permissions';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import { VRInput, VRIcon, VRPressable } from '../';
-import { usePlatform } from '../../hooks';
-import { runHapticFeedback } from '../../helpers';
+import { VRInput, VRIcon, VRPressable } from 'components';
+import { usePlatform } from 'hooks';
+import { runHapticFeedback } from 'helpers';
 import CameraModal from './components/CameraModal';
 
 const VRSearchInput = ({
@@ -23,21 +23,18 @@ const VRSearchInput = ({
     searchTerm: string;
     setSearchTerm: (value: string) => void;
 }) => {
-    const [cameraAuthorized, setCameraAuthorized] = useState(false);
+    const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showCamera, setShowCamera] = useState(false);
     const { isIOS } = usePlatform();
 
     useEffect(() => {
-        const getPermissions = async () => {
-            const isCameraAuthorized = await check(
-                PERMISSIONS[isIOS ? 'IOS' : 'ANDROID'].CAMERA
-            );
-
-            setCameraAuthorized(isCameraAuthorized === 'granted');
+        const getBarCodeScannerPermissions = async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status === 'granted');
         };
 
-        getPermissions();
-    }, [isIOS]);
+        getBarCodeScannerPermissions();
+    }, []);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -72,7 +69,7 @@ const VRSearchInput = ({
     }, [showCamera]);
 
     const handleBarcodePress = () => {
-        if (cameraAuthorized) {
+        if (hasPermission) {
             return setShowCamera(true);
         }
 
@@ -92,8 +89,12 @@ const VRSearchInput = ({
         );
     };
 
-    const handleBarCodeRead = (barcode: string | number) => {
-        setSearchTerm(barcode.toString());
+    const handleBarCodeRead = ({ data }: { data: string | undefined }) => {
+        console.log(
+            '🚀 ~ file: VRSearchInput.tsx:93 ~ handleBarCodeRead ~ data',
+            data
+        );
+        // setSearchTerm(barcode.toString());
         runHapticFeedback();
     };
 
