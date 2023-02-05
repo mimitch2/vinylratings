@@ -15,6 +15,15 @@ jest.mock('@react-navigation/native', () => ({
     ...jest.requireActual('@react-navigation/native')
 }));
 
+jest.mock('expo-linking', () => {
+    const module = {
+        ...jest.requireActual('expo-linking'),
+        createURL: jest.fn()
+    };
+
+    return module;
+});
+
 // jest.mock('@apollo/client', () => ({
 //     // __esModule: true,
 //     // ...jest.requireActual('@apollo/client')

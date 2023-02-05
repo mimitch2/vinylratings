@@ -8,7 +8,8 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "test": "jest",
-        "cm": "git cz"
+        "cm": "git cz",
+        "open:coverage": "open coverage/index.html"
     },
     "dependencies": {
         "@apollo/client": "^3.7.4",
