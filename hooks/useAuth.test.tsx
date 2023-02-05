@@ -102,7 +102,6 @@ describe('useAuth', () => {
         beforeAll(() => {
             jest.useFakeTimers({ legacyFakeTimers: true });
         });
-
         it('should set loading to false', async () => {
             const Wrapper = ({ children }: { children: any }) => (
                 <MockedProvider mocks={successMocks}>{children}</MockedProvider>

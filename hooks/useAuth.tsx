@@ -30,7 +30,7 @@ type Action =
     | { type: 'FETCHED'; payload: User }
     | { type: 'ERROR'; payload: Error };
 
-const initialState = {
+export const initialState = {
     error: undefined,
     data: undefined,
     loading: false
@@ -70,6 +70,7 @@ export const useAuth = (
 
         if (route?.params?.auth) {
             await AsyncStorage.setItem('auth', route.params.auth);
+
             navigation?.setParams({ auth: null });
         }
 

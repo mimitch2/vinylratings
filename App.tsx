@@ -80,7 +80,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-    uri: `http://localhost:8080/graphql`,
+    uri: `http://192.168.4.89:8080/graphql`,
     fetch
 });
 

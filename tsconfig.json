@@ -1,6 +1,5 @@
 {
     "extends": "expo/tsconfig.base",
-    "moduleResolution": "classic",
     "compilerOptions": {
         "strict": true,
         "baseUrl": "."

@@ -31,7 +31,7 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
 
     const handleLogin = async () => {
         const redirectTo = await getFetchResponse({
-            url: `http://localhost:8080/auth`,
+            url: `http://192.168.4.89:8080/auth`,
             type: 'text'
         });
 
