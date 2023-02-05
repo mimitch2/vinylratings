@@ -1,10 +1,10 @@
 export { default as VRButton } from './VRButton/VRButton';
 export { default as VRCalendar } from './VRCalendar/VRCalendar';
-// export { default as VRCalendarModal } from './VRCalendarModal/VRCalendarModal';
+export { default as VRCalendarModal } from './VRCalendarModal/VRCalendarModal';
 export { default as VRContainer } from './VRContainer/VRContainer';
 export { default as VRError } from './VRError/VRError';
 export { default as VRIcon } from './VRIcon/VRIcon';
-// export { default as VRImageModal } from './VRImageModal/VRImageModal';
+export { default as VRImageModal } from './VRImageModal/VRImageModal';
 export { default as VRInput } from './VRInput/VRInput';
 export { default as VRListIndicator } from './VRListIndicator/VRListIndicator';
 export { default as VRLoading } from './VRLoading/VRLoading';

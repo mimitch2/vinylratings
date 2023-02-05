@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import { useTheme } from '@react-navigation/native';
-// import { WebView } from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import {
@@ -433,7 +433,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 setModalOpen={setDiscogsReviewsModalOpen}
                 centerContent={false}
             >
-                {/* <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}>
                     {webViewLoading ? (
                         <ActivityIndicator
                             size="large"
@@ -477,7 +477,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             }
                         }}
                     />
-                </View> */}
+                </View>
             </VRModal>
         </VRContainer>
     );
