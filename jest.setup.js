@@ -10,6 +10,8 @@ jest.mock('@react-native-async-storage/async-storage', () =>
     require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
 
+jest.mock('react-native-image-zoom-viewer', () => 'ImageViewer');
+
 jest.mock('@react-navigation/native', () => ({
     __esModule: true,
     ...jest.requireActual('@react-navigation/native')
