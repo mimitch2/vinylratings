@@ -1,14 +1,14 @@
 module.exports = {
     root: true,
-    // extends: [
-    //     '@react-native-community',
-    //     'plugin:import/recommended',
-    //     'eslint:recommended',
-    //     'plugin:import/recommended',
-    //     'plugin:import/errors',
-    //     'plugin:import/warnings',
-    //     'plugin:import/typescript'
-    // ],
+    extends: [
+        '@react-native-community',
+        // 'plugin:import/recommended',
+        'eslint:recommended'
+        // 'plugin:import/recommended',
+        // 'plugin:import/errors',
+        // 'plugin:import/warnings',
+        // 'plugin:import/typescript'
+    ],
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
     overrides: [
@@ -32,7 +32,7 @@ module.exports = {
             'babel-module': {},
             typescript: {},
             node: {
-                paths: ['src'],
+                paths: ['.'],
                 extensions: ['.js', '.jsx', '.ts', '.tsx']
             }
         }

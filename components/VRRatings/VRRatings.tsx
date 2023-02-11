@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { VRText, VRRatingsStars, VRModal, VRButton, VRIcon } from '../';
-import { Theme, ThemeColors } from '../../constants';
-import { DiscogsRating, VinylRatingsRelease } from '../../types';
-import { getRatingValues, toUpperFirst } from '../../helpers';
-import { RATING_CATEGORIES } from '../../constants';
+import { VRText, VRRatingsStars, VRModal, VRButton, VRIcon } from 'components';
+import { Theme, ThemeColors, RATING_CATEGORIES } from 'constants/index';
+import { DiscogsRating, VinylRatingsRelease } from 'types';
+import { getRatingValues, toUpperFirst } from 'helpers';
 
 const RatingRow = ({
     label,

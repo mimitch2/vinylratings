@@ -27,11 +27,12 @@ jest.mock('expo-linking', () => {
 });
 
 // jest.mock('@apollo/client', () => ({
-//     // __esModule: true,
-//     // ...jest.requireActual('@apollo/client')
+//     __esModule: true,
+//     ...jest.requireActual('@apollo/client'),
 //     useQuery: jest.fn(),
 //     useLazyQuery: jest.fn(),
-//     useMutation: jest.fn()
+//     useMutation: jest.fn(),
+//     gql: jest.fn()
 // }));
 
 // // include this section and the NativeAnimatedHelper section for mocking react-native-reanimated

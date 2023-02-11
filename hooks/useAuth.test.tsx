@@ -47,6 +47,7 @@ describe('useAuth', () => {
             AsyncStorage,
             'setItem'
         );
+
         const Wrapper = ({ children }: { children: any }) => (
             <MockedProvider mocks={successMocks}>{children}</MockedProvider>
         );
@@ -59,10 +60,10 @@ describe('useAuth', () => {
         );
 
         await waitFor(() => {
+            expect(asyncSpy).toHaveBeenCalledWith('auth', 'fakeToken');
             expect(result.current.state.data).toEqual(
                 successMocks[0].result.data.getUser
             );
-            expect(asyncSpy).toHaveBeenCalledWith('auth', 'fakeToken');
         });
     });
 
