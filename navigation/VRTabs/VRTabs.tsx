@@ -219,7 +219,6 @@ const styles = (colors: ThemeColors) =>
             flexDirection: 'row',
             borderTopColor: colors.primaryFaded,
             borderTopWidth: 0.5
-            // marginTop: 50
             // paddingBottom: -20
         },
         contentStyle: {

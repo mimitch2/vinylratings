@@ -5,7 +5,6 @@ import { renderHook, waitFor, act } from '@testing-library/react-native';
 import { GraphQLError } from 'graphql';
 
 import { useAuth, GET_USER } from './useAuth';
-import { flushPromises } from '../test/testing.helpers';
 
 describe('useAuth', () => {
     const navigationMock = {

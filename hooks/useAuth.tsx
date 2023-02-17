@@ -81,7 +81,6 @@ export const useAuth = (
             fetchPolicy: route?.params?.auth ? 'network-only' : 'cache-first',
             errorPolicy: 'all'
         });
-        console.log('xxxxxxx');
 
         if (error) {
             await AsyncStorage.removeItem('auth');

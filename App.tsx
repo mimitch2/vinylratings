@@ -67,7 +67,7 @@ import { REACT_APP_SERVER_ENDPOINT } from '@env';
 import VRTabs from 'navigation/VRTabs/VRTabs';
 import { DarkTheme, DefaultTheme } from 'styles';
 import { setContext } from '@apollo/client/link/context';
-import useCachedResources from './hooks/useCachedResources';
+import useCachedResources from 'hooks/useCachedResources';
 
 const authLink = setContext(async (_, { headers }) => {
     const auth = await AsyncStorage.getItem('auth');
