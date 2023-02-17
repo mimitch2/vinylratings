@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { Theme, ThemeColors } from '../../constants';
-import { VRReleaseCard, VRIcon, VRText } from '../';
-import { Nav, Releases, VoidFuncNoParams } from '../../types';
-import { getReleaseTags } from '../../helpers';
-import { PER_PAGE } from '../../hooks';
+import { Theme, ThemeColors } from 'constants/index';
+import { VRReleaseCard, VRIcon, VRText } from 'components';
+import { Nav, Releases, VoidFuncNoParams } from 'types';
+import { getReleaseTags } from 'helpers';
+import { PER_PAGE } from 'hooks';
 
 type NextRoute = 'Release' | 'VersionRelease';
 
@@ -162,7 +162,7 @@ const VRReleasesList = ({
             ListFooterComponent={ListFooterComponent}
             refreshing={loadingMore}
             onEndReached={onLoadMore}
-            onEndReachedThreshold={0.5}
+            // onEndReachedThreshold={0.5}
             initialNumToRender={perPage}
             removeClippedSubviews
             // scrollEnabled={!loading}

@@ -29,11 +29,16 @@ const RatingRow = ({
             >
                 <VRRatingsStars average={average} />
                 {count ? (
-                    <VRText>{` ${
-                        getRatingValues({
-                            average
-                        }).preciseAverage
-                    }(${count})`}</VRText>
+                    <View style={{ flexDirection: 'row' }}>
+                        <VRText styleOverride={{ marginLeft: 4 }}>
+                            {
+                                getRatingValues({
+                                    average
+                                }).preciseAverage
+                            }
+                        </VRText>
+                        <VRText>({count})</VRText>
+                    </View>
                 ) : null}
             </View>
         </View>
