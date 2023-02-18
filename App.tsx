@@ -50,113 +50,14 @@
 //     }
 // }
 import React from 'react';
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    createHttpLink
-} from '@apollo/client';
-import fetch from 'cross-fetch';
 import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
-// @ts-ignore
-import { REACT_APP_SERVER_ENDPOINT } from '@env';
 
 import VRTabs from 'navigation/VRTabs/VRTabs';
+import ApolloProviderWrapper from './ApolloProviderWrapper';
 import { DarkTheme, DefaultTheme } from 'styles';
-import { setContext } from '@apollo/client/link/context';
 import useCachedResources from 'hooks/useCachedResources';
-
-const authLink = setContext(async (_, { headers }) => {
-    const auth = await AsyncStorage.getItem('auth');
-
-    return {
-        headers: {
-            ...headers,
-            authorization: auth ? `Bearer ${auth}` : ''
-        }
-    };
-});
-
-const httpLink = createHttpLink({
-    uri: `${REACT_APP_SERVER_ENDPOINT}/graphql`,
-    fetch
-});
-
-export const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache({
-        typePolicies: {
-            Query: {
-                fields: {
-                    getCollection: {
-                        keyArgs: false,
-                        merge(existing = null, incoming) {
-                            if (!existing) {
-                                return incoming;
-                            }
-
-                            return {
-                                ...incoming,
-                                releases: [
-                                    ...existing.releases,
-                                    ...incoming.releases
-                                ]
-                            };
-                        }
-                    },
-                    getWantList: {
-                        keyArgs: false,
-                        merge(existing = null, incoming) {
-                            if (!existing) {
-                                return incoming;
-                            }
-
-                            return {
-                                ...incoming,
-                                wants: [...existing.wants, ...incoming.wants]
-                            };
-                        }
-                    },
-                    getSearch: {
-                        keyArgs: false,
-                        merge(existing = null, incoming) {
-                            if (!existing) {
-                                return incoming;
-                            }
-
-                            return {
-                                ...incoming,
-                                results: [
-                                    ...existing.results,
-                                    ...incoming.results
-                                ]
-                            };
-                        }
-                    },
-                    getMasterReleaseVersions: {
-                        keyArgs: false,
-                        merge(existing = null, incoming) {
-                            if (!existing) {
-                                return incoming;
-                            }
-
-                            return {
-                                ...incoming,
-                                versions: [
-                                    ...existing.versions,
-                                    ...incoming.versions
-                                ]
-                            };
-                        }
-                    }
-                }
-            }
-        }
-    })
-});
 
 export const linking = {
     prefixes: [Linking.createURL('/')],
@@ -172,7 +73,7 @@ const App = () => {
     const scheme = useColorScheme();
 
     return isLoadingComplete ? (
-        <ApolloProvider client={client}>
+        <ApolloProviderWrapper>
             <SafeAreaView
                 style={{
                     flex: 1,
@@ -189,7 +90,7 @@ const App = () => {
                     <VRTabs />
                 </NavigationContainer>
             </SafeAreaView>
-        </ApolloProvider>
+        </ApolloProviderWrapper>
     ) : null;
 };
 

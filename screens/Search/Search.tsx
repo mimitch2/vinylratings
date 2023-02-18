@@ -13,7 +13,7 @@ import {
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
 import { Nav } from 'types';
-import { client } from '../../App';
+import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);

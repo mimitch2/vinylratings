@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { VRText } from '../';
-import { COLORS, ThemeColors, Theme } from '../../constants';
+import { VRText } from 'components';
+import { COLORS, ThemeColors, Theme } from 'constants/index';
 
 interface SegmentedProps {
     components: {
@@ -60,13 +60,13 @@ const styles = (colors: ThemeColors) =>
             paddingBottom: 10
         },
         headerButton: {
-            borderColor: colors.lightGrey,
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
             paddingVertical: 3,
             paddingHorizontal: 10
         },
         headers: {
+            borderColor: colors.lightGrey,
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
             marginVertical: 10,
             flexDirection: 'row'
         }

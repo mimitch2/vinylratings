@@ -45,7 +45,7 @@ import { WIDTH } from 'constants/index';
 import { TrackList, Identifiers } from './components';
 import { Vinyl } from 'svgs';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
-import { client } from '../../App';
+import { client } from '../../ApolloProviderWrapper';
 import { ThemeColors, Theme } from 'styles';
 
 const IMAGE_STYLE = {

@@ -9,7 +9,7 @@ import { REACT_APP_SERVER_ENDPOINT } from '@env';
 import { VRContainer, VRLoading, VRText, VRButton } from 'components';
 import { DisabledContext } from 'navigation/VRTabs/VRTabs';
 import { useAuth } from 'hooks/useAuth';
-import { client } from '../../App';
+import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
 
 const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
