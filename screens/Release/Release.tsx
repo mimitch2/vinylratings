@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Image,
     View,
@@ -56,6 +56,7 @@ const IMAGE_STYLE = {
 
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const { colors }: Theme = useTheme();
+    const stylesMemo = useMemo(() => styles(colors), [colors]);
 
     const [washedOn, setWashedOn] = useState('');
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
@@ -288,7 +289,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             addRatingLoading ? (
                 <VRLoading />
             ) : null}
-            <View style={styles().title}>
+            <View style={stylesMemo.title}>
                 <View>
                     <VRText fontWeight="bold" size={24}>
                         {artist}
@@ -306,7 +307,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     />
                 </View>
             </View>
-            <View style={styles().upperContainer}>
+            <View style={stylesMemo.upperContainer}>
                 <Pressable
                     onPress={() => {
                         setImageModalOpen(true);
@@ -344,8 +345,8 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
 
             {isInCollection ? (
                 <>
-                    <View style={styles().washedOnContainer}>
-                        <VRText styleOverride={styles().washedOnText}>
+                    <View style={stylesMemo.washedOnContainer}>
+                        <VRText styleOverride={stylesMemo.washedOnText}>
                             Washed on:
                         </VRText>
                         <Pressable onPress={() => setCalendarModalOpen(true)}>
