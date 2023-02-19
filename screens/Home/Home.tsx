@@ -7,7 +7,7 @@ import { CommonActions } from '@react-navigation/native';
 import { REACT_APP_SERVER_ENDPOINT } from '@env';
 
 import { VRContainer, VRLoading, VRText, VRButton } from 'components';
-import { DisabledContext } from 'navigation/VRTabs/VRTabs';
+import { DisabledContext } from 'context';
 import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
@@ -21,7 +21,9 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
     const { getFetchResponse } = useFetch();
 
     useEffect(() => {
-        data?.username && setDisabled && setDisabled(false);
+        if (data?.username && setDisabled) {
+            setDisabled(false);
+        }
     }, [setDisabled, data?.username]);
 
     if (loading) {
@@ -46,6 +48,7 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
 
         await client.clearStore();
         client.cache.gc();
+
         navigation.dispatch(
             CommonActions.reset({
                 routes: [{ name: 'Home' }]

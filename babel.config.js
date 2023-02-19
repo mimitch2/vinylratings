@@ -30,14 +30,15 @@ module.exports = function (api) {
                     alias: {
                         components: './components',
                         constants: './constants',
+                        context: './context',
                         helpers: './helpers',
                         hooks: './hooks',
+                        images: './images',
                         navigation: './navigation',
                         screens: './screens',
-                        svgs: './svgs',
-                        test: './test',
                         styles: './styles',
-                        images: './images'
+                        svgs: './svgs',
+                        test: './test'
                     }
                 }
             ]

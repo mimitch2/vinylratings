@@ -63,7 +63,9 @@ export const linking = {
     prefixes: [Linking.createURL('/')],
     config: {
         screens: {
-            Home: 'home'
+            Tabs: {
+                screens: { Home: 'home' }
+            }
         }
     }
 };

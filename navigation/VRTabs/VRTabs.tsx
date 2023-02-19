@@ -11,20 +11,233 @@ import { useTheme } from '@react-navigation/native';
 import { VRIcon, VRText } from 'components';
 import { Collection, Home, Search, WantList, Release, Versions } from 'screens';
 import { ThemeColors, Theme, FONTS } from 'styles';
+import { DisabledContext } from 'context';
+
+// type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
+// // interface Context {
+// //     setDisabled: React.Dispatch<React.SetStateAction<boolean>> | null;
+// //     disabled: boolean;
+// // }
+
+// interface TabBarProps extends BottomTabBarProps {
+//     disabled: boolean;
+// }
+// // export const DisabledContext = React.createContext<Context>({
+// //     setDisabled: null,
+// //     disabled: false
+// // });
+
+// const Tab = createBottomTabNavigator();
+// const Stack = createNativeStackNavigator();
+
+// const ROUTES: {
+//     index: number;
+//     routeName: Routes;
+//     icon: 'collection' | 'home' | 'search' | 'want';
+//     Component: (props: NativeStackScreenProps<any>) => React.ReactElement;
+//     options?: any | undefined;
+// }[] = [
+//     {
+//         index: 0,
+//         routeName: 'Home',
+//         icon: 'home',
+//         Component: Home
+//     },
+//     {
+//         index: 1,
+//         routeName: 'Collection',
+//         icon: 'collection',
+//         Component: Collection
+//     },
+//     {
+//         index: 2,
+//         routeName: 'Search',
+//         icon: 'search',
+//         Component: Search
+//     },
+//     {
+//         index: 3,
+//         routeName: 'Want',
+//         icon: 'want',
+//         Component: WantList
+//     }
+// ];
+
+// const TabBar = ({ navigation, state, disabled }: TabBarProps) => {
+//     const { colors }: Theme = useTheme();
+
+//     return (
+//         <View style={styles(colors).tabBarContainer}>
+//             {ROUTES.map(({ routeName, icon, index }) => {
+//                 const isCurrentScreen = state.index === index;
+
+//                 const color = isCurrentScreen ? colors.primary : colors.text;
+
+//                 const onPress = () => {
+//                     if (!isCurrentScreen) {
+//                         navigation.navigate(routeName);
+//                     }
+//                 };
+
+//                 const isDisabled = Boolean(disabled && index);
+
+//                 return (
+//                     <TouchableOpacity
+//                         disabled={isDisabled}
+//                         key={routeName}
+//                         accessibilityRole="button"
+//                         accessibilityState={
+//                             isCurrentScreen ? { selected: true } : {}
+//                         }
+//                         onPress={onPress}
+//                         style={[
+//                             styles(colors).tabBar,
+//                             {
+//                                 opacity: isDisabled ? 0.4 : 1
+//                             }
+//                         ]}
+//                     >
+//                         <View
+//                             style={{
+//                                 alignItems: 'center'
+//                             }}
+//                         >
+//                             <VRIcon type={icon} color={color} />
+//                             <VRText size={14} color={color}>
+//                                 {routeName}
+//                             </VRText>
+//                         </View>
+//                     </TouchableOpacity>
+//                 );
+//             })}
+//         </View>
+//     );
+// };
+
+// const Tabs = () => {
+//     const { disabled } = useContext(DisabledContext);
+//     const { colors }: Theme = useTheme();
+
+//     return (
+//         <Tab.Navigator
+//             initialRouteName="Tabs"
+//             tabBar={(props: TabBarProps) => (
+//                 <TabBar {...props} disabled={disabled} />
+//             )}
+//             screenOptions={{
+//                 headerTitleStyle: styles(colors).hederTitle,
+//                 headerStyle: styles(colors).header
+//             }}
+//         >
+//             {ROUTES.map(({ Component, routeName, options }) => {
+//                 return (
+//                     <Tab.Screen
+//                         key={routeName}
+//                         name={routeName}
+//                         component={Component}
+//                         options={options || {}}
+//                     />
+//                 );
+//             })}
+//         </Tab.Navigator>
+//     );
+// };
+
+// const VRTabs = () => {
+//     // const [disabled, setDisabled] = useState(true);
+//     const { disabled, setDisabled } = useContext(DisabledContext);
+//     console.log('🚀 ~ file: VRTabs.tsx:149 ~ VRTabs ~ disabled', disabled);
+//     const value = { disabled, setDisabled };
+//     const { colors }: Theme = useTheme();
+
+//     return (
+//         <DisabledContext.Provider value={value}>
+//             <Stack.Navigator
+//                 screenOptions={{
+//                     headerTitleStyle: styles(colors).hederTitle,
+//                     headerStyle: styles(colors).header,
+//                     contentStyle: styles(colors).contentStyle
+//                 }}
+//             >
+//                 <Stack.Screen
+//                     name="Tabs"
+//                     component={Tabs}
+//                     options={{
+//                         headerShown: false
+//                     }}
+//                 />
+//                 <Stack.Screen
+//                     name="Versions"
+//                     component={Versions}
+//                     options={{
+//                         title: 'Pressings'
+//                     }}
+//                 />
+//                 <Stack.Screen
+//                     name="VersionRelease"
+//                     component={Release}
+//                     options={{
+//                         title: 'Pressing'
+//                     }}
+//                 />
+//                 <Stack.Screen
+//                     name="Release"
+//                     component={Release}
+//                     options={{
+//                         headerTitleStyle: styles(colors).hederTitle,
+//                         headerStyle: styles(colors).header,
+//                         contentStyle: styles(colors).contentStyle
+//                     }}
+//                 />
+//             </Stack.Navigator>
+//         </DisabledContext.Provider>
+//     );
+// };
+
+// const styles = (colors: ThemeColors) =>
+//     StyleSheet.create({
+//         tabBar: {
+//             flex: 1,
+//             paddingTop: 10,
+//             backgroundColor: colors.background
+//         },
+//         header: {
+//             backgroundColor: colors.background,
+//             borderBottomColor: colors.primaryFaded,
+//             borderBottomWidth: 0.5
+//         },
+//         hederTitle: {
+//             fontFamily: FONTS.primary,
+//             fontWeight: 'bold',
+//             color: colors.text,
+//             fontSize: 20
+//         },
+//         tabBarContainer: {
+//             flexDirection: 'row',
+//             borderTopColor: colors.primaryFaded,
+//             borderTopWidth: 0.5
+//             // paddingBottom: -20
+//         },
+//         contentStyle: {
+//             backgroundColor: colors.background
+//         }
+//     });
+
+// export default VRTabs;
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
-interface Context {
-    setDisabled: React.Dispatch<React.SetStateAction<boolean>> | null;
-    disabled: boolean;
-}
+// interface Context {
+//     setDisabled: React.Dispatch<React.SetStateAction<boolean>> | null;
+//     disabled: boolean;
+// }
 
 interface TabBarProps extends BottomTabBarProps {
     disabled: boolean;
 }
-export const DisabledContext = React.createContext<Context>({
-    setDisabled: null,
-    disabled: false
-});
+// export const DisabledContext = React.createContext<Context>({
+//     setDisabled: null,
+//     disabled: false
+// });
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -69,7 +282,6 @@ const TabBar = ({ navigation, state, disabled }: TabBarProps) => {
         <View style={styles(colors).tabBarContainer}>
             {ROUTES.map(({ routeName, icon, index }) => {
                 const isCurrentScreen = state.index === index;
-
                 const color = isCurrentScreen ? colors.primary : colors.text;
 
                 const onPress = () => {
@@ -219,6 +431,7 @@ const styles = (colors: ThemeColors) =>
             flexDirection: 'row',
             borderTopColor: colors.primaryFaded,
             borderTopWidth: 0.5
+            // marginTop: 50
             // paddingBottom: -20
         },
         contentStyle: {

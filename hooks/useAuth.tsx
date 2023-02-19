@@ -70,11 +70,10 @@ export const useAuth = (
 
         if (route?.params?.auth) {
             await AsyncStorage.setItem('auth', route.params.auth);
-
             navigation?.setParams({ auth: null });
         }
 
-        const localStorageAuth = (await AsyncStorage.getItem('auth')) || '';
+        const localStorageAuth = (await AsyncStorage.getItem('auth')) ?? '';
 
         const { data, error } = await getUser({
             variables: { auth: localStorageAuth },
