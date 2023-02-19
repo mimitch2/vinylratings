@@ -51,7 +51,7 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
 
         navigation.dispatch(
             CommonActions.reset({
-                routes: [{ name: 'Home' }]
+                routes: [{ name: 'Home', params: { auth: '' } }]
             })
         );
     };
