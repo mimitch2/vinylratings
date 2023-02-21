@@ -277,210 +277,224 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const [{ name: artist }] = artists;
 
     return (
-        <VRContainer
-            onRefresh={refetchRelease}
-            refreshing={loading}
-            startAnimation={!!getRelease || !!error}
-        >
-            {addToCollectionLoading ||
-            isInCollectionLoading ||
-            removeFromCollectionLoading ||
-            addReleaseLoading ||
-            addRatingLoading ? (
-                <VRLoading />
-            ) : null}
-            <View style={stylesMemo.title}>
-                <View>
-                    <VRText fontWeight="bold" size={24}>
-                        {artist}
-                    </VRText>
-                    <VRText fontStyle="italic" size={18}>
-                        {title}
-                    </VRText>
-                </View>
-                <View>
-                    <VRListIndicator
-                        userData={{
-                            in_collection: isInCollection,
-                            in_wantlist: !!inWantList
-                        }}
-                    />
-                </View>
-            </View>
-            <View style={stylesMemo.upperContainer}>
-                <Pressable
-                    onPress={() => {
-                        setImageModalOpen(true);
-                        StatusBar.setHidden(true);
-                    }}
-                >
-                    {images && images.length ? (
-                        <Image
-                            source={{ uri: images[0].resource_url }}
-                            style={IMAGE_STYLE}
-                        />
-                    ) : (
-                        <View style={IMAGE_STYLE}>
-                            <Vinyl />
-                        </View>
-                    )}
-                </Pressable>
-                {images && images.length ? (
-                    <VRImageModal
-                        images={images}
-                        modalOpen={imageModalOpen}
-                        setModalOpen={setImageModalOpen}
-                    />
+        <>
+            <VRContainer
+                onRefresh={refetchRelease}
+                refreshing={loading}
+                startAnimation={!!getRelease || !!error}
+            >
+                {addToCollectionLoading ||
+                isInCollectionLoading ||
+                removeFromCollectionLoading ||
+                addReleaseLoading ||
+                addRatingLoading ? (
+                    <VRLoading />
                 ) : null}
-                <View>
-                    {tags.map((tag) => (
-                        <VRTag key={tag} tag={tag} size="lg" />
-                    ))}
-                </View>
-            </View>
-
-            <VRText
-                styleOverride={{ paddingVertical: 5 }}
-            >{`Released: ${releasedDate}`}</VRText>
-
-            {isInCollection ? (
-                <>
-                    <View style={stylesMemo.washedOnContainer}>
-                        <VRText styleOverride={stylesMemo.washedOnText}>
-                            Washed on:
-                        </VRText>
-                        <Pressable onPress={() => setCalendarModalOpen(true)}>
-                            <VRText color={colors.primary}>
-                                {washedOn || 'Never'}
+                <View style={{ paddingBottom: 20 }}>
+                    <View style={stylesMemo.title}>
+                        <View>
+                            <VRText fontWeight="bold" size={24}>
+                                {artist}
                             </VRText>
+                            <VRText fontStyle="italic" size={18}>
+                                {title}
+                            </VRText>
+                        </View>
+                        <View>
+                            <VRListIndicator
+                                userData={{
+                                    in_collection: isInCollection,
+                                    in_wantlist: !!inWantList
+                                }}
+                            />
+                        </View>
+                    </View>
+                    <View style={stylesMemo.upperContainer}>
+                        <Pressable
+                            onPress={() => {
+                                setImageModalOpen(true);
+                                StatusBar.setHidden(true);
+                            }}
+                        >
+                            {images && images.length ? (
+                                <Image
+                                    source={{ uri: images[0].resource_url }}
+                                    style={IMAGE_STYLE}
+                                />
+                            ) : (
+                                <View style={IMAGE_STYLE}>
+                                    <Vinyl />
+                                </View>
+                            )}
                         </Pressable>
+                        {images && images.length ? (
+                            <VRImageModal
+                                images={images}
+                                modalOpen={imageModalOpen}
+                                setModalOpen={setImageModalOpen}
+                            />
+                        ) : null}
+                        <View>
+                            {tags.map((tag) => (
+                                <VRTag key={tag} tag={tag} size="lg" />
+                            ))}
+                        </View>
                     </View>
-                    <Pressable onPress={removeFromCollection}>
-                        <VRText>Remove from collection</VRText>
-                    </Pressable>
-                </>
-            ) : (
-                <>
-                    <Pressable onPress={() => setFolderModalOpen(true)}>
-                        <VRText>Add to Collection</VRText>
-                    </Pressable>
-                    <VRModal
-                        modalOpen={folderModalOpen}
-                        setModalOpen={setFolderModalOpen}
-                        title="Add To Collection"
-                    >
-                        <FolderModalContent
-                            toggleFolderModal={toggleFolderModal}
-                            folders={foldersWithoutAll}
-                            setFolder={addToCollection}
-                        />
-                    </VRModal>
-                </>
-            )}
-            <VRCalendarModal
-                setModalOpen={setCalendarModalOpen}
-                modalOpen={calendarModalOpen}
-                loading={washedOnLoading}
-                onDatePress={async (date) => {
-                    const washedOnResponse = await addWashedOn({
-                        variables: {
-                            releaseId: +id,
-                            washedOn: date,
-                            title,
-                            artist: artists[0].name
-                        }
-                    });
 
-                    if (washedOnResponse?.data) {
-                        setWashedOn(date);
-                    }
-                    setCalendarModalOpen(false);
-                }}
-            />
-            <VRPressable
-                trackID="release_screen-see_all_versions"
-                onPress={() => {
-                    navigation.navigate({
-                        name: 'Versions',
-                        params: {
-                            masterId: master_id,
-                            artist: artists[0]?.name ?? 'Unknown'
-                        }
-                    });
-                }}
-            >
-                {!isFromVersions ? (
-                    <View style={styles(colors).versions}>
-                        <VRText>See all pressings</VRText>
-                        <VRIcon type="chevronRight" size="sm" />
-                    </View>
-                ) : null}
-            </VRPressable>
-            <VRRateModal
-                onPress={submit}
-                modalOpen={rateModalOpen}
-                setModalOpen={setRateModalOpen}
-                subTitle={`${artist} - ${title}`}
-            />
-            <VRSegmented components={segmentedData} />
-            <VRButton
-                trackID="release_screen-rate"
-                title="Rate this release"
-                onPress={() => setRateModalOpen(true)}
-            />
-            <VRModal
-                title="Discogs Reviews"
-                modalOpen={discogsReviewsModalOpen}
-                setModalOpen={setDiscogsReviewsModalOpen}
-                centerContent={false}
-            >
-                <View style={{ flex: 1 }}>
-                    {webViewLoading ? (
-                        <ActivityIndicator
-                            size="large"
-                            style={{ height: '100%', paddingBottom: '20%' }}
-                        />
-                    ) : null}
-                    <WebView
-                        source={{
-                            uri: `${uri}/reviews`
-                        }}
-                        onNavigationStateChange={({ loading: webLoading }) => {
-                            setWebViewLoading(webLoading);
-                        }}
-                        onShouldStartLoadWithRequest={(event) => {
-                            if (
-                                event?.mainDocumentURL &&
-                                !event.mainDocumentURL.includes(
-                                    `${uri}/reviews`
-                                )
-                            ) {
-                                Alert.alert(
-                                    "We've intentionally restricted this view to just reviews.",
-                                    'Tap the Go To Discogs button to open this in your browser',
-                                    [
-                                        {
-                                            text: 'Got it!',
-                                            style: 'cancel'
-                                        },
-                                        {
-                                            text: 'Go to Discogs',
-                                            onPress: () =>
-                                                Linking.openURL(
-                                                    `${uri}/reviews`
-                                                )
-                                        }
-                                    ]
-                                );
-                                return false;
-                            } else {
-                                return true;
+                    <VRText
+                        styleOverride={{ paddingVertical: 5 }}
+                    >{`Released: ${releasedDate}`}</VRText>
+
+                    {isInCollection ? (
+                        <>
+                            <View style={stylesMemo.washedOnContainer}>
+                                <VRText styleOverride={stylesMemo.washedOnText}>
+                                    Washed on:
+                                </VRText>
+                                <Pressable
+                                    onPress={() => setCalendarModalOpen(true)}
+                                >
+                                    <VRText color={colors.primary}>
+                                        {washedOn || 'Never'}
+                                    </VRText>
+                                </Pressable>
+                            </View>
+                            <Pressable onPress={removeFromCollection}>
+                                <VRText>Remove from collection</VRText>
+                            </Pressable>
+                        </>
+                    ) : (
+                        <>
+                            <Pressable onPress={() => setFolderModalOpen(true)}>
+                                <VRText>Add to Collection</VRText>
+                            </Pressable>
+                            <VRModal
+                                modalOpen={folderModalOpen}
+                                setModalOpen={setFolderModalOpen}
+                                title="Add To Collection"
+                            >
+                                <FolderModalContent
+                                    toggleFolderModal={toggleFolderModal}
+                                    folders={foldersWithoutAll}
+                                    setFolder={addToCollection}
+                                />
+                            </VRModal>
+                        </>
+                    )}
+                    <VRCalendarModal
+                        setModalOpen={setCalendarModalOpen}
+                        modalOpen={calendarModalOpen}
+                        loading={washedOnLoading}
+                        onDatePress={async (date) => {
+                            const washedOnResponse = await addWashedOn({
+                                variables: {
+                                    releaseId: +id,
+                                    washedOn: date,
+                                    title,
+                                    artist: artists[0].name
+                                }
+                            });
+
+                            if (washedOnResponse?.data) {
+                                setWashedOn(date);
                             }
+                            setCalendarModalOpen(false);
                         }}
                     />
+                    <VRPressable
+                        trackID="release_screen-see_all_versions"
+                        onPress={() => {
+                            navigation.navigate({
+                                name: 'Versions',
+                                params: {
+                                    masterId: master_id,
+                                    artist: artists[0]?.name ?? 'Unknown'
+                                }
+                            });
+                        }}
+                    >
+                        {!isFromVersions ? (
+                            <View style={styles(colors).versions}>
+                                <VRText>See all pressings</VRText>
+                                <VRIcon type="chevronRight" size="sm" />
+                            </View>
+                        ) : null}
+                    </VRPressable>
+                    <VRRateModal
+                        onPress={submit}
+                        modalOpen={rateModalOpen}
+                        setModalOpen={setRateModalOpen}
+                        subTitle={`${artist} - ${title}`}
+                    />
+                    <VRSegmented components={segmentedData} />
+
+                    <VRModal
+                        title="Discogs Reviews"
+                        modalOpen={discogsReviewsModalOpen}
+                        setModalOpen={setDiscogsReviewsModalOpen}
+                        centerContent={false}
+                    >
+                        <View style={{ flex: 1 }}>
+                            {webViewLoading ? (
+                                <ActivityIndicator
+                                    size="large"
+                                    style={{
+                                        height: '100%',
+                                        paddingBottom: '20%'
+                                    }}
+                                />
+                            ) : null}
+                            <WebView
+                                source={{
+                                    uri: `${uri}/reviews`
+                                }}
+                                onNavigationStateChange={({
+                                    loading: webLoading
+                                }) => {
+                                    setWebViewLoading(webLoading);
+                                }}
+                                onShouldStartLoadWithRequest={(event) => {
+                                    if (
+                                        event?.mainDocumentURL &&
+                                        !event.mainDocumentURL.includes(
+                                            `${uri}/reviews`
+                                        )
+                                    ) {
+                                        Alert.alert(
+                                            "We've intentionally restricted this view to just reviews.",
+                                            'Tap the Go To Discogs button to open this in your browser',
+                                            [
+                                                {
+                                                    text: 'Got it!',
+                                                    style: 'cancel'
+                                                },
+                                                {
+                                                    text: 'Go to Discogs',
+                                                    onPress: () =>
+                                                        Linking.openURL(
+                                                            `${uri}/reviews`
+                                                        )
+                                                }
+                                            ]
+                                        );
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }}
+                            />
+                        </View>
+                    </VRModal>
                 </View>
-            </VRModal>
-        </VRContainer>
+            </VRContainer>
+            <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+                <VRButton
+                    trackID="release_screen-rate"
+                    title="Rate this release"
+                    onPress={() => setRateModalOpen(true)}
+                />
+            </View>
+        </>
     );
 };
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { HEIGHT, MODAL_HEIGHT_OFFSET } from '../../constants';
-import { globalStyles, ThemeColors, Theme } from '../../constants';
+import { HEIGHT, globalStyles, Theme } from 'constants/index';
 import ModalHeader from './components/ModalHeader';
 
 const VRModal = ({
@@ -27,19 +26,25 @@ const VRModal = ({
 }) => {
     const { colors }: Theme = useTheme();
 
-    let style = styles(colors).modalContent;
-
-    if (centerContent) {
-        style = { ...style, ...globalStyles.alignCenter };
-    }
-
     return (
         <Modal
             visible={modalOpen}
             transparent={transparent}
             animationType={animationType}
         >
-            <View style={style}>
+            <View
+                style={
+                    centerContent
+                        ? {
+                              ...styles.modalContent,
+                              backgroundColor: colors.background
+                          }
+                        : {
+                              ...centeredStyles.modalContent,
+                              backgroundColor: colors.background
+                          }
+                }
+            >
                 <ModalHeader
                     title={title}
                     subTitle={subTitle}
@@ -51,13 +56,20 @@ const VRModal = ({
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        modalContent: {
-            height: HEIGHT,
-            marginTop: 30,
-            backgroundColor: colors.background
-        }
-    });
+const modalContent = {
+    height: HEIGHT,
+    marginTop: 30
+};
+
+const styles = StyleSheet.create({
+    modalContent
+});
+
+const centeredStyles = StyleSheet.create({
+    modalContent: {
+        ...modalContent,
+        ...globalStyles.alignCenter
+    }
+});
 
 export default VRModal;
