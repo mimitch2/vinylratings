@@ -20,3 +20,4 @@ export { default as VRSearchInput } from './VRSearchInput/VRSearchInput';
 export { default as VRSegmented } from './VRSegmented/VRSegmented';
 export { default as VRTag } from './VRTag/VRTag';
 export { default as VRText } from './VRText/VRText';
+export { default as VRWebViewModal } from './VRWebViewModal/VRWebViewModal';

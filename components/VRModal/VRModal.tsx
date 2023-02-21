@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
@@ -26,6 +26,11 @@ const VRModal = ({
 }) => {
     const { colors }: Theme = useTheme();
 
+    const dynamicStyles = useMemo(
+        () => (centerContent ? { ...globalStyles.alignCenter } : {}),
+        [centerContent]
+    );
+
     return (
         <Modal
             visible={modalOpen}
@@ -33,17 +38,10 @@ const VRModal = ({
             animationType={animationType}
         >
             <View
-                style={
-                    centerContent
-                        ? {
-                              ...styles.modalContent,
-                              backgroundColor: colors.background
-                          }
-                        : {
-                              ...centeredStyles.modalContent,
-                              backgroundColor: colors.background
-                          }
-                }
+                style={[
+                    styles.modalContent,
+                    { backgroundColor: colors.background, ...dynamicStyles }
+                ]}
             >
                 <ModalHeader
                     title={title}
@@ -56,19 +54,10 @@ const VRModal = ({
     );
 };
 
-const modalContent = {
-    height: HEIGHT,
-    marginTop: 30
-};
-
 const styles = StyleSheet.create({
-    modalContent
-});
-
-const centeredStyles = StyleSheet.create({
     modalContent: {
-        ...modalContent,
-        ...globalStyles.alignCenter
+        height: HEIGHT,
+        marginTop: 30
     }
 });
 
