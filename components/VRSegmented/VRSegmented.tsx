@@ -3,7 +3,7 @@ import { StyleSheet, View, Pressable } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import { VRText } from 'components';
-import { COLORS, ThemeColors, Theme } from 'constants/index';
+import { Theme } from 'constants/index';
 
 interface SegmentedProps {
     components: {
@@ -17,8 +17,8 @@ const VRSegmented = ({ components }: SegmentedProps) => {
     const { colors }: Theme = useTheme();
 
     return (
-        <View style={styles(colors).container}>
-            <View style={styles(colors).headers}>
+        <View style={styles.container}>
+            <View style={[styles.headers, { borderColor: colors.lightGrey }]}>
                 {components.map(({ header }, idx) => {
                     const isSelected = selectedIdx === idx;
 
@@ -31,7 +31,7 @@ const VRSegmented = ({ components }: SegmentedProps) => {
                                     opacity: pressed ? 0.6 : 1
                                 },
                                 {
-                                    ...styles(colors).headerButton,
+                                    ...styles.headerButton,
                                     backgroundColor: isSelected
                                         ? colors.tertiary
                                         : colors.background
@@ -54,22 +54,20 @@ const VRSegmented = ({ components }: SegmentedProps) => {
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        container: {
-            paddingBottom: 10
-        },
-        headerButton: {
-            paddingVertical: 3,
-            paddingHorizontal: 10
-        },
-        headers: {
-            borderColor: colors.lightGrey,
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            marginVertical: 10,
-            flexDirection: 'row'
-        }
-    });
+const styles = StyleSheet.create({
+    container: {
+        paddingBottom: 10
+    },
+    headerButton: {
+        paddingVertical: 3,
+        paddingHorizontal: 10
+    },
+    headers: {
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        marginVertical: 10,
+        flexDirection: 'row'
+    }
+});
 
 export default VRSegmented;

@@ -10,22 +10,14 @@ import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText } from 'components';
 import { Collection, Home, Search, WantList, Release, Versions } from 'screens';
-import { ThemeColors, Theme, FONTS } from 'styles';
+import { ThemeColors, Theme } from 'styles';
 import { DisabledContext } from 'context';
+import { FONTS } from 'constants/index';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
-// interface Context {
-//     setDisabled: React.Dispatch<React.SetStateAction<boolean>> | null;
-//     disabled: boolean;
-// }
-
 interface TabBarProps extends BottomTabBarProps {
     disabled: boolean;
 }
-// export const DisabledContext = React.createContext<Context>({
-//     setDisabled: null,
-//     disabled: false
-// });
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -201,8 +193,7 @@ const styles = (colors: ThemeColors) =>
     StyleSheet.create({
         tabBar: {
             flex: 1,
-            paddingTop: 10,
-            backgroundColor: colors.background
+            paddingTop: 10
         },
         header: {
             backgroundColor: colors.background,
@@ -219,8 +210,6 @@ const styles = (colors: ThemeColors) =>
             flexDirection: 'row',
             borderTopColor: colors.primaryFaded,
             borderTopWidth: 0.5
-            // marginTop: 50
-            // paddingBottom: -20
         },
         contentStyle: {
             backgroundColor: colors.background

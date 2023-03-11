@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { VRText } from '../';
-import { Theme, ThemeColors } from '../../constants';
+import { VRText } from 'components';
+import { Theme } from 'constants/index';
 
 const VRTag = ({
     tag,
@@ -17,8 +17,9 @@ const VRTag = ({
     return (
         <View
             style={[
-                styles(colors).view,
+                styles.view,
                 {
+                    backgroundColor: colors.primary,
                     paddingHorizontal: size === 'sm' ? 8 : 9,
                     paddingVertical: size === 'sm' ? 0 : 1
                 }
@@ -31,14 +32,12 @@ const VRTag = ({
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        view: {
-            backgroundColor: colors.primary,
-            borderRadius: 3,
-            marginRight: 3,
-            marginBottom: 10
-        }
-    });
+const styles = StyleSheet.create({
+    view: {
+        borderRadius: 3,
+        marginRight: 3,
+        marginBottom: 10
+    }
+});
 
 export default VRTag;

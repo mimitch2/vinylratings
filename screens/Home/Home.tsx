@@ -6,11 +6,12 @@ import { CommonActions } from '@react-navigation/native';
 // @ts-ignore
 import { REACT_APP_SERVER_ENDPOINT } from '@env';
 
-import { VRContainer, VRLoading, VRText, VRButton } from 'components';
+import { VRContainer, VRLoading, VRText, VRButton, VRFooter } from 'components';
 import { DisabledContext } from 'context';
 import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
+import { FONTS } from 'constants/index';
 
 const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
     const {
@@ -69,15 +70,28 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
     };
 
     return (
-        <VRContainer startAnimation>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <VRText fontWeight="bold" size={60}>
-                    VinylRatings
-                </VRText>
-                <Image
-                    source={require('../../images/home_logo.png')}
-                    style={{ height: 300, width: 300 }}
-                />
+        <>
+            <VRContainer startAnimation scrollable={false}>
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <VRText
+                        fontWeight="bold"
+                        size={45}
+                        styleOverride={{ fontFamily: FONTS.heading }}
+                    >
+                        VINYL RATINGS
+                    </VRText>
+                    {/* <Image
+                            source={require('../../images/home_logo.png')}
+                            style={{ height: 300, width: 300 }}
+                        /> */}
+                </View>
+            </VRContainer>
+            <VRFooter>
                 {isLoggedIn ? (
                     <VRButton
                         trackID="home_screen-logout"
@@ -91,8 +105,8 @@ const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
                         onPress={handleLogin}
                     />
                 )}
-            </View>
-        </VRContainer>
+            </VRFooter>
+        </>
     );
 };
 

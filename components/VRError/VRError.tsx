@@ -5,7 +5,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText, VRButton } from 'components';
 import type { IconType } from 'types';
-import type { Theme, ThemeColors } from 'constants/index';
+import type { Theme } from 'constants/index';
 
 type Levels = 'error' | 'warning' | 'info';
 type IconMap = {
@@ -56,11 +56,17 @@ const VRError = ({
     };
 
     return (
-        <View style={[styles(colors).view, styleOverride]}>
+        <View
+            style={[
+                styles.view,
+                { backgroundColor: colors.background },
+                styleOverride
+            ]}
+        >
             <VRIcon
                 type={ICON_MAP[level].icon}
                 size="xlg"
-                styleOverride={styles(colors).icon}
+                styleOverride={styles.icon}
                 color={ICON_MAP[level].color}
             />
 
@@ -79,7 +85,11 @@ const VRError = ({
                     />
                 </>
             ) : (
-                <VRText size={24} fontWeight="bold">
+                <VRText
+                    size={24}
+                    fontWeight="bold"
+                    styleOverride={{ textAlign: 'center' }}
+                >
                     {message}
                 </VRText>
             )}
@@ -87,16 +97,14 @@ const VRError = ({
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        icon: {
-            marginBottom: 10
-        },
-        view: {
-            alignItems: 'center',
-            paddingTop: '50%',
-            backgroundColor: colors.background
-        }
-    });
+const styles = StyleSheet.create({
+    icon: {
+        marginBottom: 10
+    },
+    view: {
+        alignItems: 'center',
+        paddingTop: '50%'
+    }
+});
 
 export default VRError;

@@ -100,7 +100,7 @@ export const client = new ApolloClient({
     })
 });
 
-const ApolloProviderWrapper = ({ children }: { children: JSX.Element }) => {
+const ApolloProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 

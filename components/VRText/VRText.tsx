@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, ViewStyle } from 'react-native';
-import { FONTS, Theme } from '../../constants';
+import React, { useMemo } from 'react';
+import { StyleSheet, Text, TextStyle } from 'react-native';
+import { FONTS, Theme } from 'constants/index';
 import { useTheme } from '@react-navigation/native';
 
 export const VRText = ({
@@ -31,18 +31,22 @@ export const VRText = ({
         | undefined;
     fontStyle?: 'normal' | 'italic' | undefined;
     textAlign?: 'left' | 'center' | 'right';
-    styleOverride?: ViewStyle;
+    styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
 }) => {
     const { colors }: Theme = useTheme();
 
-    const styleFromProps = {
-        fontSize: size,
-        color: color ?? colors.text,
-        fontWeight,
-        fontStyle,
-        textAlign
-    };
+    const styleFromProps = useMemo(
+        () => ({
+            fontSize: size,
+            color: color ?? colors.text,
+            fontWeight,
+            fontStyle,
+            textAlign
+        }),
+        [size, color, fontWeight, fontStyle, textAlign, colors]
+    );
+
     return (
         <Text
             style={[styles.text, styleFromProps, styleOverride]}

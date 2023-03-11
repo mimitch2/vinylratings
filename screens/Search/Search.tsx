@@ -70,7 +70,9 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     useEffect(() => {
         if (data) {
             navigation.setOptions({
-                title: `Search(${data?.getSearch?.pagination?.items || '?'})`
+                title: `Search(${
+                    data?.getSearch?.pagination?.items.toLocaleString() || '?'
+                })`
             });
         }
     }, [data, navigation]);

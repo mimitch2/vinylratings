@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { Theme, ThemeColors } from 'constants/index';
+import { Theme } from 'constants/index';
 import { VRReleaseCard, VRIcon, VRText } from 'components';
 import { Nav, Releases, VoidFuncNoParams } from 'types';
 import { getReleaseTags } from 'helpers';
@@ -90,12 +90,17 @@ const VRReleasesList = ({
                 : getReleaseTags({ item: item.basic_information, isVersions });
 
         return hasHeader ? (
-            <View style={styles(colors).headerContainer}>
+            <View
+                style={[
+                    styles.headerContainer,
+                    { backgroundColor: colors.background }
+                ]}
+            >
                 <VRIcon
                     type="music"
                     color={colors.text}
                     size="sm"
-                    styleOverride={styles(colors).icon}
+                    styleOverride={styles.icon}
                 />
                 <VRText
                     fontWeight="500"
@@ -174,17 +179,15 @@ const VRReleasesList = ({
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        headerContainer: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: colors.background,
-            padding: 6
-        },
-        icon: {
-            marginRight: 10
-        }
-    });
+const styles = StyleSheet.create({
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 6
+    },
+    icon: {
+        marginRight: 10
+    }
+});
 
 export default React.memo(VRReleasesList);

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Image, View, Pressable, StyleSheet, StatusBar } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import { useTheme } from '@react-navigation/native';
@@ -28,7 +28,8 @@ import {
     VRSegmented,
     VRTag,
     VRText,
-    VRWebViewModal
+    VRWebViewModal,
+    VRFooter
 } from 'components';
 import type { Route, DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
@@ -429,13 +430,13 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     />
                 </View>
             </VRContainer>
-            <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+            <VRFooter styleOverride={{ paddingBottom: 0 }}>
                 <VRButton
                     trackID="release_screen-rate"
                     title="Rate this release"
                     onPress={() => setRateModalOpen(true)}
                 />
-            </View>
+            </VRFooter>
         </>
     );
 };

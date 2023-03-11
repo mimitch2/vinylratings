@@ -1,3 +1,5 @@
 export const FONTS = {
-    primary: 'ArchivoNarrow-Regular'
+    primary: 'ArchivoNarrow-Regular',
+    heading: 'TradeGothic-Bold-Extended'
+    // heading: 'LetsJazz'
 };
