@@ -48,6 +48,7 @@ export const GET_SEARCH = gql`
                     genres
                     styles
                     thumb
+                    type
                 }
             }
         }

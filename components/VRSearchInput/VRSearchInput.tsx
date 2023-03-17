@@ -10,7 +10,6 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { VRInput, VRIcon, VRPressable } from 'components';
-import { usePlatform } from 'hooks';
 import { runHapticFeedback } from 'helpers';
 import CameraModal from './components/CameraModal';
 
@@ -25,7 +24,6 @@ const VRSearchInput = ({
 }) => {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showCamera, setShowCamera] = useState(false);
-    const { isIOS } = usePlatform();
 
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {

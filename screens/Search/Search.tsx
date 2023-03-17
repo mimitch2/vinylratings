@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
-
+import { CommonActions } from '@react-navigation/native';
 import { useLazyList } from 'hooks';
 
 import {
@@ -18,6 +18,8 @@ import { client } from '../../ApolloProviderWrapper';
 const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [type, setType] = useState('release');
+
     const {
         called,
         data,
@@ -46,7 +48,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         cache.evict({
             id: 'ROOT_QUERY',
             fieldName: 'getSearch',
-            broadcast: true
+            broadcast: false
         });
 
         cache.gc();
@@ -62,10 +64,16 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     );
 
     useEffect(() => {
-        if (called && searchTerm.length < 3) {
+        if (called && !searchTerm.length) {
             clearQueryCache();
+
+            navigation.dispatch(
+                CommonActions.reset({
+                    routes: [{ name: 'Search' }]
+                })
+            );
         }
-    }, [searchTerm, clearQueryCache, called]);
+    }, [searchTerm, clearQueryCache, called, navigation]);
 
     useEffect(() => {
         if (data) {
