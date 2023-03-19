@@ -13,6 +13,7 @@ export type Nav = {
     navigate: (value: NavigateObject | string) => void;
     setOptions: (value: SetOptionsArguments) => void;
     setParams: (value: SetOptionsArguments) => void;
+    dispatch: (value: any) => void;
 };
 
 export type NavState = {

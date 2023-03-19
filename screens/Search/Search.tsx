@@ -16,6 +16,8 @@ import { Nav } from 'types';
 import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
+    console.log('render');
+
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [type, setType] = useState('release');
@@ -67,13 +69,13 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         if (called && !searchTerm.length) {
             clearQueryCache();
 
-            navigation.dispatch(
-                CommonActions.reset({
-                    routes: [{ name: 'Search' }]
-                })
-            );
+            // navigation.dispatch(
+            //     CommonActions.reset({
+            //         routes: [{ name: 'Search' }]
+            //     })
+            // );
         }
-    }, [searchTerm, clearQueryCache, called, navigation]);
+    }, [searchTerm, clearQueryCache, called]);
 
     useEffect(() => {
         if (data) {
