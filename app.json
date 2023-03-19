@@ -1,40 +1,39 @@
 {
-  "expo": {
-    "name": "vinylratings",
-    "slug": "vinylratings",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "vinylratings",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mimitch.vinylratings"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "267fc7c0-ed9e-482e-a1ad-6a0a31dd5e7f"
-      }
+    "expo": {
+        "name": "Vinyl Ratings",
+        "slug": "vinylratings",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/1024.png",
+        "scheme": "vinylratings",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.mimitch.vinylratings",
+            "jsEngine": "jsc"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            }
+        },
+        "web": {
+            "favicon": "./assets/images/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "267fc7c0-ed9e-482e-a1ad-6a0a31dd5e7f"
+            }
+        }
     }
-  }
 }
