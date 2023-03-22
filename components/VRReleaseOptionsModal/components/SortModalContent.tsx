@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { Theme } from '../../../constants';
 import {
+    Theme,
     SORT_BY_OPTIONS_COLLECTION,
     SORT_BY_OPTIONS_WANT_LIST
-} from '../../../constants';
-import { VRText } from '../../';
-import { VoidFuncNoParams } from '../../../types';
+} from 'constants/index';
+import { VRText } from 'components';
+import { VoidFuncNoParams } from 'types';
 
 const SortModalContent = ({
     toggleSortModal,

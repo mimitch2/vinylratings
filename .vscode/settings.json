@@ -1,7 +1,5 @@
 {
-    "workbench.colorCustomizations": {
-        "titleBar.activeBackground": "#148157"
-    },
+    "workbench.colorCustomizations": {},
     "cSpell.words": ["haptics", "svgs", "vinylratings"],
     "typescript.tsdk": "node_modules/typescript/lib"
 }
