@@ -1,7 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useTheme } from '@react-navigation/native';
+
 import { useLazyList } from 'hooks';
+import { Theme } from 'styles';
+
+const SEARCH_TYPES = ['release', 'artist', 'master', 'label'];
 
 import {
     VRContainer,
@@ -9,7 +13,9 @@ import {
     VRError,
     VRLoading,
     VRReleasesList,
-    VRSearchInput
+    VRSearchInput,
+    VRPressable,
+    VRText
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
 import { Nav } from 'types';
@@ -20,7 +26,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
 
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [type, setType] = useState('release');
+    const [searchType, setSearchType] = useState('release');
 
     const {
         called,
@@ -45,6 +51,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         sortDefault: 'artist'
     });
     const { cache } = client;
+    const { colors }: Theme = useTheme();
 
     const clearQueryCache = useCallback(() => {
         cache.evict({
@@ -100,6 +107,30 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
             />
+
+            {SEARCH_TYPES.map((type) => {
+                const isSelected = type === searchType;
+                return (
+                    <VRPressable
+                        key={type}
+                        onPress={() => {
+                            setSearchType(type);
+                        }}
+                        trackID={`search_screen--select_search_type--${type}`}
+                        styleOverride={{
+                            padding: 10,
+                            borderColor: isSelected
+                                ? colors.primary
+                                : colors.lightGrey,
+                            borderBottomWidth: 1
+                        }}
+                    >
+                        <VRText>
+                            {`${type.charAt(0).toUpperCase()}${type.slice(1)}`}
+                        </VRText>
+                    </VRPressable>
+                );
+            })}
 
             <VRContainer
                 startAnimation
