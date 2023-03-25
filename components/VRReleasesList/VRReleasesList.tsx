@@ -173,7 +173,12 @@ const VRReleasesList = ({
             // scrollEnabled={!loading}
             stickyHeaderIndices={stickyHeaderIndices}
             refreshControl={
-                <RefreshControl refreshing={reloading} onRefresh={onRefresh} />
+                <RefreshControl
+                    refreshing={reloading}
+                    onRefresh={onRefresh}
+                    colors={[colors.grey]}
+                    tintColor={colors.grey}
+                />
             }
         />
     );

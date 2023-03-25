@@ -10,6 +10,10 @@ jest.mock('@react-native-async-storage/async-storage', () =>
     require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
 
+global.AbortController = jest.fn(() => ({
+    abort: jest.fn()
+}));
+
 jest.mock('react-native-image-zoom-viewer', () => 'ImageViewer');
 
 jest.mock('@react-navigation/native', () => ({

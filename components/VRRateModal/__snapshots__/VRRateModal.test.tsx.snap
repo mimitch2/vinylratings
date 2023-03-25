@@ -9,24 +9,28 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "rgb(242, 242, 242)",
-        "height": 1334,
-        "marginTop": 30,
-      }
+      [
+        {
+          "height": 1334,
+          "marginTop": 30,
+        },
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgb(242, 242, 242)",
+        },
+      ]
     }
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "borderBottomColor": "#a6483350",
             "paddingVertical": 20,
             "width": "100%",
           },
-          Object {
+          {
             "borderBottomWidth": 0.5,
           },
         ]
@@ -34,19 +38,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "flexShrink": 1,
               "fontFamily": "ArchivoNarrow-Regular",
             },
-            Object {
+            {
               "color": "rgb(28, 28, 30)",
               "fontSize": 20,
               "fontStyle": "normal",
               "fontWeight": "bold",
               "textAlign": "left",
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -54,25 +58,42 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
       </Text>
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "flexShrink": 1,
               "fontFamily": "ArchivoNarrow-Regular",
             },
-            Object {
+            {
               "color": "rgb(28, 28, 30)",
               "fontSize": 18,
               "fontStyle": "normal",
               "fontWeight": "500",
               "textAlign": "left",
             },
-            Object {},
+            {},
           ]
         }
       >
         1
       </Text>
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -86,7 +107,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "position": "absolute",
             "right": 22,
             "top": 22,
@@ -95,7 +116,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         testID="modal-header-close"
       >
         <View
-          style={Object {}}
+          style={{}}
           testID="vr-icon"
         >
           <RNSVGSvgView
@@ -107,16 +128,16 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             minX={0}
             minY={0}
             style={
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "transparent",
                   "borderWidth": 0,
                 },
-                Object {
+                {
                   "height": 25,
                   "width": 25,
                 },
-                Object {
+                {
                   "flex": 0,
                   "height": 25,
                   "width": 25,
@@ -129,13 +150,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             <RNSVGGroup>
               <RNSVGGroup
                 fill={
-                  Object {
+                  {
                     "payload": 4280032286,
                     "type": 0,
                   }
                 }
                 propList={
-                  Array [
+                  [
                     "fill",
                   ]
                 }
@@ -151,7 +172,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flex": 1,
           "justifyContent": "space-between",
           "padding": 20,
@@ -162,7 +183,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
       <View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
@@ -172,19 +193,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(28, 28, 30)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "500",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -192,15 +213,27 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           </Text>
           <View
             style={
-              Object {
+              {
                 "flexDirection": "row",
               }
             }
           >
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -216,18 +249,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -242,18 +275,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -266,13 +299,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -287,8 +320,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -304,18 +349,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -330,18 +375,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -354,13 +399,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -375,8 +420,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -392,18 +449,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -418,18 +475,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -442,13 +499,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -463,8 +520,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -480,18 +549,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -506,18 +575,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -530,13 +599,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -551,8 +620,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -568,18 +649,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -594,18 +675,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -618,13 +699,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -641,7 +722,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
@@ -651,19 +732,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(28, 28, 30)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "500",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -671,15 +752,27 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           </Text>
           <View
             style={
-              Object {
+              {
                 "flexDirection": "row",
               }
             }
           >
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -695,18 +788,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -721,18 +814,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -745,13 +838,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -766,8 +859,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -783,18 +888,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -809,18 +914,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -833,13 +938,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -854,8 +959,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -871,18 +988,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -897,18 +1014,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -921,13 +1038,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -942,8 +1059,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -959,18 +1088,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -985,18 +1114,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1009,13 +1138,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1030,8 +1159,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1047,18 +1188,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1073,18 +1214,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1097,13 +1238,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1120,7 +1261,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
@@ -1130,19 +1271,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(28, 28, 30)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "500",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -1150,15 +1291,27 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           </Text>
           <View
             style={
-              Object {
+              {
                 "flexDirection": "row",
               }
             }
           >
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1174,18 +1327,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1200,18 +1353,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1224,13 +1377,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1245,8 +1398,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1262,18 +1427,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1288,18 +1453,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1312,13 +1477,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1333,8 +1498,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1350,18 +1527,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1376,18 +1553,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1400,13 +1577,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1421,8 +1598,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1438,18 +1627,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1464,18 +1653,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1488,13 +1677,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1509,8 +1698,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             </View>
             <View
               accessibilityState={
-                Object {
+                {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -1526,18 +1727,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "opacity": 1,
                   },
-                  Object {},
+                  {},
                 ]
               }
               testID="pressable"
             >
               <View
                 style={
-                  Object {
+                  {
                     "paddingHorizontal": 4,
                   }
                 }
@@ -1552,18 +1753,18 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   minX={0}
                   minY={0}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "backgroundColor": "transparent",
                         "borderWidth": 0,
                       },
-                      Object {
+                      {
                         "height": 25,
                         "marginHorizontal": -2,
                         "marginTop": -2,
                         "width": 25,
                       },
-                      Object {
+                      {
                         "flex": 0,
                         "height": 25,
                         "width": 25,
@@ -1576,13 +1777,13 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   <RNSVGGroup>
                     <RNSVGGroup
                       fill={
-                        Object {
+                        {
                           "payload": 4278221567,
                           "type": 0,
                         }
                       }
                       propList={
-                        Array [
+                        [
                           "fill",
                         ]
                       }
@@ -1599,26 +1800,26 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "marginTop": 10,
             }
           }
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(28, 28, 30)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "500",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -1630,8 +1831,8 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
             onChangeText={[Function]}
             placeholder=""
             style={
-              Array [
-                Object {
+              [
+                {
                   "borderColor": "rgb(0, 122, 255)",
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -1639,7 +1840,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   "fontFamily": "ArchivoNarrow-Regular",
                   "padding": 5,
                 },
-                Object {
+                {
                   "height": 110,
                 },
               ]
@@ -1649,19 +1850,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           />
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(28, 28, 30)",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "500",
                   "textAlign": "left",
                 },
-                Object {
+                {
                   "alignSelf": "flex-end",
                   "opacity": 0.7,
                 },
@@ -1675,8 +1876,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
       <View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -1692,12 +1905,12 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "opacity": 1,
               },
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "backgroundColor": undefined,
                   "borderRadius": 25,
@@ -1705,7 +1918,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   "paddingHorizontal": 20,
                   "paddingVertical": 8,
                 },
-                Object {
+                {
                   "marginBottom": 10,
                 },
               ],
@@ -1715,19 +1928,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(242, 242, 242)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "bold",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -1736,8 +1949,20 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": true,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -1753,12 +1978,12 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "opacity": 0.6,
               },
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "backgroundColor": "rgb(0, 122, 255)",
                   "borderRadius": 25,
@@ -1766,7 +1991,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   "paddingHorizontal": 20,
                   "paddingVertical": 8,
                 },
-                Object {
+                {
                   "marginBottom": 40,
                 },
               ],
@@ -1776,19 +2001,19 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexShrink": 1,
                   "fontFamily": "ArchivoNarrow-Regular",
                 },
-                Object {
+                {
                   "color": "rgb(242, 242, 242)",
                   "fontSize": 20,
                   "fontStyle": "normal",
                   "fontWeight": "bold",
                   "textAlign": "left",
                 },
-                Object {},
+                {},
               ]
             }
           >

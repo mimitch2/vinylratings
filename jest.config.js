@@ -19,5 +19,6 @@ module.exports = {
     coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
     globals: {
         window: {}
-    }
+    },
+    testEnvironment: 'node'
 };

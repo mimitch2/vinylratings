@@ -9,7 +9,8 @@ import { flushPromises } from 'test/testing.helpers';
 
 describe('Home', () => {
     const navigationMock = {
-        setParams: jest.fn()
+        setParams: jest.fn(),
+        dispatch: jest.fn()
     };
     const routeMock = {
         params: {
