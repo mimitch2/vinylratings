@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
+import { View } from 'react-native';
 import { CommonActions, useTheme } from '@react-navigation/native';
 
 import { useLazyList } from 'hooks';
@@ -108,30 +109,39 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 setSearchTerm={setSearchTerm}
             />
 
-            {SEARCH_TYPES.map((type) => {
-                const isSelected = type === searchType;
-                return (
-                    <VRPressable
-                        key={type}
-                        onPress={() => {
-                            setSearchType(type);
-                        }}
-                        trackID={`search_screen--select_search_type--${type}`}
-                        styleOverride={{
-                            padding: 10,
-                            borderColor: isSelected
-                                ? colors.primary
-                                : colors.lightGrey,
-                            borderBottomWidth: 1
-                        }}
-                    >
-                        <VRText>
-                            {`${type.charAt(0).toUpperCase()}${type.slice(1)}`}
-                        </VRText>
-                    </VRPressable>
-                );
-            })}
-
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 10
+                }}
+            >
+                {SEARCH_TYPES.map((type) => {
+                    const isSelected = type === searchType;
+                    return (
+                        <VRPressable
+                            key={type}
+                            onPress={() => {
+                                setSearchType(type);
+                            }}
+                            trackID={`search_screen--select_search_type--${type}`}
+                            styleOverride={{
+                                padding: 10,
+                                borderColor: isSelected
+                                    ? colors.primary
+                                    : colors.lightGrey,
+                                borderBottomWidth: 1
+                            }}
+                        >
+                            <VRText>
+                                {`${type.charAt(0).toUpperCase()}${type.slice(
+                                    1
+                                )}`}
+                            </VRText>
+                        </VRPressable>
+                    );
+                })}
+            </View>
             <VRContainer
                 startAnimation
                 scrollable={false}
