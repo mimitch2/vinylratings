@@ -94,73 +94,76 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         (loading && !loadingMore && !reloading) || isSortingOrFiltering;
 
     return (
-        <VRContainer
-            startAnimation
-            scrollable={false}
-            styleOverride={{
-                paddingBottom: 65
-            }}
-        >
-            {isLoading && <VRLoading />}
-
-            <VRReleaseOptionsModal
-                sort={sort}
-                setSort={setSort}
-                sortOrder={sortOrder}
-                setSortOrder={setSortOrder}
-            />
+        <>
             <VRSearchInput
                 runQuery={runSearchQuery}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
             />
 
-            {error ? (
-                <VRError
-                    error={error}
-                    trackID="search_screen-error"
-                    level="error"
-                    styleOverride={{
-                        opacity: loading ? 0.5 : 1
-                    }}
-                />
-            ) : null}
+            <VRContainer
+                startAnimation
+                scrollable={false}
+                styleOverride={{
+                    paddingBottom: 65
+                }}
+            >
+                {isLoading && <VRLoading />}
 
-            {!called ? (
-                <VRError
-                    message="Enter a search term"
-                    level="info"
-                    styleOverride={{
-                        opacity: loading ? 0.5 : 1
-                    }}
-                />
-            ) : null}
-
-            {called && results?.length ? (
-                <VRReleasesList
-                    innerRef={scrollViewRef}
-                    data={results ?? []}
-                    loading={loading || isLoading}
-                    reloading={reloading}
-                    loadingMore={loadingMore}
-                    onRefresh={onRefresh}
-                    onLoadMore={onLoadMore}
-                    navigation={navigation}
+                <VRReleaseOptionsModal
                     sort={sort}
-                    isSearch
+                    setSort={setSort}
+                    sortOrder={sortOrder}
+                    setSortOrder={setSortOrder}
                 />
-            ) : null}
 
-            {called && !results?.length && !loading ? (
-                <VRError
-                    message="Nothing found! Try changing your search"
-                    level="warning"
-                    styleOverride={{
-                        opacity: loading ? 0.5 : 1
-                    }}
-                />
-            ) : null}
-        </VRContainer>
+                {error ? (
+                    <VRError
+                        error={error}
+                        trackID="search_screen-error"
+                        level="error"
+                        styleOverride={{
+                            opacity: loading ? 0.5 : 1
+                        }}
+                    />
+                ) : null}
+
+                {!called ? (
+                    <VRError
+                        message="Enter a search term"
+                        level="info"
+                        styleOverride={{
+                            opacity: loading ? 0.5 : 1
+                        }}
+                    />
+                ) : null}
+
+                {called && results?.length ? (
+                    <VRReleasesList
+                        innerRef={scrollViewRef}
+                        data={results ?? []}
+                        loading={loading || isLoading}
+                        reloading={reloading}
+                        loadingMore={loadingMore}
+                        onRefresh={onRefresh}
+                        onLoadMore={onLoadMore}
+                        navigation={navigation}
+                        sort={sort}
+                        isSearch
+                    />
+                ) : null}
+
+                {called && !results?.length && !loading ? (
+                    <VRError
+                        message="Nothing found! Try changing your search"
+                        level="warning"
+                        styleOverride={{
+                            opacity: loading ? 0.5 : 1
+                        }}
+                    />
+                ) : null}
+            </VRContainer>
+        </>
     );
 };
 

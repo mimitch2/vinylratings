@@ -93,7 +93,7 @@ const VRSearchInput = ({
     };
 
     return (
-        <View>
+        <View style={styles.container}>
             <VRInput
                 handleTextChange={(value) => setSearchTerm(value)}
                 value={searchTerm}
@@ -126,6 +126,10 @@ const VRSearchInput = ({
 };
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 12,
+        marginHorizontal: 20
+    },
     icon: {
         position: 'absolute',
         right: 5,

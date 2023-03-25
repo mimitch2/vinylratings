@@ -45,7 +45,10 @@ const ROUTES: {
         index: 2,
         routeName: 'Search',
         icon: 'search',
-        Component: Search
+        Component: Search,
+        options: {
+            header: () => null
+        }
     },
     {
         index: 3,
