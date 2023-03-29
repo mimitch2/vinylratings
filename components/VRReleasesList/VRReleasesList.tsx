@@ -9,8 +9,14 @@ import {
 import { useTheme } from '@react-navigation/native';
 
 import { Theme } from 'constants/index';
-import { VRReleaseCard, VRIcon, VRText } from 'components';
-import { Nav, Releases, VoidFuncNoParams } from 'types';
+import { VRArtistCard, VRReleaseCard, VRIcon, VRText } from 'components';
+import {
+    SearchTypes,
+    ArtistSearch,
+    Nav,
+    Releases,
+    VoidFuncNoParams
+} from 'types';
 import { getReleaseTags } from 'helpers';
 import { PER_PAGE } from 'hooks';
 
@@ -76,7 +82,18 @@ const VRReleasesList = ({
         });
     };
 
-    const renderCard = ({ item }: { item: Releases }) => {
+    const renderArtistCard = ({ item }: { item: ArtistSearch }) => {
+        return (
+            <VRArtistCard
+                artist={item}
+                onPress={() => {
+                    console.log(item.id);
+                }}
+            />
+        );
+    };
+
+    const renderReleaseCard = ({ item }: { item: Releases }) => {
         const hasHeader = item?.header;
         const [genre] = item?.basic_information?.genres ?? 'Unknown';
         const userData = item?.basic_information?.user_data ?? {
@@ -126,6 +143,18 @@ const VRReleasesList = ({
                 disabled={loading || reloading || loadingMore}
             />
         );
+    };
+
+    const renderCard = ({ item }) => {
+        if (item?.type === SearchTypes.ARTIST) {
+            return renderArtistCard({ item });
+        }
+
+        if (item?.basic_information?.type === SearchTypes.RELEASE) {
+            return renderReleaseCard({ item });
+        }
+
+        return <View />;
     };
 
     const ListFooterComponent = (

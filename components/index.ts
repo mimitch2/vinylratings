@@ -1,3 +1,4 @@
+export { default as VRArtistCard } from './VRArtistCard/VRArtistCard';
 export { default as VRButton } from './VRButton/VRButton';
 export { default as VRCalendar } from './VRCalendar/VRCalendar';
 export { default as VRCalendarModal } from './VRCalendarModal/VRCalendarModal';

@@ -38,7 +38,8 @@ module.exports = function (api) {
                         screens: './screens',
                         styles: './styles',
                         svgs: './svgs',
-                        test: './test'
+                        test: './test',
+                        types: './types'
                     }
                 }
             ]

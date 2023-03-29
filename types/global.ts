@@ -5,6 +5,7 @@ import {
     CompositeScreenProps,
     NavigatorScreenParams
 } from '@react-navigation/native';
+import { UserData } from './releases';
 
 export type VoidFunc = <T>(params: T | undefined) => void;
 export type VoidFuncNoParams = () => void;
@@ -68,3 +69,17 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
         BottomTabScreenProps<RootTabParamList, Screen>,
         NativeStackScreenProps<RootStackParamList>
     >;
+
+export enum SearchTypes {
+    ARTIST = 'artist',
+    RELEASE = 'release',
+    MASTER = 'master'
+}
+
+export type ArtistSearch = {
+    title: string;
+    id: number;
+    type: SearchTypes;
+    thumb: string;
+    user_data: UserData;
+};
