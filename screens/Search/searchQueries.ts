@@ -21,34 +21,66 @@ export const GET_SEARCH = gql`
             offset: $offset
             limit: $limit
         ) {
-            pagination {
-                items
-                page
-                pages
-                per_page
-            }
-            results {
-                id
-                rating
-                basic_information {
-                    id
+            ... on ArtistSearchResult {
+                isArtists
+                pagination {
+                    items
+                    page
+                    pages
+                    per_page
+                }
+                results {
                     title
-                    artists {
-                        name
-                    }
+                    cover_image
+                    id
+                    thumb
+                    type
                     user_data {
                         in_collection
                         in_wantlist
                     }
-                    formats {
-                        name
+                }
+            }
+            ... on ReleasesSearchResult {
+                isReleases
+                pagination {
+                    items
+                    page
+                    pages
+                    per_page
+                }
+                results {
+                    id
+                    basic_information {
+                        format
+                        country
+                        artists {
+                            name
+                        }
+                        genres
+                        formats {
+                            descriptions
+                            name
+                            qty
+                            text
+                        }
+                        id
+                        label
+                        released
+                        styles
+                        thumb
+                        title
+                        type
+                        user_data {
+                            in_collection
+                            in_wantlist
+                        }
+                        year
                     }
-                    year
-                    country
-                    genres
-                    styles
-                    thumb
-                    type
+                    date_added
+                    folder_id
+                    instance_id
+                    rating
                 }
             }
         }

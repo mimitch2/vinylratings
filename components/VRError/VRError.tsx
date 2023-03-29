@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
-import RNRestart from 'react-native-restart';
+import * as Updates from 'expo-updates';
 import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText, VRButton } from 'components';
@@ -79,8 +79,8 @@ const VRError = ({
                         containerStyle={{ marginTop: 20 }}
                         trackID={trackID || 'vr_error-general'}
                         title="Restart"
-                        onPress={() => {
-                            RNRestart.Restart();
+                        onPress={async () => {
+                            await Updates.reloadAsync();
                         }}
                     />
                 </>

@@ -30,19 +30,22 @@ interface Variables {
     sort_order: SortOrder;
     offset: number;
     limit: number;
+    type: string;
 }
 
 export const useLazyList = ({
     scrollViewRef,
     QUERY,
     queryKey,
-    sortDefault = 'added'
+    sortDefault = 'added',
+    type = 'release'
 }: {
     scrollViewRef: React.RefObject<FlatList<Releases>>;
     QUERY: DocumentNode;
     queryKey: string;
     lazy?: boolean;
     sortDefault?: string;
+    type?: string;
 }) => {
     const [pagination, setPagination] =
         useState<Pagination>(PAGINATION_DEFAULT);
@@ -52,13 +55,18 @@ export const useLazyList = ({
     const [sort, setSort] = useState(sortDefault);
     const [sortOrder, setSortOrder] = useState<SortOrder>(SORT_ORDER_DEFAULT);
 
+    useEffect(() => {
+        setSort(sortDefault);
+    }, [sortDefault]);
+
     const variables: Variables = {
         page: 1,
         per_page: PER_PAGE,
         sort,
         sort_order: sortOrder,
         offset: 0,
-        limit: PER_PAGE
+        limit: PER_PAGE,
+        type
     };
 
     const [
@@ -96,7 +104,7 @@ export const useLazyList = ({
         if (called) {
             asyncRefresh();
         }
-    }, [sort, sortOrder, refetch, called]);
+    }, [sort, sortOrder, type, refetch, called]);
 
     const onRefresh = async () => {
         runHapticFeedback();

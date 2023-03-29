@@ -23,11 +23,10 @@ import { Nav } from 'types';
 import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
-    console.log('render');
-
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState('release');
+    const sortDefault = searchType === 'release' ? 'year' : 'artist';
 
     const {
         called,
@@ -49,7 +48,8 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         scrollViewRef,
         QUERY: GET_SEARCH,
         queryKey: 'getSearch',
-        sortDefault: 'artist'
+        sortDefault,
+        type: searchType
     });
     const { cache } = client;
     const { colors }: Theme = useTheme();
