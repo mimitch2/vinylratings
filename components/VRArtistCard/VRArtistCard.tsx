@@ -20,7 +20,7 @@ const VRArtistCard = ({
 }: {
     artist: ArtistSearch;
     onPress: VoidFuncNoParams;
-    disabled: boolean;
+    disabled?: boolean;
 }) => {
     const { colors }: Theme = useTheme();
 
@@ -28,7 +28,7 @@ const VRArtistCard = ({
 
     return (
         <VRPressable
-            trackID="release_card-press"
+            trackID="artist_card-press"
             onPress={onPress}
             disabled={disabled}
             styleOverride={[
@@ -63,24 +63,17 @@ const VRArtistCard = ({
                                 width: '100%'
                             }}
                         >
-                            <VRText fontWeight="bold" size={20}>
-                                {title}
-                            </VRText>
-
+                            <View>
+                                <VRText fontWeight="bold" size={22}>
+                                    {title}
+                                </VRText>
+                                <View style={styles(colors).tags}>
+                                    <VRTag tag={'Artist'} size="sm" />
+                                </View>
+                            </View>
                             <VRListIndicator userData={user_data ?? null} />
                         </View>
-                        <VRText
-                            size={14}
-                            fontStyle="italic"
-                            numberOfLines={1}
-                            styleOverride={{ paddingRight: 5 }}
-                        >
-                            {title}
-                        </VRText>
                     </View>
-                </View>
-                <View style={styles(colors).tags}>
-                    <VRTag tag={'Artist'} size="sm" />
                 </View>
             </View>
             <View style={styles(colors).iconContainer}>
@@ -115,7 +108,7 @@ const styles = (colors: ThemeColors) =>
         tags: {
             flexDirection: 'row',
             flex: 1,
-            marginTop: 10
+            marginTop: 4
         },
         iconContainer: {
             justifyContent: 'center'

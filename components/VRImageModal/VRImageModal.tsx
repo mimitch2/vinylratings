@@ -24,7 +24,9 @@ const VRImageModal = ({
 }) => {
     const mappedImages = images.map((image) => {
         return {
-            url: image.resource_url
+            url: image.resource_url,
+            height: image.height,
+            width: image.width
         };
     });
 

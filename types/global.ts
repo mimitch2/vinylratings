@@ -5,14 +5,14 @@ import {
     CompositeScreenProps,
     NavigatorScreenParams
 } from '@react-navigation/native';
-import { UserData } from './releases';
+import { UserData, DiscogsImage } from './releases';
 
 export type VoidFunc = <T>(params: T | undefined) => void;
 export type VoidFuncNoParams = () => void;
 
 export type Colors = keyof typeof COLORS_MAP.light;
 
-export type IconSize = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg';
+export type IconSize = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg' | 'xxxlg';
 export type IconType =
     | 'asc'
     | 'barcode'
@@ -33,6 +33,7 @@ export type IconType =
     | 'starEmpty'
     | 'starFull'
     | 'starHalf'
+    | 'users'
     | 'want'
     | 'warning';
 
@@ -77,9 +78,25 @@ export enum SearchTypes {
 }
 
 export type ArtistSearch = {
+    cover_image: string;
     title: string;
     id: number;
     type: SearchTypes;
     thumb: string;
     user_data: UserData;
+};
+
+export type Member = {
+    id: number;
+    name: string;
+    active: boolean;
+    thumbnail_url: string;
+};
+
+export type ArtistDetail = {
+    name: string;
+    profile: string;
+    namevariations: string[];
+    images: DiscogsImage[];
+    members: Member[];
 };

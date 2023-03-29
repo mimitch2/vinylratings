@@ -1,3 +1,4 @@
+export { default as ArtistDetails } from './ArtistDetails/ArtistDetails';
 export { default as Collection } from './Collection/Collection';
 export { default as Home } from './Home/Home';
 export { default as Release } from './Release/Release';

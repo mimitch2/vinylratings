@@ -83,12 +83,20 @@ const VRReleasesList = ({
     };
 
     const renderArtistCard = ({ item }: { item: ArtistSearch }) => {
+        const { id } = item;
         return (
             <VRArtistCard
                 artist={item}
                 onPress={() => {
-                    console.log(item.id);
+                    navigation.navigate({
+                        name: 'Artist',
+                        params: {
+                            id,
+                            coverImage: item.cover_image
+                        }
+                    });
                 }}
+                disabled={loading || reloading || loadingMore}
             />
         );
     };
@@ -134,7 +142,7 @@ const VRReleasesList = ({
                 key={item.id}
                 onPress={() =>
                     onCardPress({
-                        id: item.id,
+                        id: +item.id,
                         userData
                     })
                 }
@@ -150,11 +158,7 @@ const VRReleasesList = ({
             return renderArtistCard({ item });
         }
 
-        if (item?.basic_information?.type === SearchTypes.RELEASE) {
-            return renderReleaseCard({ item });
-        }
-
-        return <View />;
+        return renderReleaseCard({ item });
     };
 
     const ListFooterComponent = (

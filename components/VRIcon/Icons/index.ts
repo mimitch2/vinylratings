@@ -16,6 +16,7 @@ export { default as Sort } from './Sort';
 export { default as StarEmpty } from './StarEmpty';
 export { default as StarFull } from './StarFull';
 export { default as StarHalf } from './StarHalf';
+export { default as Users } from './Users';
 export { default as UserCollection } from './UserCollection';
 export { default as Want } from './Want';
 export { default as Warning } from './Warning';

@@ -9,7 +9,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText } from 'components';
-import { Collection, Home, Search, WantList, Release, Versions } from 'screens';
+import {
+    Collection,
+    Home,
+    Search,
+    WantList,
+    Release,
+    Versions,
+    ArtistDetails
+} from 'screens';
 import { ThemeColors, Theme } from 'styles';
 import { DisabledContext } from 'context';
 import { FONTS } from 'constants/index';
@@ -162,6 +170,13 @@ const VRTabs = () => {
                     component={Tabs}
                     options={{
                         headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="Artist"
+                    component={ArtistDetails}
+                    options={{
+                        title: 'Artist'
                     }}
                 />
                 <Stack.Screen

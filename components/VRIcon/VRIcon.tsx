@@ -22,6 +22,7 @@ import {
     StarEmpty,
     StarFull,
     StarHalf,
+    Users,
     UserCollection,
     Want,
     Warning
@@ -41,6 +42,7 @@ export const SVG_MAP: SVGMap = {
     chevronRight: ChevronRight,
     close: Close,
     collection: UserCollection,
+    users: Users,
     desc: Desc,
     error: Error,
     filter: Filter,
@@ -64,7 +66,8 @@ const SIZE_MAP = {
     md: 25,
     lg: 30,
     xlg: 40,
-    xxlg: 50
+    xxlg: 50,
+    xxxlg: 100
 };
 
 const VRIcon = ({
