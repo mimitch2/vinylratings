@@ -51,6 +51,10 @@ export const GET_SEARCH = gql`
                 }
                 results {
                     id
+                    date_added
+                    folder_id
+                    instance_id
+                    rating
                     basic_information {
                         format
                         country
@@ -77,10 +81,6 @@ export const GET_SEARCH = gql`
                         }
                         year
                     }
-                    date_added
-                    folder_id
-                    instance_id
-                    rating
                 }
             }
         }

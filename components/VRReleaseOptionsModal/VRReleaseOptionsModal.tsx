@@ -16,7 +16,8 @@ const VRReleaseOptionsModal = ({
     folders,
     folder,
     setFolder,
-    isWantList = false
+    isWantList = false,
+    isArtistSearch = false
 }: {
     sort: string;
     setSort: Dispatch<SetStateAction<string>>;
@@ -26,6 +27,7 @@ const VRReleaseOptionsModal = ({
     folder?: Folder;
     setFolder?: Dispatch<SetStateAction<Folder>>;
     isWantList?: boolean;
+    isArtistSearch?: boolean;
 }) => {
     const [sortModalOpen, setSortModalOpen] = useState(false);
     const [folderModalOpen, setFolderModalOpen] = useState(false);
@@ -71,6 +73,7 @@ const VRReleaseOptionsModal = ({
                     sort={sort}
                     setSort={setSort}
                     isWantList={isWantList}
+                    isArtistSearch={isArtistSearch}
                 />
             </VRModal>
             {shouldRenderFolders && (

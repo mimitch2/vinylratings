@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Pressable, StatusBar } from 'react-native';
 import { useQuery } from '@apollo/client';
-
 import {
     VRText,
     VRImageModal,
@@ -44,13 +43,18 @@ const ArtistDetails = ({ route }) => {
 
     const { images, name, profile, members } = data.getArtist;
 
+    const membersCopy = members && [...members];
+    const sortedMembers =
+        membersCopy &&
+        membersCopy.sort((a: any, b: any) => b.active - a.active);
+
     const segmentedData = [
         {
             header: 'Members',
             component: (
-                <View>
-                    {members ? (
-                        members.map((member) => {
+                <View style={{ paddingBottom: 20 }}>
+                    {sortedMembers ? (
+                        sortedMembers.map((member) => {
                             return (
                                 <View
                                     key={member.id}
@@ -106,6 +110,7 @@ const ArtistDetails = ({ route }) => {
                 <>
                     {profile ? (
                         <VRText styleOverride={{ paddingBottom: 20 }}>
+                            {/* {`${template(profile)}`} */}
                             {profile}
                         </VRText>
                     ) : (

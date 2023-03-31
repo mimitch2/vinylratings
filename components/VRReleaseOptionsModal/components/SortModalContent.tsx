@@ -5,7 +5,8 @@ import { useTheme } from '@react-navigation/native';
 import {
     Theme,
     SORT_BY_OPTIONS_COLLECTION,
-    SORT_BY_OPTIONS_WANT_LIST
+    SORT_BY_OPTIONS_WANT_LIST,
+    SORT_BY_OPTIONS_ARTIST
 } from 'constants/index';
 import { VRText } from 'components';
 import { VoidFuncNoParams } from 'types';
@@ -14,17 +15,21 @@ const SortModalContent = ({
     toggleSortModal,
     sort,
     setSort,
-    isWantList
+    isWantList,
+    isArtistSearch = false
 }: {
     toggleSortModal: VoidFuncNoParams;
     sort: string;
     setSort: Dispatch<SetStateAction<string>>;
     isWantList: boolean;
+    isArtistSearch?: boolean;
 }) => {
     const { colors }: Theme = useTheme();
 
     const options = isWantList
         ? SORT_BY_OPTIONS_WANT_LIST
+        : isArtistSearch
+        ? SORT_BY_OPTIONS_ARTIST
         : SORT_BY_OPTIONS_COLLECTION;
 
     return (

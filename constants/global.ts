@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { PayloadKeys } from 'types';
 
 const commonSortOptions = [
@@ -19,6 +18,10 @@ clonedSortOptions.splice(2, 0, {
 });
 
 export const SORT_BY_OPTIONS_WANT_LIST = clonedSortOptions;
+export const SORT_BY_OPTIONS_ARTIST = [
+    { value: 'artist', label: 'Artist' },
+    { value: 'label', label: 'Label' }
+];
 
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;

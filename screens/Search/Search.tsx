@@ -5,8 +5,9 @@ import { CommonActions, useTheme } from '@react-navigation/native';
 
 import { useLazyList } from 'hooks';
 import { Theme } from 'styles';
+import { SearchTypes, Nav } from 'types';
 
-const SEARCH_TYPES = ['release', 'artist', 'master', 'label'];
+const SEARCH_TYPES = Object.values(SearchTypes);
 
 import {
     VRContainer,
@@ -19,7 +20,6 @@ import {
     VRText
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
-import { Nav } from 'types';
 import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
@@ -156,6 +156,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     setSort={setSort}
                     sortOrder={sortOrder}
                     setSortOrder={setSortOrder}
+                    isArtistSearch={searchType === SearchTypes.ARTIST}
                 />
 
                 {error ? (
