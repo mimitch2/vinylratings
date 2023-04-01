@@ -26,7 +26,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState('release');
-    const sortDefault = searchType === 'release' ? 'year' : 'artist';
+    const sortDefault = 'artist';
 
     const {
         called,

@@ -22,7 +22,6 @@ export const SORT_BY_OPTIONS_ARTIST = [
     { value: 'artist', label: 'Artist' },
     { value: 'label', label: 'Label' }
 ];
-
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 export const MODAL_HEIGHT_OFFSET = 90;
