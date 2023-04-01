@@ -112,7 +112,11 @@ const VRReleasesList = ({
         const tags =
             hasHeader || isSearch
                 ? []
-                : getReleaseTags({ item: item.basic_information, isVersions });
+                : getReleaseTags({
+                      item: item.basic_information,
+                      isVersions,
+                      type
+                  });
 
         return hasHeader ? (
             <View

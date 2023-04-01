@@ -83,6 +83,43 @@ export const GET_SEARCH = gql`
                     }
                 }
             }
+            ... on MasterSearchResult {
+                isMasters
+                pagination {
+                    items
+                    page
+                    pages
+                    per_page
+                }
+                results {
+                    id
+                    basic_information {
+                        country
+                        artists {
+                            name
+                        }
+                        genres
+                        formats {
+                            descriptions
+                            name
+                            qty
+                            text
+                        }
+                        id
+                        label
+                        released
+                        styles
+                        thumb
+                        title
+                        type
+                        user_data {
+                            in_collection
+                            in_wantlist
+                        }
+                        year
+                    }
+                }
+            }
         }
     }
 `;

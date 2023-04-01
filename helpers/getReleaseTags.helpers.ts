@@ -30,11 +30,13 @@ const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
 export const getReleaseTags = ({
     item,
     limit = true,
-    isVersions = false
+    isVersions = false,
+    type = 'release'
 }: {
     item: BasicInformation | DiscogsVersion;
     limit?: boolean;
     isVersions?: boolean;
+    type?: string;
 }) => {
     if (isVersions) {
         return getVersionsTags({ item: item as DiscogsVersion });
@@ -72,6 +74,10 @@ export const getReleaseTags = ({
 
     if (formatInfo?.text && !limit) {
         tagsArray.push(formatInfo.text);
+    }
+
+    if (type === 'master') {
+        tagsArray.unshift('Master');
     }
 
     descriptions &&

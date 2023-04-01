@@ -40,7 +40,8 @@ const VRReleaseCard = ({
             artists,
             country,
             year,
-            user_data
+            user_data,
+            type
         }
     } = release;
 
@@ -51,6 +52,10 @@ const VRReleaseCard = ({
             ? [country || 'Unknown', year || 'Unknown']
             : tags;
 
+        if (isSearch && type === 'master') {
+            targetTags.unshift('Master');
+        }
+
         let wantListTags = null;
 
         if (isWantList) {
@@ -58,7 +63,7 @@ const VRReleaseCard = ({
         }
 
         return wantListTags ?? targetTags;
-    }, [releaseStyle, isWantList, country, isSearch, year, tags]);
+    }, [releaseStyle, isWantList, country, isSearch, year, tags, type]);
 
     return (
         <VRPressable
@@ -111,10 +116,12 @@ const VRReleaseCard = ({
                         >
                             {title}
                         </VRText>
-                        <VRRatingsStars
-                            average={release?.rating ?? 0}
-                            size="sm"
-                        />
+                        {isSearch && type !== 'master' ? (
+                            <VRRatingsStars
+                                average={release?.rating ?? 0}
+                                size="sm"
+                            />
+                        ) : null}
                     </View>
                 </View>
                 <View style={styles(colors).tags}>

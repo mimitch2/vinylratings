@@ -1,4 +1,5 @@
 import { User } from './user';
+import { SearchTypes } from './global';
 
 export type DiscogsImage = {
     resource_url: string;
@@ -54,6 +55,7 @@ export type BasicInformation = {
     released?: string;
     label?: string;
     user_data?: UserData;
+    type: SearchTypes;
 };
 
 export type DiscogsVersion = {
