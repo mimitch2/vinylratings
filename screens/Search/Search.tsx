@@ -25,7 +25,7 @@ import { client } from '../../ApolloProviderWrapper';
 const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchType, setSearchType] = useState('release');
+    const [searchType, setSearchType] = useState(SearchTypes.RELEASE);
     const sortDefault = 'artist';
 
     const {
