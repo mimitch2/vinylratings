@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useRoute, useTheme } from '@react-navigation/native';
 
-import { Theme, ThemeColors } from '../../constants';
+import { Theme, ThemeColors } from 'constants/index';
 import { Releases, VoidFuncNoParams } from 'types';
 import {
     VRIcon,
@@ -116,7 +116,7 @@ const VRReleaseCard = ({
                         >
                             {title}
                         </VRText>
-                        {isSearch && type !== 'master' ? (
+                        {type !== 'master' ? (
                             <VRRatingsStars
                                 average={release?.rating ?? 0}
                                 size="sm"

@@ -109,6 +109,8 @@ const VRReleasesList = ({
             in_wantlist: inWantList
         };
 
+        const { type } = item?.basic_information ?? 'release';
+
         const tags =
             hasHeader || isSearch
                 ? []

@@ -192,6 +192,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                         navigation={navigation}
                         sort={sort}
                         isSearch
+                        nextRoute="VersionRelease"
                     />
                 ) : null}
 
