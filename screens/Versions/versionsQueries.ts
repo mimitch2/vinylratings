@@ -29,7 +29,6 @@ export const GET_VERSIONS = gql`
                 id
                 rating
                 basic_information {
-                    id
                     title
                     thumb
                     label

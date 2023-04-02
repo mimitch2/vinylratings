@@ -7,7 +7,6 @@ export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     if (country) {
         tagsArray.push(country);
     }
-    // const descriptions = format?.split(',') ?? [];
 
     if (item?.label) {
         tagsArray.push(item.label[0]);

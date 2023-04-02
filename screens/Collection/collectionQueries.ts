@@ -41,7 +41,6 @@ export const GET_COLLECTION = gql`
                 instance_id
                 rating
                 basic_information {
-                    id
                     title
                     thumb
                     year
