@@ -7,7 +7,8 @@ import {
     VRReleaseOptionsModal,
     VRError,
     VRLoading,
-    VRReleasesList
+    VRReleasesList,
+    VRText
 } from 'components';
 import { Nav } from 'types';
 import { GET_COLLECTION } from './collectionQueries';
@@ -46,6 +47,12 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
 
     if (initialLoading || foldersLoading) {
         return <VRLoading />;
+    }
+
+    if (!data || error) {
+        return (
+            <VRText>{`${error?.message || 'Something went wrong!'}`}</VRText>
+        );
     }
 
     const releases = data?.getCollection?.releases ?? [];

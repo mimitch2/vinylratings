@@ -78,22 +78,6 @@ export const client = new ApolloClient({
                             };
                         }
                     },
-                    getArtistSearch: {
-                        keyArgs: false,
-                        merge(existing = null, incoming) {
-                            if (!existing) {
-                                return incoming;
-                            }
-
-                            return {
-                                ...incoming,
-                                results: [
-                                    ...existing.results,
-                                    ...incoming.results
-                                ]
-                            };
-                        }
-                    },
                     getMasterReleaseVersions: {
                         keyArgs: false,
                         merge(existing = null, incoming) {

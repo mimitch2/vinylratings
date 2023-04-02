@@ -1,6 +1,6 @@
 import type { BasicInformation, DiscogsVersion } from 'types';
 
-const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
+export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     const { released, format, country } = item;
 
     const tagsArray = released ? [released] : [];
@@ -30,13 +30,11 @@ const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
 export const getReleaseTags = ({
     item,
     limit = true,
-    isVersions = false,
-    type = 'release'
+    isVersions = false
 }: {
     item: BasicInformation | DiscogsVersion;
     limit?: boolean;
     isVersions?: boolean;
-    type?: string;
 }) => {
     if (isVersions) {
         return getVersionsTags({ item: item as DiscogsVersion });
@@ -74,10 +72,6 @@ export const getReleaseTags = ({
 
     if (formatInfo?.text && !limit) {
         tagsArray.push(formatInfo.text);
-    }
-
-    if (type === 'master') {
-        tagsArray.unshift('Master');
     }
 
     descriptions &&

@@ -66,7 +66,7 @@ const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
 
     return (
         <VRContainer
-            startAnimation
+            startAnimation={!!data}
             scrollable={false}
             styleOverride={{
                 paddingBottom: 35

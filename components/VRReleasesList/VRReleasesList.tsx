@@ -65,6 +65,7 @@ const VRReleasesList = ({
     isVersions?: boolean;
     nextRoute?: NextRoute;
 }) => {
+    console.log('🚀 ~ file: VRReleasesList.tsx:68 ~ data:', data);
     const { colors }: Theme = useTheme();
 
     const onCardPress = ({ id, userData }: { id: number; userData: any }) => {
@@ -110,16 +111,13 @@ const VRReleasesList = ({
             in_wantlist: inWantList
         };
 
-        // const type = item?.basic_information?.type ?? SearchTypes.RELEASE;
-
-        const tags =
-            hasHeader || isSearch
-                ? []
-                : getReleaseTags({
-                      item: item.basic_information,
-                      isVersions,
-                      type: 'release'
-                  });
+        // const tags =
+        //     hasHeader || isSearch
+        //         ? []
+        //         : getReleaseTags({
+        //               item: item.basic_information,
+        //               isVersions
+        //           });
 
         return hasHeader ? (
             <View
@@ -154,7 +152,7 @@ const VRReleasesList = ({
                     })
                 }
                 release={item}
-                tags={tags}
+                tags={[]}
                 disabled={loading || reloading || loadingMore}
             />
         );

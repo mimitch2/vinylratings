@@ -79,7 +79,7 @@ const WantList = ({ navigation }: { navigation: Nav }) => {
                 <VRReleasesList
                     innerRef={scrollViewRef}
                     data={wants}
-                    loading={loading}
+                    loading={loading || false}
                     reloading={reloading}
                     loadingMore={loadingMore}
                     onRefresh={onRefresh}
