@@ -7,14 +7,14 @@ const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     if (country) {
         tagsArray.push(country);
     }
-    const descriptions = format?.split(',') ?? [];
+    // const descriptions = format?.split(',') ?? [];
 
     if (item?.label) {
-        tagsArray.push(item.label);
+        tagsArray.push(item.label[0]);
     }
 
-    descriptions &&
-        descriptions.forEach((description, idx) => {
+    format &&
+        format.forEach((description, idx) => {
             const trimmedDescription = description.trim();
             const isLpType =
                 trimmedDescription === 'LP' || trimmedDescription === 'Album';

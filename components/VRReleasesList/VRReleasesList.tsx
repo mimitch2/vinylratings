@@ -84,6 +84,7 @@ const VRReleasesList = ({
 
     const renderArtistCard = ({ item }: { item: ArtistSearch }) => {
         const { id } = item;
+
         return (
             <VRArtistCard
                 artist={item}
@@ -109,7 +110,7 @@ const VRReleasesList = ({
             in_wantlist: inWantList
         };
 
-        const { type } = item?.basic_information ?? 'release';
+        // const type = item?.basic_information?.type ?? SearchTypes.RELEASE;
 
         const tags =
             hasHeader || isSearch
@@ -117,7 +118,7 @@ const VRReleasesList = ({
                 : getReleaseTags({
                       item: item.basic_information,
                       isVersions,
-                      type
+                      type: 'release'
                   });
 
         return hasHeader ? (

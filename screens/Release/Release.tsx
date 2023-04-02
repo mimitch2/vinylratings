@@ -391,19 +391,19 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             setCalendarModalOpen(false);
                         }}
                     />
-                    <VRPressable
-                        trackID="release_screen-see_all_versions"
-                        onPress={() => {
-                            navigation.navigate({
-                                name: 'Versions',
-                                params: {
-                                    masterId: master_id,
-                                    artist: artists[0]?.name ?? 'Unknown'
-                                }
-                            });
-                        }}
-                    >
-                        {!isFromVersions ? (
+                    {!isFromVersions ? (
+                        <VRPressable
+                            trackID="release_screen-see_all_versions"
+                            onPress={() => {
+                                navigation.navigate({
+                                    name: 'Versions',
+                                    params: {
+                                        masterId: master_id,
+                                        artist: artists[0]?.name ?? 'Unknown'
+                                    }
+                                });
+                            }}
+                        >
                             <View
                                 style={[
                                     styles.versions,
@@ -413,8 +413,9 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                                 <VRText>See all pressings</VRText>
                                 <VRIcon type="chevronRight" size="sm" />
                             </View>
-                        ) : null}
-                    </VRPressable>
+                        </VRPressable>
+                    ) : null}
+
                     <VRRateModal
                         onPress={submit}
                         modalOpen={rateModalOpen}

@@ -68,9 +68,9 @@ export type DiscogsVersion = {
     styles: [];
     genres: [];
     artists: [];
-    format: string;
+    format: string[];
     released: string;
-    label: string;
+    label: string[];
     user_data: UserData;
 };
 

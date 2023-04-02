@@ -50,6 +50,12 @@ const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                 title: `Pressings(${data?.getMasterReleaseVersions?.pagination.items})`
             });
         }
+
+        // return () => {
+        //     navigation.setOptions({
+        //         title: 'Pressings'
+        //     });
+        // };
     }, [data, navigation]);
 
     if (initialLoading) {
