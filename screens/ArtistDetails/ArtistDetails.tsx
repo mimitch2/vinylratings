@@ -31,6 +31,7 @@ const ArtistDetails = ({ route }) => {
         }
     );
 
+    // TODO: remove this
     useEffect(() => {
         if (data) {
             console.log('🚀 ~ file: Artist.tsx:18 ~ useEffect ~ data:', data);

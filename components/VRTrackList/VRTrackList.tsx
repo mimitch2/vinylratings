@@ -6,7 +6,7 @@ import { DiscogsTrackList } from 'types';
 import { VRText } from 'components';
 import { ThemeColors } from 'styles';
 
-const TrackList = ({ tracklist }: { tracklist: DiscogsTrackList[] }) => {
+const VRTrackList = ({ tracklist }: { tracklist: DiscogsTrackList[] }) => {
     const { colors } = useTheme();
     const { rowStyle, titleStyle } = styles(colors);
 
@@ -48,4 +48,4 @@ const styles = (colors: ThemeColors) =>
         }
     });
 
-export default TrackList;
+export default VRTrackList;

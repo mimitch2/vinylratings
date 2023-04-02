@@ -10,13 +10,14 @@ import { useTheme } from '@react-navigation/native';
 
 import { VRIcon, VRText } from 'components';
 import {
+    ArtistDetails,
     Collection,
     Home,
-    Search,
-    WantList,
+    MasterRelease,
     Release,
+    Search,
     Versions,
-    ArtistDetails
+    WantList
 } from 'screens';
 import { ThemeColors, Theme } from 'styles';
 import { DisabledContext } from 'context';
@@ -196,6 +197,15 @@ const VRTabs = () => {
                 <Stack.Screen
                     name="Release"
                     component={Release}
+                    options={{
+                        headerTitleStyle: styles(colors).hederTitle,
+                        headerStyle: styles(colors).header,
+                        contentStyle: styles(colors).contentStyle
+                    }}
+                />
+                <Stack.Screen
+                    name="Master"
+                    component={MasterRelease}
                     options={{
                         headerTitleStyle: styles(colors).hederTitle,
                         headerStyle: styles(colors).header,

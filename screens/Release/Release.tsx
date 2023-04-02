@@ -29,12 +29,13 @@ import {
     VRTag,
     VRText,
     VRWebViewModal,
-    VRFooter
+    VRFooter,
+    VRTrackList
 } from 'components';
 import type { Route, DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
 import { WIDTH } from 'constants/index';
-import { TrackList, Identifiers } from './components';
+import { Identifiers } from './components';
 import { Vinyl } from 'svgs';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
@@ -239,7 +240,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         },
         {
             header: 'Tracklist',
-            component: <TrackList tracklist={tracklist} />
+            component: <VRTrackList tracklist={tracklist} />
         },
         {
             header: 'Notes',

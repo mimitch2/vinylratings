@@ -72,7 +72,7 @@ const VRReleasesList = ({
         const isInWantList = !!userData?.in_wantlist;
 
         navigation.navigate({
-            name: nextRoute,
+            name: 'Master',
             params: {
                 id,
                 inCollection: isInCollection ?? inCollection,
