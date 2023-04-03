@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Image, View, Pressable, StyleSheet, StatusBar } from 'react-native';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useTheme } from '@react-navigation/native';
 
-import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import { GET_MASTER_RELEASE } from './masterReleaseQueries';
 import {
     VRButton,
@@ -24,12 +23,9 @@ import {
     VRWebViewModal,
     VRTrackList
 } from 'components';
-import type { Route, DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
-import { getReleaseTags } from 'helpers';
+import type { Route, Nav } from 'types';
 import { WIDTH } from 'constants/index';
 import { Vinyl } from 'svgs';
-import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
-import { client } from '../../ApolloProviderWrapper';
 import { Theme } from 'styles';
 
 const IMAGE_STYLE = {
@@ -89,15 +85,15 @@ const MasterRelease = ({
         images,
         tracklist,
         year,
-        // genres,
-        styles
+        genres,
+        styles: releaseStyles
         // main_release,
         // most_recent_release,
         // num_for_sale,
         // lowest_price
     } = getMasterRelease ?? {};
 
-    // const tags = getReleaseTags({ item: getMasterRelease, limit: false });
+    const tags = ['Master', ...genres, releaseStyles];
 
     const segmentedData = [
         {
@@ -129,7 +125,7 @@ const MasterRelease = ({
                         <View>
                             <VRListIndicator
                                 userData={{
-                                    in_collection: inCollection,
+                                    in_collection: !!inCollection,
                                     in_wantlist: !!inWantList
                                 }}
                             />
@@ -160,11 +156,11 @@ const MasterRelease = ({
                                 setModalOpen={setImageModalOpen}
                             />
                         ) : null}
-                        {/* <View>
+                        <View>
                             {tags.map((tag) => (
                                 <VRTag key={tag} tag={tag} size="lg" />
                             ))}
-                        </View> */}
+                        </View>
                     </View>
 
                     <VRText

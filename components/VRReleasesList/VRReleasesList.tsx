@@ -67,12 +67,20 @@ const VRReleasesList = ({
 }) => {
     const { colors }: Theme = useTheme();
 
-    const onCardPress = ({ id, userData }: { id: number; userData: any }) => {
+    const onCardPress = ({
+        id,
+        userData,
+        type
+    }: {
+        id: number;
+        userData: any;
+        type: string;
+    }) => {
         const isInCollection = !!userData?.in_collection;
         const isInWantList = !!userData?.in_wantlist;
 
         navigation.navigate({
-            name: 'Master',
+            name: type === SearchTypes.MASTER ? 'Master' : nextRoute,
             params: {
                 id,
                 inCollection: isInCollection ?? inCollection,
@@ -109,6 +117,7 @@ const VRReleasesList = ({
             in_collection: inCollection,
             in_wantlist: inWantList
         };
+        const type = item?.basic_information?.type ?? 'release';
 
         const tags =
             hasHeader || isSearch
@@ -147,7 +156,8 @@ const VRReleasesList = ({
                 onPress={() =>
                     onCardPress({
                         id: +item.id,
-                        userData
+                        userData,
+                        type
                     })
                 }
                 release={item}
