@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useCallback, useState } from 'react';
 import { useLazyQuery, gql } from '@apollo/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route, User } from 'types';
+import { User, Nav } from 'types';
+import { Route } from 'screens/Home/Home';
 
 export const GET_USER = gql`
     query GetUser($auth: String!) {
@@ -49,12 +50,7 @@ const authReducer = (state: State, action: Action): State => {
     }
 };
 
-export const useAuth = (
-    route?: Route,
-    navigation?:
-        | { setParams: (obj: { [key: string]: string | null }) => void }
-        | undefined
-) => {
+export const useAuth = (route?: Route, navigation?: Nav | undefined) => {
     const [getUser] = useLazyQuery(GET_USER);
     const [state, dispatch] = useReducer(authReducer, initialState);
     const [minimumLoading, setMinimumLoading] = useState(false);
@@ -70,7 +66,7 @@ export const useAuth = (
 
         if (route?.params?.auth) {
             await AsyncStorage.setItem('auth', route.params.auth);
-            navigation?.setParams({ auth: null });
+            navigation?.setParams({ auth: '' });
         }
 
         const localStorageAuth = (await AsyncStorage.getItem('auth')) ?? '';

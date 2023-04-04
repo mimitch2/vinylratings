@@ -21,7 +21,7 @@ export type NavState = {
 };
 
 type Params = {
-    id?: number;
+    id: string;
     inCollection?: boolean;
     inWantList?: boolean;
     isFromVersions?: boolean;

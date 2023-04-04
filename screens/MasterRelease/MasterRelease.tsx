@@ -23,10 +23,20 @@ import {
     VRWebViewModal,
     VRTrackList
 } from 'components';
-import type { Route, Nav } from 'types';
+import type { Nav } from 'types';
 import { WIDTH } from 'constants/index';
 import { Vinyl } from 'svgs';
 import { Theme } from 'styles';
+
+type Params = {
+    id: string;
+    inCollection?: boolean;
+    inWantList?: boolean;
+};
+
+export type Route = {
+    params: Params;
+};
 
 const IMAGE_STYLE = {
     borderRadius: 4,
@@ -213,13 +223,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline'
-    },
-    washedOnContainer: {
-        flexDirection: 'row',
-        paddingVertical: 5
-    },
-    washedOnText: {
-        marginRight: 6
     },
     versions: {
         marginVertical: 10,

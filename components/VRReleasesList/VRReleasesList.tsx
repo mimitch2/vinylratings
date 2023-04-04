@@ -21,6 +21,7 @@ import { getReleaseTags } from 'helpers';
 import { PER_PAGE } from 'hooks';
 
 type NextRoute = 'Release' | 'VersionRelease';
+type Item = ArtistSearch | Releases;
 
 const LoadingMoreSpinner = ({ loadingMore }: { loadingMore: boolean }) => {
     return loadingMore ? (
@@ -167,12 +168,16 @@ const VRReleasesList = ({
         );
     };
 
-    const renderCard = ({ item }) => {
-        if (item?.type === SearchTypes.ARTIST) {
+    const renderCard = ({ item }: { item: Item }) => {
+        if ('type' in item && item?.type === SearchTypes.ARTIST) {
             return renderArtistCard({ item });
         }
 
-        return renderReleaseCard({ item });
+        if ('basic_information' in item) {
+            return renderReleaseCard({ item });
+        }
+
+        return null;
     };
 
     const ListFooterComponent = (

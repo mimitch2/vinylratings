@@ -12,7 +12,14 @@ import {
 import { Nav } from 'types';
 import { GET_VERSIONS } from './versionsQueries';
 
-type Route = { params: { masterId: string; artist: string } };
+type Params = {
+    masterId: string;
+    artist: string;
+};
+
+type Route = {
+    params: Params;
+};
 
 const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     const {

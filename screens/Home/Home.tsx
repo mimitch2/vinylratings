@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { Alert, Linking, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 // @ts-ignore
 import { REACT_APP_SERVER_ENDPOINT } from '@env';
@@ -12,8 +11,17 @@ import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
 import { FONTS } from 'constants/index';
+import { Nav } from 'types';
 
-const Home = ({ navigation, route }: NativeStackScreenProps<any>) => {
+type Params = {
+    auth?: string;
+};
+
+export type Route = {
+    params: Params;
+};
+
+const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     const {
         state: { data, loading },
         getAuth

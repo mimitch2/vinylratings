@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Image, Pressable, StatusBar } from 'react-native';
 import { useQuery } from '@apollo/client';
 import {
@@ -6,7 +6,8 @@ import {
     VRImageModal,
     VRContainer,
     VRSegmented,
-    VRIcon
+    VRIcon,
+    VRLoading
 } from 'components';
 import { GET_ARTIST } from './artistQueries';
 import { HEIGHT, WIDTH } from 'constants/index';
@@ -16,7 +17,16 @@ type ArtistDetailResponse = {
     getArtist: ArtistDetail;
 };
 
-const ArtistDetails = ({ route }) => {
+type Params = {
+    id: string;
+    coverImage: string;
+};
+
+type Route = {
+    params: Params;
+};
+
+const ArtistDetails = ({ route }: { route: Route }) => {
     const [imageModalOpen, setImageModalOpen] = useState(false);
     const {
         params: { id, coverImage }
@@ -30,13 +40,6 @@ const ArtistDetails = ({ route }) => {
             }
         }
     );
-
-    // TODO: remove this
-    useEffect(() => {
-        if (data) {
-            console.log('🚀 ~ file: Artist.tsx:18 ~ useEffect ~ data:', data);
-        }
-    }, [data]);
 
     if (!data?.getArtist || loading) {
         return null;
@@ -121,6 +124,10 @@ const ArtistDetails = ({ route }) => {
             )
         }
     ];
+
+    if (loading) {
+        return <VRLoading />;
+    }
 
     return (
         <>

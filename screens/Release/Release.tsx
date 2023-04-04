@@ -32,7 +32,7 @@ import {
     VRFooter,
     VRTrackList
 } from 'components';
-import type { Route, DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
+import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
 import { WIDTH } from 'constants/index';
 import { Identifiers } from './components';
@@ -40,6 +40,16 @@ import { Vinyl } from 'svgs';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
 import { Theme } from 'styles';
+
+type Params = {
+    id: string;
+    inWantList: boolean;
+    isFromVersions: boolean;
+};
+
+export type Route = {
+    params: Params;
+};
 
 const IMAGE_STYLE = {
     borderRadius: 4,
