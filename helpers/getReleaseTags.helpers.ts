@@ -39,7 +39,8 @@ export const getReleaseTags = ({
         return getVersionsTags({ item: item as DiscogsVersion });
     }
 
-    const { year, formats, country } = item as BasicInformation;
+    const { year, formats, country, labels, series, companies } =
+        item as BasicInformation;
 
     const formatInfo = formats.reduce(
         (data, format) => {
@@ -71,6 +72,14 @@ export const getReleaseTags = ({
 
     if (formatInfo?.text && !limit) {
         tagsArray.push(formatInfo.text);
+    }
+
+    if (labels?.length) {
+        tagsArray.unshift(labels[0].name);
+    }
+
+    if (series?.length) {
+        tagsArray.push(series[0].name);
     }
 
     descriptions &&

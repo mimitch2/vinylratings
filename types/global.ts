@@ -74,8 +74,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 export enum SearchTypes {
     RELEASE = 'release',
     ARTIST = 'artist',
-    MASTER = 'master',
-    LABEL = 'label'
+    MASTER = 'master'
 }
 
 export type ArtistSearch = {

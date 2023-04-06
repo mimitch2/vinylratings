@@ -11,6 +11,16 @@ export const IS_IN_COLLECTION = gql`
 export const GET_RELEASE = gql`
     query GetRelease($id: Int!) {
         getRelease(id: $id) {
+            labels {
+                name
+            }
+            series {
+                name
+            }
+            companies {
+                name
+                entity_type_name
+            }
             uri
             id
             master_id

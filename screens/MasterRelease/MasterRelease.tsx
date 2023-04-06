@@ -5,8 +5,6 @@ import { useTheme } from '@react-navigation/native';
 
 import { GET_MASTER_RELEASE } from './masterReleaseQueries';
 import {
-    VRButton,
-    VRCalendarModal,
     VRContainer,
     VRError,
     VRIcon,
@@ -15,8 +13,6 @@ import {
     VRLoading,
     VRModal,
     VRPressable,
-    VRRateModal,
-    VRRatings,
     VRSegmented,
     VRTag,
     VRText,

@@ -52,9 +52,8 @@ export type Route = {
 };
 
 const IMAGE_STYLE = {
-    borderRadius: 4,
-    width: WIDTH / 2,
-    height: WIDTH / 2
+    width: WIDTH,
+    height: WIDTH
 };
 
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
@@ -292,6 +291,44 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     <VRLoading />
                 ) : null}
                 <View style={{ paddingBottom: 20 }}>
+                    <View style={styles.upperContainer}>
+                        <Pressable
+                            onPress={() => {
+                                setImageModalOpen(true);
+                                StatusBar.setHidden(true);
+                            }}
+                        >
+                            <View
+                                style={{
+                                    flexDirection: 'row'
+                                    // justifyContent: 'space-evenly'
+                                    // width: '100%'
+                                }}
+                            >
+                                {images?.length ? (
+                                    <View>
+                                        <Image
+                                            style={IMAGE_STYLE}
+                                            source={{
+                                                uri: images[0].resource_url
+                                            }}
+                                        />
+                                    </View>
+                                ) : (
+                                    <View style={IMAGE_STYLE}>
+                                        <Vinyl />
+                                    </View>
+                                )}
+                            </View>
+                        </Pressable>
+                        {images && images.length ? (
+                            <VRImageModal
+                                images={images}
+                                modalOpen={imageModalOpen}
+                                setModalOpen={setImageModalOpen}
+                            />
+                        ) : null}
+                    </View>
                     <View style={styles.title}>
                         <View>
                             <VRText fontWeight="bold" size={24}>
@@ -310,38 +347,17 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             />
                         </View>
                     </View>
-                    <View style={styles.upperContainer}>
-                        <Pressable
-                            onPress={() => {
-                                setImageModalOpen(true);
-                                StatusBar.setHidden(true);
-                            }}
-                        >
-                            {images && images.length ? (
-                                <Image
-                                    source={{ uri: images[0].resource_url }}
-                                    style={IMAGE_STYLE}
-                                />
-                            ) : (
-                                <View style={IMAGE_STYLE}>
-                                    <Vinyl />
-                                </View>
-                            )}
-                        </Pressable>
-                        {images && images.length ? (
-                            <VRImageModal
-                                images={images}
-                                modalOpen={imageModalOpen}
-                                setModalOpen={setImageModalOpen}
-                            />
-                        ) : null}
-                        <View>
-                            {tags.map((tag) => (
-                                <VRTag key={tag} tag={tag} size="lg" />
-                            ))}
-                        </View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            marginTop: 15
+                        }}
+                    >
+                        {tags.map((tag) => (
+                            <VRTag key={tag} tag={tag} size="lg" />
+                        ))}
                     </View>
-
                     <VRText
                         styleOverride={{ paddingVertical: 5 }}
                     >{`Released: ${releasedDate}`}</VRText>
@@ -455,8 +471,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
 
 const styles = StyleSheet.create({
     upperContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        marginLeft: -20
     },
     title: {
         paddingBottom: 10,
