@@ -11,6 +11,7 @@ import {
 } from 'components';
 import { Nav } from 'types';
 import { GET_VERSIONS } from './versionsQueries';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 type Params = {
     masterId: string;
@@ -85,7 +86,7 @@ const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                     trackID="versions_screen-error"
                     level="error"
                     styleOverride={{
-                        opacity: loading ? 0.5 : 1
+                        opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                     }}
                 />
             )}

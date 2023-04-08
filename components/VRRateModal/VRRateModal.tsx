@@ -3,10 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import { VRText, VRModal, VRIcon, VRPressable, VRButton, VRInput } from '../';
-import { Theme } from '../../constants';
-import { RatingPayload, PayloadKeys } from '../../types';
+import { Theme, RATING_CATEGORIES } from '../../constants';
+import { RatingPayload, RatingPayloadKey } from '../../types';
 import { generateArrayOfNumbers, toUpperFirst } from '../../helpers';
-import { RATING_CATEGORIES } from '../../constants';
 
 const DEFAULT_RATINGS = {
     clarity: 0,
@@ -19,7 +18,7 @@ const Stars = ({
     handleInput,
     ratings
 }: {
-    handleInput: (key: PayloadKeys, value: number | string) => void;
+    handleInput: (key: RatingPayloadKey, value: number | string) => void;
     ratings: RatingPayload;
 }) => {
     const { colors }: Theme = useTheme();
@@ -90,7 +89,7 @@ const VRRateModal = ({
 }) => {
     const [ratings, setRatings] = useState<RatingPayload>(DEFAULT_RATINGS);
 
-    const handleInput = (key: PayloadKeys, value: number | string) => {
+    const handleInput = (key: RatingPayloadKey, value: number | string) => {
         setRatings((prevState) => {
             return {
                 ...prevState,

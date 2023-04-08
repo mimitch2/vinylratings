@@ -12,6 +12,7 @@ import {
 } from 'components';
 import { Nav } from 'types';
 import { GET_COLLECTION } from './collectionQueries';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const Collection = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
@@ -71,7 +72,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                     trackID="collection_screen-error"
                     level="error"
                     styleOverride={{
-                        opacity: loading ? 0.5 : 1
+                        opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                     }}
                 />
             )}
@@ -109,7 +110,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                     message="There do not seem to be any items here"
                     level="warning"
                     styleOverride={{
-                        opacity: loading ? 0.5 : 1
+                        opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                     }}
                 />
             ) : null}

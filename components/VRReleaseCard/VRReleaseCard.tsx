@@ -2,7 +2,11 @@ import React, { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useRoute, useTheme } from '@react-navigation/native';
 
-import { Theme, ThemeColors } from 'constants/index';
+import {
+    Theme,
+    ThemeColors,
+    PRESSED_OR_DISABLED_OPACITY
+} from 'constants/index';
 import { Releases, VoidFuncNoParams } from 'types';
 import {
     VRIcon,
@@ -73,7 +77,7 @@ const VRReleaseCard = ({
             styleOverride={[
                 styles(colors).container,
                 {
-                    opacity: disabled ? 0.6 : 1
+                    opacity: disabled ? PRESSED_OR_DISABLED_OPACITY : 1
                 }
             ]}
         >

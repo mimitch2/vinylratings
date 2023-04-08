@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { PayloadKeys } from 'types';
+import { RatingPayloadKey } from 'types';
 
 const commonSortOptions = [
     { value: 'added', label: 'Added' },
@@ -26,11 +26,13 @@ export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 export const MODAL_HEIGHT_OFFSET = 90;
 
-export const RATING_CATEGORIES: PayloadKeys[] = [
+export const RATING_CATEGORIES: RatingPayloadKey[] = [
     'clarity',
     'quietness',
     'flatness'
 ];
+
+export const PRESSED_OR_DISABLED_OPACITY = 0.5;
 
 export const globalStyles = StyleSheet.create({
     centerCenter: {

@@ -43,7 +43,7 @@ export type RatingPayload = {
     flatness: number;
     quietness: number;
 };
-export type PayloadKeys = keyof RatingPayload;
+export type RatingPayloadKey = keyof RatingPayload;
 
 declare global {
     namespace ReactNavigation {

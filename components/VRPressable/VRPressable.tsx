@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pressable, ViewStyle, StyleProp } from 'react-native';
 
-import { VoidFuncNoParams } from '../../types';
+import { VoidFuncNoParams } from 'types';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const VRPressable = ({
     trackID,
@@ -23,7 +24,10 @@ const VRPressable = ({
             testID={testID || 'pressable'}
             disabled={disabled}
             style={({ pressed }) => [
-                { opacity: pressed || disabled ? 0.6 : 1.0 },
+                {
+                    opacity:
+                        pressed || disabled ? PRESSED_OR_DISABLED_OPACITY : 1.0
+                },
                 styleOverride
             ]}
             onPress={() => {

@@ -1,14 +1,15 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
-import { View } from 'react-native';
 import { CommonActions, useTheme } from '@react-navigation/native';
 
 import { useLazyList } from 'hooks';
 import { Theme } from 'styles';
+import { toUpperFirst } from 'helpers';
 import { SearchTypes, Nav } from 'types';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const SEARCH_TYPES = Object.values(SearchTypes).map((type) => ({
-    label: `${type.charAt(0).toUpperCase()}${type.slice(1)}`,
+    label: toUpperFirst(type),
     value: type
 }));
 
@@ -19,8 +20,6 @@ import {
     VRLoading,
     VRReleasesList,
     VRSearchInput,
-    VRPressable,
-    VRText,
     VRSegmented
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
@@ -122,36 +121,14 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 data={SEARCH_TYPES}
                 onPress={handleSearchTypePress}
                 containerStyleOverride={{
-                    paddingVertical: 10
+                    paddingBottom: 0
                 }}
                 labelStyleOverride={{
                     paddingVertical: 10,
-                    paddingHorizontal: 20
+                    paddingHorizontal: 20,
+                    marginVertical: 0
                 }}
             />
-            {/* {SEARCH_TYPES.map((type) => {
-                    const isSelected = type === searchType;
-                    return (
-                        <VRPressable
-                            key={type}
-                            onPress={() => handleSearchTypePress(type)}
-                            trackID={`search_screen--select_search_type--${type}`}
-                            styleOverride={{
-                                padding: 10,
-                                borderColor: isSelected
-                                    ? colors.primary
-                                    : colors.lightGrey,
-                                borderBottomWidth: 1
-                            }}
-                        >
-                            <VRText>
-                                {`${type.charAt(0).toUpperCase()}${type.slice(
-                                    1
-                                )}`}
-                            </VRText>
-                        </VRPressable>
-                    );
-                })} */}
             <VRContainer
                 startAnimation
                 scrollable={false}
@@ -175,7 +152,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                         trackID="search_screen-error"
                         level="error"
                         styleOverride={{
-                            opacity: loading ? 0.5 : 1
+                            opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                         }}
                     />
                 ) : null}
@@ -185,7 +162,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                         message="Enter a search term"
                         level="info"
                         styleOverride={{
-                            opacity: loading ? 0.5 : 1
+                            opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                         }}
                     />
                 ) : null}
@@ -210,7 +187,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                         message="Nothing found! Try changing your search"
                         level="warning"
                         styleOverride={{
-                            opacity: loading ? 0.5 : 1
+                            opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
                         }}
                     />
                 ) : null}
