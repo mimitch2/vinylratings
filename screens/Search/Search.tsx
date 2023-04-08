@@ -26,6 +26,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState(SearchTypes.RELEASE);
+
     const sortDefault = 'artist';
 
     const {
@@ -53,6 +54,10 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     });
     const { cache } = client;
     const { colors }: Theme = useTheme();
+
+    const handleSearchTypePress = (type: SearchTypes) => {
+        setSearchType(type);
+    };
 
     const clearQueryCache = useCallback(() => {
         cache.evict({
@@ -121,9 +126,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     return (
                         <VRPressable
                             key={type}
-                            onPress={() => {
-                                setSearchType(type);
-                            }}
+                            onPress={() => handleSearchTypePress(type)}
                             trackID={`search_screen--select_search_type--${type}`}
                             styleOverride={{
                                 padding: 10,
