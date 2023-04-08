@@ -103,7 +103,7 @@ const MasterRelease = ({
 
     const segmentedData = [
         {
-            header: 'Tracklist',
+            label: 'Tracklist',
             component: <VRTrackList tracklist={tracklist} />
         }
     ];
@@ -196,7 +196,7 @@ const MasterRelease = ({
                         </View>
                     </VRPressable>
 
-                    <VRSegmented components={segmentedData} />
+                    <VRSegmented data={segmentedData} />
 
                     {/* <VRWebViewModal
                         uri={uri}

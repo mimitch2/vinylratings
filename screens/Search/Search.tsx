@@ -7,7 +7,10 @@ import { useLazyList } from 'hooks';
 import { Theme } from 'styles';
 import { SearchTypes, Nav } from 'types';
 
-const SEARCH_TYPES = Object.values(SearchTypes);
+const SEARCH_TYPES = Object.values(SearchTypes).map((type) => ({
+    label: `${type.charAt(0).toUpperCase()}${type.slice(1)}`,
+    value: type
+}));
 
 import {
     VRContainer,
@@ -17,7 +20,8 @@ import {
     VRReleasesList,
     VRSearchInput,
     VRPressable,
-    VRText
+    VRText,
+    VRSegmented
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
 import { client } from '../../ApolloProviderWrapper';
@@ -55,8 +59,8 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     const { cache } = client;
     const { colors }: Theme = useTheme();
 
-    const handleSearchTypePress = (type: SearchTypes) => {
-        setSearchType(type);
+    const handleSearchTypePress = (value: SearchTypes) => {
+        setSearchType(value);
     };
 
     const clearQueryCache = useCallback(() => {
@@ -114,14 +118,18 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 setSearchTerm={setSearchTerm}
             />
 
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: 10
+            <VRSegmented
+                data={SEARCH_TYPES}
+                onPress={handleSearchTypePress}
+                containerStyleOverride={{
+                    paddingVertical: 10
                 }}
-            >
-                {SEARCH_TYPES.map((type) => {
+                labelStyleOverride={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 20
+                }}
+            />
+            {/* {SEARCH_TYPES.map((type) => {
                     const isSelected = type === searchType;
                     return (
                         <VRPressable
@@ -143,8 +151,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                             </VRText>
                         </VRPressable>
                     );
-                })}
-            </View>
+                })} */}
             <VRContainer
                 startAnimation
                 scrollable={false}

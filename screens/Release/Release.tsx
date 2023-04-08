@@ -59,6 +59,7 @@ const IMAGE_STYLE = {
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const { colors }: Theme = useTheme();
 
+    const [segmentedIdx, setSegmentedIdx] = useState(0);
     const [washedOn, setWashedOn] = useState('');
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
     const [imageModalOpen, setImageModalOpen] = useState(false);
@@ -238,7 +239,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
 
     const segmentedData = [
         {
-            header: 'Ratings',
+            label: 'Ratings',
             component: (
                 <VRRatings
                     discogsRating={community.rating}
@@ -248,11 +249,11 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             )
         },
         {
-            header: 'Tracklist',
+            label: 'Tracklist',
             component: <VRTrackList tracklist={tracklist} />
         },
         {
-            header: 'Notes',
+            label: 'Notes',
             component: (
                 <VRText styleOverride={{ marginTop: 10 }}>
                     {releaseNotes}
@@ -260,7 +261,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             )
         },
         {
-            header: 'Identifiers',
+            label: 'Identifiers',
             component: <Identifiers identifiers={identifiers} />
         }
     ];
@@ -449,7 +450,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         setModalOpen={setRateModalOpen}
                         subTitle={`${artist} - ${title}`}
                     />
-                    <VRSegmented components={segmentedData} />
+                    <VRSegmented data={segmentedData} />
 
                     <VRWebViewModal
                         uri={uri}

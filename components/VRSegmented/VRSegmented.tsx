@@ -1,31 +1,53 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import { StyleSheet, View, ViewStyle, Pressable } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import { VRText } from 'components';
 import { Theme } from 'constants/index';
 
 interface SegmentedProps {
-    components: {
-        header: string;
-        component: React.ReactNode | React.ReactNode[];
+    data: {
+        label: string;
+        value?: string | number;
+        component?: React.ReactNode | React.ReactNode[];
     }[];
+    onPress?: (value: any) => void;
+    containerStyleOverride?: ViewStyle;
+    labelStyleOverride?: ViewStyle;
 }
 
-const VRSegmented = ({ components }: SegmentedProps) => {
+const VRSegmented = ({
+    data,
+    onPress,
+    containerStyleOverride = {},
+    labelStyleOverride = {}
+}: SegmentedProps) => {
     const [selectedIdx, setSelectedIdx] = useState(0);
     const { colors }: Theme = useTheme();
 
+    const handleOnPress = (idx: number, value?: string | number) => {
+        setSelectedIdx(idx);
+        onPress && value && onPress(value);
+    };
+
     return (
-        <View style={styles.container}>
-            <View style={[styles.headers, { borderColor: colors.lightGrey }]}>
-                {components.map(({ header }, idx) => {
+        <View style={[styles.container, containerStyleOverride]}>
+            <View
+                style={[
+                    styles.labels,
+                    { borderColor: colors.lightGrey },
+                    labelStyleOverride
+                ]}
+            >
+                {data.map((section, idx) => {
+                    const { label } = section;
+                    const value = section.value || null;
                     const isSelected = selectedIdx === idx;
 
                     return (
                         <Pressable
-                            key={header}
-                            onPress={() => setSelectedIdx(idx)}
+                            key={label}
+                            onPress={() => handleOnPress(idx, value)}
                             style={({ pressed }) => [
                                 {
                                     opacity: pressed ? 0.6 : 1
@@ -43,13 +65,15 @@ const VRSegmented = ({ components }: SegmentedProps) => {
                                     isSelected ? colors.background : colors.text
                                 }
                             >
-                                {header}
+                                {label}
                             </VRText>
                         </Pressable>
                     );
                 })}
             </View>
-            <View>{components[selectedIdx].component}</View>
+            {data[selectedIdx]?.component && (
+                <View>{data[selectedIdx].component}</View>
+            )}
         </View>
     );
 };
@@ -62,11 +86,12 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 10
     },
-    headers: {
+    labels: {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         marginVertical: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });
 
