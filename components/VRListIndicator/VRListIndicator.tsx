@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { UserData } from 'types';
+import { UserData, IconSize } from 'types';
 import { VRIcon } from 'components';
 
 const VRListIndicator = ({
@@ -10,7 +10,7 @@ const VRListIndicator = ({
     size = 'md'
 }: {
     userData: UserData | null;
-    size?: string;
+    size?: IconSize;
 }) => {
     const { colors } = useTheme();
 
