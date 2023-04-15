@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, useRef } from 'react';
 import { ActivityIndicator, Alert, Linking, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
@@ -14,6 +14,21 @@ const VRWebViewModal = ({
     setDiscogsReviewsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
     const [webViewLoading, setWebViewLoading] = useState(false);
+    const webViewRef = useRef<WebView>(null);
+    const run = `
+        setTimeout(() => {
+            document.getElementById('site_headers_super_wrap').style.visibility = 'hidden';
+            document.getElementById('site_footer_wrap').style.visibility = 'hidden';
+        }, 10);
+    `;
+
+    if (discogsReviewsModalOpen) {
+        try {
+            webViewRef.current?.injectJavaScript(run);
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
 
     return (
         <VRModal
@@ -22,7 +37,7 @@ const VRWebViewModal = ({
             setModalOpen={setDiscogsReviewsModalOpen}
             centerContent={false}
         >
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingBottom: 30 }}>
                 {webViewLoading ? (
                     <ActivityIndicator
                         size="large"
@@ -36,8 +51,17 @@ const VRWebViewModal = ({
                     source={{
                         uri: `${uri}/reviews`
                     }}
-                    onNavigationStateChange={({ loading: webLoading }) => {
-                        setWebViewLoading(webLoading);
+                    style={{
+                        top: -58
+                    }}
+                    ref={webViewRef}
+                    onLoadStart={() => {
+                        setWebViewLoading(true);
+                    }}
+                    onLoadEnd={() => {
+                        setTimeout(() => {
+                            setWebViewLoading(false);
+                        }, 100);
                     }}
                     onShouldStartLoadWithRequest={(event) => {
                         if (
