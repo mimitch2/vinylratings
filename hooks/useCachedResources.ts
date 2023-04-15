@@ -14,6 +14,9 @@ const useCachedResources = () => {
                 // Load fonts
                 await Font.loadAsync({
                     'ArchivoNarrow-Regular': require('../assets/fonts/ArchivoNarrow-Regular.ttf'),
+                    'ArchivoNarrow-Bold': require('../assets/fonts/ArchivoNarrow-Bold.ttf'),
+                    'ArchivoNarrow-Italic': require('../assets/fonts/ArchivoNarrow-Italic.ttf'),
+                    'ArchivoNarrow-BoldItalic': require('../assets/fonts/ArchivoNarrow-BoldItalic.ttf'),
                     'TradeGothic-Bold-Extended': require('../assets/fonts/Trade-Gothic-LT-Std-Bold-Extended.otf'),
                     LetsJazz: require('../assets/fonts/LetsJazz.otf')
                 });

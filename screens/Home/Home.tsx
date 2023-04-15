@@ -86,11 +86,7 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                         alignItems: 'center'
                     }}
                 >
-                    <VRText
-                        fontWeight="bold"
-                        size={45}
-                        styleOverride={{ fontFamily: FONTS.heading }}
-                    >
+                    <VRText size={45} fontFamily={FONTS.heading}>
                         VINYL RATINGS
                     </VRText>
                     {/* <Image

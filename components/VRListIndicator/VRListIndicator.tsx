@@ -2,10 +2,16 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { UserData } from '../../types';
-import { VRIcon } from '../';
+import { UserData } from 'types';
+import { VRIcon } from 'components';
 
-const VRListIndicator = ({ userData }: { userData: UserData | null }) => {
+const VRListIndicator = ({
+    userData,
+    size = 'md'
+}: {
+    userData: UserData | null;
+    size?: string;
+}) => {
     const { colors } = useTheme();
 
     return (
@@ -15,6 +21,7 @@ const VRListIndicator = ({ userData }: { userData: UserData | null }) => {
                     type="collection"
                     color={colors.primary}
                     testID="collection-icon"
+                    size={size}
                 />
             ) : null}
             {userData?.in_wantlist ? (
@@ -23,6 +30,7 @@ const VRListIndicator = ({ userData }: { userData: UserData | null }) => {
                         type="want"
                         color={colors.primary}
                         testID="want-icon"
+                        size={size}
                     />
                 </View>
             ) : null}

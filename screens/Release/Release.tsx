@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, View, Pressable, StyleSheet, StatusBar } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import { useTheme } from '@react-navigation/native';
 
@@ -18,25 +18,21 @@ import {
     VRContainer,
     VRError,
     VRIcon,
-    VRImageModal,
-    VRListIndicator,
     VRLoading,
     VRModal,
     VRPressable,
     VRRateModal,
     VRRatings,
     VRSegmented,
-    VRTag,
     VRText,
     VRWebViewModal,
     VRFooter,
-    VRTrackList
+    VRTrackList,
+    VRReleaseInfoCommon
 } from 'components';
 import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
-import { WIDTH } from 'constants/index';
 import { Identifiers } from './components';
-import { Vinyl } from 'svgs';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
 import { Theme } from 'styles';
@@ -51,18 +47,12 @@ export type Route = {
     params: Params;
 };
 
-const IMAGE_STYLE = {
-    width: WIDTH,
-    height: WIDTH
-};
-
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const { colors }: Theme = useTheme();
 
     const [segmentedIdx, setSegmentedIdx] = useState(0);
     const [washedOn, setWashedOn] = useState('');
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
-    const [imageModalOpen, setImageModalOpen] = useState(false);
     const [folderModalOpen, setFolderModalOpen] = useState(false);
     const [rateModalOpen, setRateModalOpen] = useState(false);
     const [discogsReviewsModalOpen, setDiscogsReviewsModalOpen] =
@@ -276,6 +266,12 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         : new Date(released).toLocaleDateString();
 
     const [{ name: artist }] = artists;
+    const isLoading =
+        addToCollectionLoading ||
+        isInCollectionLoading ||
+        removeFromCollectionLoading ||
+        addReleaseLoading ||
+        addRatingLoading;
 
     return (
         <>
@@ -284,84 +280,17 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 refreshing={loading}
                 startAnimation={!!getRelease || !!error}
             >
-                {addToCollectionLoading ||
-                isInCollectionLoading ||
-                removeFromCollectionLoading ||
-                addReleaseLoading ||
-                addRatingLoading ? (
-                    <VRLoading />
-                ) : null}
+                {isLoading ? <VRLoading /> : null}
                 <View style={{ paddingBottom: 20 }}>
-                    <View style={styles.upperContainer}>
-                        <Pressable
-                            onPress={() => {
-                                setImageModalOpen(true);
-                                StatusBar.setHidden(true);
-                            }}
-                        >
-                            <View
-                                style={{
-                                    flexDirection: 'row'
-                                    // justifyContent: 'space-evenly'
-                                    // width: '100%'
-                                }}
-                            >
-                                {images?.length ? (
-                                    <View>
-                                        <Image
-                                            style={IMAGE_STYLE}
-                                            source={{
-                                                uri: images[0].resource_url
-                                            }}
-                                        />
-                                    </View>
-                                ) : (
-                                    <View style={IMAGE_STYLE}>
-                                        <Vinyl />
-                                    </View>
-                                )}
-                            </View>
-                        </Pressable>
-                        {images && images.length ? (
-                            <VRImageModal
-                                images={images}
-                                modalOpen={imageModalOpen}
-                                setModalOpen={setImageModalOpen}
-                            />
-                        ) : null}
-                    </View>
-                    <View style={styles.title}>
-                        <View>
-                            <VRText fontWeight="bold" size={24}>
-                                {artist}
-                            </VRText>
-                            <VRText fontStyle="italic" size={18}>
-                                {title}
-                            </VRText>
-                        </View>
-                        <View>
-                            <VRListIndicator
-                                userData={{
-                                    in_collection: isInCollection,
-                                    in_wantlist: !!inWantList
-                                }}
-                            />
-                        </View>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            marginTop: 15
-                        }}
-                    >
-                        {tags.map((tag) => (
-                            <VRTag key={tag} tag={tag} size="lg" />
-                        ))}
-                    </View>
-                    <VRText
-                        styleOverride={{ paddingVertical: 5 }}
-                    >{`Released: ${releasedDate}`}</VRText>
+                    <VRReleaseInfoCommon
+                        images={images}
+                        tags={tags}
+                        isInCollection={isInCollection}
+                        inWantList={inWantList}
+                        title={title}
+                        artist={artist}
+                        releasedDate={releasedDate}
+                    />
 
                     {isInCollection ? (
                         <>

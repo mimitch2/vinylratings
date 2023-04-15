@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image, View, Pressable, StyleSheet, StatusBar } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useTheme } from '@react-navigation/native';
 
@@ -8,20 +8,14 @@ import {
     VRContainer,
     VRError,
     VRIcon,
-    VRImageModal,
-    VRListIndicator,
     VRLoading,
-    VRModal,
     VRPressable,
     VRSegmented,
-    VRTag,
     VRText,
-    VRWebViewModal,
-    VRTrackList
+    VRTrackList,
+    VRReleaseInfoCommon
 } from 'components';
 import type { Nav } from 'types';
-import { WIDTH } from 'constants/index';
-import { Vinyl } from 'svgs';
 import { Theme } from 'styles';
 
 type Params = {
@@ -34,12 +28,6 @@ export type Route = {
     params: Params;
 };
 
-const IMAGE_STYLE = {
-    borderRadius: 4,
-    width: WIDTH / 2,
-    height: WIDTH / 2
-};
-
 const MasterRelease = ({
     route,
     navigation
@@ -49,7 +37,6 @@ const MasterRelease = ({
 }) => {
     const { colors }: Theme = useTheme();
 
-    const [imageModalOpen, setImageModalOpen] = useState(false);
     // const [discogsReviewsModalOpen, setDiscogsReviewsModalOpen] =
     //     useState(false);
     const {
@@ -119,59 +106,15 @@ const MasterRelease = ({
             >
                 {loading ? <VRLoading /> : null}
                 <View style={{ paddingBottom: 20 }}>
-                    <View style={styles.title}>
-                        <View>
-                            <VRText fontWeight="bold" size={24}>
-                                {artist}
-                            </VRText>
-                            <VRText fontStyle="italic" size={18}>
-                                {title}
-                            </VRText>
-                        </View>
-                        <View>
-                            <VRListIndicator
-                                userData={{
-                                    in_collection: !!inCollection,
-                                    in_wantlist: !!inWantList
-                                }}
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.upperContainer}>
-                        <Pressable
-                            onPress={() => {
-                                setImageModalOpen(true);
-                                StatusBar.setHidden(true);
-                            }}
-                        >
-                            {images && images.length ? (
-                                <Image
-                                    source={{ uri: images[0].resource_url }}
-                                    style={IMAGE_STYLE}
-                                />
-                            ) : (
-                                <View style={IMAGE_STYLE}>
-                                    <Vinyl />
-                                </View>
-                            )}
-                        </Pressable>
-                        {images && images.length ? (
-                            <VRImageModal
-                                images={images}
-                                modalOpen={imageModalOpen}
-                                setModalOpen={setImageModalOpen}
-                            />
-                        ) : null}
-                        <View>
-                            {tags.map((tag) => (
-                                <VRTag key={tag} tag={tag} size="lg" />
-                            ))}
-                        </View>
-                    </View>
-
-                    <VRText
-                        styleOverride={{ paddingVertical: 5 }}
-                    >{`Released: ${year}`}</VRText>
+                    <VRReleaseInfoCommon
+                        images={images}
+                        tags={tags}
+                        isInCollection={!!inCollection}
+                        inWantList={!!inWantList}
+                        title={title}
+                        artist={artist}
+                        releasedDate={year}
+                    />
 
                     <VRPressable
                         trackID="release_screen-see_all_versions"

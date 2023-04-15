@@ -16,6 +16,7 @@ export { default as VRRatings } from './VRRatings/VRRatings';
 export { default as VRRatingsStars } from './VRRatingsStars/VRRatingsStars';
 export { default as VRRateModal } from './VRRateModal/VRRateModal';
 export { default as VRReleaseCard } from './VRReleaseCard/VRReleaseCard';
+export { default as VRReleaseInfoCommon } from './VRReleaseInfoCommon/VRReleaseInfoCommon';
 export { default as VRReleaseOptionsModal } from './VRReleaseOptionsModal/VRReleaseOptionsModal';
 export { default as VRReleasesList } from './VRReleasesList/VRReleasesList';
 export { default as VRSearchInput } from './VRSearchInput/VRSearchInput';

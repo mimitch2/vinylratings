@@ -1,14 +1,15 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TextStyle } from 'react-native';
 import { FONTS, Theme } from 'constants/index';
 import { useTheme } from '@react-navigation/native';
 
 export const VRText = ({
     children,
-    size = 16,
+    size = 18,
     color = null,
-    fontWeight = '500',
+    fontWeight = 'normal',
     fontStyle = 'normal',
+    fontFamily = null,
     textAlign = 'left',
     styleOverride = {},
     numberOfLines = undefined
@@ -16,36 +17,43 @@ export const VRText = ({
     children: React.ReactNode;
     size?: number;
     color?: string | null;
-    fontWeight?:
-        | 'normal'
-        | 'bold'
-        | '100'
-        | '200'
-        | '300'
-        | '400'
-        | '500'
-        | '600'
-        | '700'
-        | '800'
-        | '900'
-        | undefined;
-    fontStyle?: 'normal' | 'italic' | undefined;
+    fontWeight?: 'normal' | 'bold' | '500' | '600';
+    fontStyle?: 'normal' | 'italic';
     textAlign?: 'left' | 'center' | 'right';
+    fontFamily?: string | null;
     styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
 }) => {
     const { colors }: Theme = useTheme();
 
-    const styleFromProps = useMemo(
-        () => ({
-            fontSize: size,
-            color: color ?? colors.text,
-            fontWeight,
-            fontStyle,
-            textAlign
-        }),
-        [size, color, fontWeight, fontStyle, textAlign, colors]
-    );
+    const getFontFamily = () => {
+        if (fontFamily) {
+            return fontFamily;
+        }
+
+        if (fontWeight === 'normal') {
+            if (fontStyle === 'italic') {
+                return FONTS.italic;
+            }
+            return FONTS.primary;
+        }
+
+        if (fontWeight === 'bold') {
+            if (fontStyle === 'italic') {
+                return FONTS.boldItalic;
+            }
+            return FONTS.bold;
+        }
+
+        return FONTS.primary;
+    };
+
+    const styleFromProps = {
+        fontSize: size,
+        color: color ?? colors.text,
+        textAlign,
+        fontFamily: getFontFamily()
+    };
 
     return (
         <Text
