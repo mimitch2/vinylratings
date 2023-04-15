@@ -472,7 +472,8 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
 
 const styles = StyleSheet.create({
     upperContainer: {
-        marginLeft: -20
+        left: -20,
+        top: -20
     },
     title: {
         paddingBottom: 10,

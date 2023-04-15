@@ -61,7 +61,7 @@ const VRWebViewModal = ({
                     onLoadEnd={() => {
                         setTimeout(() => {
                             setWebViewLoading(false);
-                        }, 100);
+                        }, 20);
                     }}
                     onShouldStartLoadWithRequest={(event) => {
                         if (
