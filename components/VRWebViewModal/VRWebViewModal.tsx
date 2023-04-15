@@ -37,7 +37,9 @@ const VRWebViewModal = ({
             setModalOpen={setDiscogsReviewsModalOpen}
             centerContent={false}
         >
-            <View style={{ flex: 1, paddingBottom: 30 }}>
+            <View
+                style={{ flex: 1, paddingBottom: 30, backgroundColor: 'white' }}
+            >
                 {webViewLoading ? (
                     <ActivityIndicator
                         size="large"

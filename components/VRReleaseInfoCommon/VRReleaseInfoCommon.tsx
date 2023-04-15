@@ -71,16 +71,11 @@ const VRReleaseInfoCommon = ({
                     />
                 ) : null}
             </View>
-            <View style={styles.title}>
-                <View>
+            <View>
+                <View style={styles.title}>
                     <VRText fontWeight="bold" size={28}>
                         {title}
                     </VRText>
-                    <VRText fontStyle="italic" size={20}>
-                        {artist}
-                    </VRText>
-                </View>
-                <View>
                     <VRListIndicator
                         userData={{
                             in_collection: isInCollection,
@@ -89,14 +84,11 @@ const VRReleaseInfoCommon = ({
                         size="lg"
                     />
                 </View>
+                <VRText fontStyle="italic" size={20}>
+                    {artist}
+                </VRText>
             </View>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    marginTop: 15
-                }}
-            >
+            <View style={styles.tags}>
                 {tags.map((tag) => (
                     <VRTag key={tag} tag={tag} size="lg" />
                 ))}
@@ -114,10 +106,13 @@ const styles = StyleSheet.create({
         top: -20
     },
     title: {
-        paddingBottom: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'baseline'
+        justifyContent: 'space-between'
+    },
+    tags: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 15
     }
 });
 
