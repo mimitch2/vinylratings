@@ -62,36 +62,56 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSearchType(value);
     };
 
-    const clearQueryCache = useCallback(() => {
-        cache.evict({
-            id: 'ROOT_QUERY',
-            fieldName: 'getSearch',
-            broadcast: false
-        });
-
-        cache.gc();
-    }, [cache]);
-
     const runSearchQuery = useCallback(
         ({ variables }: any) => {
-            clearQueryCache();
+            console.log(
+                '🚀 ~ file: Search.tsx:216 ~ Search ~ variables:',
+                variables
+            );
+
             search({ variables });
         },
 
-        [search, clearQueryCache]
+        [search]
     );
 
     useEffect(() => {
         if (called && !searchTerm.length) {
-            clearQueryCache();
+            const clearQueryCache = () => {
+                // cache.evict({
+                //     id: 'ROOT_QUERY',
+                //     fieldName: 'getSearch',
+                //     broadcast: false
+                // });
 
+                // cache.gc();
+
+                cache.modify({
+                    fields: {
+                        getSearch() {
+                            return {
+                                results: [],
+                                pagination: {
+                                    __typename: 'Pagination',
+                                    items: 0,
+                                    page: 1,
+                                    pages: 1,
+                                    perPage: 25
+                                }
+                            };
+                        }
+                    },
+                    broadcast: true
+                });
+            };
+            clearQueryCache();
             // navigation.dispatch(
             //     CommonActions.reset({
             //         routes: [{ name: 'Search' }]
             //     })
             // );
         }
-    }, [searchTerm, clearQueryCache, called]);
+    }, [searchTerm, called, cache]);
 
     useEffect(() => {
         if (data) {
@@ -103,8 +123,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         }
     }, [data, navigation]);
 
-    const results =
-        data?.getSearch?.results ?? previousData?.getSearch?.results;
+    const results = data?.getSearch?.results ?? null;
 
     const isLoading =
         (loading && !loadingMore && !reloading) || isSortingOrFiltering;

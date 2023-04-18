@@ -138,10 +138,6 @@ export const useLazyList = ({
             });
         } catch (err) {
             setLoadingMore(false);
-            console.error(
-                '🚀 ~ file: useLazyList.tsx ~ line 131 ~ onLoadMore ~ err',
-                err
-            );
             throw new Error(`useLazyList-fetchMore: ${err}`);
         }
     };
