@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
-import { CommonActions, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 
 import { useLazyList } from 'hooks';
 import { Theme } from 'styles';
@@ -64,11 +64,6 @@ const Search = ({ navigation }: { navigation: Nav }) => {
 
     const runSearchQuery = useCallback(
         ({ variables }: any) => {
-            console.log(
-                '🚀 ~ file: Search.tsx:216 ~ Search ~ variables:',
-                variables
-            );
-
             search({ variables });
         },
 
@@ -78,14 +73,6 @@ const Search = ({ navigation }: { navigation: Nav }) => {
     useEffect(() => {
         if (called && !searchTerm.length) {
             const clearQueryCache = () => {
-                // cache.evict({
-                //     id: 'ROOT_QUERY',
-                //     fieldName: 'getSearch',
-                //     broadcast: false
-                // });
-
-                // cache.gc();
-
                 cache.modify({
                     fields: {
                         getSearch() {
@@ -105,11 +92,6 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                 });
             };
             clearQueryCache();
-            // navigation.dispatch(
-            //     CommonActions.reset({
-            //         routes: [{ name: 'Search' }]
-            //     })
-            // );
         }
     }, [searchTerm, called, cache]);
 
