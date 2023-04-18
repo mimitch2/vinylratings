@@ -22,15 +22,34 @@ import {
     VRSearchInput,
     VRSegmented
 } from 'components';
-import { GET_SEARCH } from './searchQueries';
+import { GET_SEARCH, GET_RELEASE_SEARCH } from './searchQueries';
 import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchType, setSearchType] = useState(SearchTypes.RELEASE);
+    const [searchType, setSearchType] = useState<SearchTypes>(
+        SearchTypes.RELEASE
+    );
 
     const sortDefault = 'artist';
+
+    const args = {
+        scrollViewRef,
+        QUERY:
+            searchType === SearchTypes.RELEASE
+                ? GET_RELEASE_SEARCH
+                : GET_SEARCH,
+        queryKey:
+            searchType === SearchTypes.RELEASE
+                ? 'getReleaseSearch'
+                : 'getSearch',
+        sortDefault
+    };
+
+    if (searchType !== SearchTypes.RELEASE) {
+        args.type = searchType;
+    }
 
     const {
         called,
@@ -48,13 +67,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSortOrder,
         sort,
         sortOrder
-    } = useLazyList({
-        scrollViewRef,
-        QUERY: GET_SEARCH,
-        queryKey: 'getSearch',
-        sortDefault,
-        type: searchType
-    });
+    } = useLazyList(args);
     const { cache } = client;
     const { colors }: Theme = useTheme();
 
@@ -66,46 +79,53 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         ({ variables }: any) => {
             search({ variables });
         },
-
         [search]
     );
 
     useEffect(() => {
         if (called && !searchTerm.length) {
+            const noResults = {
+                results: [],
+                pagination: {
+                    __typename: 'Pagination',
+                    items: 0,
+                    page: 1,
+                    pages: 1,
+                    perPage: 25
+                }
+            };
+
             const clearQueryCache = () => {
-                cache.modify({
-                    fields: {
-                        getSearch() {
-                            return {
-                                results: [],
-                                pagination: {
-                                    __typename: 'Pagination',
-                                    items: 0,
-                                    page: 1,
-                                    pages: 1,
-                                    perPage: 25
-                                }
-                            };
-                        }
-                    },
-                    broadcast: true
-                });
+                if (searchType === SearchTypes.RELEASE) {
+                    cache.modify({
+                        fields: {
+                            getReleaseSearch() {
+                                return noResults;
+                            }
+                        },
+                        broadcast: true
+                    });
+                } else {
+                    cache.modify({
+                        fields: {
+                            getSearch() {
+                                return noResults;
+                            }
+                        },
+                        broadcast: true
+                    });
+                }
             };
             clearQueryCache();
         }
-    }, [searchTerm, called, cache]);
+    }, [searchTerm, called, cache, searchType]);
 
-    useEffect(() => {
-        if (data) {
-            navigation.setOptions({
-                title: `Search(${
-                    data?.getSearch?.pagination?.items.toLocaleString() || '?'
-                })`
-            });
-        }
-    }, [data, navigation]);
-
-    const results = data?.getSearch?.results ?? null;
+    const results =
+        data?.[
+            searchType === SearchTypes.RELEASE
+                ? 'getReleaseSearch'
+                : 'getSearch'
+        ]?.results ?? null;
 
     const isLoading =
         (loading && !loadingMore && !reloading) || isSortingOrFiltering;

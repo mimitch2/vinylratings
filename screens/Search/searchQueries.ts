@@ -41,48 +41,48 @@ export const GET_SEARCH = gql`
                     }
                 }
             }
-            ... on ReleasesSearchResult {
-                isReleases
-                pagination {
-                    items
-                    page
-                    pages
-                    per_page
-                }
-                results {
-                    id
-                    date_added
-                    folder_id
-                    instance_id
-                    rating
-                    basic_information {
-                        format
-                        country
-                        artists {
-                            name
-                        }
-                        genres
-                        formats {
-                            descriptions
-                            name
-                            qty
-                            text
-                        }
-                        id
-                        label
-                        released
-                        styles
-                        thumb
-                        title
-                        type
-                        user_data {
-                            in_collection
-                            in_wantlist
-                        }
-                        year
-                    }
-                }
-            }
+            # ... on ReleasesSearchResult {
+            #     isReleases
+            #     pagination {
+            #         items
+            #         page
+            #         pages
+            #         per_page
+            #     }
+            #     results {
+            #         id
+            #         date_added
+            #         folder_id
+            #         instance_id
+            #         rating
+            #         basic_information {
+            #             format
+            #             country
+            #             artists {
+            #                 name
+            #             }
+            #             genres
+            #             formats {
+            #                 descriptions
+            #                 name
+            #                 qty
+            #                 text
+            #             }
+            #             id
+            #             label
+            #             released
+            #             styles
+            #             thumb
+            #             title
+            #             type
+            #             user_data {
+            #                 in_collection
+            #                 in_wantlist
+            #             }
+            #             year
+            #         }
+            #     }
+            # }
             ... on MasterSearchResult {
                 isMasters
                 pagination {
@@ -118,6 +118,68 @@ export const GET_SEARCH = gql`
                         }
                         year
                     }
+                }
+            }
+        }
+    }
+`;
+
+export const GET_RELEASE_SEARCH = gql`
+    query GetReleaseSearch(
+        $search: String
+        $sort: String
+        $sort_order: String
+        $page: Int
+        $per_page: Int
+        $offset: Int
+        $limit: Int
+    ) {
+        getReleaseSearch(
+            search: $search
+            sort: $sort
+            sort_order: $sort_order
+            page: $page
+            per_page: $per_page
+            offset: $offset
+            limit: $limit
+        ) {
+            pagination {
+                items
+                page
+                pages
+                per_page
+            }
+            results {
+                id
+                date_added
+                folder_id
+                instance_id
+                rating
+                basic_information {
+                    format
+                    country
+                    artists {
+                        name
+                    }
+                    genres
+                    formats {
+                        descriptions
+                        name
+                        qty
+                        text
+                    }
+                    id
+                    label
+                    released
+                    styles
+                    thumb
+                    title
+                    type
+                    user_data {
+                        in_collection
+                        in_wantlist
+                    }
+                    year
                 }
             }
         }

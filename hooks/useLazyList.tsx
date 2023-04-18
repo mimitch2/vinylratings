@@ -75,7 +75,7 @@ export const useLazyList = ({
     ] = useLazyQuery(QUERY, {
         variables,
         onCompleted: (returnedData: Data) => {
-            if (!loadingMore && returnedData?.getSearch?.results?.length) {
+            if (!loadingMore && returnedData?.[queryKey]?.results?.length) {
                 scrollViewRef?.current?.scrollToIndex({
                     index: 0,
                     animated: false
