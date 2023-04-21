@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
-
+import { StyleSheet, ViewStyle } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 const VRFooter = ({
     children,
     styleOverride = {}
@@ -8,7 +8,9 @@ const VRFooter = ({
     children: React.ReactNode;
     styleOverride?: ViewStyle;
 }) => {
-    return <View style={[styles.container, styleOverride]}>{children}</View>;
+    return (
+        <Layout style={[styles.container, styleOverride]}>{children}</Layout>
+    );
 };
 
 const styles = StyleSheet.create({

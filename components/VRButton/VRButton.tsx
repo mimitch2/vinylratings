@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { Button, Text } from '@ui-kitten/components';
 
 import { VRText, VRPressable } from 'components';
 import { Theme, ColorsKeys } from 'constants/index';
@@ -46,22 +47,25 @@ const VRButton = ({
     const color: string = colors[textVariant as ColorsKeys];
 
     return (
-        <VRPressable
-            styleOverride={[
-                small
-                    ? styles(backgroundColor, stacked).buttonSmall
-                    : styles(backgroundColor, stacked).button,
-                containerStyle
-            ]}
-            onPress={onPress}
-            trackID={trackID}
-            disabled={disabled}
-            testID={testID}
-        >
-            <VRText color={color} size={small ? 12 : 20} fontWeight="bold">
-                {title}
-            </VRText>
-        </VRPressable>
+        <Button onPress={onPress} disabled={disabled}>
+            {title}
+        </Button>
+        // <VRPressable
+        //     styleOverride={[
+        //         small
+        //             ? styles(backgroundColor, stacked).buttonSmall
+        //             : styles(backgroundColor, stacked).button,
+        //         containerStyle
+        //     ]}
+        //     onPress={onPress}
+        //     trackID={trackID}
+        //     disabled={disabled}
+        //     testID={testID}
+        // >
+        //     <VRText color={color} size={small ? 12 : 20} fontWeight="bold">
+        //         {title}
+        //     </VRText>
+        // </VRPressable>
     );
 };
 

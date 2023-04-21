@@ -11,7 +11,7 @@ import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
 import { FONTS } from 'constants/index';
-import { Nav } from 'types';
+import { Nav, TextCategory } from 'types';
 
 type Params = {
     auth?: string;
@@ -86,7 +86,10 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                         alignItems: 'center'
                     }}
                 >
-                    <VRText size={45} fontFamily={FONTS.heading}>
+                    <VRText
+                        category={TextCategory.h1}
+                        fontFamily={FONTS.heading}
+                    >
                         VINYL RATINGS
                     </VRText>
                     {/* <Image

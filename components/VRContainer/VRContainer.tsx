@@ -6,7 +6,8 @@ import {
     RefreshControl,
     ViewStyle
 } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+// import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { VRLoading } from 'components';
 import { FONTS, Theme, ThemeColors } from 'constants/index';
@@ -34,7 +35,6 @@ const VRContainer = ({
     refreshing = false,
     onRefresh = null
 }: Props) => {
-    const { colors }: Theme = useTheme();
     const fadeIn = useRef(new Animated.Value(0)).current;
 
     const commonStyle = [
@@ -61,8 +61,8 @@ const VRContainer = ({
     }
 
     return scrollable ? (
-        <View
-            style={[styles(colors).view, { opacity: refreshing ? 0.6 : 1 }]}
+        <Layout
+            style={[styles.view, { opacity: refreshing ? 0.6 : 1 }]}
             testID="scroll"
         >
             <Animated.ScrollView
@@ -73,31 +73,29 @@ const VRContainer = ({
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={onRefresh}
-                            colors={[colors.lightGrey]}
-                            tintColor={colors.lightGrey}
+                            // colors={[colors.lightGrey]}
+                            // tintColor={colors.lightGrey}
                         />
                     ) : undefined
                 }
             >
                 <View>{children}</View>
             </Animated.ScrollView>
-        </View>
+        </Layout>
     ) : (
-        <View style={styles(colors).view} testID="view">
+        <Layout style={styles.view} testID="view">
             <Animated.View style={commonStyle}>
                 <View>{children}</View>
             </Animated.View>
-        </View>
+        </Layout>
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        view: {
-            flex: 1,
-            fontFamily: FONTS.primary,
-            backgroundColor: colors.background
-        }
-    });
+const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        fontFamily: FONTS.primary
+    }
+});
 
 export default React.memo(VRContainer);

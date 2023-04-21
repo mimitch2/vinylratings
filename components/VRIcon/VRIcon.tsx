@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+// import { Text, useTheme } from '@ui-kitten/components';
 
 import { IconType, IconSize } from 'types';
 import {

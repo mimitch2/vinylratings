@@ -1,19 +1,22 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-
+import {
+    BottomNavigation,
+    BottomNavigationTab,
+    BottomNavigationProps,
+    Layout,
+    Text
+} from '@ui-kitten/components';
 import { Theme, HEIGHT } from 'constants/index';
 
 const VRLoading = () => {
     const { colors }: Theme = useTheme();
 
     return (
-        <View
-            style={[styles.view, { backgroundColor: colors.background }]}
-            testID="loading"
-        >
+        <Layout style={styles.view} testID="loading">
             <ActivityIndicator size="large" />
-        </View>
+        </Layout>
     );
 };
 
