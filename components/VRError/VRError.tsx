@@ -53,6 +53,8 @@ const VRError = ({
         }
     };
 
+    const category = TextCategory.h5;
+
     return (
         <Layout style={[styles.view, styleOverride]}>
             <VRIcon
@@ -64,7 +66,7 @@ const VRError = ({
 
             {error ? (
                 <>
-                    <VRText category={TextCategory.h3} textAlign="center">
+                    <VRText category={category} textAlign="center">
                         {error?.message ?? message}
                     </VRText>
                     <VRButton
@@ -78,7 +80,7 @@ const VRError = ({
                 </>
             ) : (
                 <VRText
-                    category={TextCategory.h3}
+                    category={category}
                     styleOverride={{ textAlign: 'center' }}
                 >
                     {message}

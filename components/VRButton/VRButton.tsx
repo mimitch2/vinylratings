@@ -4,8 +4,8 @@ import { useTheme } from '@react-navigation/native';
 import { Button, Text } from '@ui-kitten/components';
 
 import { VRText, VRPressable } from 'components';
-import { Theme, ColorsKeys } from 'constants/index';
-import { VoidFuncNoParams } from 'types';
+import { Theme, ColorsKeys, FONTS } from 'constants/index';
+import { TextCategory, VoidFuncNoParams } from 'types';
 
 type ButtonVariants = 'primary' | 'secondary' | 'tertiary' | 'danger';
 type VariantMap = {
@@ -47,7 +47,19 @@ const VRButton = ({
     const color: string = colors[textVariant as ColorsKeys];
 
     return (
-        <Button onPress={onPress} disabled={disabled}>
+        <Button
+            onPress={onPress}
+            disabled={disabled}
+            style={[
+                {
+                    flex: stacked ? 0 : 1
+                },
+                containerStyle
+            ]}
+            size="medium"
+            // appearance="ghost"
+            // status="control"
+        >
             {title}
         </Button>
         // <VRPressable
@@ -69,21 +81,20 @@ const VRButton = ({
     );
 };
 
-const styles = (backgroundColor: string, stacked: boolean) =>
-    StyleSheet.create({
-        button: {
-            backgroundColor,
-            paddingHorizontal: 20,
-            paddingVertical: 8,
-            borderRadius: 25,
-            alignItems: 'center',
-            flex: stacked ? 0 : 1
-        },
-        buttonSmall: {
-            backgroundColor,
-            paddingHorizontal: 8,
-            paddingVertical: 2,
-            borderRadius: 10
-        }
-    });
+// const styles = StyleSheet.create({
+//     button: {
+//         backgroundColor,
+//         paddingHorizontal: 20,
+//         paddingVertical: 8,
+//         borderRadius: 25,
+//         alignItems: 'center',
+//         flex: stacked ? 0 : 1
+//     },
+//     buttonSmall: {
+//         backgroundColor,
+//         paddingHorizontal: 8,
+//         paddingVertical: 2,
+//         borderRadius: 10
+//     }
+// });
 export default VRButton;

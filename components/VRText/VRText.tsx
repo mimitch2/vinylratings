@@ -12,7 +12,7 @@ export const VRText = ({
     color = Colors.text,
     fontWeight = 'normal',
     fontStyle = 'normal',
-    fontFamily = null,
+    fontFamily = FONTS.primary,
     textAlign = 'left',
     styleOverride = {},
     numberOfLines = undefined
@@ -28,6 +28,7 @@ export const VRText = ({
     numberOfLines?: number | undefined;
 }) => {
     const themeColor = useColorTheme(color);
+
     const getFontFamily = () => {
         if (fontFamily) {
             return fontFamily;
