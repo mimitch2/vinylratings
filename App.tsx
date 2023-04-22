@@ -53,6 +53,7 @@ const App = () => {
             <ApplicationProvider
                 {...eva}
                 theme={{ ...eva[scheme ?? 'dark'], ...darkTheme }}
+                // @ts-ignore
                 customMapping={mapping}
             >
                 <Layout

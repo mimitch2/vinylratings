@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { useLazyList } from 'hooks';
 import { Theme } from 'styles';
@@ -132,24 +133,27 @@ const Search = ({ navigation }: { navigation: Nav }) => {
 
     return (
         <>
-            <VRSearchInput
-                runQuery={runSearchQuery}
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-            />
+            <Layout>
+                <VRSearchInput
+                    runQuery={runSearchQuery}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
 
-            <VRSegmented
-                data={SEARCH_TYPES}
-                onPress={handleSearchTypePress}
-                containerStyleOverride={{
-                    paddingBottom: 0
-                }}
-                labelStyleOverride={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    marginVertical: 0
-                }}
-            />
+                <VRSegmented
+                    data={SEARCH_TYPES}
+                    onPress={handleSearchTypePress}
+                    containerStyleOverride={{
+                        paddingBottom: 0
+                    }}
+                    labelStyleOverride={{
+                        paddingVertical: 10,
+                        paddingHorizontal: 20,
+                        marginVertical: 0
+                    }}
+                />
+            </Layout>
+
             <VRContainer
                 startAnimation
                 scrollable={false}

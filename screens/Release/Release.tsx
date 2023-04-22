@@ -57,7 +57,6 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const {
         params: { id, inWantList, isFromVersions }
     } = route;
-
     // Queries
     const {
         isInCollection,

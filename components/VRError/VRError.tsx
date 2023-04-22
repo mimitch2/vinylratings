@@ -76,6 +76,7 @@ const VRError = ({
                         onPress={async () => {
                             await Updates.reloadAsync();
                         }}
+                        variant="danger"
                     />
                 </>
             ) : (

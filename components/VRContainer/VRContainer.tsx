@@ -73,8 +73,6 @@ const VRContainer = ({
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={onRefresh}
-                            // colors={[colors.lightGrey]}
-                            // tintColor={colors.lightGrey}
                         />
                     ) : undefined
                 }
@@ -93,8 +91,7 @@ const VRContainer = ({
 
 const styles = StyleSheet.create({
     view: {
-        flex: 1,
-        fontFamily: FONTS.primary
+        flex: 1
     }
 });
 

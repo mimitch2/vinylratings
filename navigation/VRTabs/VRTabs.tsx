@@ -63,7 +63,7 @@ const ROUTES: {
         icon: 'search',
         Component: Search,
         options: {
-            header: () => null
+            headerShown: false
         }
     },
     {
@@ -174,14 +174,14 @@ export const HeaderBar = ({
     title: string;
     back?: boolean;
 }): React.ReactElement => (
-    <Layout>
+    <>
         <TopNavigation
             accessoryLeft={back ? BackAction : undefined}
             title={() => <VRText category={TextCategory.h5}>{title}</VRText>}
             alignment="center"
         />
         <VRDivider />
-    </Layout>
+    </>
 );
 
 const VRTabs = () => {

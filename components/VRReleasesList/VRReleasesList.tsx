@@ -7,6 +7,7 @@ import {
     StyleSheet
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { Theme } from 'constants/index';
 import { VRArtistCard, VRReleaseCard, VRIcon, VRText } from 'components';
@@ -15,7 +16,8 @@ import {
     ArtistSearch,
     Nav,
     Releases,
-    VoidFuncNoParams
+    VoidFuncNoParams,
+    TextCategory
 } from 'types';
 import { getReleaseTags } from 'helpers';
 import { PER_PAGE } from 'hooks';
@@ -129,27 +131,10 @@ const VRReleasesList = ({
                   });
 
         return hasHeader ? (
-            <View
-                style={[
-                    styles.headerContainer,
-                    { backgroundColor: colors.background }
-                ]}
-            >
-                <VRIcon
-                    type="music"
-                    color={colors.text}
-                    size="sm"
-                    styleOverride={styles.icon}
-                />
-                <VRText
-                    fontWeight="500"
-                    color={colors.text}
-                    fontStyle="italic"
-                    size={18}
-                >
-                    {genre}
-                </VRText>
-            </View>
+            <Layout style={[styles.headerContainer]}>
+                <VRIcon type="music" size="sm" styleOverride={styles.icon} />
+                <VRText category={TextCategory.h6}>{genre}</VRText>
+            </Layout>
         ) : (
             <VRReleaseCard
                 artist={artist}

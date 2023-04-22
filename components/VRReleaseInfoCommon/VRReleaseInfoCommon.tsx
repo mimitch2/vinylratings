@@ -73,9 +73,7 @@ const VRReleaseInfoCommon = ({
             </View>
             <View>
                 <View style={styles.title}>
-                    <VRText fontWeight="bold" category={TextCategory.h4}>
-                        {title}
-                    </VRText>
+                    <VRText category={TextCategory.h4}>{title}</VRText>
                     <VRListIndicator
                         userData={{
                             in_collection: isInCollection,

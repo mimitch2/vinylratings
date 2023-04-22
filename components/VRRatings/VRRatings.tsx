@@ -138,7 +138,7 @@ const VRRatings = ({
                     stacked={false}
                 />
                 <VRButton
-                    trackID="release_screen-open_ratings_modal"
+                    trackID="release_screen-open_discogs_modal"
                     title="Discogs reviews"
                     onPress={() => setDiscogsReviewsModalOpen(true)}
                     containerStyle={{ marginLeft: 5 }}

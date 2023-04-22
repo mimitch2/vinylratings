@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import {
-    StyleSheet,
-    View,
-    AppState,
-    Alert,
-    Linking,
-    Platform
-} from 'react-native';
+import { StyleSheet, AppState, Alert, Linking, Platform } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Layout } from '@ui-kitten/components';
 
 import { VRInput, VRIcon, VRPressable } from 'components';
 import { runHapticFeedback } from 'helpers';
 import CameraModal from './components/CameraModal';
+
+const InputIcon = ({
+    setSearchTerm,
+    searchTerm,
+    handleBarcodePress
+}: {
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+    searchTerm: string;
+    handleBarcodePress: () => void;
+}) => {
+    return searchTerm.length ? (
+        <VRPressable
+            onPress={() => setSearchTerm('')}
+            trackID="search_screen-clear_search"
+        >
+            <VRIcon type="close" size="md" />
+        </VRPressable>
+    ) : (
+        <VRPressable
+            onPress={handleBarcodePress}
+            trackID="search_screen-open_camera"
+        >
+            <VRIcon type="barcode" size="md" />
+        </VRPressable>
+    );
+};
 
 const VRSearchInput = ({
     runQuery,
@@ -20,7 +40,7 @@ const VRSearchInput = ({
 }: {
     runQuery: any;
     searchTerm: string;
-    setSearchTerm: (value: string) => void;
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }) => {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showCamera, setShowCamera] = useState(false);
@@ -93,13 +113,20 @@ const VRSearchInput = ({
     };
 
     return (
-        <View style={styles.container}>
+        <Layout style={styles.container}>
             <VRInput
                 handleTextChange={(value) => setSearchTerm(value)}
                 value={searchTerm}
                 placeholder="Search"
+                accessoryRight={() => (
+                    <InputIcon
+                        setSearchTerm={setSearchTerm}
+                        searchTerm={searchTerm}
+                        handleBarcodePress={handleBarcodePress}
+                    />
+                )}
             />
-            {searchTerm.length ? (
+            {/* {searchTerm.length ? (
                 <VRPressable
                     onPress={() => setSearchTerm('')}
                     trackID="search_screen-clear_search"
@@ -115,13 +142,13 @@ const VRSearchInput = ({
                 >
                     <VRIcon type="barcode" size="sm" />
                 </VRPressable>
-            )}
+            )} */}
             <CameraModal
                 showCamera={showCamera}
                 setShowCamera={setShowCamera}
                 onBarCodeRead={handleBarCodeRead}
             />
-        </View>
+        </Layout>
     );
 };
 
@@ -129,18 +156,6 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 12,
         marginHorizontal: 20
-    },
-    icon: {
-        position: 'absolute',
-        right: 5,
-        ...Platform.select({
-            ios: {
-                top: 5
-            },
-            android: {
-                top: 6
-            }
-        })
     }
 });
 

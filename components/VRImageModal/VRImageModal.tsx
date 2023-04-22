@@ -3,14 +3,15 @@ import {
     View,
     Pressable,
     StyleSheet,
-    Modal,
+    // Modal,
     StatusBar,
     ActivityIndicator
 } from 'react-native';
 import { VRIcon } from 'components';
+import { Modal, Layout, useTheme } from '@ui-kitten/components';
 
-import { COLORS } from 'constants/index';
 import { DiscogsImage } from 'types';
+import { useColorTheme } from 'hooks';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 const VRImageModal = ({
@@ -22,6 +23,8 @@ const VRImageModal = ({
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
 }) => {
+    const backgroundColor = useColorTheme('background');
+
     const mappedImages = images.map((image) => {
         return {
             url: image.resource_url,
@@ -31,8 +34,13 @@ const VRImageModal = ({
     });
 
     return (
-        <Modal visible={modalOpen} animationType="slide">
-            <View style={styles.close}>
+        <Modal
+            visible={modalOpen}
+            animationType="slide"
+            style={{ flex: 1 }}
+            shouldUseContainer={false}
+        >
+            <Layout style={styles.close}>
                 <Pressable
                     testID="close-button"
                     onPress={() => {
@@ -40,14 +48,15 @@ const VRImageModal = ({
                         StatusBar.setHidden(false);
                     }}
                 >
-                    <VRIcon type="close" size="lg" color={COLORS.background} />
+                    <VRIcon type="close" size="lg" />
                 </Pressable>
-            </View>
+            </Layout>
             <ImageViewer
                 imageUrls={mappedImages}
                 useNativeDriver
-                saveToLocalByLongPress={false}
+                saveToLocalByLongPress={true}
                 loadingRender={() => <ActivityIndicator />}
+                backgroundColor={backgroundColor}
             />
         </Modal>
     );
@@ -58,8 +67,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 2,
         top: 30,
-        right: 20,
-        backgroundColor: 'transparent'
+        right: 20
+        // backgroundColor: 'transparent'
     }
 });
 
