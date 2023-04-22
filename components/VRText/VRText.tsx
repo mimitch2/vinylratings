@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, TextStyle } from 'react-native';
-import { FONTS } from 'constants/index';
+import { TextStyle } from 'react-native';
 import { Text } from '@ui-kitten/components';
-import { TextCategory } from 'types';
+
+import { FONTS } from 'constants/index';
+import { TextCategory, Colors } from 'types';
+import { useColorTheme } from 'hooks';
 
 export const VRText = ({
     children,
     category = TextCategory.p1,
-    color = null,
+    color = Colors.text,
     fontWeight = 'normal',
     fontStyle = 'normal',
     fontFamily = null,
@@ -15,9 +17,9 @@ export const VRText = ({
     styleOverride = {},
     numberOfLines = undefined
 }: {
-    children: string;
+    children: string | string[];
     category?: TextCategory;
-    color?: string | null;
+    color?: Colors;
     fontWeight?: 'normal' | 'bold' | '500' | '600';
     fontStyle?: 'normal' | 'italic';
     textAlign?: 'left' | 'center' | 'right';
@@ -25,6 +27,7 @@ export const VRText = ({
     styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
 }) => {
+    const themeColor = useColorTheme(color);
     const getFontFamily = () => {
         if (fontFamily) {
             return fontFamily;
@@ -54,21 +57,17 @@ export const VRText = ({
 
     return (
         <Text
-            style={[styles.text, styleFromProps, styleOverride]}
+            style={[
+                { flexShrink: 1, color: themeColor },
+                styleFromProps,
+                styleOverride
+            ]}
             numberOfLines={numberOfLines}
             category={category}
-            // appearance="hint"
         >
             {children}
         </Text>
     );
 };
-
-const styles = StyleSheet.create({
-    text: {
-        // fontFamily: FONTS.primary,
-        flexShrink: 1
-    }
-});
 
 export default VRText;

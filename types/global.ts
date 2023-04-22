@@ -1,22 +1,25 @@
-import { COLORS_MAP } from 'constants/index';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {
-    CompositeScreenProps,
-    NavigatorScreenParams
-} from '@react-navigation/native';
 import { UserData, DiscogsImage } from './releases';
 
 export type VoidFunc = <T>(params: T | undefined) => void;
 export type VoidFuncNoParams = () => void;
 
-export type Colors = keyof typeof COLORS_MAP.light;
+export enum Colors {
+    basic = 'basic',
+    primary = 'primary',
+    info = 'info',
+    warning = 'warning',
+    danger = 'danger',
+    text = 'text'
+}
 
 export type IconSize = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg' | 'xxxlg';
 export type IconType =
     | 'asc'
     | 'barcode'
     | 'check'
+    | 'chevronLeft'
     | 'chevronRight'
     | 'close'
     | 'collection'

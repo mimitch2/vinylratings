@@ -89,6 +89,15 @@ export const DefaultTheme = {
     }
 };
 
+export const COLOR_MAP = {
+    basic: 'color-basic-default',
+    primary: 'color-primary-default',
+    info: 'color-info-default',
+    warning: 'color-warning-default',
+    danger: 'color-danger-default',
+    text: 'text-basic-color'
+};
+
 /* CSS HEX */
 // --rich-black-fogra-29: #001524ff;
 // --ming: #15616dff;

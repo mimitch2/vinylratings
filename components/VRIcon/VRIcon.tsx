@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, ViewStyle } from 'react-native';
-import { useTheme } from '@react-navigation/native';
-// import { Text, useTheme } from '@ui-kitten/components';
+import { ViewStyle } from 'react-native';
+import { Layout } from '@ui-kitten/components';
+import { IconType, IconSize, Colors } from 'types';
+import { useColorTheme } from 'hooks';
 
-import { IconType, IconSize } from 'types';
 import {
     Asc,
     Barcode,
     Check,
+    ChevronLeft,
     ChevronRight,
     Close,
     Desc,
@@ -41,6 +42,7 @@ export const SVG_MAP: SVGMap = {
     barcode: Barcode,
     check: Check,
     chevronRight: ChevronRight,
+    chevronLeft: ChevronLeft,
     close: Close,
     collection: UserCollection,
     users: Users,
@@ -72,27 +74,25 @@ const SIZE_MAP = {
 };
 
 const VRIcon = ({
-    color = null,
+    color = Colors.primary,
     size = 'md',
     styleOverride = {},
     type,
     testID = null
 }: {
-    color?: string | null;
+    color?: Colors;
     size?: IconSize;
     styleOverride?: ViewStyle;
     type: IconType;
     testID?: string | null;
 }) => {
-    const { colors } = useTheme();
-
+    const themeColor = useColorTheme(color);
     const Icon: React.FC<IconProps> = SVG_MAP[type];
-    const targetColor = color ?? colors.text;
 
     return (
-        <View style={styleOverride} testID={testID || 'vr-icon'}>
-            <Icon size={SIZE_MAP[size]} color={targetColor} />
-        </View>
+        <Layout style={styleOverride} testID={testID || 'vr-icon'}>
+            <Icon size={SIZE_MAP[size]} color={themeColor} />
+        </Layout>
     );
 };
 

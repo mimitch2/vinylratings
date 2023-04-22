@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 // @ts-ignore
 import { REACT_APP_SERVER_ENDPOINT } from '@env';
-
 import { VRContainer, VRLoading, VRText, VRButton, VRFooter } from 'components';
 import { DisabledContext } from 'context';
 import { useAuth } from 'hooks/useAuth';

@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { VRIcon } from '../';
-import { generateArrayOfNumbers, getRatingValues } from '../../helpers';
-import { Theme } from '../../constants';
-import { IconSize } from '../../types';
+import { VRIcon } from 'components';
+import { generateArrayOfNumbers, getRatingValues } from 'helpers';
+import { Theme } from 'constants/index';
+import { IconSize } from 'types';
 
 const RatingStar = ({
     inputRating,

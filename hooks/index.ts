@@ -5,3 +5,4 @@ export * from './useList';
 export * from './usePlatform';
 export * from './useLazyList';
 export * from './useFetch';
+export * from './useColorTheme';

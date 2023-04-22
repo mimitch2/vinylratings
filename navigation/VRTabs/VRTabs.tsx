@@ -2,7 +2,12 @@ import {
     createBottomTabNavigator,
     BottomTabBarProps
 } from '@react-navigation/bottom-tabs';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    DrawerLayoutAndroidComponent,
+    StyleSheet,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import React, { useState, useMemo, useContext } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,8 +19,7 @@ import {
     TopNavigation,
     TopNavigationAction,
     Divider,
-    Layout,
-    Text
+    Layout
 } from '@ui-kitten/components';
 
 import { VRIcon, VRText } from 'components';
@@ -32,7 +36,7 @@ import {
 import { ThemeColors, Theme } from 'styles';
 import { DisabledContext } from 'context';
 import { FONTS } from 'constants/index';
-import { TextCategory } from 'types';
+import { TextCategory, Colors } from 'types';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
 interface TabBarProps extends BottomTabBarProps {
@@ -78,7 +82,7 @@ const ROUTES: {
     }
 ];
 
-const TabBar = ({ navigation, state, disabled }: TabBarProps) => {
+const TabBar = ({ navigation, disabled }: TabBarProps) => {
     const { colors }: Theme = useTheme();
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -93,11 +97,33 @@ const TabBar = ({ navigation, state, disabled }: TabBarProps) => {
             >
                 {ROUTES.map(({ routeName, icon, index }) => {
                     const isDisabled = !!(disabled && index);
+                    const isSelected = selectedIndex === index;
                     return (
                         <BottomNavigationTab
                             key={routeName}
-                            icon={() => <VRIcon type={icon} size="lg" />}
-                            title={() => <VRText>{routeName}</VRText>}
+                            icon={() => (
+                                <VRIcon
+                                    type={icon}
+                                    size="lg"
+                                    color={
+                                        isSelected
+                                            ? Colors.primary
+                                            : Colors.text
+                                    }
+                                />
+                            )}
+                            title={() => (
+                                <VRText
+                                    color={
+                                        isSelected
+                                            ? Colors.primary
+                                            : Colors.text
+                                    }
+                                    styleOverride={{ marginTop: 3 }}
+                                >
+                                    {routeName.toUpperCase()}
+                                </VRText>
+                            )}
                             disabled={isDisabled}
                             style={[
                                 styles(colors).tabBar,
@@ -107,45 +133,6 @@ const TabBar = ({ navigation, state, disabled }: TabBarProps) => {
                             ]}
                         />
                     );
-                    //         const isCurrentScreen = state.index === index;
-                    //         const color = isCurrentScreen ? colors.primary : colors.text;
-
-                    //         const onPress = () => {
-                    //             if (!isCurrentScreen) {
-                    //                 navigation.navigate(routeName);
-                    //             }
-                    //         };
-
-                    //         const isDisabled = Boolean(disabled && index);
-
-                    //         return (
-                    //             <TouchableOpacity
-                    //                 disabled={isDisabled}
-                    //                 key={routeName}
-                    //                 accessibilityRole="button"
-                    //                 accessibilityState={
-                    //                     isCurrentScreen ? { selected: true } : {}
-                    //                 }
-                    //                 onPress={onPress}
-                    //                 style={[
-                    //                     styles(colors).tabBar,
-                    //                     {
-                    //                         opacity: isDisabled ? 0.4 : 1
-                    //                     }
-                    //                 ]}
-                    //             >
-                    //                 <View
-                    //                     style={{
-                    //                         alignItems: 'center'
-                    //                     }}
-                    //                 >
-                    //                     <VRIcon type={icon} color={color} />
-                    //                     <VRText size={14} color={color}>
-                    //                         {routeName}
-                    //                     </VRText>
-                    //                 </View>
-                    //             </TouchableOpacity>
-                    //         );
                 })}
             </BottomNavigation>
         </Layout>
@@ -189,7 +176,7 @@ const BackAction = (): React.ReactElement => {
     const navigation = useNavigation();
     return (
         <TopNavigationAction
-            icon={() => <VRIcon type="chevronRight" />}
+            icon={() => <VRIcon type="chevronLeft" />}
             onPress={() => navigation.goBack()}
         />
     );
@@ -202,14 +189,14 @@ export const TopNavigationSimpleUsageShowcase = ({
     title: string;
     back?: boolean;
 }): React.ReactElement => (
-    <>
+    <Layout>
         <TopNavigation
             accessoryLeft={back ? BackAction : undefined}
-            title={() => <VRText category={TextCategory.h4}>{title}</VRText>}
+            title={() => <VRText category={TextCategory.h5}>{title}</VRText>}
             alignment="center"
         />
         <Divider />
-    </>
+    </Layout>
 );
 
 const VRTabs = () => {
