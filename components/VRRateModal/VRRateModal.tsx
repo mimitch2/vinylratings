@@ -149,7 +149,7 @@ const VRRateModal = ({
                         title="Cancel"
                         onPress={handleModalClose}
                         trackID="rate_modal-cancel"
-                        variant="tertiary"
+                        variant="warning"
                         testID="cancel"
                     />
                     <VRButton
@@ -157,6 +157,7 @@ const VRRateModal = ({
                         title="Submit"
                         onPress={handleSubmit}
                         trackID="rate_modal-submit"
+                        variant="primary"
                         disabled={Object.values(ratings).some(
                             (rating) => rating !== '' && !rating
                         )}

@@ -1,51 +1,59 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 import { Button, Text } from '@ui-kitten/components';
 
-import { VRText, VRPressable } from 'components';
-import { Theme, ColorsKeys, FONTS } from 'constants/index';
-import { TextCategory, VoidFuncNoParams } from 'types';
+import { VoidFuncNoParams } from 'types';
 
-type ButtonVariants = 'primary' | 'secondary' | 'tertiary' | 'danger';
+type ButtonVariants =
+    | 'primary'
+    | 'info'
+    | 'warning'
+    | 'danger'
+    | 'basic'
+    | 'text';
 type VariantMap = {
-    [key in ButtonVariants]: { bg: string; text: string };
+    [key in ButtonVariants]: { appearance: string; status: string };
+};
+type Sizes = 'tiny' | 'small' | 'medium' | 'large' | 'huge';
+type FontSizeMap = {
+    [key in Sizes]: number;
 };
 
 const VARIANT_MAP: VariantMap = {
-    primary: { bg: 'primary', text: 'background' },
-    tertiary: { bg: 'tertiary', text: 'background' },
-    secondary: { bg: 'secondary', text: 'background' },
-    danger: { bg: 'danger', text: 'background' }
+    primary: { appearance: 'filled', status: 'primary' },
+    info: { appearance: 'outline', status: 'info' },
+    warning: { appearance: 'filled', status: 'warning' },
+    danger: { appearance: 'filled', status: 'danger' },
+    basic: { appearance: 'outline', status: 'basic' },
+    text: { appearance: 'ghost', status: 'basic' }
+};
+
+const FONT_SIZE_MAP: FontSizeMap = {
+    tiny: 12,
+    small: 14,
+    medium: 16,
+    large: 18,
+    huge: 20
 };
 
 const VRButton = ({
     onPress,
     title,
-    small = false,
+    size = 'medium',
     variant = 'primary',
     trackID,
     containerStyle = {},
     disabled = false,
-    testID = null,
     stacked = true
 }: {
     onPress: VoidFuncNoParams;
     title: string;
-    small?: boolean;
+    size?: Sizes;
     variant?: ButtonVariants;
     trackID: string;
     containerStyle?: Object;
     disabled?: boolean;
-    testID?: string | null;
     stacked?: boolean;
 }) => {
-    const { colors }: Theme = useTheme();
-    const bgVariant = VARIANT_MAP[variant].bg;
-    const textVariant = VARIANT_MAP[variant].text;
-    const backgroundColor: string = colors[bgVariant as ColorsKeys];
-    const color: string = colors[textVariant as ColorsKeys];
-
     return (
         <Button
             onPress={onPress}
@@ -56,45 +64,33 @@ const VRButton = ({
                 },
                 containerStyle
             ]}
-            size="medium"
-            // appearance="ghost"
-            // status="control"
+            size={size}
+            onPressIn={() => {
+                console.log(trackID);
+            }}
+            appearance={
+                VARIANT_MAP?.[variant]?.appearance ??
+                VARIANT_MAP.primary.appearance
+            }
+            status={
+                VARIANT_MAP?.[variant]?.status ?? VARIANT_MAP.primary.status
+            }
         >
-            {title}
+            {(evaProps) => {
+                return (
+                    <Text
+                        {...evaProps}
+                        style={{
+                            fontSize:
+                                FONT_SIZE_MAP?.[size] ?? FONT_SIZE_MAP.medium
+                        }}
+                    >
+                        {title}
+                    </Text>
+                );
+            }}
         </Button>
-        // <VRPressable
-        //     styleOverride={[
-        //         small
-        //             ? styles(backgroundColor, stacked).buttonSmall
-        //             : styles(backgroundColor, stacked).button,
-        //         containerStyle
-        //     ]}
-        //     onPress={onPress}
-        //     trackID={trackID}
-        //     disabled={disabled}
-        //     testID={testID}
-        // >
-        //     <VRText color={color} size={small ? 12 : 20} fontWeight="bold">
-        //         {title}
-        //     </VRText>
-        // </VRPressable>
     );
 };
 
-// const styles = StyleSheet.create({
-//     button: {
-//         backgroundColor,
-//         paddingHorizontal: 20,
-//         paddingVertical: 8,
-//         borderRadius: 25,
-//         alignItems: 'center',
-//         flex: stacked ? 0 : 1
-//     },
-//     buttonSmall: {
-//         backgroundColor,
-//         paddingHorizontal: 8,
-//         paddingVertical: 2,
-//         borderRadius: 10
-//     }
-// });
 export default VRButton;

@@ -29,31 +29,8 @@ export const VRText = ({
 }) => {
     const themeColor = useColorTheme(color);
 
-    const getFontFamily = () => {
-        if (fontFamily) {
-            return fontFamily;
-        }
-
-        if (fontWeight === 'normal') {
-            if (fontStyle === 'italic') {
-                return FONTS.italic;
-            }
-            return FONTS.primary;
-        }
-
-        if (fontWeight === 'bold') {
-            if (fontStyle === 'italic') {
-                return FONTS.boldItalic;
-            }
-            return FONTS.bold;
-        }
-
-        return FONTS.primary;
-    };
-
     const styleFromProps = {
-        textAlign,
-        fontFamily: getFontFamily()
+        textAlign
     };
 
     return (

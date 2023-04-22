@@ -101,10 +101,9 @@ const VRReleaseCard = ({
                                 }}
                             >
                                 <VRText
-                                    category={TextCategory.p1}
+                                    category={TextCategory.h6}
                                     numberOfLines={1}
                                     styleOverride={{ paddingRight: 5 }}
-                                    fontWeight="bold"
                                 >
                                     {title}
                                 </VRText>
@@ -113,7 +112,7 @@ const VRReleaseCard = ({
                             </View>
                             <VRText
                                 fontStyle="italic"
-                                category={TextCategory.p2}
+                                category={TextCategory.s2}
                             >
                                 {artist ?? artists[0]?.name ?? 'Unknown'}
                             </VRText>

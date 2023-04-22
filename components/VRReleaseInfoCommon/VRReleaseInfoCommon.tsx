@@ -73,7 +73,7 @@ const VRReleaseInfoCommon = ({
             </View>
             <View>
                 <View style={styles.title}>
-                    <VRText fontWeight="bold" category={TextCategory.h5}>
+                    <VRText fontWeight="bold" category={TextCategory.h4}>
                         {title}
                     </VRText>
                     <VRListIndicator
@@ -84,7 +84,7 @@ const VRReleaseInfoCommon = ({
                         size="lg"
                     />
                 </View>
-                <VRText fontStyle="italic" category={TextCategory.h6}>
+                <VRText fontStyle="italic" category={TextCategory.s1}>
                     {artist}
                 </VRText>
             </View>

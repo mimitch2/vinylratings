@@ -357,12 +357,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             }}
                         >
                             <VRDivider />
-                            <View
-                                style={[
-                                    styles.versions
-                                    // { borderColor: colors.primaryFaded }
-                                ]}
-                            >
+                            <View style={[styles.versions]}>
                                 <VRText>See all pressings</VRText>
                                 <VRIcon type="chevronRight" size="sm" />
                             </View>

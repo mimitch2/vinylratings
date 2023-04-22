@@ -88,6 +88,7 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                     <VRText
                         category={TextCategory.h1}
                         fontFamily={FONTS.heading}
+                        styleOverride={{ fontSize: 60 }}
                     >
                         VINYL RATINGS
                     </VRText>

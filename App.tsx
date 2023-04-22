@@ -9,7 +9,7 @@ import useCachedResources from 'hooks/useCachedResources';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Layout } from '@ui-kitten/components';
 import { default as darkTheme } from 'constants/themeDark.json';
-
+import { default as mapping } from 'constants/mapping.json';
 // function createIconsMap() {
 //     return new Proxy(
 //         {},
@@ -53,6 +53,7 @@ const App = () => {
             <ApplicationProvider
                 {...eva}
                 theme={{ ...eva[scheme ?? 'dark'], ...darkTheme }}
+                customMapping={mapping}
             >
                 <Layout
                     style={{

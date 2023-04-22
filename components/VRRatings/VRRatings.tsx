@@ -133,7 +133,8 @@ const VRRatings = ({
                     title="See all ratings"
                     onPress={() => setRatingsModalOpen(true)}
                     containerStyle={{ marginRight: 5 }}
-                    variant="tertiary"
+                    variant="basic"
+                    size="small"
                     stacked={false}
                 />
                 <VRButton
@@ -141,7 +142,8 @@ const VRRatings = ({
                     title="Discogs reviews"
                     onPress={() => setDiscogsReviewsModalOpen(true)}
                     containerStyle={{ marginLeft: 5 }}
-                    variant="tertiary"
+                    variant="basic"
+                    size="small"
                     stacked={false}
                 />
             </View>
