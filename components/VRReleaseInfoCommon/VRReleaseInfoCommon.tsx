@@ -9,7 +9,7 @@ import {
     VRText,
     VRPressable
 } from 'components';
-import { DiscogsImage } from 'types';
+import { DiscogsImage, TextCategory } from 'types';
 import { Vinyl } from 'svgs';
 
 const IMAGE_STYLE = {
@@ -73,7 +73,7 @@ const VRReleaseInfoCommon = ({
             </View>
             <View>
                 <View style={styles.title}>
-                    <VRText fontWeight="bold" size={28}>
+                    <VRText fontWeight="bold" category={TextCategory.h5}>
                         {title}
                     </VRText>
                     <VRListIndicator
@@ -84,7 +84,7 @@ const VRReleaseInfoCommon = ({
                         size="lg"
                     />
                 </View>
-                <VRText fontStyle="italic" size={20}>
+                <VRText fontStyle="italic" category={TextCategory.h6}>
                     {artist}
                 </VRText>
             </View>

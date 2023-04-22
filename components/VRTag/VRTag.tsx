@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 
 import { VRText } from 'components';
-import { Theme } from 'constants/index';
+import { useColorTheme } from 'hooks';
+import { Colors, TextCategory } from 'types';
 
 const VRTag = ({
     tag,
@@ -12,31 +13,36 @@ const VRTag = ({
     tag: string | number;
     size: 'sm' | 'lg';
 }) => {
-    const { colors }: Theme = useTheme();
+    const backgroundColor = useColorTheme(Colors.warning);
+    const isSmall = size === 'sm';
 
     return (
-        <View
+        <Layout
             style={[
                 styles.view,
                 {
-                    backgroundColor: colors.primary,
-                    paddingHorizontal: size === 'sm' ? 8 : 9,
-                    paddingVertical: size === 'sm' ? 0 : 1
+                    backgroundColor,
+                    paddingHorizontal: isSmall ? 8 : 9,
+                    paddingVertical: isSmall ? 0 : 1,
+                    marginBottom: !isSmall ? 5 : 0
                 }
             ]}
         >
-            <VRText size={size === 'sm' ? 12 : 14} color={colors.background}>
+            <VRText
+                category={isSmall ? TextCategory.c1 : TextCategory.p2}
+                color={Colors.background}
+            >
                 {tag}
             </VRText>
-        </View>
+        </Layout>
     );
 };
 
 const styles = StyleSheet.create({
     view: {
         borderRadius: 3,
-        marginRight: 3,
-        marginBottom: 10
+        marginRight: 3
+        // marginBottom: 10
     }
 });
 

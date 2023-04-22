@@ -17,7 +17,7 @@ export const VRText = ({
     styleOverride = {},
     numberOfLines = undefined
 }: {
-    children: string | string[];
+    children: string | string[] | number;
     category?: TextCategory;
     color?: Colors;
     fontWeight?: 'normal' | 'bold' | '500' | '600';

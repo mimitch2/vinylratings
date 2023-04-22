@@ -2,16 +2,10 @@ import {
     createBottomTabNavigator,
     BottomTabBarProps
 } from '@react-navigation/bottom-tabs';
-import {
-    DrawerLayoutAndroidComponent,
-    StyleSheet,
-    TouchableOpacity,
-    View
-} from 'react-native';
 import React, { useState, useMemo, useContext } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useTheme, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
     BottomNavigation,
     BottomNavigationTab,
@@ -22,7 +16,7 @@ import {
     Layout
 } from '@ui-kitten/components';
 
-import { VRIcon, VRText } from 'components';
+import { VRIcon, VRText, VRDivider } from 'components';
 import {
     ArtistDetails,
     Collection,
@@ -33,9 +27,7 @@ import {
     Versions,
     WantList
 } from 'screens';
-import { ThemeColors, Theme } from 'styles';
 import { DisabledContext } from 'context';
-import { FONTS } from 'constants/index';
 import { TextCategory, Colors } from 'types';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
@@ -83,7 +75,6 @@ const ROUTES: {
 ];
 
 const TabBar = ({ navigation, disabled }: TabBarProps) => {
-    const { colors }: Theme = useTheme();
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     return (
@@ -104,7 +95,7 @@ const TabBar = ({ navigation, disabled }: TabBarProps) => {
                             icon={() => (
                                 <VRIcon
                                     type={icon}
-                                    size="lg"
+                                    size="md"
                                     color={
                                         isSelected
                                             ? Colors.primary
@@ -121,16 +112,13 @@ const TabBar = ({ navigation, disabled }: TabBarProps) => {
                                     }
                                     styleOverride={{ marginTop: 3 }}
                                 >
-                                    {routeName.toUpperCase()}
+                                    {routeName}
                                 </VRText>
                             )}
                             disabled={isDisabled}
-                            style={[
-                                styles(colors).tabBar,
-                                {
-                                    opacity: isDisabled ? 0.5 : 1
-                                }
-                            ]}
+                            style={{
+                                opacity: isDisabled ? 0.5 : 1
+                            }}
                         />
                     );
                 })}
@@ -159,10 +147,7 @@ const Tabs = () => {
                             ...options,
                             headerMode: 'screen',
                             header: () => (
-                                <TopNavigationSimpleUsageShowcase
-                                    title={routeName}
-                                    back={false}
-                                />
+                                <HeaderBar title={routeName} back={false} />
                             )
                         }}
                     />
@@ -182,7 +167,7 @@ const BackAction = (): React.ReactElement => {
     );
 };
 
-export const TopNavigationSimpleUsageShowcase = ({
+export const HeaderBar = ({
     title,
     back = true
 }: {
@@ -195,7 +180,7 @@ export const TopNavigationSimpleUsageShowcase = ({
             title={() => <VRText category={TextCategory.h5}>{title}</VRText>}
             alignment="center"
         />
-        <Divider />
+        <VRDivider />
     </Layout>
 );
 
@@ -222,9 +207,7 @@ const VRTabs = () => {
                     component={ArtistDetails}
                     options={{
                         headerMode: 'screen',
-                        header: () => (
-                            <TopNavigationSimpleUsageShowcase title="Artist" />
-                        )
+                        header: () => <HeaderBar title="Artist" />
                     }}
                 />
                 <Stack.Screen
@@ -232,9 +215,7 @@ const VRTabs = () => {
                     component={Versions}
                     options={{
                         headerMode: 'screen',
-                        header: () => (
-                            <TopNavigationSimpleUsageShowcase title="Pressings" />
-                        )
+                        header: () => <HeaderBar title="Pressings" />
                     }}
                 />
                 <Stack.Screen
@@ -242,9 +223,7 @@ const VRTabs = () => {
                     component={Release}
                     options={{
                         headerMode: 'screen',
-                        header: () => (
-                            <TopNavigationSimpleUsageShowcase title="Pressings" />
-                        )
+                        header: () => <HeaderBar title="Pressings" />
                     }}
                 />
                 <Stack.Screen
@@ -252,9 +231,7 @@ const VRTabs = () => {
                     component={Release}
                     options={{
                         headerMode: 'screen',
-                        header: () => (
-                            <TopNavigationSimpleUsageShowcase title="Release" />
-                        )
+                        header: () => <HeaderBar title="Release" />
                     }}
                 />
                 <Stack.Screen
@@ -262,41 +239,12 @@ const VRTabs = () => {
                     component={MasterRelease}
                     options={{
                         headerMode: 'screen',
-                        header: () => (
-                            <TopNavigationSimpleUsageShowcase title="Master" />
-                        )
+                        header: () => <HeaderBar title="Master" />
                     }}
                 />
             </Stack.Navigator>
         </DisabledContext.Provider>
     );
 };
-
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        tabBar: {
-            // flex: 1,
-            paddingTop: 10
-        },
-        header: {
-            // backgroundColor: colors.background,
-            borderBottomColor: colors.primaryFaded,
-            borderBottomWidth: 0.5
-        },
-        hederTitle: {
-            fontFamily: FONTS.primary,
-            // fontWeight: 'bold',
-            // color: colors.text,
-            fontSize: 20
-        },
-        tabBarContainer: {
-            flexDirection: 'row',
-            borderTopColor: colors.primaryFaded,
-            borderTopWidth: 0.5
-        },
-        contentStyle: {
-            // backgroundColor: colors.background,
-        }
-    });
 
 export default VRTabs;

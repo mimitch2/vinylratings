@@ -74,7 +74,7 @@ const SIZE_MAP = {
 };
 
 const VRIcon = ({
-    color = Colors.primary,
+    color = Colors.text,
     size = 'md',
     styleOverride = {},
     type,

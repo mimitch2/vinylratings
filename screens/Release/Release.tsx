@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
-import { useTheme } from '@react-navigation/native';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import {
@@ -16,26 +15,26 @@ import {
     VRButton,
     VRCalendarModal,
     VRContainer,
+    VRDivider,
     VRError,
+    VRFooter,
     VRIcon,
     VRLoading,
     VRModal,
     VRPressable,
     VRRateModal,
     VRRatings,
+    VRReleaseInfoCommon,
     VRSegmented,
     VRText,
-    VRWebViewModal,
-    VRFooter,
     VRTrackList,
-    VRReleaseInfoCommon
+    VRWebViewModal
 } from 'components';
 import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
 import { Identifiers } from './components';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
-import { Theme } from 'styles';
 
 type Params = {
     id: string;
@@ -48,8 +47,6 @@ export type Route = {
 };
 
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
-    const { colors }: Theme = useTheme();
-
     const [segmentedIdx, setSegmentedIdx] = useState(0);
     const [washedOn, setWashedOn] = useState('');
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
@@ -281,7 +278,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 startAnimation={!!getRelease || !!error}
             >
                 {isLoading ? <VRLoading /> : null}
-                <View style={{ paddingBottom: 20 }}>
+                <View style={{ paddingBottom: 20, marginTop: 5 }}>
                     <VRReleaseInfoCommon
                         images={images}
                         tags={tags}
@@ -301,9 +298,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                                 <Pressable
                                     onPress={() => setCalendarModalOpen(true)}
                                 >
-                                    <VRText color={colors.primary}>
-                                        {washedOn || 'Never'}
-                                    </VRText>
+                                    <VRText>{washedOn || 'Never'}</VRText>
                                 </Pressable>
                             </View>
                             <Pressable onPress={removeFromCollection}>
@@ -361,15 +356,17 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                                 });
                             }}
                         >
+                            <VRDivider />
                             <View
                                 style={[
-                                    styles.versions,
-                                    { borderColor: colors.primaryFaded }
+                                    styles.versions
+                                    // { borderColor: colors.primaryFaded }
                                 ]}
                             >
                                 <VRText>See all pressings</VRText>
                                 <VRIcon type="chevronRight" size="sm" />
                             </View>
+                            <VRDivider />
                         </VRPressable>
                     ) : null}
 
@@ -418,10 +415,7 @@ const styles = StyleSheet.create({
         marginRight: 6
     },
     versions: {
-        marginVertical: 10,
         paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'

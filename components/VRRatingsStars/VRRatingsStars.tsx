@@ -1,22 +1,21 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 
 import { VRIcon } from 'components';
 import { generateArrayOfNumbers, getRatingValues } from 'helpers';
-import { Theme } from 'constants/index';
-import { IconSize } from 'types';
+import { IconSize, Colors } from 'types';
 
 const RatingStar = ({
     inputRating,
     average,
-    size = 'md'
+    size = 'md',
+    color = Colors.primary
 }: {
     inputRating: number;
     average: number;
     size: IconSize;
+    color?: Colors;
 }) => {
-    const { colors }: Theme = useTheme();
     const { ratingInteger, ratingFloat } = getRatingValues({
         average
     });
@@ -35,14 +34,7 @@ const RatingStar = ({
         ? 'starHalf'
         : 'starEmpty';
 
-    return (
-        <VRIcon
-            type={type}
-            color={colors.primary}
-            key={inputRating}
-            size={size}
-        />
-    );
+    return <VRIcon type={type} color={color} key={inputRating} size={size} />;
 };
 
 const VRRatingsStars = ({

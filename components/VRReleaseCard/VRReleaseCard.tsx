@@ -1,20 +1,17 @@
 import React, { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { useRoute, useTheme } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
+import { Releases, VoidFuncNoParams, TextCategory } from 'types';
 import {
-    Theme,
-    ThemeColors,
-    PRESSED_OR_DISABLED_OPACITY
-} from 'constants/index';
-import { Releases, VoidFuncNoParams } from 'types';
-import {
+    VRDivider,
     VRIcon,
-    VRText,
-    VRTag,
     VRListIndicator,
+    VRPressable,
     VRRatingsStars,
-    VRPressable
+    VRTag,
+    VRText
 } from 'components';
 import { Vinyl } from 'svgs';
 
@@ -31,7 +28,6 @@ const VRReleaseCard = ({
     disabled?: boolean;
     tags?: string[];
 }) => {
-    const { colors }: Theme = useTheme();
     const { name: routeName } = useRoute();
     const isSearch = routeName === 'Search';
     const isWantList = routeName === 'Want';
@@ -70,107 +66,107 @@ const VRReleaseCard = ({
     }, [releaseStyle, isWantList, country, isSearch, year, tags, type]);
 
     return (
-        <VRPressable
-            trackID="release_card-press"
-            onPress={onPress}
-            disabled={disabled}
-            styleOverride={[
-                styles(colors).container,
-                {
-                    opacity: disabled ? PRESSED_OR_DISABLED_OPACITY : 1
-                }
-            ]}
-        >
-            <View style={styles(colors).innerContainer}>
-                <View style={styles(colors).leftArea}>
-                    {thumb ? (
-                        <Image
-                            source={{
-                                uri: thumb
-                            }}
-                            style={styles(colors).image}
-                        />
-                    ) : (
-                        <View
-                            style={styles(colors).image}
-                            testID="image-default"
-                        >
-                            <Vinyl />
-                        </View>
-                    )}
-                    <View style={styles(colors).title}>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                width: '100%'
-                            }}
-                        >
-                            <VRText fontWeight="bold" size={20}>
+        <>
+            <VRPressable
+                trackID="release_card-press"
+                onPress={onPress}
+                disabled={disabled}
+                styleOverride={[
+                    styles.container,
+                    {
+                        opacity: disabled ? PRESSED_OR_DISABLED_OPACITY : 1
+                    }
+                ]}
+            >
+                <View style={styles.innerContainer}>
+                    <View style={styles.leftArea}>
+                        {thumb ? (
+                            <Image
+                                source={{
+                                    uri: thumb
+                                }}
+                                style={styles.image}
+                            />
+                        ) : (
+                            <View style={styles.image} testID="image-default">
+                                <Vinyl />
+                            </View>
+                        )}
+                        <View style={styles.title}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    width: '100%'
+                                }}
+                            >
+                                <VRText
+                                    category={TextCategory.p1}
+                                    numberOfLines={1}
+                                    styleOverride={{ paddingRight: 5 }}
+                                    fontWeight="bold"
+                                >
+                                    {title}
+                                </VRText>
+
+                                <VRListIndicator userData={user_data ?? null} />
+                            </View>
+                            <VRText
+                                fontStyle="italic"
+                                category={TextCategory.p2}
+                            >
                                 {artist ?? artists[0]?.name ?? 'Unknown'}
                             </VRText>
 
-                            <VRListIndicator userData={user_data ?? null} />
+                            {type !== 'master' ? (
+                                <VRRatingsStars
+                                    average={release?.rating ?? 0}
+                                    size="sm"
+                                />
+                            ) : null}
                         </View>
-                        <VRText
-                            size={14}
-                            fontStyle="italic"
-                            numberOfLines={1}
-                            styleOverride={{ paddingRight: 5 }}
-                        >
-                            {title}
-                        </VRText>
-                        {type !== 'master' ? (
-                            <VRRatingsStars
-                                average={release?.rating ?? 0}
-                                size="sm"
-                            />
-                        ) : null}
+                    </View>
+                    <View style={styles.tags}>
+                        {cardTags.map((tag, idx) => (
+                            <VRTag key={`${tag}-${idx}`} tag={tag} size="sm" />
+                        ))}
                     </View>
                 </View>
-                <View style={styles(colors).tags}>
-                    {cardTags.map((tag, idx) => (
-                        <VRTag key={`${tag}-${idx}`} tag={tag} size="sm" />
-                    ))}
+                <View style={styles.iconContainer}>
+                    <VRIcon type="chevronRight" />
                 </View>
-            </View>
-            <View style={styles(colors).iconContainer}>
-                <VRIcon type="chevronRight" />
-            </View>
-        </VRPressable>
+            </VRPressable>
+            <VRDivider />
+        </>
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        container: {
-            flexDirection: 'row',
-            paddingVertical: 10,
-            marginBottom: 5,
-            borderBottomColor: colors.textFaded,
-            borderBottomWidth: 0.5
-        },
-        innerContainer: {
-            flex: 1
-        },
-        leftArea: {
-            flexDirection: 'row',
-            flex: 1
-        },
-        title: { marginLeft: 10, flexShrink: 1 },
-        image: {
-            width: 60,
-            height: 60,
-            borderRadius: 4
-        },
-        tags: {
-            flexDirection: 'row',
-            flex: 1,
-            marginTop: 10
-        },
-        iconContainer: {
-            justifyContent: 'center'
-        }
-    });
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        paddingVertical: 20
+    },
+    innerContainer: {
+        flex: 1
+    },
+    leftArea: {
+        flexDirection: 'row',
+        flex: 1
+    },
+    title: { marginLeft: 10, flexShrink: 1 },
+    image: {
+        width: 60,
+        height: 60,
+        borderRadius: 4
+    },
+    tags: {
+        flexDirection: 'row',
+        flex: 1,
+        marginTop: 10
+    },
+    iconContainer: {
+        justifyContent: 'center'
+    }
+});
 
 export default React.memo(VRReleaseCard);

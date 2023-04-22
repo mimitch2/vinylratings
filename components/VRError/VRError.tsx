@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import * as Updates from 'expo-updates';
-import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { VRIcon, VRText, VRButton } from 'components';
 import type { IconType } from 'types';
-import type { Theme } from 'constants/index';
+import { TextCategory, Colors } from 'types';
 
 type Levels = 'error' | 'warning' | 'info';
 type IconMap = {
     [key in Levels]: {
         icon: IconType;
-        color: string;
+        color: Colors;
     };
 };
 interface CommonProps {
@@ -38,31 +38,23 @@ const VRError = ({
     styleOverride = {},
     trackID
 }: Props) => {
-    const { colors }: Theme = useTheme();
-
     const ICON_MAP: IconMap = {
         error: {
             icon: 'error',
-            color: colors.danger
+            color: Colors.danger
         },
         warning: {
             icon: 'warning',
-            color: colors.tertiary
+            color: Colors.warning
         },
         info: {
             icon: 'questionMark',
-            color: colors.primary
+            color: Colors.text
         }
     };
 
     return (
-        <View
-            style={[
-                styles.view,
-                { backgroundColor: colors.background },
-                styleOverride
-            ]}
-        >
+        <Layout style={[styles.view, styleOverride]}>
             <VRIcon
                 type={ICON_MAP[level].icon}
                 size="xlg"
@@ -72,7 +64,7 @@ const VRError = ({
 
             {error ? (
                 <>
-                    <VRText size={18} fontWeight="bold" textAlign="center">
+                    <VRText category={TextCategory.h3} textAlign="center">
                         {error?.message ?? message}
                     </VRText>
                     <VRButton
@@ -86,14 +78,13 @@ const VRError = ({
                 </>
             ) : (
                 <VRText
-                    size={24}
-                    fontWeight="bold"
+                    category={TextCategory.h3}
                     styleOverride={{ textAlign: 'center' }}
                 >
                     {message}
                 </VRText>
             )}
-        </View>
+        </Layout>
     );
 };
 
