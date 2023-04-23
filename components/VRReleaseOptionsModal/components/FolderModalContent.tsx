@@ -1,10 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
-import { globalStyles, Theme } from '../../../constants';
-import { VRText } from '../../';
-import { Folder, VoidFuncNoParams } from '../../../types';
+import { globalStyles, Theme } from 'constants/index';
+import { VRText } from 'components';
+import { Colors, Folder, VoidFuncNoParams } from 'types';
+import { useColorTheme } from 'hooks';
 
 const FolderModalContent = ({
     toggleFolderModal,
@@ -17,18 +19,17 @@ const FolderModalContent = ({
     folder?: Folder | null;
     setFolder: Dispatch<SetStateAction<Folder>> | ((value: Folder) => void);
 }) => {
-    const { colors }: Theme = useTheme();
+    // const { colors }: Theme = useTheme();
 
     return (
         <ScrollView
             contentContainerStyle={styles.container}
             showsVerticalScrollIndicator={false}
         >
-            <View style={styles.list}>
+            <Layout style={styles.list}>
                 {folders.map((folderItem: Folder) => {
                     const isSelected = folderItem.id === folder?.id;
-                    const color = isSelected ? colors.primary : colors.text;
-                    const fontWeight = isSelected ? 'bold' : 'normal';
+                    const color = isSelected ? Colors.primary : Colors.text;
 
                     return (
                         <Pressable
@@ -41,16 +42,14 @@ const FolderModalContent = ({
                         >
                             <VRText
                                 styleOverride={styles.listItemText}
-                                size={20}
                                 color={color}
-                                fontWeight={fontWeight}
                             >
                                 {`${folderItem.name} (${folderItem.count})`}
                             </VRText>
                         </Pressable>
                     );
                 })}
-            </View>
+            </Layout>
         </ScrollView>
     );
 };
@@ -70,7 +69,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     listItemText: {
-        marginRight: 10
+        marginRight: 10,
+        fontSize: 18
     }
 });
 

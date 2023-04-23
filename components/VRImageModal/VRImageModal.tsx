@@ -1,18 +1,17 @@
 import React from 'react';
 import {
-    View,
     Pressable,
     StyleSheet,
-    // Modal,
     StatusBar,
     ActivityIndicator
 } from 'react-native';
-import { VRIcon } from 'components';
-import { Modal, Layout, useTheme } from '@ui-kitten/components';
-
-import { DiscogsImage } from 'types';
-import { useColorTheme } from 'hooks';
 import ImageViewer from 'react-native-image-zoom-viewer';
+
+import { VRIcon } from 'components';
+import { Modal, Layout } from '@ui-kitten/components';
+
+import { DiscogsImage, Colors } from 'types';
+import { useColorTheme } from 'hooks';
 
 const VRImageModal = ({
     images,
@@ -23,7 +22,7 @@ const VRImageModal = ({
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
 }) => {
-    const backgroundColor = useColorTheme('background');
+    const backgroundColor = useColorTheme(Colors.background);
 
     const mappedImages = images.map((image) => {
         return {

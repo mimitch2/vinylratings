@@ -14,7 +14,7 @@ const VRInput = ({
     label = '',
     maxLength = 250,
     showLength = false,
-    accessoryRight = () => <></>
+    accessoryRight = undefined
 }: {
     handleTextChange: (value: string) => void;
     value: string;
@@ -25,7 +25,7 @@ const VRInput = ({
     label?: string;
     maxLength?: number;
     showLength?: boolean;
-    accessoryRight?: React.FC;
+    accessoryRight?: React.ReactElement;
 }) => {
     return (
         <Layout style={containerStyleOverride}>

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 
-import { VRIcon, VRText } from '../../';
-import { COLORS } from '../../../constants';
-import { VoidFunc } from '../../../types';
+import { VRIcon, VRText } from 'components';
+import { COLORS } from 'constants/index';
+import { TextCategory, VoidFunc } from 'types';
 
 const ModalHeader = ({
     title = '',
@@ -15,13 +16,11 @@ const ModalHeader = ({
     onClosePress: VoidFunc;
 }) => {
     return (
-        <View style={[styles.view, { borderBottomWidth: title ? 0.5 : 0 }]}>
-            {title && (
-                <VRText size={20} fontWeight="bold">
-                    {title}
-                </VRText>
+        <Layout style={[styles.view, { borderBottomWidth: title ? 0.5 : 0 }]}>
+            {title && <VRText category={TextCategory.h4}>{title}</VRText>}
+            {subTitle && (
+                <VRText styleOverride={{ fontSize: 18 }}>{subTitle}</VRText>
             )}
-            {subTitle && <VRText size={18}>{subTitle}</VRText>}
             <Pressable
                 style={styles.modalClose}
                 onPress={onClosePress}
@@ -29,7 +28,7 @@ const ModalHeader = ({
             >
                 <VRIcon type="close" />
             </Pressable>
-        </View>
+        </Layout>
     );
 };
 

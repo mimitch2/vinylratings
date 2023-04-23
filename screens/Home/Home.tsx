@@ -79,18 +79,10 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     return (
         <>
             <VRContainer startAnimation scrollable={false}>
-                <View
-                    style={
-                        {
-                            // justifyContent: 'center',
-                            // alignItems: 'center'
-                        }
-                    }
-                >
+                <View>
                     <VRText
                         category={TextCategory.h1}
-                        fontFamily={FONTS.heading}
-                        // styleOverride={{ fontSize: 60 }}
+                        styleOverride={{ fontSize: 50 }}
                     >
                         {'VINYL\nRATINGS'}
                     </VRText>

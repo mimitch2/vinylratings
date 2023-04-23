@@ -2,46 +2,32 @@ import React from 'react';
 import { TextStyle } from 'react-native';
 import { Text } from '@ui-kitten/components';
 
-import { FONTS } from 'constants/index';
-import { TextCategory, Colors } from 'types';
-import { useColorTheme } from 'hooks';
+import { TextCategory } from 'types';
 
 export const VRText = ({
     children,
     category = TextCategory.p1,
-    color = Colors.text,
-    fontWeight = 'normal',
-    fontStyle = 'normal',
-    fontFamily = FONTS.primary,
     textAlign = 'left',
     styleOverride = {},
-    numberOfLines = undefined
+    numberOfLines = undefined,
+    status = 'basic',
+    appearance = 'default'
 }: {
     children: string | string[] | number;
     category?: TextCategory;
-    color?: Colors;
-    fontWeight?: 'normal' | 'bold' | '500' | '600';
-    fontStyle?: 'normal' | 'italic';
     textAlign?: 'left' | 'center' | 'right';
-    fontFamily?: string | null;
     styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
+    status?: 'basic' | 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    appearance?: 'default' | 'alternative' | 'hint' | 'control';
 }) => {
-    const themeColor = useColorTheme(color);
-
-    const styleFromProps = {
-        textAlign
-    };
-
     return (
         <Text
-            style={[
-                { flexShrink: 1, color: themeColor },
-                styleFromProps,
-                styleOverride
-            ]}
+            style={[{ flexShrink: 1, textAlign }, styleOverride]}
             numberOfLines={numberOfLines}
             category={category}
+            status={status}
+            appearance={appearance}
         >
             {children}
         </Text>

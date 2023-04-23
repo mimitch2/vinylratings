@@ -18,7 +18,7 @@ const RatingRow = ({
 }) => {
     return (
         <Layout style={styles.row}>
-            <VRText fontWeight="bold">{label}</VRText>
+            <VRText category={TextCategory.p2}>{label}</VRText>
             <Layout
                 style={{
                     width: '48%',
@@ -180,13 +180,10 @@ const VRRatings = ({
                                             marginBottom: 10
                                         }}
                                     >
-                                        <VRText
-                                            fontWeight="bold"
-                                            category={TextCategory.h3}
-                                        >
+                                        <VRText category={TextCategory.h3}>
                                             {rating.user.username}
                                         </VRText>
-                                        <VRText fontStyle="italic">
+                                        <VRText category={TextCategory.s1}>
                                             {new Date(
                                                 +rating.createdAt
                                             ).toLocaleDateString()}
@@ -207,7 +204,9 @@ const VRRatings = ({
                                         />
                                     );
                                 })}
-                                <VRText fontWeight="bold">Notes:</VRText>
+                                <VRText category={TextCategory.p2}>
+                                    Notes:
+                                </VRText>
                                 <VRText>{rating.notes}</VRText>
                             </Layout>
                         );

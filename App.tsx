@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, useColorScheme } from 'react-native';
+import { SafeAreaView, useColorScheme, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
@@ -8,6 +8,7 @@ import ApolloProviderWrapper from './ApolloProviderWrapper';
 import useCachedResources from 'hooks/useCachedResources';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Layout } from '@ui-kitten/components';
+import { default as lightTheme } from 'constants/themeLight.json';
 import { default as darkTheme } from 'constants/themeDark.json';
 import { default as mapping } from 'constants/mapping.json';
 // function createIconsMap() {
@@ -43,29 +44,25 @@ export const linking = {
 
 const App = () => {
     const isLoadingComplete = useCachedResources();
-    const scheme = useColorScheme();
+    // const scheme = useColorScheme();
 
     // const theme = scheme === 'dark' ? darkTheme : lightTheme;
+    // console.log('🚀 ~ file: App.tsx:50 ~ App ~ theme:', {
+    //     ...eva[scheme ?? 'dark'],
+    //     ...theme
+    // });
 
     return isLoadingComplete ? (
         <ApolloProviderWrapper>
             {/* <IconRegistry icons={[VRIconsPack()]} /> */}
             <ApplicationProvider
                 {...eva}
-                theme={{ ...eva[scheme ?? 'dark'], ...darkTheme }}
+                theme={{ ...eva.dark, ...darkTheme }}
                 // @ts-ignore
                 customMapping={mapping}
             >
-                <Layout
-                    style={{
-                        flex: 1
-                    }}
-                >
-                    <SafeAreaView
-                        style={{
-                            flex: 1
-                        }}
-                    >
+                <Layout style={styles.flex}>
+                    <SafeAreaView style={styles.flex}>
                         <NavigationContainer linking={linking}>
                             <VRTabs />
                         </NavigationContainer>
@@ -75,5 +72,11 @@ const App = () => {
         </ApolloProviderWrapper>
     ) : null;
 };
+
+const styles = StyleSheet.create({
+    flex: {
+        flex: 1
+    }
+});
 
 export default App;

@@ -44,7 +44,7 @@ const ModalControlBar = ({
                         }}
                     >
                         <VRIcon type="folder" />
-                        <VRText fontStyle="italic">{folder.name}</VRText>
+                        <VRText>{folder.name}</VRText>
                     </VRPressable>
                 )}
 
