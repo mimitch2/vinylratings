@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRRatingsStars, VRModal, VRButton, VRIcon } from 'components';
-import { Theme, ThemeColors, RATING_CATEGORIES } from 'constants/index';
-import { DiscogsRating, VinylRatingsRelease } from 'types';
+import { RATING_CATEGORIES } from 'constants/index';
+import { DiscogsRating, TextCategory, VinylRatingsRelease } from 'types';
 import { getRatingValues, toUpperFirst } from 'helpers';
 
 const RatingRow = ({
@@ -14,13 +14,12 @@ const RatingRow = ({
 }: {
     label: string;
     average: number;
-    colors: ThemeColors;
     count?: number;
 }) => {
     return (
-        <View style={styles.row}>
+        <Layout style={styles.row}>
             <VRText fontWeight="bold">{label}</VRText>
-            <View
+            <Layout
                 style={{
                     width: '48%',
                     flexDirection: 'row',
@@ -29,7 +28,7 @@ const RatingRow = ({
             >
                 <VRRatingsStars average={average} />
                 {count ? (
-                    <View style={{ flexDirection: 'row' }}>
+                    <Layout style={{ flexDirection: 'row' }}>
                         <VRText styleOverride={{ marginLeft: 4 }}>
                             {
                                 getRatingValues({
@@ -37,11 +36,11 @@ const RatingRow = ({
                                 }).preciseAverage
                             }
                         </VRText>
-                        <VRText>({count})</VRText>
-                    </View>
+                        <VRText>{`(${count})`}</VRText>
+                    </Layout>
                 ) : null}
-            </View>
-        </View>
+            </Layout>
+        </Layout>
     );
 };
 
@@ -54,7 +53,6 @@ const VRRatings = ({
     vinylRatingsRelease: VinylRatingsRelease;
     setDiscogsReviewsModalOpen: (value: boolean) => void;
 }) => {
-    const { colors }: Theme = useTheme();
     const [ratingsModalOpen, setRatingsModalOpen] = useState(false);
 
     const { count, average: discogsAverage } = discogsRating;
@@ -115,7 +113,6 @@ const VRRatings = ({
                     <RatingRow
                         key={label}
                         label={label}
-                        colors={colors}
                         average={average}
                         count={total}
                     />
@@ -152,18 +149,16 @@ const VRRatings = ({
                 modalOpen={ratingsModalOpen}
                 setModalOpen={setRatingsModalOpen}
             >
-                <View style={{ width: '100%', paddingHorizontal: 20 }}>
+                <Layout style={{ width: '100%', paddingHorizontal: 20 }}>
                     {vinylRatings?.map((rating) => {
                         return (
-                            <View
+                            <Layout
                                 key={rating._id}
                                 style={{
-                                    paddingVertical: 15,
-                                    borderBottomColor: colors.primaryFaded,
-                                    borderBottomWidth: 1
+                                    paddingVertical: 15
                                 }}
                             >
-                                <View style={{ flexDirection: 'row' }}>
+                                <Layout style={{ flexDirection: 'row' }}>
                                     {rating.user.avatarUrl ? (
                                         <Image
                                             source={{
@@ -185,7 +180,10 @@ const VRRatings = ({
                                             marginBottom: 10
                                         }}
                                     >
-                                        <VRText fontWeight="bold" size={24}>
+                                        <VRText
+                                            fontWeight="bold"
+                                            category={TextCategory.h3}
+                                        >
                                             {rating.user.username}
                                         </VRText>
                                         <VRText fontStyle="italic">
@@ -194,11 +192,10 @@ const VRRatings = ({
                                             ).toLocaleDateString()}
                                         </VRText>
                                     </View>
-                                </View>
+                                </Layout>
 
                                 <RatingRow
                                     label="Average:"
-                                    colors={colors}
                                     average={+rating.rating}
                                 />
                                 {RATING_CATEGORIES.map((key) => {
@@ -206,17 +203,16 @@ const VRRatings = ({
                                         <RatingRow
                                             key={key}
                                             label={`${toUpperFirst(key)}:`}
-                                            colors={colors}
                                             average={+rating[key]}
                                         />
                                     );
                                 })}
                                 <VRText fontWeight="bold">Notes:</VRText>
                                 <VRText>{rating.notes}</VRText>
-                            </View>
+                            </Layout>
                         );
                     })}
-                </View>
+                </Layout>
             </VRModal>
         </>
     );

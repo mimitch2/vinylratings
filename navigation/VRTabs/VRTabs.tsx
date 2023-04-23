@@ -12,7 +12,6 @@ import {
     BottomNavigationProps,
     TopNavigation,
     TopNavigationAction,
-    Divider,
     Layout
 } from '@ui-kitten/components';
 
@@ -177,7 +176,11 @@ export const HeaderBar = ({
     <>
         <TopNavigation
             accessoryLeft={back ? BackAction : undefined}
-            title={() => <VRText category={TextCategory.h5}>{title}</VRText>}
+            title={() => (
+                <VRText category={TextCategory.h5}>
+                    {title.toUpperCase()}
+                </VRText>
+            )}
             alignment="center"
         />
         <VRDivider />

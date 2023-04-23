@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRModal, VRIcon, VRPressable, VRButton, VRInput } from '../';
-import { Theme, RATING_CATEGORIES } from '../../constants';
-import { RatingPayload, RatingPayloadKey } from '../../types';
-import { generateArrayOfNumbers, toUpperFirst } from '../../helpers';
+import { RATING_CATEGORIES } from 'constants/index';
+import { RatingPayload, RatingPayloadKey, TextCategory } from 'types';
+import { generateArrayOfNumbers, toUpperFirst } from 'helpers';
 
 const DEFAULT_RATINGS = {
     clarity: 0,
@@ -21,22 +21,20 @@ const Stars = ({
     handleInput: (key: RatingPayloadKey, value: number | string) => void;
     ratings: RatingPayload;
 }) => {
-    const { colors }: Theme = useTheme();
-
     return (
         <>
             {RATING_CATEGORIES.map((category) => {
                 return (
-                    <View
+                    <Layout
                         style={styles.container}
                         key={category}
                         testID={'stars-category'}
                     >
-                        <VRText size={20}>{`${toUpperFirst(
+                        <VRText category={TextCategory.h4}>{`${toUpperFirst(
                             category
                         )}: `}</VRText>
 
-                        <View style={styles.stars}>
+                        <Layout style={styles.stars}>
                             {generateArrayOfNumbers({ length: 5 }).map(
                                 (inputRating) => {
                                     return (
@@ -60,7 +58,6 @@ const Stars = ({
                                                         ? 'starFull'
                                                         : 'starEmpty'
                                                 }
-                                                color={colors.primary}
                                                 size="md"
                                                 testID={`star-${category}-${inputRating}`}
                                             />
@@ -68,8 +65,8 @@ const Stars = ({
                                     );
                                 }
                             )}
-                        </View>
-                    </View>
+                        </Layout>
+                    </Layout>
                 );
             })}
         </>
@@ -139,7 +136,6 @@ const VRRateModal = ({
                         styleOverride={{ height: 110 }}
                         containerStyleOverride={{ marginTop: 10 }}
                         label="Notes:"
-                        labelSize={20}
                         showLength
                     />
                 </View>
@@ -150,7 +146,6 @@ const VRRateModal = ({
                         onPress={handleModalClose}
                         trackID="rate_modal-cancel"
                         variant="warning"
-                        testID="cancel"
                     />
                     <VRButton
                         containerStyle={{ marginBottom: 40 }}
@@ -161,7 +156,6 @@ const VRRateModal = ({
                         disabled={Object.values(ratings).some(
                             (rating) => rating !== '' && !rating
                         )}
-                        testID="submit"
                     />
                 </View>
             </View>

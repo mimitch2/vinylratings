@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
+
 import { HEIGHT } from 'constants/index';
 
 const VRLoading = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
@@ -35,6 +35,7 @@ import { getReleaseTags } from 'helpers';
 import { Identifiers } from './components';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
+import { Layout } from '@ui-kitten/components';
 
 type Params = {
     id: string;
@@ -277,7 +278,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 startAnimation={!!getRelease || !!error}
             >
                 {isLoading ? <VRLoading /> : null}
-                <View style={{ paddingBottom: 20, marginTop: 5 }}>
+                <Layout style={{ paddingBottom: 20, marginTop: 5 }}>
                     <VRReleaseInfoCommon
                         images={images}
                         tags={tags}
@@ -290,7 +291,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
 
                     {isInCollection ? (
                         <>
-                            <View style={styles.washedOnContainer}>
+                            <Layout style={styles.washedOnContainer}>
                                 <VRText styleOverride={styles.washedOnText}>
                                     Washed on:
                                 </VRText>
@@ -299,7 +300,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                                 >
                                     <VRText>{washedOn || 'Never'}</VRText>
                                 </Pressable>
-                            </View>
+                            </Layout>
                             <Pressable onPress={removeFromCollection}>
                                 <VRText>Remove from collection</VRText>
                             </Pressable>
@@ -356,10 +357,10 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             }}
                         >
                             <VRDivider />
-                            <View style={[styles.versions]}>
+                            <Layout style={[styles.versions]}>
                                 <VRText>See all pressings</VRText>
                                 <VRIcon type="chevronRight" size="sm" />
-                            </View>
+                            </Layout>
                             <VRDivider />
                         </VRPressable>
                     ) : null}
@@ -377,7 +378,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         discogsReviewsModalOpen={discogsReviewsModalOpen}
                         setDiscogsReviewsModalOpen={setDiscogsReviewsModalOpen}
                     />
-                </View>
+                </Layout>
             </VRContainer>
             <VRFooter styleOverride={{ paddingBottom: 0 }}>
                 <VRButton

@@ -1,12 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { Layout } from '@ui-kitten/components';
 
-import {
-    Theme,
-    ThemeColors,
-    PRESSED_OR_DISABLED_OPACITY
-} from 'constants/index';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 import {
     VRIcon,
     VRText,
@@ -15,7 +11,7 @@ import {
     VRPressable
 } from 'components';
 import { Vinyl } from 'svgs';
-import { ArtistSearch, VoidFuncNoParams } from 'types';
+import { ArtistSearch, TextCategory, VoidFuncNoParams } from 'types';
 
 const VRArtistCard = ({
     artist,
@@ -26,8 +22,6 @@ const VRArtistCard = ({
     onPress: VoidFuncNoParams;
     disabled?: boolean;
 }) => {
-    const { colors }: Theme = useTheme();
-
     const { thumb, title, user_data } = artist;
 
     return (
@@ -36,87 +30,83 @@ const VRArtistCard = ({
             onPress={onPress}
             disabled={disabled}
             styleOverride={[
-                styles(colors).container,
+                styles.container,
                 {
                     opacity: disabled ? PRESSED_OR_DISABLED_OPACITY : 1
                 }
             ]}
         >
-            <View style={styles(colors).innerContainer}>
-                <View style={styles(colors).leftArea}>
+            <Layout style={styles.innerContainer}>
+                <Layout style={styles.leftArea}>
                     {thumb ? (
                         <Image
                             source={{
                                 uri: thumb
                             }}
-                            style={styles(colors).image}
+                            style={styles.image}
                         />
                     ) : (
-                        <View
-                            style={styles(colors).image}
-                            testID="image-default"
-                        >
+                        <Layout style={styles.image} testID="image-default">
                             <Vinyl />
-                        </View>
+                        </Layout>
                     )}
-                    <View style={styles(colors).title}>
-                        <View
+                    <Layout style={styles.title}>
+                        <Layout
                             style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 width: '100%'
                             }}
                         >
-                            <View>
-                                <VRText fontWeight="bold" size={22}>
+                            <Layout>
+                                <VRText category={TextCategory.h3}>
                                     {title}
                                 </VRText>
-                                <View style={styles(colors).tags}>
+                                <Layout style={styles.tags}>
                                     <VRTag tag={'Artist'} size="sm" />
-                                </View>
-                            </View>
+                                </Layout>
+                            </Layout>
                             <VRListIndicator userData={user_data ?? null} />
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <View style={styles(colors).iconContainer}>
+                        </Layout>
+                    </Layout>
+                </Layout>
+            </Layout>
+            <View style={styles.iconContainer}>
                 <VRIcon type="chevronRight" />
             </View>
         </VRPressable>
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        container: {
-            flexDirection: 'row',
-            paddingVertical: 10,
-            marginBottom: 5,
-            borderBottomColor: colors.textFaded,
-            borderBottomWidth: 0.5
-        },
-        innerContainer: {
-            flex: 1
-        },
-        leftArea: {
-            flexDirection: 'row',
-            flex: 1
-        },
-        title: { marginLeft: 10, flexShrink: 1 },
-        image: {
-            width: 60,
-            height: 60,
-            borderRadius: 4
-        },
-        tags: {
-            flexDirection: 'row',
-            flex: 1,
-            marginTop: 4
-        },
-        iconContainer: {
-            justifyContent: 'center'
-        }
-    });
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+        marginBottom: 5,
+        // borderBottomColor: colors.textFaded,
+        borderBottomWidth: 0.5
+    },
+    innerContainer: {
+        flex: 1
+    },
+    leftArea: {
+        flexDirection: 'row',
+        flex: 1
+    },
+    title: { marginLeft: 10, flexShrink: 1 },
+    image: {
+        width: 60,
+        height: 60,
+        borderRadius: 4
+    },
+    tags: {
+        flexDirection: 'row',
+        flex: 1,
+        marginTop: 4
+    },
+    iconContainer: {
+        justifyContent: 'center'
+    }
+});
 
 export default VRArtistCard;

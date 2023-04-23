@@ -80,17 +80,19 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
         <>
             <VRContainer startAnimation scrollable={false}>
                 <View
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
+                    style={
+                        {
+                            // justifyContent: 'center',
+                            // alignItems: 'center'
+                        }
+                    }
                 >
                     <VRText
                         category={TextCategory.h1}
                         fontFamily={FONTS.heading}
-                        styleOverride={{ fontSize: 60 }}
+                        // styleOverride={{ fontSize: 60 }}
                     >
-                        VINYL RATINGS
+                        {'VINYL\nRATINGS'}
                     </VRText>
                     {/* <Image
                             source={require('../../images/home_logo.png')}

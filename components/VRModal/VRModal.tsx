@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Modal } from '@ui-kitten/components';
 
 import { HEIGHT, globalStyles } from 'constants/index';
 import ModalHeader from './components/ModalHeader';
@@ -29,11 +30,7 @@ const VRModal = ({
     );
 
     return (
-        <Modal
-            visible={modalOpen}
-            transparent={transparent}
-            animationType={animationType}
-        >
+        <Modal visible={modalOpen} animationType={animationType}>
             <View style={[styles.modalContent, dynamicStyles]}>
                 <ModalHeader
                     title={title}
