@@ -13,7 +13,6 @@ import {
 } from './releaseQueries';
 import {
     VRButton,
-    VRCalendarModal,
     VRContainer,
     VRDivider,
     VRError,
@@ -28,7 +27,8 @@ import {
     VRSegmented,
     VRText,
     VRTrackList,
-    VRWebViewModal
+    VRWebViewModal,
+    VRCalendarModal
 } from 'components';
 import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';

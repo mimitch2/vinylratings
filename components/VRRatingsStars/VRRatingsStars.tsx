@@ -1,15 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import { VRIcon } from 'components';
 import { generateArrayOfNumbers, getRatingValues } from 'helpers';
 import { IconSize, Colors } from 'types';
+import { Layout } from '@ui-kitten/components';
 
 const RatingStar = ({
     inputRating,
     average,
     size = 'md',
-    color = Colors.primary
+    color = Colors.warning
 }: {
     inputRating: number;
     average: number;
@@ -45,7 +45,7 @@ const VRRatingsStars = ({
     size?: IconSize;
 }) => {
     return (
-        <View style={{ flexDirection: 'row' }}>
+        <Layout style={{ flexDirection: 'row' }}>
             {generateArrayOfNumbers({ length: 5 }).map((inputRating) => {
                 return (
                     <RatingStar
@@ -56,7 +56,7 @@ const VRRatingsStars = ({
                     />
                 );
             })}
-        </View>
+        </Layout>
     );
 };
 

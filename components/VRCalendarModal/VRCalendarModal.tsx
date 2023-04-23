@@ -1,9 +1,9 @@
 import React from 'react';
-import { Calendar, DateData } from 'react-native-calendars';
-import { Pressable } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { Calendar, Layout } from '@ui-kitten/components';
 
-import { VRModal, VRText, VRLoading } from 'components';
-import { COLORS, FONTS } from 'constants/index';
+import { VRModal, VRButton, VRLoading } from 'components';
+import { HEIGHT } from 'constants/index';
 
 const VRCalendarModal = ({
     onDatePress,
@@ -16,67 +16,55 @@ const VRCalendarModal = ({
     setModalOpen: (value: boolean) => void;
     loading: boolean;
 }) => {
-    const now = new Date();
-
-    const padTo2Digits = (num: number) => {
-        return num.toString().padStart(2, '0');
-    };
-
-    const HandleDayPress = (pickedDate: DateData) => {
-        const dateString = `${padTo2Digits(pickedDate.month)}/${padTo2Digits(
-            pickedDate.day
-        )}/${pickedDate.year}`;
-
-        onDatePress(dateString);
-    };
-
     return (
         <VRModal
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
             title="Pick a date"
         >
-            {loading ? (
-                <VRLoading />
-            ) : (
-                <>
+            <Layout
+                style={{
+                    flex: 1,
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Layout>
                     <Calendar
-                        onDayPress={(pickedDate) => {
-                            HandleDayPress(pickedDate);
-                        }}
-                        maxDate={now.toLocaleDateString()}
-                        monthFormat={'MMM yyyy'}
-                        onPressArrowLeft={(subtractMonth) => subtractMonth()}
-                        onPressArrowRight={(addMonth) => addMonth()}
-                        disableAllTouchEventsForDisabledDays
-                        enableSwipeMonths={true}
-                        style={{
-                            marginBottom: 20
-                        }}
-                        theme={{
-                            selectedDayTextColor: COLORS.primary,
-                            todayTextColor: COLORS.primary,
-                            dayTextColor: COLORS.darkGrey,
-                            arrowColor: COLORS.primary,
-                            disabledArrowColor: COLORS.lightGrey,
-                            monthTextColor: COLORS.darkGrey,
-                            textDayFontFamily: FONTS.primary,
-                            textMonthFontFamily: FONTS.primary,
-                            textDayHeaderFontFamily: FONTS.primary,
-                            textDayFontSize: 16,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 16
+                        onSelect={(pickedDate) => {
+                            onDatePress(pickedDate.toLocaleDateString());
                         }}
                     />
-                    <VRText fontType="h4">Or</VRText>
-                    <Pressable
-                        onPress={() => {
-                            onDatePress('');
+                </Layout>
+                <VRButton
+                    containerStyle={{
+                        marginBottom: 65
+                    }}
+                    title="Reset"
+                    onPress={() => {
+                        setModalOpen(false);
+                    }}
+                    trackID="calendar-modal-reset-button"
+                    variant="primary"
+                />
+            </Layout>
+            {loading && (
+                <Layout
+                    style={{
+                        position: 'absolute',
+                        height: HEIGHT,
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        opacity: 0.5
+                    }}
+                >
+                    <ActivityIndicator
+                        size="large"
+                        style={{
+                            marginBottom: 60
                         }}
-                    >
-                        <VRText styleOverride={{ marginTop: 10 }}>Reset</VRText>
-                    </Pressable>
-                </>
+                    />
+                </Layout>
             )}
         </VRModal>
     );

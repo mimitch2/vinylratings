@@ -28,11 +28,11 @@ const VARIANT_MAP: VariantMap = {
 };
 
 const FONT_SIZE_MAP: FontSizeMap = {
-    tiny: 12,
-    small: 14,
-    medium: 16,
-    large: 18,
-    huge: 20
+    tiny: 14,
+    small: 16,
+    medium: 18,
+    large: 20,
+    huge: 24
 };
 
 const VRButton = ({
@@ -82,7 +82,7 @@ const VRButton = ({
                         {...evaProps}
                         style={{
                             fontSize:
-                                FONT_SIZE_MAP?.[size] ?? FONT_SIZE_MAP.medium
+                                FONT_SIZE_MAP?.[size] ?? FONT_SIZE_MAP.large
                         }}
                     >
                         {title}

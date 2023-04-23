@@ -2,8 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
-import { VRIcon, VRText } from 'components';
-import { COLORS } from 'constants/index';
+import { VRIcon, VRText, VRDivider } from 'components';
 import { VoidFunc } from 'types';
 
 const ModalHeader = ({
@@ -16,27 +15,30 @@ const ModalHeader = ({
     onClosePress: VoidFunc;
 }) => {
     return (
-        <Layout style={[styles.view, { borderBottomWidth: title ? 0.5 : 0 }]}>
-            {title && <VRText fontType="h4">{title}</VRText>}
-            {subTitle && (
-                <VRText styleOverride={{ fontSize: 18 }}>{subTitle}</VRText>
-            )}
-            <Pressable
-                style={styles.modalClose}
-                onPress={onClosePress}
-                testID="modal-header-close"
-            >
-                <VRIcon type="close" />
-            </Pressable>
+        <Layout style={styles.wrapper}>
+            <Layout style={styles.view}>
+                {title && <VRText fontType="h4">{title}</VRText>}
+                {subTitle && <VRText fontType="h5">{subTitle}</VRText>}
+                <Pressable
+                    style={styles.modalClose}
+                    onPress={onClosePress}
+                    testID="modal-header-close"
+                >
+                    <VRIcon type="close" />
+                </Pressable>
+            </Layout>
+            {title && <VRDivider />}
         </Layout>
     );
 };
 
 const styles = StyleSheet.create({
+    wrapper: {
+        width: '100%'
+    },
     view: {
         width: '100%',
         alignItems: 'center',
-        borderBottomColor: COLORS.primaryFaded,
         paddingVertical: 20
     },
     modalClose: {

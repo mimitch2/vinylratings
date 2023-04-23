@@ -12,7 +12,6 @@ const VRModal = ({
     modalOpen,
     setModalOpen,
     animationType = 'slide',
-    transparent = true,
     centerContent = true
 }: {
     children: React.ReactNode;
@@ -21,7 +20,6 @@ const VRModal = ({
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
     animationType?: 'slide' | 'fade' | 'none';
-    transparent?: boolean;
     centerContent?: boolean;
 }) => {
     const dynamicStyles = useMemo(

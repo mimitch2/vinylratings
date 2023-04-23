@@ -13,7 +13,7 @@ const VRTag = ({
     tag: string | number;
     size: 'sm' | 'lg';
 }) => {
-    const backgroundColor = useColorTheme(Colors.warning);
+    const backgroundColor = useColorTheme(Colors.primary);
     const isSmall = size === 'sm';
 
     return (

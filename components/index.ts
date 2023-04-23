@@ -1,6 +1,5 @@
 export { default as VRArtistCard } from './VRArtistCard/VRArtistCard';
 export { default as VRButton } from './VRButton/VRButton';
-export { default as VRCalendar } from './VRCalendar/VRCalendar';
 export { default as VRCalendarModal } from './VRCalendarModal/VRCalendarModal';
 export { default as VRContainer } from './VRContainer/VRContainer';
 export { default as VRError } from './VRError/VRError';
@@ -23,6 +22,6 @@ export { default as VRReleasesList } from './VRReleasesList/VRReleasesList';
 export { default as VRSearchInput } from './VRSearchInput/VRSearchInput';
 export { default as VRSegmented } from './VRSegmented/VRSegmented';
 export { default as VRTag } from './VRTag/VRTag';
-export { default as VRText, TextCategory } from './VRText/VRText';
+export { default as VRText } from './VRText/VRText';
 export { default as VRTrackList } from './VRTrackList/VRTrackList';
 export { default as VRWebViewModal } from './VRWebViewModal/VRWebViewModal';

@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRModal, VRIcon, VRPressable, VRButton, VRInput } from '../';
 import { RATING_CATEGORIES } from 'constants/index';
-import { RatingPayload, RatingPayloadKey } from 'types';
+import { Colors, RatingPayload, RatingPayloadKey } from 'types';
 import { generateArrayOfNumbers, toUpperFirst } from 'helpers';
 
 const DEFAULT_RATINGS = {
@@ -59,6 +59,7 @@ const Stars = ({
                                                         : 'starEmpty'
                                                 }
                                                 size="md"
+                                                color={Colors.warning}
                                                 testID={`star-${category}-${inputRating}`}
                                             />
                                         </VRPressable>
@@ -145,17 +146,17 @@ const VRRateModal = ({
                         title="Cancel"
                         onPress={handleModalClose}
                         trackID="rate_modal-cancel"
-                        variant="warning"
+                        variant="basic"
                     />
                     <VRButton
                         containerStyle={{ marginBottom: 40 }}
                         title="Submit"
                         onPress={handleSubmit}
                         trackID="rate_modal-submit"
-                        variant="primary"
                         disabled={Object.values(ratings).some(
                             (rating) => rating !== '' && !rating
                         )}
+                        variant="primary"
                     />
                 </View>
             </View>
