@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 
 import { VRText } from 'components';
 import { Layout, Input } from '@ui-kitten/components';

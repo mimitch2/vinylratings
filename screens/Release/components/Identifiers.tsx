@@ -15,7 +15,7 @@ const Identifiers = ({
             {identifiers.map((id) => {
                 return (
                     <View style={styles.row} key={id.description || id.value}>
-                        <VRText fontWeight="bold">
+                        <VRText fontType="bold">
                             {`${id.type}: ${id.value}`}
                         </VRText>
                         {id.description ? (

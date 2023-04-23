@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
-import { Releases, VoidFuncNoParams, TextCategory } from 'types';
+import { Releases, VoidFuncNoParams } from 'types';
 import {
     VRDivider,
     VRIcon,
@@ -101,7 +101,7 @@ const VRReleaseCard = ({
                                 }}
                             >
                                 <VRText
-                                    category={TextCategory.h6}
+                                    fontType="h6"
                                     numberOfLines={1}
                                     styleOverride={{ paddingRight: 5 }}
                                 >
@@ -110,10 +110,7 @@ const VRReleaseCard = ({
 
                                 <VRListIndicator userData={user_data ?? null} />
                             </View>
-                            <VRText
-                                fontStyle="italic"
-                                category={TextCategory.s2}
-                            >
+                            <VRText fontType="italic">
                                 {artist ?? artists[0]?.name ?? 'Unknown'}
                             </VRText>
 

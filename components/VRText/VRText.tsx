@@ -6,26 +6,77 @@ import { TextCategory } from 'types';
 
 export const VRText = ({
     children,
-    category = TextCategory.p1,
     textAlign = 'left',
     styleOverride = {},
     numberOfLines = undefined,
     status = 'basic',
-    appearance = 'default'
+    appearance = 'default',
+    fontType = 'normal'
 }: {
     children: string | string[] | number;
-    category?: TextCategory;
     textAlign?: 'left' | 'center' | 'right';
     styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
-    status?: 'basic' | 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    status?:
+        | 'basic'
+        | 'primary'
+        | 'success'
+        | 'info'
+        | 'warning'
+        | 'danger'
+        | 'control';
     appearance?: 'default' | 'alternative' | 'hint' | 'control';
+    fontType?:
+        | 'normal'
+        | 'bold'
+        | 'italic'
+        | 'bold-italic'
+        | 'h1'
+        | 'h2'
+        | 'h3'
+        | 'h4'
+        | 'h5'
+        | 'h6'
+        | 'caption'
+        | 'caption-italic'
+        | 'label';
 }) => {
+    const getFont = () => {
+        switch (fontType) {
+            case 'bold':
+                return TextCategory.p2;
+            case 'italic':
+                return TextCategory.s1;
+            case 'bold-italic':
+                return TextCategory.s2;
+            case 'h1':
+                return TextCategory.h1;
+            case 'h2':
+                return TextCategory.h2;
+            case 'h3':
+                return TextCategory.h3;
+            case 'h4':
+                return TextCategory.h4;
+            case 'h5':
+                return TextCategory.h5;
+            case 'h6':
+                return TextCategory.h6;
+            case 'caption':
+                return TextCategory.c1;
+            case 'caption-italic':
+                return TextCategory.c2;
+            case 'label':
+                return TextCategory.label;
+            default:
+                return TextCategory.p1;
+        }
+    };
+
     return (
         <Text
             style={[{ flexShrink: 1, textAlign }, styleOverride]}
             numberOfLines={numberOfLines}
-            category={category}
+            category={getFont()}
             status={status}
             appearance={appearance}
         >

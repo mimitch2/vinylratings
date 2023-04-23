@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, DateData } from 'react-native-calendars';
 import { Pressable } from 'react-native';
 
-import { VRModal, VRText, VRLoading, TextCategory } from 'components';
+import { VRModal, VRText, VRLoading } from 'components';
 import { COLORS, FONTS } from 'constants/index';
 
 const VRCalendarModal = ({
@@ -68,7 +68,7 @@ const VRCalendarModal = ({
                             textDayHeaderFontSize: 16
                         }}
                     />
-                    <VRText category={TextCategory.p4}>Or</VRText>
+                    <VRText fontType="h4">Or</VRText>
                     <Pressable
                         onPress={() => {
                             onDatePress('');

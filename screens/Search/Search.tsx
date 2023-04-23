@@ -1,10 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { FlatList } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
 
 import { useLazyList } from 'hooks';
-import { Theme } from 'styles';
 import { toUpperFirst } from 'helpers';
 import { SearchTypes, Nav } from 'types';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
@@ -70,7 +68,6 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         sortOrder
     } = useLazyList(args);
     const { cache } = client;
-    const { colors }: Theme = useTheme();
 
     const handleSearchTypePress = (value: SearchTypes) => {
         setSearchType(value);

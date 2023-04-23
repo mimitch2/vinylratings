@@ -10,7 +10,6 @@ import {
 import { Layout } from '@ui-kitten/components';
 
 import { VRLoading } from 'components';
-import { FONTS } from 'constants/index';
 
 interface Props {
     children: React.ReactNode;

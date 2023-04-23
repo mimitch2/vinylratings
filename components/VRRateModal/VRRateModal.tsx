@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRModal, VRIcon, VRPressable, VRButton, VRInput } from '../';
 import { RATING_CATEGORIES } from 'constants/index';
-import { RatingPayload, RatingPayloadKey, TextCategory } from 'types';
+import { RatingPayload, RatingPayloadKey } from 'types';
 import { generateArrayOfNumbers, toUpperFirst } from 'helpers';
 
 const DEFAULT_RATINGS = {
@@ -30,7 +30,7 @@ const Stars = ({
                         key={category}
                         testID={'stars-category'}
                     >
-                        <VRText category={TextCategory.h4}>{`${toUpperFirst(
+                        <VRText fontType="h4">{`${toUpperFirst(
                             category
                         )}: `}</VRText>
 

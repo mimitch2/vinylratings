@@ -1,12 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Pressable, StyleSheet, ScrollView, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { Pressable, StyleSheet, ScrollView } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
-import { globalStyles, Theme } from 'constants/index';
+import { globalStyles } from 'constants/index';
 import { VRText } from 'components';
-import { Colors, Folder, VoidFuncNoParams } from 'types';
-import { useColorTheme } from 'hooks';
+import { Folder, VoidFuncNoParams } from 'types';
 
 const FolderModalContent = ({
     toggleFolderModal,
@@ -19,8 +17,6 @@ const FolderModalContent = ({
     folder?: Folder | null;
     setFolder: Dispatch<SetStateAction<Folder>> | ((value: Folder) => void);
 }) => {
-    // const { colors }: Theme = useTheme();
-
     return (
         <ScrollView
             contentContainerStyle={styles.container}
@@ -29,7 +25,7 @@ const FolderModalContent = ({
             <Layout style={styles.list}>
                 {folders.map((folderItem: Folder) => {
                     const isSelected = folderItem.id === folder?.id;
-                    const color = isSelected ? Colors.primary : Colors.text;
+                    const color = isSelected ? 'primary' : 'basic';
 
                     return (
                         <Pressable
@@ -42,7 +38,7 @@ const FolderModalContent = ({
                         >
                             <VRText
                                 styleOverride={styles.listItemText}
-                                color={color}
+                                status={color}
                             >
                                 {`${folderItem.name} (${folderItem.count})`}
                             </VRText>

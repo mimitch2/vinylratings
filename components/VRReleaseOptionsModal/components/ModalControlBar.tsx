@@ -31,7 +31,7 @@ const ModalControlBar = ({
                     styleOverride={globalStyles.centerCenter}
                 >
                     <VRIcon type="sort" />
-                    <VRText fontStyle="italic">{`by ${sort}`}</VRText>
+                    <VRText fontType="italic">{`by ${sort}`}</VRText>
                 </VRPressable>
                 {folder && (
                     <VRPressable

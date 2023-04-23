@@ -9,8 +9,7 @@ import { DisabledContext } from 'context';
 import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
-import { FONTS } from 'constants/index';
-import { Nav, TextCategory } from 'types';
+import { Nav } from 'types';
 
 type Params = {
     auth?: string;
@@ -80,10 +79,7 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
         <>
             <VRContainer startAnimation scrollable={false}>
                 <View>
-                    <VRText
-                        category={TextCategory.h1}
-                        styleOverride={{ fontSize: 50 }}
-                    >
+                    <VRText fontType="h1" styleOverride={{ fontSize: 50 }}>
                         {'VINYL\nRATINGS'}
                     </VRText>
                     {/* <Image

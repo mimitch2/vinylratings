@@ -92,7 +92,7 @@ const ArtistDetails = ({ route }: { route: Route }) => {
                                         />
                                     )}
                                     <View>
-                                        <VRText fontWeight="bold" size={20}>
+                                        <VRText fontType="h4">
                                             {member.name}
                                         </VRText>
                                         <VRText>
@@ -144,7 +144,7 @@ const ArtistDetails = ({ route }: { route: Route }) => {
                     />
                 ) : (
                     <View style={{ alignItems: 'center' }}>
-                        <VRIcon type="users" color="black" size="xxxlg" />
+                        <VRIcon type="users" size="xxxlg" />
                     </View>
                 )}
             </Pressable>
@@ -159,9 +159,7 @@ const ArtistDetails = ({ route }: { route: Route }) => {
                         setModalOpen={setImageModalOpen}
                     />
                 ) : null}
-                <VRText fontWeight="bold" size={36}>
-                    {name}
-                </VRText>
+                <VRText fontType="h2">{name}</VRText>
                 <VRSegmented components={segmentedData} />
             </VRContainer>
         </>

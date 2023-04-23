@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, AppState, Alert, Linking, Platform } from 'react-native';
+import { StyleSheet, AppState, Alert, Linking } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Layout } from '@ui-kitten/components';
 
@@ -118,31 +118,14 @@ const VRSearchInput = ({
                 handleTextChange={(value) => setSearchTerm(value)}
                 value={searchTerm}
                 placeholder="Search"
-                accessoryRight={() => (
+                accessoryRight={
                     <InputIcon
                         setSearchTerm={setSearchTerm}
                         searchTerm={searchTerm}
                         handleBarcodePress={handleBarcodePress}
                     />
-                )}
+                }
             />
-            {/* {searchTerm.length ? (
-                <VRPressable
-                    onPress={() => setSearchTerm('')}
-                    trackID="search_screen-clear_search"
-                    styleOverride={styles.icon}
-                >
-                    <VRIcon type="close" size="sm" />
-                </VRPressable>
-            ) : (
-                <VRPressable
-                    onPress={handleBarcodePress}
-                    trackID="search_screen-open_camera"
-                    styleOverride={styles.icon}
-                >
-                    <VRIcon type="barcode" size="sm" />
-                </VRPressable>
-            )} */}
             <CameraModal
                 showCamera={showCamera}
                 setShowCamera={setShowCamera}

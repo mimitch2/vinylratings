@@ -16,8 +16,7 @@ import {
     ArtistSearch,
     Nav,
     Releases,
-    VoidFuncNoParams,
-    TextCategory
+    VoidFuncNoParams
 } from 'types';
 import { getReleaseTags } from 'helpers';
 import { PER_PAGE } from 'hooks';
@@ -133,7 +132,7 @@ const VRReleasesList = ({
         return hasHeader ? (
             <Layout style={[styles.headerContainer]}>
                 <VRIcon type="music" size="sm" styleOverride={styles.icon} />
-                <VRText category={TextCategory.h6}>{genre}</VRText>
+                <VRText fontType="h6">{genre}</VRText>
             </Layout>
         ) : (
             <VRReleaseCard

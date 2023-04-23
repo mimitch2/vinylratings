@@ -1,9 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 
 import {
-    Theme,
     SORT_BY_OPTIONS_COLLECTION,
     SORT_BY_OPTIONS_WANT_LIST,
     SORT_BY_OPTIONS_ARTIST
@@ -24,8 +22,6 @@ const SortModalContent = ({
     isWantList: boolean;
     isArtistSearch?: boolean;
 }) => {
-    const { colors }: Theme = useTheme();
-
     const options = isWantList
         ? SORT_BY_OPTIONS_WANT_LIST
         : isArtistSearch
@@ -36,8 +32,8 @@ const SortModalContent = ({
         <View style={styles.list}>
             {options.map(({ value, label }) => {
                 const isSelected = sort === value;
-                const color = isSelected ? colors.primary : colors.text;
-                const fontWeight = isSelected ? 'bold' : 'normal';
+                const color = isSelected ? 'primary' : 'basic';
+                const fontType = isSelected ? 'bold' : 'normal';
 
                 return (
                     <Pressable
@@ -50,9 +46,8 @@ const SortModalContent = ({
                     >
                         <VRText
                             styleOverride={styles.listItemText}
-                            size={20}
-                            color={color}
-                            fontWeight={fontWeight}
+                            fontType={fontType}
+                            status={color}
                         >
                             {label}
                         </VRText>
@@ -74,7 +69,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     listItemText: {
-        marginRight: 10
+        marginRight: 10,
+        fontSize: 18
     }
 });
 

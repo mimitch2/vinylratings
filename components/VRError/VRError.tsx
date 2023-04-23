@@ -5,7 +5,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { VRIcon, VRText, VRButton } from 'components';
 import type { IconType } from 'types';
-import { TextCategory, Colors } from 'types';
+import { Colors } from 'types';
 
 type Levels = 'error' | 'warning' | 'info';
 type IconMap = {
@@ -53,7 +53,7 @@ const VRError = ({
         }
     };
 
-    const category = TextCategory.h5;
+    const fontType = 'h5';
 
     return (
         <Layout style={[styles.view, styleOverride]}>
@@ -66,7 +66,7 @@ const VRError = ({
 
             {error ? (
                 <>
-                    <VRText category={category} textAlign="center">
+                    <VRText fontType={fontType} textAlign="center">
                         {error?.message ?? message}
                     </VRText>
                     <VRButton
@@ -81,7 +81,7 @@ const VRError = ({
                 </>
             ) : (
                 <VRText
-                    category={category}
+                    fontType={fontType}
                     styleOverride={{ textAlign: 'center' }}
                 >
                     {message}

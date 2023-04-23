@@ -11,7 +11,7 @@ import {
     VRPressable
 } from 'components';
 import { Vinyl } from 'svgs';
-import { ArtistSearch, TextCategory, VoidFuncNoParams } from 'types';
+import { ArtistSearch, VoidFuncNoParams } from 'types';
 
 const VRArtistCard = ({
     artist,
@@ -59,9 +59,7 @@ const VRArtistCard = ({
                             }}
                         >
                             <Layout>
-                                <VRText category={TextCategory.h3}>
-                                    {title}
-                                </VRText>
+                                <VRText fontType="h3">{title}</VRText>
                                 <Layout style={styles.tags}>
                                     <VRTag tag={'Artist'} size="sm" />
                                 </Layout>

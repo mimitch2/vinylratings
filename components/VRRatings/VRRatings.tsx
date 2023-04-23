@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRRatingsStars, VRModal, VRButton, VRIcon } from 'components';
 import { RATING_CATEGORIES } from 'constants/index';
-import { DiscogsRating, TextCategory, VinylRatingsRelease } from 'types';
+import { DiscogsRating, VinylRatingsRelease } from 'types';
 import { getRatingValues, toUpperFirst } from 'helpers';
 
 const RatingRow = ({
@@ -18,7 +18,7 @@ const RatingRow = ({
 }) => {
     return (
         <Layout style={styles.row}>
-            <VRText category={TextCategory.p2}>{label}</VRText>
+            <VRText fontType="bold">{label}</VRText>
             <Layout
                 style={{
                     width: '48%',
@@ -180,10 +180,10 @@ const VRRatings = ({
                                             marginBottom: 10
                                         }}
                                     >
-                                        <VRText category={TextCategory.h3}>
+                                        <VRText fontType="h3">
                                             {rating.user.username}
                                         </VRText>
-                                        <VRText category={TextCategory.s1}>
+                                        <VRText fontType="italic">
                                             {new Date(
                                                 +rating.createdAt
                                             ).toLocaleDateString()}
@@ -204,9 +204,7 @@ const VRRatings = ({
                                         />
                                     );
                                 })}
-                                <VRText category={TextCategory.p2}>
-                                    Notes:
-                                </VRText>
+                                <VRText fontType="bold">Notes:</VRText>
                                 <VRText>{rating.notes}</VRText>
                             </Layout>
                         );

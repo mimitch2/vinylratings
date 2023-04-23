@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { VRText } from 'components';
 import { useColorTheme } from 'hooks';
-import { Colors, TextCategory } from 'types';
+import { Colors } from 'types';
 
 const VRTag = ({
     tag,
@@ -28,12 +28,7 @@ const VRTag = ({
                 }
             ]}
         >
-            <VRText
-                category={isSmall ? TextCategory.c1 : TextCategory.p2}
-                color={Colors.background}
-            >
-                {tag}
-            </VRText>
+            <VRText fontType="label">{tag}</VRText>
         </Layout>
     );
 };

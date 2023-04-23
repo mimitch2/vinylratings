@@ -27,7 +27,7 @@ import {
     WantList
 } from 'screens';
 import { DisabledContext } from 'context';
-import { TextCategory, Colors } from 'types';
+import { Colors } from 'types';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
 interface TabBarProps extends BottomTabBarProps {
@@ -104,11 +104,7 @@ const TabBar = ({ navigation, disabled }: TabBarProps) => {
                             )}
                             title={() => (
                                 <VRText
-                                    color={
-                                        isSelected
-                                            ? Colors.primary
-                                            : Colors.text
-                                    }
+                                    status={isSelected ? 'primary' : 'basic'}
                                     styleOverride={{ marginTop: 3 }}
                                 >
                                     {routeName}
@@ -176,11 +172,7 @@ export const HeaderBar = ({
     <>
         <TopNavigation
             accessoryLeft={back ? BackAction : undefined}
-            title={() => (
-                <VRText category={TextCategory.h5}>
-                    {title.toUpperCase()}
-                </VRText>
-            )}
+            title={() => <VRText fontType="h5">{title.toUpperCase()}</VRText>}
             alignment="center"
         />
         <VRDivider />

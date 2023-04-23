@@ -1,10 +1,10 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
 import { VRIcon, VRText } from 'components';
 import { COLORS } from 'constants/index';
-import { TextCategory, VoidFunc } from 'types';
+import { VoidFunc } from 'types';
 
 const ModalHeader = ({
     title = '',
@@ -17,7 +17,7 @@ const ModalHeader = ({
 }) => {
     return (
         <Layout style={[styles.view, { borderBottomWidth: title ? 0.5 : 0 }]}>
-            {title && <VRText category={TextCategory.h4}>{title}</VRText>}
+            {title && <VRText fontType="h4">{title}</VRText>}
             {subTitle && (
                 <VRText styleOverride={{ fontSize: 18 }}>{subTitle}</VRText>
             )}
