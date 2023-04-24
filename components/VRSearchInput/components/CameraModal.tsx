@@ -72,9 +72,6 @@ const CameraModal = ({
                     }}
                     onBarCodeScanned={handleReadCode}
                     flashMode={torchMode ? FlashMode.torch : FlashMode.off}
-                    // onCameraReady={() => {
-                    //     console.log('camera ready');
-                    // }}
                 />
                 <Animated.View
                     style={{
@@ -128,6 +125,9 @@ const CameraModal = ({
             visible={showCamera}
             backdropStyle={styles.backdrop}
             animationType="fade"
+            onBackdropPress={() => {
+                setShowCamera(false);
+            }}
         >
             <Card style={styles.container}>
                 <Layout>

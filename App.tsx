@@ -7,7 +7,11 @@ import VRTabs from 'navigation/VRTabs/VRTabs';
 import ApolloProviderWrapper from './ApolloProviderWrapper';
 import useCachedResources from 'hooks/useCachedResources';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Layout } from '@ui-kitten/components';
+import {
+    ApplicationProvider,
+    Layout,
+    ModalService
+} from '@ui-kitten/components';
 import { default as lightTheme } from 'constants/themeLight.json';
 import { default as darkTheme } from 'constants/themeDark.json';
 import { default as mapping } from 'constants/mapping.json';
@@ -44,6 +48,7 @@ export const linking = {
 
 const App = () => {
     const isLoadingComplete = useCachedResources();
+    ModalService.setShouldUseTopInsets = true;
     // const scheme = useColorScheme();
 
     // const theme = scheme === 'dark' ? darkTheme : lightTheme;

@@ -39,6 +39,9 @@ const VRInput = ({
                 multiline={multiline}
                 maxLength={maxLength}
                 accessoryRight={accessoryRight}
+                textStyle={{
+                    minHeight: multiline ? 80 : 0
+                }}
             />
             {showLength ? (
                 <VRText
