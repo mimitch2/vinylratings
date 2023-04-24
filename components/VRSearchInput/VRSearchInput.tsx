@@ -126,11 +126,13 @@ const VRSearchInput = ({
                     />
                 }
             />
-            <CameraModal
-                showCamera={showCamera}
-                setShowCamera={setShowCamera}
-                onBarCodeRead={handleBarCodeRead}
-            />
+            {showCamera && (
+                <CameraModal
+                    showCamera={showCamera}
+                    setShowCamera={setShowCamera}
+                    onBarCodeRead={handleBarCodeRead}
+                />
+            )}
         </Layout>
     );
 };

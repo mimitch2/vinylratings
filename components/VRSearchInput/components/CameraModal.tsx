@@ -5,8 +5,9 @@ import { Camera, FlashMode } from 'expo-camera';
 
 import { VRIcon, VRPressable } from 'components';
 import { Layout, Modal, Card } from '@ui-kitten/components';
-import { HEIGHT, WIDTH } from 'constants/index';
 import { toUpperFirst } from 'helpers';
+import { useColorTheme } from 'hooks';
+import { Colors } from 'types';
 
 const CameraModal = ({
     showCamera,
@@ -21,13 +22,14 @@ const CameraModal = ({
     const [toValue, setToValue] = useState(0);
 
     const scanAnimation = useRef(new Animated.Value(15)).current;
+    const scannerColor = useColorTheme(Colors.primary);
 
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
                 Animated.timing(scanAnimation, {
-                    toValue: toValue - 15,
-                    duration: 2500,
+                    toValue: toValue - 18,
+                    duration: 2100,
                     useNativeDriver: true,
                     easing: (value) => {
                         return value;
@@ -35,6 +37,10 @@ const CameraModal = ({
                 })
             ])
         ).start();
+
+        // return () => {
+        //     scanAnimation.resetAnimation();
+        // };
     }, [scanAnimation, toValue]);
 
     const handleReadCode = ({ data }: { data: string | undefined }) => {
@@ -58,23 +64,28 @@ const CameraModal = ({
             >
                 <Camera
                     style={{
-                        width: '100%',
-                        height: '77%'
+                        width: 300,
+                        height: 200
                     }}
                     barCodeScannerSettings={{
                         barCodeTypes: [code39, code128, itf14, upc_e, ean13]
                     }}
                     onBarCodeScanned={handleReadCode}
                     flashMode={torchMode ? FlashMode.torch : FlashMode.off}
+                    // onCameraReady={() => {
+                    //     console.log('camera ready');
+                    // }}
                 />
                 <Animated.View
                     style={{
                         position: 'absolute',
-                        height: '55%',
-                        width: 0.4,
+                        height: 160,
+                        width: 1,
                         left: 0,
+                        top: 20,
                         transform: [{ translateX: scanAnimation }],
-                        backgroundColor: 'rgba(255, 255, 255, 0.5)'
+                        backgroundColor: scannerColor,
+                        opacity: 0.6
                     }}
                 />
                 {[
@@ -89,14 +100,15 @@ const CameraModal = ({
                             style={{
                                 position: 'absolute',
                                 [horiz]: 15,
-                                [vert]: 40,
+                                [vert]: 15,
                                 height: 30,
                                 width: 30,
                                 [`border${toUpperFirst(vert)}Color`]:
-                                    'rgba(255, 255, 255, 0.5)',
+                                    'rgba(255, 255, 255, 0.6)',
                                 [`border${toUpperFirst(horiz)}Color`]:
-                                    'rgba(255, 255, 255, 0.5)',
-                                borderWidth: 1
+                                    'rgba(255, 255, 255, 0.6)',
+                                [`border${toUpperFirst(vert)}Width`]: 1,
+                                [`border${toUpperFirst(horiz)}Width`]: 1
                             }}
                         />
                     );
@@ -151,13 +163,13 @@ const styles = StyleSheet.create({
         // flex: 1,
         // backgroundColor: colors.darkGrey,
         // paddingTop: 100
-        height: HEIGHT / 2,
-        width: WIDTH / 1.1,
-        justifyContent: 'space-between'
+        // height: 200,
+        // width: 300,
+        // justifyContent: 'space-between'
     },
     cameraContainer: {
-        justifyContent: 'center',
-        alignItems: 'center'
+        // justifyContent: 'center',
+        // alignItems: 'center'
         // height: HEIGHT / 1.7,
         // width: WIDTH / 1.1
         // ...Platform.select({
@@ -172,7 +184,7 @@ const styles = StyleSheet.create({
         // })
     },
     bottomButtons: {
-        paddingBottom: 20,
+        padding: 20,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
