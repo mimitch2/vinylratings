@@ -43,7 +43,8 @@ const VRButton = ({
     trackID,
     containerStyle = {},
     disabled = false,
-    stacked = true
+    stacked = true,
+    accessoryRight = undefined
 }: {
     onPress: VoidFuncNoParams;
     title: string;
@@ -53,6 +54,7 @@ const VRButton = ({
     containerStyle?: Object;
     disabled?: boolean;
     stacked?: boolean;
+    accessoryRight?: React.ReactElement | undefined;
 }) => {
     return (
         <Button
@@ -75,6 +77,7 @@ const VRButton = ({
             status={
                 VARIANT_MAP?.[variant]?.status ?? VARIANT_MAP.primary.status
             }
+            accessoryRight={accessoryRight}
         >
             {(evaProps) => {
                 return (
@@ -85,7 +88,7 @@ const VRButton = ({
                                 FONT_SIZE_MAP?.[size] ?? FONT_SIZE_MAP.large
                         }}
                     >
-                        {title}
+                        {title.toUpperCase()}
                     </Text>
                 );
             }}

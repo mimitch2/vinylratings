@@ -41,6 +41,7 @@ const VRCalendarModal = ({
                     }}
                     title="Reset"
                     onPress={() => {
+                        onDatePress('');
                         setModalOpen(false);
                     }}
                     trackID="calendar-modal-reset-button"

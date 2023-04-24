@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { Dimensions, Modal, View, StyleSheet, Platform } from 'react-native';
+import { Dimensions, View, StyleSheet, Platform } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera, FlashMode } from 'expo-camera';
 
 import { ThemeColors, Theme } from 'styles';
-import { VRIcon, VRPressable } from 'components';
-import { useTheme } from '@react-navigation/native';
+import { VRIcon, VRPressable, VRButton } from 'components';
+import { Layout, Modal, Card } from '@ui-kitten/components';
+import { Colors } from 'types';
+import { HEIGHT, WIDTH } from 'constants/index';
 
-const { width, height } = Dimensions.get('window');
+const BoltIcon = ({ torchMode }: { torchMode: boolean }) => {
+    return (
+        <VRIcon
+            type={torchMode ? 'bolt' : 'boltSlash'}
+            styleOverride={{
+                position: 'absolute',
+                right: 4
+            }}
+            size="sm"
+        />
+    );
+};
 
 const CameraModal = ({
     showCamera,
@@ -19,7 +32,6 @@ const CameraModal = ({
     onBarCodeRead: (value: { data: string | undefined }) => void;
 }) => {
     const [torchMode, setTorchMode] = useState(false);
-    const { colors }: Theme = useTheme();
 
     const handleReadCode = ({ data }: { data: string | undefined }) => {
         setShowCamera(false);
@@ -32,46 +44,20 @@ const CameraModal = ({
 
     const renderCamera = () => {
         return (
-            <View style={styles(colors).cameraContainer}>
-                <View
+            <Layout style={styles.cameraContainer}>
+                <Layout
                     style={{ justifyContent: 'center', alignItems: 'center' }}
                 >
                     <Camera
-                        style={{ width: '100%', height: '60%' }}
+                        style={{ width: '90%', height: '60%' }}
                         barCodeScannerSettings={{
                             barCodeTypes: [code39, code128, itf14, upc_e, ean13]
                         }}
                         onBarCodeScanned={handleReadCode}
                         flashMode={torchMode ? FlashMode.torch : FlashMode.off}
                     />
-                </View>
-                {/* <BarCodeScanner
-                    onBarCodeScanned={handleReadCode}
-                    // style={{ width: '100%', height: '20%' }}
-                    barCodeTypes={[code39, code128, itf14, upc_e, ean13]}
-                >
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '100%',
-                            width: '100%',
-                            backgroundColor: 'transparent'
-                        }}
-                    >
-                        <View
-                            style={{
-                                borderTopWidth: 1,
-                                borderRightWidth: 1,
-                                borderColor: 'blue',
-                                height: 80,
-                                width: 80,
-                                backgroundColor: 'transparent'
-                            }}
-                        />
-                    </View>
-                </BarCodeScanner> */}
-            </View>
+                </Layout>
+            </Layout>
         );
     };
 
@@ -82,62 +68,75 @@ const CameraModal = ({
     } = BarCodeScanner;
 
     return (
-        <Modal animationType="slide" visible={showCamera}>
-            <View style={styles(colors).container}>
-                {Platform.OS === 'android' && renderCamera()}
-                <View />
-                {Platform.OS !== 'android' && renderCamera()}
-                <View style={styles(colors).bottomButtons}>
-                    <VRPressable
-                        trackID="camera_modal-enable_torch"
+        <Modal
+            visible={showCamera}
+            backdropStyle={styles.backdrop}
+            animationType="fade"
+        >
+            <Layout>
+                <Layout style={styles.cameraContainer}>
+                    {Platform.OS === 'android' && renderCamera()}
+                    <Layout />
+                    {Platform.OS !== 'android' && renderCamera()}
+                </Layout>
+                <Layout style={styles.bottomButtons}>
+                    <VRButton
+                        size="small"
+                        title="Cancel"
+                        onPress={() => {
+                            setTorchMode(false);
+                            setShowCamera(false);
+                        }}
+                        trackID="barcode-scanner--cancel"
+                        containerStyle={{ marginRight: 20 }}
+                        stacked={false}
+                    />
+                    <VRButton
+                        size="small"
+                        title="light"
                         onPress={onSetTorch}
-                    >
-                        <VRIcon
-                            type="flashlight"
-                            color={torchMode ? colors.primary : colors.grey}
-                            size="xlg"
-                        />
-                    </VRPressable>
-                    <VRPressable
-                        trackID="camera_modal-close_modal"
-                        onPress={() => setShowCamera(false)}
-                    >
-                        <VRIcon type="close" color={colors.grey} size="xlg" />
-                    </VRPressable>
-                </View>
-            </View>
+                        trackID="barcode-scanner--turn-on-flashlight"
+                        accessoryRight={<BoltIcon torchMode={torchMode} />}
+                        variant="basic"
+                        stacked={false}
+                    />
+                </Layout>
+            </Layout>
         </Modal>
     );
 };
 
-const styles = (colors: ThemeColors) =>
-    StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.darkGrey,
-            paddingTop: 100
-        },
-        cameraContainer: {
-            ...Platform.select({
-                android: {
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width,
-                    height
-                },
-                default: {
-                    flex: 1,
-                    borderColor: colors.primary,
-                    borderWidth: 5
-                }
-            })
-        },
-        bottomButtons: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 60
-        }
-    });
+const styles = StyleSheet.create({
+    container: {
+        // flex: 1,
+        // backgroundColor: colors.darkGrey,
+        // paddingTop: 100
+        // height: HEIGHT / 4,
+        // width: WIDTH
+    },
+    cameraContainer: {
+        height: HEIGHT / 2,
+        width: WIDTH / 1.1
+        // ...Platform.select({
+        //     android: {
+        //         position: 'absolute',
+        //         top: 0,
+        //         left: 0
+        //     },
+        //     default: {
+        //         // flex: 1
+        //     }
+        // })
+    },
+    bottomButtons: {
+        // width: '100%',
+        padding: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    backdrop: {
+        backgroundColor: 'rgba(100, 100, 100, 0.5)'
+    }
+});
 
 export default CameraModal;
