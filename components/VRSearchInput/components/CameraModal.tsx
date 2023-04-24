@@ -6,6 +6,7 @@ import { Camera, FlashMode } from 'expo-camera';
 import { VRIcon, VRPressable } from 'components';
 import { Layout, Modal, Card } from '@ui-kitten/components';
 import { HEIGHT, WIDTH } from 'constants/index';
+import { toUpperFirst } from 'helpers';
 
 const CameraModal = ({
     showCamera,
@@ -18,6 +19,7 @@ const CameraModal = ({
 }) => {
     const [torchMode, setTorchMode] = useState(false);
     const [toValue, setToValue] = useState(0);
+
     const scanAnimation = useRef(new Animated.Value(15)).current;
 
     useEffect(() => {
@@ -49,12 +51,8 @@ const CameraModal = ({
             <Layout
                 style={styles.cameraContainer}
                 onLayout={(event) => {
-                    const { height, width } = event.nativeEvent.layout;
-                    console.log(
-                        '🚀 ~ file: CameraModal.tsx:53 ~ renderCamera ~ height, width:',
-                        height,
-                        width
-                    );
+                    const { width } = event.nativeEvent.layout;
+
                     setToValue(width);
                 }}
             >
@@ -79,55 +77,30 @@ const CameraModal = ({
                         backgroundColor: 'rgba(255, 255, 255, 0.5)'
                     }}
                 />
-                <View
-                    style={{
-                        position: 'absolute',
-                        left: 15,
-                        top: 40,
-                        height: 30,
-                        width: 30,
-                        borderTopColor: 'rgba(255, 255, 255, 0.5)',
-                        borderLeftColor: 'rgba(255, 255, 255, 0.5)',
-                        borderWidth: 1
-                    }}
-                />
-
-                <View
-                    style={{
-                        position: 'absolute',
-                        right: 15,
-                        top: 40,
-                        height: 30,
-                        width: 30,
-                        borderTopColor: 'rgba(255, 255, 255, 0.5)',
-                        borderRightColor: 'rgba(255, 255, 255, 0.5)',
-                        borderWidth: 1
-                    }}
-                />
-                <View
-                    style={{
-                        position: 'absolute',
-                        left: 15,
-                        bottom: 40,
-                        height: 30,
-                        width: 30,
-                        borderBottomColor: 'rgba(255, 255, 255, 0.5)',
-                        borderLeftColor: 'rgba(255, 255, 255, 0.5)',
-                        borderWidth: 1
-                    }}
-                />
-                <View
-                    style={{
-                        position: 'absolute',
-                        right: 15,
-                        bottom: 40,
-                        height: 30,
-                        width: 30,
-                        borderBottomColor: 'rgba(255, 255, 255, 0.5)',
-                        borderRightColor: 'rgba(255, 255, 255, 0.5)',
-                        borderWidth: 1
-                    }}
-                />
+                {[
+                    ['top', 'left'],
+                    ['top', 'right'],
+                    ['bottom', 'left'],
+                    ['bottom', 'right']
+                ].map(([vert, horiz]) => {
+                    return (
+                        <View
+                            key={`${vert}-${horiz}`}
+                            style={{
+                                position: 'absolute',
+                                [horiz]: 15,
+                                [vert]: 40,
+                                height: 30,
+                                width: 30,
+                                [`border${toUpperFirst(vert)}Color`]:
+                                    'rgba(255, 255, 255, 0.5)',
+                                [`border${toUpperFirst(horiz)}Color`]:
+                                    'rgba(255, 255, 255, 0.5)',
+                                borderWidth: 1
+                            }}
+                        />
+                    );
+                })}
             </Layout>
         );
     };
