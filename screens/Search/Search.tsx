@@ -35,14 +35,8 @@ const Search = ({ navigation }: { navigation: Nav }) => {
 
     const args = {
         scrollViewRef,
-        QUERY:
-            searchType === SearchTypes.RELEASE
-                ? GET_RELEASE_SEARCH
-                : GET_SEARCH,
-        queryKey:
-            searchType === SearchTypes.RELEASE
-                ? 'getReleaseSearch'
-                : 'getSearch',
+        QUERY: GET_SEARCH,
+        queryKey: 'getSearch',
         sortDefault
     };
 
@@ -118,12 +112,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         }
     }, [searchTerm, called, cache, searchType]);
 
-    const results =
-        data?.[
-            searchType === SearchTypes.RELEASE
-                ? 'getReleaseSearch'
-                : 'getSearch'
-        ]?.results ?? null;
+    const results = data?.getSearch?.results ?? null;
 
     const isLoading =
         (loading && !loadingMore && !reloading) || isSortingOrFiltering;
