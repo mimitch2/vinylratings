@@ -84,6 +84,7 @@ const TabBar = ({ navigation, disabled }: TabBarProps) => {
                     setSelectedIndex(index);
                     navigation.navigate(ROUTES[index].routeName);
                 }}
+                indicatorStyle={{ width: '80%', marginVertical: 8 }}
             >
                 {ROUTES.map(({ routeName, icon, index }) => {
                     const isDisabled = !!(disabled && index);

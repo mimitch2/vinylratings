@@ -54,7 +54,8 @@ const ArtistDetails = ({ route }: { route: Route }) => {
 
     const segmentedData = [
         {
-            header: 'Members',
+            label: 'Members',
+            value: 'members',
             component: (
                 <View style={{ paddingBottom: 20 }}>
                     {sortedMembers ? (
@@ -109,12 +110,12 @@ const ArtistDetails = ({ route }: { route: Route }) => {
             )
         },
         {
-            header: 'Profile',
+            label: 'Profile',
+            value: 'profile',
             component: (
                 <>
                     {profile ? (
                         <VRText styleOverride={{ paddingBottom: 20 }}>
-                            {/* {`${template(profile)}`} */}
                             {profile}
                         </VRText>
                     ) : (
@@ -160,7 +161,7 @@ const ArtistDetails = ({ route }: { route: Route }) => {
                     />
                 ) : null}
                 <VRText fontType="h2">{name}</VRText>
-                <VRSegmented components={segmentedData} />
+                <VRSegmented data={segmentedData} />
             </VRContainer>
         </>
     );

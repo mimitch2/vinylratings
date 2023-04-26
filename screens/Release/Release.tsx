@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
         marginRight: 6
     },
     versions: {
-        paddingVertical: 10,
+        paddingVertical: 12,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'

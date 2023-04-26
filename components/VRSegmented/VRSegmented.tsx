@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ViewStyle, Pressable } from 'react-native';
-import { useTheme } from '@react-navigation/native';
-
-import { VRText } from 'components';
-import { Theme, PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
+import { StyleSheet, ViewStyle } from 'react-native';
+import { TabBar, Tab, Layout } from '@ui-kitten/components';
 
 interface SegmentedProps {
     data: {
@@ -22,67 +19,40 @@ const VRSegmented = ({
     containerStyleOverride = {},
     labelStyleOverride = {}
 }: SegmentedProps) => {
+    console.log('🚀 ~ file: VRSegmented.tsx:22 ~ data:', data);
     const [selectedIdx, setSelectedIdx] = useState(0);
-    const { colors }: Theme = useTheme();
 
-    const handleOnPress = (
-        idx: number,
-        value?: string | number | undefined
-    ) => {
+    const handleOnPress = (idx: number) => {
         setSelectedIdx(idx);
-        onPress && value && onPress(value);
+        onPress && data[idx].value && onPress(data[idx].value);
     };
 
     return (
-        <View style={[styles.container, containerStyleOverride]}>
-            <View style={[styles.labels, labelStyleOverride]}>
-                {data.map((section, idx) => {
-                    const { label } = section;
-                    const value = section.value;
-                    const isSelected = selectedIdx === idx;
-
-                    return (
-                        <Pressable
-                            key={label}
-                            onPress={() => handleOnPress(idx, value)}
-                            style={({ pressed }) => [
-                                styles.headerButton,
-                                {
-                                    opacity: pressed
-                                        ? PRESSED_OR_DISABLED_OPACITY
-                                        : 1,
-                                    borderColor: isSelected
-                                        ? colors.primary
-                                        : colors.grey
-                                }
-                            ]}
-                        >
-                            <VRText>{label}</VRText>
-                        </Pressable>
-                    );
-                })}
-            </View>
-            {data[selectedIdx]?.component && (
-                <View>{data[selectedIdx].component}</View>
+        <>
+            <Layout style={styles.container}>
+                <TabBar
+                    selectedIndex={selectedIdx}
+                    onSelect={(index) => handleOnPress(index)}
+                    indicatorStyle={styles.indicator}
+                >
+                    {data.map(({ label }) => {
+                        return <Tab key={label} title={label.toUpperCase()} />;
+                    })}
+                </TabBar>
+            </Layout>
+            {data?.[selectedIdx]?.component && (
+                <Layout>{data[selectedIdx].component}</Layout>
             )}
-        </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingBottom: 10
+        marginVertical: 6
     },
-    headerButton: {
-        borderBottomWidth: 2,
-        flex: 1,
-        alignItems: 'center',
-        marginHorizontal: 10
-    },
-    labels: {
-        marginVertical: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+    indicator: {
+        width: '68%'
     }
 });
 
