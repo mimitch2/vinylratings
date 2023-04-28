@@ -37,12 +37,10 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         scrollViewRef,
         QUERY: GET_SEARCH,
         queryKey: 'getSearch',
-        sortDefault
+        sortDefault,
+        type: searchType,
+        searchTerm
     };
-
-    if (searchType !== SearchTypes.RELEASE) {
-        args.type = searchType;
-    }
 
     const {
         called,
@@ -60,6 +58,8 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSortOrder,
         sort,
         sortOrder
+        // searchTerm,
+        // setSearchTerm
     } = useLazyList(args);
     const { cache } = client;
 
@@ -67,12 +67,12 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSearchType(value);
     };
 
-    const runSearchQuery = useCallback(
-        ({ variables }: any) => {
-            search({ variables });
-        },
-        [search]
-    );
+    // const runSearchQuery = useCallback(
+    //     ({ variables }: any) => {
+    //         search({ variables });
+    //     },
+    //     [search]
+    // );
 
     useEffect(() => {
         if (called && !searchTerm.length) {
@@ -112,7 +112,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         }
     }, [searchTerm, called, cache, searchType]);
 
-    const results = data?.getSearch?.results ?? null;
+    const results = data?.getSearch?.results ?? [];
 
     const isLoading =
         (loading && !loadingMore && !reloading) || isSortingOrFiltering;
@@ -121,7 +121,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         <>
             <Layout>
                 <VRSearchInput
-                    runQuery={runSearchQuery}
+                    // runQuery={runSearchQuery}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                 />

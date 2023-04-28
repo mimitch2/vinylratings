@@ -34,11 +34,11 @@ const InputIcon = ({
 };
 
 const VRSearchInput = ({
-    runQuery,
+    // runQuery,
     searchTerm,
     setSearchTerm
 }: {
-    runQuery: any;
+    // runQuery: any;
     searchTerm: string;
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -54,22 +54,21 @@ const VRSearchInput = ({
         getBarCodeScannerPermissions();
     }, []);
 
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            const lastCharacter = searchTerm[searchTerm.length - 1];
+    // useEffect(() => {
+    //     const delayDebounceFn = setTimeout(() => {
+    //         const lastCharacter = searchTerm[searchTerm.length - 1];
 
-            if (
-                searchTerm.length > 2 &&
-                lastCharacter !== ' ' &&
-                searchTerm.length > 1 &&
-                searchTerm[searchTerm.length - 2]
-            ) {
-                runQuery({ variables: { search: searchTerm } });
-            }
-        }, 500);
+    //         if (
+    //             searchTerm.length > 2 &&
+    //             lastCharacter !== ' ' &&
+    //             searchTerm[searchTerm.length - 2]
+    //         ) {
+    //             runQuery({ variables: { search: searchTerm } });
+    //         }
+    //     }, 500);
 
-        return () => clearTimeout(delayDebounceFn);
-    }, [searchTerm, runQuery]);
+    //     return () => clearTimeout(delayDebounceFn);
+    // }, [searchTerm, runQuery]);
 
     useEffect(() => {
         const subscription = AppState.addEventListener(

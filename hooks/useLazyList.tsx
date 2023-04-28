@@ -20,7 +20,7 @@ type QueriedData = {
     results: Releases[] | undefined;
 };
 interface Data {
-    [key: string]: QueriedData;
+    getSearch: QueriedData;
 }
 
 interface Variables {
@@ -31,6 +31,7 @@ interface Variables {
     offset: number;
     limit: number;
     type: string;
+    searchTerm: string;
 }
 
 export const useLazyList = ({
@@ -38,7 +39,8 @@ export const useLazyList = ({
     QUERY,
     queryKey,
     sortDefault = 'added',
-    type = 'release'
+    type = 'release',
+    searchTerm = ''
 }: {
     scrollViewRef: React.RefObject<FlatList<Releases>>;
     QUERY: DocumentNode;
@@ -46,6 +48,7 @@ export const useLazyList = ({
     lazy?: boolean;
     sortDefault?: string;
     type?: string;
+    searchTerm?: string;
 }) => {
     const [pagination, setPagination] =
         useState<Pagination>(PAGINATION_DEFAULT);
@@ -54,6 +57,11 @@ export const useLazyList = ({
     const [loadingMore, setLoadingMore] = useState(false);
     const [sort, setSort] = useState(sortDefault);
     const [sortOrder, setSortOrder] = useState<SortOrder>(SORT_ORDER_DEFAULT);
+    // const [searchTerm, setSearchTerm] = useState('');
+    const [data, setData] = useState<QueriedData | undefined>({
+        pagination: PAGINATION_DEFAULT,
+        results: []
+    });
 
     useEffect(() => {
         setSort(sortDefault);
@@ -66,15 +74,23 @@ export const useLazyList = ({
         sort_order: sortOrder,
         offset: 0,
         limit: PER_PAGE,
-        type
+        type,
+        searchTerm
     };
 
     const [
         search,
-        { called, loading, data, previousData, fetchMore, refetch, error }
+        { called, loading, previousData, fetchMore, refetch, error, client }
     ] = useLazyQuery(QUERY, {
         variables,
+        fetchPolicy: 'network-only',
         onCompleted: (returnedData: Data) => {
+            console.log(
+                '🚀 ~ file: useLazyList.tsx:93 ~ returnedData:',
+                returnedData
+            );
+
+            setData(returnedData);
             if (!loadingMore && returnedData?.[queryKey]?.results?.length) {
                 scrollViewRef?.current?.scrollToIndex({
                     index: 0,
@@ -92,6 +108,32 @@ export const useLazyList = ({
             throw new Error(`useLazyList: ${err}`);
         }
     });
+
+    // useEffect(() => {
+    //     if (searchTerm) {
+    //         search();
+    //     }
+    // }, [searchTerm, search]);
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            const lastCharacter = searchTerm[searchTerm.length - 1];
+
+            if (
+                searchTerm.length > 2 &&
+                lastCharacter !== ' ' &&
+                searchTerm[searchTerm.length - 2]
+            ) {
+                console.log(
+                    '🚀 ~ file: useLazyList.tsx:112 ~ delayDebounceFn ~ searchTerm:',
+                    searchTerm
+                );
+                search({ variables: { search: searchTerm } });
+            }
+        }, 500);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm, search]);
 
     useEffect(() => {
         const asyncRefresh = async () => {

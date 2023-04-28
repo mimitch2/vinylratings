@@ -19,7 +19,6 @@ const VRSegmented = ({
     containerStyleOverride = {},
     labelStyleOverride = {}
 }: SegmentedProps) => {
-    console.log('🚀 ~ file: VRSegmented.tsx:22 ~ data:', data);
     const [selectedIdx, setSelectedIdx] = useState(0);
 
     const handleOnPress = (idx: number) => {
