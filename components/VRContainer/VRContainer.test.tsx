@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text } from 'react-native';
-import VRContainer from './VRContainer';
+import { waitFor } from '@testing-library/react-native';
 
-import { render, waitFor } from '@testing-library/react-native';
+import VRContainer from './VRContainer';
+import { renderWithProvider } from 'test';
 
 describe('VRContainer', () => {
     it('should render loading', async () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRContainer isLoading>
                 <Text>Testing this yo</Text>
             </VRContainer>
@@ -17,7 +18,7 @@ describe('VRContainer', () => {
         });
     });
     it('should render correctly for scrollable', () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRContainer startAnimation>
                 <Text>Testing this yo</Text>
             </VRContainer>
@@ -27,7 +28,7 @@ describe('VRContainer', () => {
     });
 
     it('should render correctly for non-scrollable', () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRContainer startAnimation scrollable={false}>
                 <Text>Testing this yo</Text>
             </VRContainer>
@@ -37,7 +38,7 @@ describe('VRContainer', () => {
     });
 
     it('should render refresh', () => {
-        const view = render(
+        const view = renderWithProvider(
             <VRContainer onRefresh={() => {}} refreshing>
                 <Text>Testing this yo</Text>
             </VRContainer>

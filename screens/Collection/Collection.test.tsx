@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react-native';
+import React from 'react';
+import * as navigation from '@react-navigation/native';
 
-import { collectionMock } from 'test';
+import { collectionMock, renderWithProvider } from 'test';
 import Collection from './Collection';
 import * as useList from 'hooks/useList';
 import * as useGetFolders from 'hooks/useGetFolders';
-import * as navigation from '@react-navigation/native';
 
 describe('Collection', () => {
     let useListMock: any;
@@ -67,7 +67,7 @@ describe('Collection', () => {
                     ...useGetFoldersMock,
                     foldersLoading: true
                 });
-                const { getByTestId } = render(
+                const { getByTestId } = renderWithProvider(
                     <Collection navigation={navigationMock} />
                 );
 
@@ -82,7 +82,7 @@ describe('Collection', () => {
                     initialLoading: true
                 });
 
-                const { getByTestId } = render(
+                const { getByTestId } = renderWithProvider(
                     <Collection navigation={navigationMock} />
                 );
 
@@ -103,7 +103,7 @@ describe('Collection', () => {
         });
 
         it('should set header title with correct folder and count', () => {
-            render(<Collection navigation={navigationMock} />);
+            renderWithProvider(<Collection navigation={navigationMock} />);
 
             expect(navigationMock.setOptions).toHaveBeenCalledWith({
                 title: 'Collection:All(3)'
@@ -123,7 +123,7 @@ describe('Collection', () => {
                         }
                     }
                 });
-                const { getByText } = render(
+                const { getByText } = renderWithProvider(
                     <Collection navigation={navigationMock} />
                 );
 
@@ -148,7 +148,7 @@ describe('Collection', () => {
             });
 
             it('should render error message', () => {
-                const { getByText } = render(
+                const { getByText } = renderWithProvider(
                     <Collection navigation={navigationMock} />
                 );
 

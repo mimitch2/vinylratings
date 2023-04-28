@@ -22,6 +22,7 @@ export const foldersMock = [
 ];
 
 export const basicInformationMock: BasicInformation = {
+    type: 'release',
     title: 'Our Mother The Mountain',
     thumb: 'fake_url.jpeg',
     year: 2015,

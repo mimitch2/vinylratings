@@ -1,12 +1,14 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 
 import VRRateModal from './VRRateModal';
+import { renderWithProvider } from 'test';
 
 describe('VRRateModal', () => {
     const setModalOpenMock = jest.fn();
     const onPressMock = jest.fn();
     it('should call setModalOpen when pressing close', () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRRateModal
                 setModalOpen={setModalOpenMock}
                 modalOpen
@@ -22,7 +24,7 @@ describe('VRRateModal', () => {
     });
 
     it('should render stars as full after tapping', () => {
-        const view = render(
+        const view = renderWithProvider(
             <VRRateModal
                 setModalOpen={setModalOpenMock}
                 modalOpen
@@ -39,7 +41,7 @@ describe('VRRateModal', () => {
     });
 
     it('should call onPress when submitting', () => {
-        const { getByText, getByTestId } = render(
+        const { getByText, getByTestId, getByRole } = renderWithProvider(
             <VRRateModal
                 setModalOpen={setModalOpenMock}
                 modalOpen
@@ -51,8 +53,8 @@ describe('VRRateModal', () => {
             fireEvent.press(getByTestId(`star-${category}-3`));
         });
 
-        fireEvent.changeText(getByTestId('input'), 'nice');
-        fireEvent.press(getByText('Submit'));
+        fireEvent.changeText(getByRole('input'), 'nice');
+        fireEvent.press(getByText('SUBMIT'));
 
         expect(onPressMock).toHaveBeenLastCalledWith({
             clarity: 3,

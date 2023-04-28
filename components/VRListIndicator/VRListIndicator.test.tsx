@@ -1,10 +1,11 @@
-import { render } from '@testing-library/react-native';
+import React from 'react';
 
 import VRListIndicator from './VRListIndicator';
+import { renderWithProvider } from 'test';
 
 describe('VRListIndicator', () => {
     it('should not render any icons', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRListIndicator
                 userData={{
                     in_collection: false,
@@ -18,7 +19,7 @@ describe('VRListIndicator', () => {
     });
 
     it('should only render collection icon', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRListIndicator
                 userData={{
                     in_collection: true,
@@ -32,7 +33,7 @@ describe('VRListIndicator', () => {
     });
 
     it('should only render want icon', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRListIndicator
                 userData={{
                     in_collection: false,
@@ -46,7 +47,7 @@ describe('VRListIndicator', () => {
     });
 
     it('should render both icons', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRListIndicator
                 userData={{
                     in_collection: true,

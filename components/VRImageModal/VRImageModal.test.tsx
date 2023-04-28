@@ -1,7 +1,9 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 
 import VRImageModal from './VRImageModal';
 import { DiscogsImage } from 'types';
+import { renderWithProvider } from 'test';
 
 describe('VRImageModal', () => {
     const images: DiscogsImage[] = [
@@ -14,7 +16,7 @@ describe('VRImageModal', () => {
     const setModalOpenMock = jest.fn();
 
     it('should not render anything if modal is closed', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRImageModal
                 images={images}
                 modalOpen={false}
@@ -26,7 +28,7 @@ describe('VRImageModal', () => {
     });
 
     it('should render modal contents if modal is open', () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRImageModal
                 images={images}
                 modalOpen
@@ -38,7 +40,7 @@ describe('VRImageModal', () => {
     });
 
     it('should call setModalOpen when close button is clicked', () => {
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <VRImageModal
                 images={images}
                 modalOpen

@@ -1,22 +1,27 @@
 import React from 'react';
-import VRButton from './VRButton';
+import { screen, fireEvent } from '@testing-library/react-native';
 
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import VRButton from './VRButton';
+import { renderWithProvider } from 'test';
 
 describe('VRButton', () => {
     const onPressMock = jest.fn();
     it('should call onPress when pressed', () => {
-        render(<VRButton onPress={onPressMock} title="test" trackID="track" />);
+        renderWithProvider(
+            <VRButton onPress={onPressMock} title="test" trackID="track" />
+        );
 
-        const button = screen.getByText('test');
+        const button = screen.getByText('TEST');
         fireEvent.press(button);
 
         expect(onPressMock).toHaveBeenCalledTimes(1);
     });
 
     it('should render correct text', () => {
-        render(<VRButton onPress={onPressMock} title="test" trackID="track" />);
-        const button = screen.getByText('test');
-        expect(button).toHaveTextContent('test');
+        renderWithProvider(
+            <VRButton onPress={onPressMock} title="test" trackID="track" />
+        );
+        const button = screen.getByText('TEST');
+        expect(button).toHaveTextContent('TEST');
     });
 });

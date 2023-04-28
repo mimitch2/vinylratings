@@ -1,6 +1,8 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 
 import VRInput from './VRInput';
+import { renderWithProvider } from 'test';
 
 describe('VRInput', () => {
     const value = 'Radiohead';
@@ -8,7 +10,7 @@ describe('VRInput', () => {
 
     it('should update input when user types', () => {
         const inputValue = 'is awesome';
-        const { getByDisplayValue } = render(
+        const { getByDisplayValue } = renderWithProvider(
             <VRInput value={value} handleTextChange={onChangeMock} />
         );
 
@@ -18,7 +20,7 @@ describe('VRInput', () => {
 
     it('should render label', () => {
         const label = 'Type here';
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <VRInput
                 value={value}
                 handleTextChange={onChangeMock}
@@ -30,7 +32,7 @@ describe('VRInput', () => {
     });
 
     it('should word count', () => {
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <VRInput value={value} handleTextChange={onChangeMock} showLength />
         );
 

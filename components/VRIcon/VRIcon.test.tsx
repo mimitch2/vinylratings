@@ -1,7 +1,8 @@
-import { render } from '@testing-library/react-native';
+import React from 'react';
 
 import VRIcon, { SVG_MAP } from './VRIcon';
-import { IconType } from '../../types';
+import { IconType } from 'types';
+import { renderWithProvider } from 'test';
 
 describe('VRIcon', () => {
     const iconTypes = Object.keys(SVG_MAP).map((type) => ({
@@ -9,7 +10,7 @@ describe('VRIcon', () => {
     })) as { type: IconType }[];
 
     it.each(iconTypes)('should render $type icon correctly', ({ type }) => {
-        const icon = render(<VRIcon type={type} />);
+        const icon = renderWithProvider(<VRIcon type={type} />);
 
         expect(icon).toMatchSnapshot();
     });

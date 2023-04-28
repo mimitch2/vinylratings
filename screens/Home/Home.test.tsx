@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { fireEvent } from '@testing-library/react-native';
 import { Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Home from './Home';
 import * as useAuth from 'hooks/useAuth';
-import { flushPromises } from 'test/testing.helpers';
+import { flushPromises, renderWithProvider } from 'test/testing.helpers';
 
 describe('Home', () => {
     const navigationMock = {
@@ -54,7 +54,7 @@ describe('Home', () => {
             getAuth: getAuthMock
         });
 
-        const { getByTestId } = render(
+        const { getByTestId } = renderWithProvider(
             <Home navigation={navigationMock} route={routeMock} />
         );
 
@@ -68,11 +68,11 @@ describe('Home', () => {
         );
         const alertSpy: jest.SpyInstance<void> = jest.spyOn(Alert, 'alert');
 
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <Home navigation={navigationMock} route={routeMock} />
         );
 
-        const logoutButton = getByText('Logout');
+        const logoutButton = getByText('LOGOUT');
         fireEvent.press(logoutButton);
 
         expect(alertSpy).toHaveBeenCalledTimes(1);
@@ -102,11 +102,11 @@ describe('Home', () => {
             getAuth: getAuthMock
         });
 
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <Home navigation={navigationMock} route={routeMock} />
         );
 
-        const loginButton = getByText('Login');
+        const loginButton = getByText('LOGIN');
         fireEvent.press(loginButton);
 
         await flushPromises();

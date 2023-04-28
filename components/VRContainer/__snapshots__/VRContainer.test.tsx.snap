@@ -2,16 +2,21 @@
 
 exports[`VRContainer should render refresh 1`] = `
 <View
+  appearance="default"
+  level="1"
   style={
     [
       {
-        "backgroundColor": "rgb(242, 242, 242)",
-        "flex": 1,
-        "fontFamily": "ArchivoNarrow-Regular",
+        "backgroundColor": "#222B45",
       },
-      {
-        "opacity": 0.6,
-      },
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "opacity": 0.6,
+        },
+      ],
     ]
   }
   testID="scroll"
@@ -21,11 +26,6 @@ exports[`VRContainer should render refresh 1`] = `
     contentInsetAdjustmentBehavior="automatic"
     refreshControl={
       <RefreshControlMock
-        colors={
-          [
-            undefined,
-          ]
-        }
         onRefresh={[Function]}
         refreshing={true}
       />
