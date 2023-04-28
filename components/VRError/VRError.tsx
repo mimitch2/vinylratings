@@ -97,7 +97,9 @@ const styles = StyleSheet.create({
     },
     view: {
         alignItems: 'center',
-        paddingTop: '50%'
+        justifyContent: 'center',
+        height: '100%',
+        paddingBottom: 120
     }
 });
 

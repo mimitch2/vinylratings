@@ -22,7 +22,6 @@ import {
     VRSegmented
 } from 'components';
 import { GET_SEARCH } from './searchQueries';
-import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
     const scrollViewRef = useRef<FlatList>(null);
@@ -56,41 +55,13 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSort,
         setSortOrder,
         sort,
-        sortOrder
+        sortOrder,
+        isTyping
     } = useLazyList(args);
-    const { cache } = client;
 
     const handleSearchTypePress = (value: SearchTypes) => {
         setSearchType(value);
     };
-
-    // useEffect(() => {
-    //     if (called && !searchTerm.length) {
-    //         const noResults = {
-    //             results: [],
-    //             pagination: {
-    //                 __typename: 'Pagination',
-    //                 items: 0,
-    //                 page: 1,
-    //                 pages: 1,
-    //                 perPage: 25
-    //             }
-    //         };
-
-    //         const clearQueryCache = () => {
-    //             cache.modify({
-    //                 fields: {
-    //                     getSearch() {
-    //                         return noResults;
-    //                     }
-    //                 },
-    //                 broadcast: true
-    //             });
-    //         };
-
-    //         clearQueryCache();
-    //     }
-    // }, [searchTerm, called, cache, searchType]);
 
     const results = data?.getSearch?.results ?? [];
 
@@ -147,7 +118,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     />
                 ) : null}
 
-                {!called ? (
+                {!called || (called && isTyping) || !searchTerm.length ? (
                     <VRError
                         message="Enter a search term"
                         level="info"
@@ -157,7 +128,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     />
                 ) : null}
 
-                {called && results?.length ? (
+                {called && results?.length && !isTyping && searchTerm.length ? (
                     <VRReleasesList
                         innerRef={scrollViewRef}
                         data={results ?? []}

@@ -63,7 +63,7 @@ export const client = new ApolloClient({
                         }
                     },
                     getSearch: {
-                        keyArgs: ['search'],
+                        keyArgs: ['search', 'type'],
                         merge(existing = null, incoming) {
                             if (!existing) {
                                 return incoming;

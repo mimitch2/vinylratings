@@ -55,6 +55,7 @@ export const useLazyList = ({
     const [loadingMore, setLoadingMore] = useState(false);
     const [sort, setSort] = useState(sortDefault);
     const [sortOrder, setSortOrder] = useState<SortOrder>(SORT_ORDER_DEFAULT);
+    const [isTyping, setIsTyping] = useState(false);
     const [data, setData] = useState<Data | undefined>(undefined);
 
     useEffect(() => {
@@ -79,6 +80,7 @@ export const useLazyList = ({
         variables,
         onCompleted: (returnedData: Data) => {
             setData(returnedData);
+
             if (!loadingMore && returnedData?.getSearch?.results?.length) {
                 scrollViewRef?.current?.scrollToIndex({
                     index: 0,
@@ -90,14 +92,17 @@ export const useLazyList = ({
                 returnedData.getSearch?.pagination ?? PAGINATION_DEFAULT
             );
             setLoadingMore(false);
+            setIsTyping(false);
         },
         onError(err) {
             setLoadingMore(false);
+            setIsTyping(false);
             throw new Error(`useLazyList: ${err}`);
         }
     });
 
     useEffect(() => {
+        setIsTyping(true);
         const delayDebounceFn = setTimeout(() => {
             const lastCharacter = searchTerm[searchTerm.length - 1];
 
@@ -110,21 +115,25 @@ export const useLazyList = ({
             }
         }, 500);
 
-        return () => clearTimeout(delayDebounceFn);
+        return () => {
+            clearTimeout(delayDebounceFn);
+        };
     }, [searchTerm, search]);
 
     useEffect(() => {
-        const asyncRefresh = async () => {
+        const asyncRefetch = async () => {
             setIsSortingOrFiltering(true);
             await refetch();
 
             setIsSortingOrFiltering(false);
         };
 
-        if (called) {
-            asyncRefresh();
+        if (called && searchTerm.length) {
+            console.log('xxx');
+
+            asyncRefetch();
         }
-    }, [sort, sortOrder, type, refetch, called]);
+    }, [sort, sortOrder, type, refetch, called, searchTerm]);
 
     const onRefresh = async () => {
         runHapticFeedback();
@@ -177,6 +186,7 @@ export const useLazyList = ({
         setSort,
         setSortOrder,
         sort,
-        sortOrder
+        sortOrder,
+        isTyping
     };
 };

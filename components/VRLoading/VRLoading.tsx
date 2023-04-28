@@ -2,8 +2,6 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
-import { HEIGHT } from 'constants/index';
-
 const VRLoading = () => {
     return (
         <Layout style={styles.view} testID="loading">
@@ -17,8 +15,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        height: HEIGHT,
-        width: '100%'
+        height: '100%',
+        width: '100%',
+        flex: 1
     }
 });
 
