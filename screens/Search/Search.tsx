@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import type { FlatList } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
@@ -21,7 +21,7 @@ import {
     VRSearchInput,
     VRSegmented
 } from 'components';
-import { GET_SEARCH, GET_RELEASE_SEARCH } from './searchQueries';
+import { GET_SEARCH } from './searchQueries';
 import { client } from '../../ApolloProviderWrapper';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
@@ -51,15 +51,12 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         isSortingOrFiltering,
         onLoadMore,
         onRefresh,
-        previousData,
+        // previousData,
         reloading,
-        search,
         setSort,
         setSortOrder,
         sort,
         sortOrder
-        // searchTerm,
-        // setSearchTerm
     } = useLazyList(args);
     const { cache } = client;
 
@@ -67,50 +64,33 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         setSearchType(value);
     };
 
-    // const runSearchQuery = useCallback(
-    //     ({ variables }: any) => {
-    //         search({ variables });
-    //     },
-    //     [search]
-    // );
+    // useEffect(() => {
+    //     if (called && !searchTerm.length) {
+    //         const noResults = {
+    //             results: [],
+    //             pagination: {
+    //                 __typename: 'Pagination',
+    //                 items: 0,
+    //                 page: 1,
+    //                 pages: 1,
+    //                 perPage: 25
+    //             }
+    //         };
 
-    useEffect(() => {
-        if (called && !searchTerm.length) {
-            const noResults = {
-                results: [],
-                pagination: {
-                    __typename: 'Pagination',
-                    items: 0,
-                    page: 1,
-                    pages: 1,
-                    perPage: 25
-                }
-            };
+    //         const clearQueryCache = () => {
+    //             cache.modify({
+    //                 fields: {
+    //                     getSearch() {
+    //                         return noResults;
+    //                     }
+    //                 },
+    //                 broadcast: true
+    //             });
+    //         };
 
-            const clearQueryCache = () => {
-                if (searchType === SearchTypes.RELEASE) {
-                    cache.modify({
-                        fields: {
-                            getReleaseSearch() {
-                                return noResults;
-                            }
-                        },
-                        broadcast: true
-                    });
-                } else {
-                    cache.modify({
-                        fields: {
-                            getSearch() {
-                                return noResults;
-                            }
-                        },
-                        broadcast: true
-                    });
-                }
-            };
-            clearQueryCache();
-        }
-    }, [searchTerm, called, cache, searchType]);
+    //         clearQueryCache();
+    //     }
+    // }, [searchTerm, called, cache, searchType]);
 
     const results = data?.getSearch?.results ?? [];
 
@@ -121,7 +101,6 @@ const Search = ({ navigation }: { navigation: Nav }) => {
         <>
             <Layout>
                 <VRSearchInput
-                    // runQuery={runSearchQuery}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                 />

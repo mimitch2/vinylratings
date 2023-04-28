@@ -17,34 +17,32 @@ const SORT_ORDER_DEFAULT = 'desc';
 
 type QueriedData = {
     pagination: Pagination;
-    results: Releases[] | undefined;
+    results: Releases[];
 };
 interface Data {
     getSearch: QueriedData;
 }
 
 interface Variables {
-    page: number;
-    per_page: number;
-    sort: string;
-    sort_order: SortOrder;
-    offset: number;
-    limit: number;
-    type: string;
-    searchTerm: string;
+    page?: number;
+    per_page?: number;
+    sort?: string;
+    sort_order?: SortOrder;
+    offset?: number;
+    limit?: number;
+    type?: string;
+    search: string;
 }
 
 export const useLazyList = ({
     scrollViewRef,
     QUERY,
-    queryKey,
     sortDefault = 'added',
     type = 'release',
     searchTerm = ''
 }: {
     scrollViewRef: React.RefObject<FlatList<Releases>>;
     QUERY: DocumentNode;
-    queryKey: string;
     lazy?: boolean;
     sortDefault?: string;
     type?: string;
@@ -57,11 +55,7 @@ export const useLazyList = ({
     const [loadingMore, setLoadingMore] = useState(false);
     const [sort, setSort] = useState(sortDefault);
     const [sortOrder, setSortOrder] = useState<SortOrder>(SORT_ORDER_DEFAULT);
-    // const [searchTerm, setSearchTerm] = useState('');
-    const [data, setData] = useState<QueriedData | undefined>({
-        pagination: PAGINATION_DEFAULT,
-        results: []
-    });
+    const [data, setData] = useState<Data | undefined>(undefined);
 
     useEffect(() => {
         setSort(sortDefault);
@@ -75,23 +69,17 @@ export const useLazyList = ({
         offset: 0,
         limit: PER_PAGE,
         type,
-        searchTerm
+        search: searchTerm
     };
 
     const [
         search,
-        { called, loading, previousData, fetchMore, refetch, error, client }
+        { called, loading, previousData, fetchMore, refetch, error }
     ] = useLazyQuery(QUERY, {
         variables,
-        fetchPolicy: 'network-only',
         onCompleted: (returnedData: Data) => {
-            console.log(
-                '🚀 ~ file: useLazyList.tsx:93 ~ returnedData:',
-                returnedData
-            );
-
             setData(returnedData);
-            if (!loadingMore && returnedData?.[queryKey]?.results?.length) {
+            if (!loadingMore && returnedData?.getSearch?.results?.length) {
                 scrollViewRef?.current?.scrollToIndex({
                     index: 0,
                     animated: false
@@ -99,7 +87,7 @@ export const useLazyList = ({
             }
 
             setPagination(
-                returnedData[queryKey]?.pagination ?? PAGINATION_DEFAULT
+                returnedData.getSearch?.pagination ?? PAGINATION_DEFAULT
             );
             setLoadingMore(false);
         },
@@ -108,12 +96,6 @@ export const useLazyList = ({
             throw new Error(`useLazyList: ${err}`);
         }
     });
-
-    // useEffect(() => {
-    //     if (searchTerm) {
-    //         search();
-    //     }
-    // }, [searchTerm, search]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -124,10 +106,6 @@ export const useLazyList = ({
                 lastCharacter !== ' ' &&
                 searchTerm[searchTerm.length - 2]
             ) {
-                console.log(
-                    '🚀 ~ file: useLazyList.tsx:112 ~ delayDebounceFn ~ searchTerm:',
-                    searchTerm
-                );
                 search({ variables: { search: searchTerm } });
             }
         }, 500);
