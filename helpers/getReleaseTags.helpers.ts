@@ -16,9 +16,11 @@ export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
         format.forEach((description, idx) => {
             const trimmedDescription = description.trim();
             const isLpType =
-                trimmedDescription === 'LP' || trimmedDescription === 'Album';
+                trimmedDescription === 'LP' ||
+                trimmedDescription === 'Album' ||
+                trimmedDescription === 'Vinyl';
 
-            if (!isLpType && idx < 3) {
+            if (!isLpType) {
                 tagsArray.push(trimmedDescription);
             }
         });

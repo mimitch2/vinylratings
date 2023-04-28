@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { fireEvent } from '@testing-library/react-native';
 import * as navigation from '@react-navigation/native';
 
 import VRReleaseCard from './VRReleaseCard';
-import { collectionItemMock } from 'test';
+import { collectionItemMock, renderWithProvider } from 'test';
 
 describe('VRReleaseCard', () => {
     const onPressMock = jest.fn();
@@ -18,7 +18,7 @@ describe('VRReleaseCard', () => {
         });
 
         it('should render title and artist correctly', () => {
-            const { getByText } = render(
+            const { getByText } = renderWithProvider(
                 <VRReleaseCard
                     release={collectionItemMock}
                     onPress={onPressMock}
@@ -38,7 +38,7 @@ describe('VRReleaseCard', () => {
         });
 
         it('should render title and artist correctly', () => {
-            const { getByText } = render(
+            const { getByText } = renderWithProvider(
                 <VRReleaseCard
                     release={collectionItemMock}
                     onPress={onPressMock}
@@ -58,7 +58,7 @@ describe('VRReleaseCard', () => {
         });
 
         it('should render title and artist correctly', () => {
-            const { getByText } = render(
+            const { getByText } = renderWithProvider(
                 <VRReleaseCard
                     release={collectionItemMock}
                     onPress={onPressMock}
@@ -85,7 +85,7 @@ describe('VRReleaseCard', () => {
                 }
             };
 
-            const { getByTestId } = render(
+            const { getByTestId } = renderWithProvider(
                 <VRReleaseCard release={releaseMock} onPress={onPressMock} />
             );
 
@@ -100,7 +100,7 @@ describe('VRReleaseCard', () => {
             });
         });
         it('should call onPress', () => {
-            const { getByText } = render(
+            const { getByText } = renderWithProvider(
                 <VRReleaseCard
                     release={collectionItemMock}
                     onPress={onPressMock}

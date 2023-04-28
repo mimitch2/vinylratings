@@ -2290,30 +2290,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               ]
             }
           >
-            <Text
-              appearance="default"
-              category="p1"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#E8E8E6",
-                    "fontFamily": "System",
-                    "fontSize": 15,
-                    "fontWeight": "400",
-                  },
-                  [
-                    {
-                      "flexShrink": 1,
-                      "textAlign": "left",
-                    },
-                    {},
-                  ],
-                ]
-              }
-            >
-              Notes:
-            </Text>
             <View
               accessibilityState={
                 {
@@ -2349,6 +2325,32 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
               }
               testID="@input/container"
             >
+              <Text
+                appearance="default"
+                category="h6"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#E8E8E6",
+                      "fontFamily": "System",
+                      "fontSize": 18,
+                      "fontWeight": "800",
+                    },
+                    [
+                      {
+                        "flexShrink": 1,
+                        "textAlign": "left",
+                      },
+                      {
+                        "marginBottom": 8,
+                      },
+                    ],
+                  ]
+                }
+              >
+                Notes:
+              </Text>
               <View
                 style={
                   [
@@ -2370,6 +2372,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                 }
               >
                 <TextInput
+                  accessibilityLabel="Notes:"
                   appearance="default"
                   editable={true}
                   maxLength={250}

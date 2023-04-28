@@ -1,8 +1,10 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 
 import { Folder } from 'types';
 import VRReleaseOptionsModal from './VRReleaseOptionsModal';
 import { SORT_BY_OPTIONS_WANT_LIST } from 'constants/index';
+import { renderWithProvider } from 'test';
 
 describe('VRReleaseOptionsModal', () => {
     const setSortMock = jest.fn();
@@ -28,7 +30,7 @@ describe('VRReleaseOptionsModal', () => {
     ];
 
     it('should not render folder icon if no folder', () => {
-        const { queryByTestId } = render(
+        const { queryByTestId } = renderWithProvider(
             <VRReleaseOptionsModal
                 sortOrder="asc"
                 sort="added"
@@ -45,7 +47,7 @@ describe('VRReleaseOptionsModal', () => {
         let view: any;
 
         beforeEach(() => {
-            view = render(
+            view = renderWithProvider(
                 <VRReleaseOptionsModal
                     sortOrder="asc"
                     sort="added"
@@ -83,7 +85,7 @@ describe('VRReleaseOptionsModal', () => {
         let view: any;
 
         beforeEach(() => {
-            view = render(
+            view = renderWithProvider(
                 <VRReleaseOptionsModal
                     sortOrder="asc"
                     sort="added"
@@ -119,7 +121,7 @@ describe('VRReleaseOptionsModal', () => {
 
     describe('sort order', () => {
         it('should set sort order when pressed', () => {
-            const { getByTestId } = render(
+            const { getByTestId } = renderWithProvider(
                 <VRReleaseOptionsModal
                     sortOrder="asc"
                     sort="added"

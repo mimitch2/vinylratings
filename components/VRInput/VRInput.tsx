@@ -29,8 +29,22 @@ const VRInput = ({
 }) => {
     return (
         <Layout style={containerStyleOverride}>
-            {label ? <VRText>{label}</VRText> : null}
             <Input
+                label={
+                    label
+                        ? () => {
+                              return (
+                                  <VRText
+                                      fontType="h6"
+                                      styleOverride={{ marginBottom: 8 }}
+                                  >
+                                      {label}
+                                  </VRText>
+                              );
+                          }
+                        : ''
+                }
+                accessibilityLabel={label}
                 testID="input"
                 style={styleOverride}
                 onChangeText={handleTextChange}

@@ -41,7 +41,7 @@ describe('VRRateModal', () => {
     });
 
     it('should call onPress when submitting', () => {
-        const { getByText, getByTestId, getByRole } = renderWithProvider(
+        const { getByText, getByTestId, getByLabelText } = renderWithProvider(
             <VRRateModal
                 setModalOpen={setModalOpenMock}
                 modalOpen
@@ -53,7 +53,7 @@ describe('VRRateModal', () => {
             fireEvent.press(getByTestId(`star-${category}-3`));
         });
 
-        fireEvent.changeText(getByRole('input'), 'nice');
+        fireEvent.changeText(getByLabelText('Notes:'), 'nice');
         fireEvent.press(getByText('SUBMIT'));
 
         expect(onPressMock).toHaveBeenLastCalledWith({
