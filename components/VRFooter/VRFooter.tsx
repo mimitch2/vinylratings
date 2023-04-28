@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ViewStyle, View } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 const VRFooter = ({
     children,

@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import {
     BottomNavigation,
     BottomNavigationTab,
-    BottomNavigationProps,
     TopNavigation,
     TopNavigationAction,
     Layout

@@ -10,6 +10,7 @@ module.exports = {
     ],
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
+    ignorePatterns: ['coverage/**'],
     overrides: [
         {
             files: ['*.ts', '*.tsx', '*.js'],
@@ -17,12 +18,28 @@ module.exports = {
                 // '@typescript-eslint/no-shadow': ['error'],
                 // 'no-shadow': 'off'
                 // 'no-undef': 'off'
-                'import/no-unresolved': [1, { commonjs: true, amd: true }],
+                'import/no-unresolved': 'off',
                 // 'import/named': 2,
                 'import/namespace': 1,
                 'import/default': 2,
                 // 'import/export': 2
-                'no-unused-vars': 'off'
+                'no-unused-vars': 'off',
+                '@typescript-eslint/no-unused-vars': ['warn'],
+                'comma-dangle': 'off',
+                'react-native/no-inline-styles': 'off',
+                'import/no-named-as-default': 'warn',
+                'react/no-unstable-nested-components': [
+                    'off',
+                    {
+                        allowAsProps: true,
+                        customValidators:
+                            [] /* optional array of validators used for propTypes validation */
+                    }
+                ],
+                'import/no-named-as-default-member': 'off'
+            },
+            settings: {
+                'import/ignore': ['react-native']
             }
         }
     ]

@@ -15,10 +15,10 @@ interface SegmentedProps {
 
 const VRSegmented = ({
     data,
-    onPress,
-    containerStyleOverride = {},
-    labelStyleOverride = {}
-}: SegmentedProps) => {
+    onPress
+}: // containerStyleOverride = {},
+// labelStyleOverride = {}
+SegmentedProps) => {
     const [selectedIdx, setSelectedIdx] = useState(0);
 
     const handleOnPress = (idx: number) => {

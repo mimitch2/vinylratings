@@ -13,7 +13,7 @@ export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     }
 
     format &&
-        format.forEach((description, idx) => {
+        format.forEach((description) => {
             const trimmedDescription = description.trim();
             const isLpType =
                 trimmedDescription === 'LP' ||

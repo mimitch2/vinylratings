@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Calendar, Layout } from '@ui-kitten/components';
 
-import { VRModal, VRButton, VRLoading } from 'components';
+import { VRModal, VRButton } from 'components';
 import { HEIGHT } from 'constants/index';
 
 const VRCalendarModal = ({

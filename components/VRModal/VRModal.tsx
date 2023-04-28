@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Modal, Layout } from '@ui-kitten/components';
 
 import { HEIGHT, globalStyles } from 'constants/index';

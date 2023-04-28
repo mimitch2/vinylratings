@@ -58,7 +58,7 @@ const VRRatings = ({
     const { count, average: discogsAverage } = discogsRating;
     const {
         clarityAvg,
-        currentUserRating,
+        // currentUserRating,
         flatnessAvg,
         quietnessAvg,
         ratingAvg,

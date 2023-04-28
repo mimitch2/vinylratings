@@ -10,7 +10,9 @@
         "test": "jest",
         "cm": "git cz",
         "open:coverage": "open coverage/index.html",
-        "build:dev:ios": "eas build --profile development --platform ios"
+        "build:dev:ios": "eas build --profile development --platform ios",
+        "lint": "eslint ./",
+        "lint:fix": "eslint ./ --fix"
     },
     "dependencies": {
         "@apollo/client": "^3.7.4",
