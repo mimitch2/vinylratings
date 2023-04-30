@@ -33,6 +33,10 @@ const VRCalendarModal = ({
                         onSelect={(pickedDate) => {
                             onDatePress(pickedDate.toLocaleDateString());
                         }}
+                        max={new Date()}
+                        style={{
+                            marginTop: 20
+                        }}
                     />
                 </Layout>
                 <VRButton

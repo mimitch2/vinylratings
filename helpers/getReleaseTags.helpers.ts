@@ -1,4 +1,4 @@
-import type { BasicInformation, DiscogsVersion } from 'types';
+import type { BasicInformation, DiscogsVersion, DiscogsRelease } from 'types';
 
 export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     const { released, format, country } = item;
@@ -13,14 +13,14 @@ export const getVersionsTags = ({ item }: { item: DiscogsVersion }) => {
     }
 
     format &&
-        format.forEach((description) => {
+        format.forEach((description, idx) => {
             const trimmedDescription = description.trim();
             const isLpType =
                 trimmedDescription === 'LP' ||
                 trimmedDescription === 'Album' ||
                 trimmedDescription === 'Vinyl';
 
-            if (!isLpType) {
+            if (!isLpType && idx < 1) {
                 tagsArray.push(trimmedDescription);
             }
         });
@@ -33,7 +33,7 @@ export const getReleaseTags = ({
     limit = true,
     isVersions = false
 }: {
-    item: BasicInformation | DiscogsVersion;
+    item: BasicInformation | DiscogsVersion | DiscogsRelease;
     limit?: boolean;
     isVersions?: boolean;
 }) => {
@@ -42,7 +42,7 @@ export const getReleaseTags = ({
     }
 
     const { year, formats, country, labels, series, companies } =
-        item as BasicInformation;
+        item as DiscogsRelease;
 
     const formatInfo = formats.reduce(
         (data, format) => {
@@ -60,7 +60,7 @@ export const getReleaseTags = ({
     );
 
     const [{ descriptions }] = formats;
-    const tagsArray = year ? [year.toString()] : [];
+    const tagsArray = limit && year ? [year.toString()] : [];
 
     if (country) {
         tagsArray.push(country);

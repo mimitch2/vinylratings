@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
@@ -58,6 +58,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const {
         params: { id, inWantList, isFromVersions }
     } = route;
+
     // Queries
     const {
         isInCollection,
@@ -253,14 +254,29 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         }
     ];
 
-    const isJustYear =
-        released &&
-        released.indexOf('/') === -1 &&
-        released.indexOf('-') === -1;
+    const getReleaseDate = () => {
+        const isJustYear =
+            released &&
+            released.indexOf('/') === -1 &&
+            released.indexOf('-') === -1;
 
-    const releasedDate = isJustYear
-        ? released
-        : new Date(released).toLocaleDateString();
+        if (isJustYear) {
+            return released;
+        }
+
+        const newDate = new Date(released).toLocaleDateString();
+
+        if (newDate === 'Invalid Date') {
+            return getRelease?.year?.toString() ?? 'Unknown';
+        }
+
+        return newDate;
+    };
+
+    const folderName =
+        folders?.find((folder) => {
+            return +releases?.[0]?.folder_id === folder?.id ?? false;
+        })?.name ?? 'Unknown';
 
     const [{ name: artist }] = artists;
     const isLoading =
@@ -286,43 +302,58 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         inWantList={inWantList}
                         title={title}
                         artist={artist}
-                        releasedDate={releasedDate}
+                        releasedDate={getReleaseDate()}
                     />
-
                     {isInCollection ? (
-                        <>
-                            <Layout style={styles.washedOnContainer}>
-                                <VRText styleOverride={styles.washedOnText}>
-                                    Washed on:
-                                </VRText>
-                                <Pressable
-                                    onPress={() => setCalendarModalOpen(true)}
-                                >
-                                    <VRText>{washedOn || 'Never'}</VRText>
-                                </Pressable>
-                            </Layout>
-                            <Pressable onPress={removeFromCollection}>
-                                <VRText>Remove from collection</VRText>
-                            </Pressable>
-                        </>
-                    ) : (
-                        <>
-                            <Pressable onPress={() => setFolderModalOpen(true)}>
-                                <VRText>Add to Collection</VRText>
-                            </Pressable>
-                            <VRModal
-                                modalOpen={folderModalOpen}
-                                setModalOpen={setFolderModalOpen}
-                                title="Add To Collection"
-                            >
-                                <FolderModalContent
-                                    toggleFolderModal={toggleFolderModal}
-                                    folders={foldersWithoutAll}
-                                    setFolder={addToCollection}
-                                />
-                            </VRModal>
-                        </>
-                    )}
+                        <VRText>Folder: {folderName}</VRText>
+                    ) : null}
+
+                    <Layout style={styles.buttonRow}>
+                        <VRButton
+                            title={`${
+                                isInCollection ? 'Remove from' : 'Add to'
+                            } collection`}
+                            onPress={
+                                isInCollection
+                                    ? removeFromCollection
+                                    : () => setFolderModalOpen(true)
+                            }
+                            trackID="release_screen-remove_from_collection"
+                            size="tiny"
+                            variant="basic"
+                            stacked={false}
+                        />
+                        {isInCollection ? (
+                            <VRButton
+                                title={
+                                    washedOn
+                                        ? `Washed on: ${washedOn}`
+                                        : 'Set washed on date'
+                                }
+                                onPress={() => setCalendarModalOpen(true)}
+                                trackID="release_screen-wash_now"
+                                size="tiny"
+                                variant="basic"
+                                stacked={false}
+                                containerStyle={{
+                                    marginLeft: 10
+                                }}
+                            />
+                        ) : null}
+                    </Layout>
+
+                    <VRModal
+                        modalOpen={folderModalOpen}
+                        setModalOpen={setFolderModalOpen}
+                        title="Add To Collection"
+                    >
+                        <FolderModalContent
+                            toggleFolderModal={toggleFolderModal}
+                            folders={foldersWithoutAll}
+                            setFolder={addToCollection}
+                        />
+                    </VRModal>
+
                     <VRCalendarModal
                         setModalOpen={setCalendarModalOpen}
                         modalOpen={calendarModalOpen}
@@ -402,9 +433,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'baseline'
     },
-    washedOnContainer: {
+    buttonRow: {
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 20,
+        justifyContent: 'space-between'
     },
     washedOnText: {
         marginRight: 6

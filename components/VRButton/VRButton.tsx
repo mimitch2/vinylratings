@@ -88,7 +88,7 @@ const VRButton = ({
                                 FONT_SIZE_MAP?.[size] ?? FONT_SIZE_MAP.large
                         }}
                     >
-                        {title.toUpperCase()}
+                        {size !== 'tiny' ? title.toUpperCase() : title}
                     </Text>
                 );
             }}

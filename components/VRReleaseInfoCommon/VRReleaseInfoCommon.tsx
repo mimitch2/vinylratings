@@ -89,9 +89,7 @@ const VRReleaseInfoCommon = ({
                     <VRTag key={tag} tag={tag} size="lg" />
                 ))}
             </View>
-            <VRText
-                styleOverride={{ paddingVertical: 5 }}
-            >{`Released: ${releasedDate}`}</VRText>
+            <VRText>{`Released: ${releasedDate}`}</VRText>
         </>
     );
 };

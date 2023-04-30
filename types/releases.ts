@@ -135,6 +135,20 @@ export type VinylRatingsRelease = {
     vinylRatings: VinylRating[];
 } | null;
 
+type Label = {
+    name: string;
+};
+
+type Company = {
+    name: string;
+    entity_type_name: string;
+};
+
+type SeriesEntry = {
+    name: string;
+    entity_type_name: string;
+};
+
 export interface DiscogsRelease extends BasicInformation {
     uri: string;
     master_id: number;
@@ -146,6 +160,9 @@ export interface DiscogsRelease extends BasicInformation {
     notes: string;
     country: string;
     community: DiscogsCommunity;
+    labels: [Label] | [];
+    companies: [Company] | [];
+    series: [SeriesEntry] | [];
 }
 
 export type Folder = {

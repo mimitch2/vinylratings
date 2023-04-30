@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
 import { VRText, VRRatingsStars, VRModal, VRButton, VRIcon } from 'components';
@@ -118,7 +118,7 @@ const VRRatings = ({
                     />
                 );
             })}
-            <View
+            <Layout
                 style={{
                     flexDirection: 'row',
                     marginTop: 20,
@@ -143,7 +143,7 @@ const VRRatings = ({
                     size="small"
                     stacked={false}
                 />
-            </View>
+            </Layout>
             <VRModal
                 title="Ratings"
                 modalOpen={ratingsModalOpen}
@@ -174,7 +174,7 @@ const VRRatings = ({
                                         <VRIcon type="home" />
                                     )}
 
-                                    <View
+                                    <Layout
                                         style={{
                                             marginLeft: 6,
                                             marginBottom: 10
@@ -188,7 +188,7 @@ const VRRatings = ({
                                                 +rating.createdAt
                                             ).toLocaleDateString()}
                                         </VRText>
-                                    </View>
+                                    </Layout>
                                 </Layout>
 
                                 <RatingRow
