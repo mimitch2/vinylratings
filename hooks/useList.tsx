@@ -10,7 +10,7 @@ import {
     Data,
     Variables
 } from '../types';
-// import { runHapticFeedback } from '../helpers';
+import { runHapticFeedback } from '../helpers';
 import { useQuery, DocumentNode } from '@apollo/client';
 
 export const PER_PAGE = 25;
@@ -61,7 +61,7 @@ export const useList = ({
 
     const { data, fetchMore, refetch, error, loading } = useQuery(QUERY, {
         variables,
-        fetchPolicy: 'cache-and-network',
+        // fetchPolicy: 'cache-and-network',
         onCompleted: (returnedData: Data) => {
             setPagination(
                 returnedData?.[queryKey]?.pagination ?? PAGINATION_DEFAULT
@@ -88,7 +88,7 @@ export const useList = ({
     }, [sort, sortOrder, refetch, folder, scrollViewRef]);
 
     const onRefresh = async () => {
-        // runHapticFeedback();
+        runHapticFeedback();
         setReloading(true);
         setPagination(PAGINATION_DEFAULT);
         await refetch();

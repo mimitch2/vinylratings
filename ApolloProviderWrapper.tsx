@@ -34,7 +34,7 @@ export const client = new ApolloClient({
             Query: {
                 fields: {
                     getCollection: {
-                        keyArgs: false,
+                        keyArgs: ['folder'],
                         merge(existing = null, incoming) {
                             if (!existing) {
                                 return incoming;

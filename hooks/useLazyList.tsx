@@ -103,6 +103,7 @@ export const useLazyList = ({
 
     useEffect(() => {
         setIsTyping(true);
+
         const delayDebounceFn = setTimeout(() => {
             const lastCharacter = searchTerm[searchTerm.length - 1];
 

@@ -9,18 +9,21 @@ const VRCalendarModal = ({
     onDatePress,
     modalOpen,
     setModalOpen,
-    loading
+    loading,
+    animationType = 'slide'
 }: {
     onDatePress: (value: string) => void;
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
     loading: boolean;
+    animationType?: 'slide' | 'fade' | 'none';
 }) => {
     return (
         <VRModal
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
             title="Pick a date"
+            animationType={animationType}
         >
             <Layout
                 style={{

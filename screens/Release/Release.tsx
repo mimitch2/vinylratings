@@ -243,7 +243,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         {
             label: 'Notes',
             component: (
-                <VRText styleOverride={{ marginTop: 10 }}>
+                <VRText styleOverride={{ marginTop: 10, minHeight: 200 }}>
                     {releaseNotes}
                 </VRText>
             )

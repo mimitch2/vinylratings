@@ -17,7 +17,7 @@ const RatingRow = ({
     count?: number;
 }) => {
     return (
-        <Layout style={styles.row}>
+        <Layout style={styles.row} testID="rating-row">
             <VRText fontType="bold">{label}</VRText>
             <Layout
                 style={{
@@ -148,6 +148,7 @@ const VRRatings = ({
                 title="Ratings"
                 modalOpen={ratingsModalOpen}
                 setModalOpen={setRatingsModalOpen}
+                testID="ratings-modal"
             >
                 <Layout style={{ width: '100%', paddingHorizontal: 20 }}>
                     {vinylRatings?.map((rating) => {

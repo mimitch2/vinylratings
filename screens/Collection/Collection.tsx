@@ -38,13 +38,13 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
         folder
     });
 
-    useEffect(() => {
-        if (data) {
-            navigation.setOptions({
-                title: `Collection:${folder.name}(${data?.getCollection?.pagination.items})`
-            });
-        }
-    }, [data, folder, navigation]);
+    // useEffect(() => {
+    //     if (data) {
+    //         navigation.setOptions({
+    //             title: `Collection:${folder.name}(${data?.getCollection?.pagination.items})`
+    //         });
+    //     }
+    // }, [data, folder, navigation]);
 
     if (initialLoading || foldersLoading) {
         return <VRLoading />;
@@ -57,6 +57,10 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
     }
 
     const releases = data?.getCollection?.releases ?? [];
+    console.log(
+        '🚀 ~ file: Collection.tsx:60 ~ Collection ~ releases:',
+        releases
+    );
 
     return (
         <VRContainer
@@ -91,7 +95,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                 setFolder={setFolder}
             />
 
-            {releases?.length ? (
+            {releases?.length && (
                 <VRReleasesList
                     innerRef={scrollViewRef}
                     data={releases}
@@ -103,7 +107,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                     navigation={navigation}
                     sort={sort}
                 />
-            ) : null}
+            )}
 
             {!releases.length && !error ? (
                 <VRError

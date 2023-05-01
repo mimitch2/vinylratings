@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { DiscogsIdentifiers } from 'types';
 import { VRText } from 'components';
 import { COLORS } from 'styles';
+import { Layout } from '@ui-kitten/components';
 
 const Identifiers = ({
     identifiers
@@ -11,7 +12,7 @@ const Identifiers = ({
     identifiers: DiscogsIdentifiers[];
 }) => {
     return (
-        <>
+        <Layout style={styles.container}>
             {identifiers.map((id) => {
                 return (
                     <View style={styles.row} key={id.description || id.value}>
@@ -24,11 +25,14 @@ const Identifiers = ({
                     </View>
                 );
             })}
-        </>
+        </Layout>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        minHeight: 200
+    },
     row: {
         borderBottomColor: COLORS.primaryFaded,
         borderBottomWidth: 1,

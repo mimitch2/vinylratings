@@ -26,7 +26,7 @@ export interface State {
     loading: boolean;
 }
 
-type Action =
+export type Action =
     | { type: 'LOADING'; payload: boolean }
     | { type: 'FETCHED'; payload: User }
     | { type: 'ERROR'; payload: Error };
@@ -37,7 +37,7 @@ export const initialState = {
     loading: false
 };
 
-const authReducer = (state: State, action: Action): State => {
+export const authReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'LOADING':
             return { ...state, loading: action.payload };
