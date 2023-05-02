@@ -7,5 +7,5 @@ export interface User {
     avatarUrl: string;
     discogsUserId: number;
     releasesRated: number;
-    vinylRatings: VinylRating[];
+    vinylRatings: VinylRating[] | null;
 }

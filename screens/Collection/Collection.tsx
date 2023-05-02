@@ -57,11 +57,6 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
     }
 
     const releases = data?.getCollection?.releases ?? [];
-    console.log(
-        '🚀 ~ file: Collection.tsx:60 ~ Collection ~ releases:',
-        releases
-    );
-
     return (
         <VRContainer
             startAnimation={!!data || !!error}

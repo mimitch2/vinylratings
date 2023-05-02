@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import {
@@ -36,6 +36,10 @@ import { Identifiers } from './components';
 import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
 import { Layout } from '@ui-kitten/components';
+
+// const NOTES_QUERY = gql`
+// query getCollection
+// `
 
 type Params = {
     id: string;

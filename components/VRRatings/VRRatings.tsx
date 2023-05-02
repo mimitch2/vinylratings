@@ -53,6 +53,10 @@ const VRRatings = ({
     vinylRatingsRelease: VinylRatingsRelease;
     setDiscogsReviewsModalOpen: (value: boolean) => void;
 }) => {
+    console.log(
+        '🚀 ~ file: VRRatings.tsx:56 ~ vinylRatingsRelease:',
+        vinylRatingsRelease
+    );
     const [ratingsModalOpen, setRatingsModalOpen] = useState(false);
 
     const { count, average: discogsAverage } = discogsRating;
@@ -148,7 +152,6 @@ const VRRatings = ({
                 title="Ratings"
                 modalOpen={ratingsModalOpen}
                 setModalOpen={setRatingsModalOpen}
-                testID="ratings-modal"
             >
                 <Layout style={{ width: '100%', paddingHorizontal: 20 }}>
                     {vinylRatings?.map((rating) => {

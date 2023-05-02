@@ -40,6 +40,10 @@ export const GET_COLLECTION = gql`
                 date_added
                 instance_id
                 rating
+                notes {
+                    field_id
+                    value
+                }
                 basic_information {
                     title
                     thumb

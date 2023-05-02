@@ -30,7 +30,13 @@ describe('VRRatings', () => {
                 release: 'bar',
                 updatedAt: 'stuff',
                 user: {
-                    username: 'me'
+                    username: 'me',
+                    _id: '333',
+                    token: 'fake_token',
+                    avatarUrl: 'fake_url',
+                    discogsUserId: 1,
+                    releasesRated: 1,
+                    vinylRatings: null
                 }
             }
         ]

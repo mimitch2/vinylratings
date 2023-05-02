@@ -92,6 +92,18 @@ export const GET_RELEASE = gql`
                     user {
                         username
                         avatarUrl
+                        discogsUserId
+                        releasesRated
+                        vinylRatings {
+                            _id
+                            quietness
+                            flatness
+                            clarity
+                            rating
+                            createdAt
+                            notes
+                            updatedAt
+                        }
                     }
                 }
             }
