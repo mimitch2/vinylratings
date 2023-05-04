@@ -70,10 +70,12 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         isInCollectionLoading,
         refetchIsInCollection
     } = useIsInCollection({ releaseId: +id });
+    const instanceId = +releases?.[0]?.instance_id ?? null;
 
     const { data, loading, refetch, error } = useQuery(GET_RELEASE, {
         variables: {
-            id: +id
+            id: +id,
+            instanceId
         }
     });
 
@@ -143,7 +145,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 variables: {
                     folderId: +releases.length && +releases[0].folder_id,
                     releaseId: +id,
-                    instanceId: +releases.length && +releases[0].instance_id
+                    instanceId
                 },
                 onCompleted: (response) => {
                     if (response?.removeFromCollection?.isGood) {
@@ -179,7 +181,6 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     }
 
     const { getRelease }: { getRelease: DiscogsRelease } = data ?? null;
-    const instanceId = +releases?.[0].instance_id ?? null;
 
     const {
         uri,
@@ -368,6 +369,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             const washedOnResponse = await addWashedOn({
                                 variables: {
                                     releaseId: +id,
+                                    instanceId,
                                     washedOn: date,
                                     title,
                                     artist: artists[0].name

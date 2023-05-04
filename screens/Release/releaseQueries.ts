@@ -9,8 +9,8 @@ export const IS_IN_COLLECTION = gql`
 `;
 
 export const GET_RELEASE = gql`
-    query GetRelease($id: Int!) {
-        getRelease(id: $id) {
+    query GetRelease($id: Int!, $instanceId: Int) {
+        getRelease(id: $id, instanceId: $instanceId) {
             labels {
                 name
             }
@@ -157,6 +157,7 @@ export const ADD_RELEASE = gql`
             ratingAvg
             ratingsCount
             userCopy {
+                instanceId
                 releaseId
                 washedOn
             }
@@ -189,19 +190,21 @@ export const ADD_RATING = gql`
 export const ADD_WASHED_ON = gql`
     mutation AddWashedOn(
         $releaseId: Int!
+        $instanceId: Int!
         $washedOn: String!
         $title: String!
         $artist: String!
     ) {
         addWashedOn(
             releaseId: $releaseId
+            instanceId: $instanceId
             washedOn: $washedOn
             title: $title
             artist: $artist
         ) {
             washedOn
             releaseId
-            # user
+            instanceId
         }
     }
 `;
