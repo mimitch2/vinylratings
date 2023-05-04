@@ -136,8 +136,18 @@ export const REMOVE_FROM_COLLECTION = gql`
 `;
 
 export const ADD_RELEASE = gql`
-    mutation AddRelease($releaseId: Int!, $title: String!, $artist: String!) {
-        addRelease(releaseId: $releaseId, title: $title, artist: $artist) {
+    mutation AddRelease(
+        $releaseId: Int!
+        $instanceId: Int!
+        $title: String!
+        $artist: String!
+    ) {
+        addRelease(
+            releaseId: $releaseId
+            instanceId: $instanceId
+            title: $title
+            artist: $artist
+        ) {
             releaseId
             title
             artist

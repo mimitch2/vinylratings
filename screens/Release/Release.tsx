@@ -179,6 +179,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     }
 
     const { getRelease }: { getRelease: DiscogsRelease } = data ?? null;
+    const instanceId = +releases?.[0].instance_id ?? null;
 
     const {
         uri,
@@ -213,6 +214,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 await addRelease({
                     variables: {
                         releaseId: +id,
+                        instanceId,
                         title,
                         artist: artists[0].name
                     }
