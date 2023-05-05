@@ -130,8 +130,6 @@ export const useLazyList = ({
         };
 
         if (called && searchTerm.length) {
-            console.log('xxx');
-
             asyncRefetch();
         }
     }, [sort, sortOrder, type, refetch, called, searchTerm]);

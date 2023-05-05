@@ -13,14 +13,54 @@ export const GET_SEARCH = gql`
     ) {
         getSearch(
             search: $search
-            type: $type
-            sort: $sort
-            sort_order: $sort_order
+            limit: $limit
+            offset: $offset
             page: $page
             per_page: $per_page
-            offset: $offset
-            limit: $limit
+            sort: $sort
+            sort_order: $sort_order
+            type: $type
         ) {
+            ... on ReleasesSearchResult {
+                isReleases
+                results {
+                    date_added
+                    id
+                    rating
+                    basic_information {
+                        title
+                        type
+                        artists {
+                            name
+                        }
+                        country
+                        format
+                        formats {
+                            descriptions
+                            name
+                            qty
+                            text
+                        }
+                        genres
+                        id
+                        label
+                        released
+                        styles
+                        thumb
+                        year
+                        user_data {
+                            in_collection
+                            in_wantlist
+                        }
+                    }
+                }
+                pagination {
+                    items
+                    page
+                    pages
+                    per_page
+                }
+            }
             ... on ArtistSearchResult {
                 isArtists
                 pagination {
@@ -30,57 +70,11 @@ export const GET_SEARCH = gql`
                     per_page
                 }
                 results {
-                    title
                     cover_image
                     id
                     thumb
+                    title
                     type
-                    user_data {
-                        in_collection
-                        in_wantlist
-                    }
-                }
-            }
-            ... on ReleasesSearchResult {
-                isReleases
-                pagination {
-                    items
-                    page
-                    pages
-                    per_page
-                }
-                results {
-                    id
-                    date_added
-                    folder_id
-                    instance_id
-                    rating
-                    basic_information {
-                        format
-                        country
-                        artists {
-                            name
-                        }
-                        genres
-                        formats {
-                            descriptions
-                            name
-                            qty
-                            text
-                        }
-                        id
-                        label
-                        released
-                        styles
-                        thumb
-                        title
-                        type
-                        user_data {
-                            in_collection
-                            in_wantlist
-                        }
-                        year
-                    }
                 }
             }
             ... on MasterSearchResult {
@@ -92,19 +86,19 @@ export const GET_SEARCH = gql`
                     per_page
                 }
                 results {
-                    id
                     basic_information {
-                        country
                         artists {
                             name
                         }
-                        genres
+                        country
+                        format
                         formats {
                             descriptions
                             name
                             qty
                             text
                         }
+                        genres
                         id
                         label
                         released
@@ -118,6 +112,9 @@ export const GET_SEARCH = gql`
                         }
                         year
                     }
+                    id
+                    rating
+                    date_added
                 }
             }
         }
