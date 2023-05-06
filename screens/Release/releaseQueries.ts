@@ -8,6 +8,22 @@ export const IS_IN_COLLECTION = gql`
     }
 `;
 
+export const GET_CUSTOM_FIELDS = gql`
+    query GetCustomFields {
+        getCustomFields {
+            fields {
+                id
+                name
+                type
+                options
+                position
+                lines
+                public
+            }
+        }
+    }
+`;
+
 export const GET_RELEASE = gql`
     query GetRelease($id: Int!, $instanceId: Int) {
         getRelease(id: $id, instanceId: $instanceId) {

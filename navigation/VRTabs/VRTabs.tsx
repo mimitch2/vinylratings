@@ -6,6 +6,7 @@ import React, { useState, useMemo, useContext } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+
 import {
     BottomNavigation,
     BottomNavigationTab,
@@ -181,6 +182,7 @@ export const HeaderBar = ({
 
 const VRTabs = () => {
     const [disabled, setDisabled] = useState(true);
+
     const value = useMemo(
         () => ({
             disabled,

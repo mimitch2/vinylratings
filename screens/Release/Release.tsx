@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import {
@@ -9,7 +9,8 @@ import {
     ADD_TO_COLLECTION,
     REMOVE_FROM_COLLECTION,
     ADD_RATING,
-    ADD_WASHED_ON
+    ADD_WASHED_ON,
+    GET_CUSTOM_FIELDS
 } from './releaseQueries';
 import {
     VRButton,
@@ -33,13 +34,14 @@ import {
 import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
 import { Identifiers } from './components';
-import { useIsInCollection, useGetFolders, IS_IN_COLLECTION } from 'hooks';
+import {
+    useIsInCollection,
+    useGetFolders,
+    IS_IN_COLLECTION,
+    useIsLoading
+} from 'hooks';
 import { client } from '../../ApolloProviderWrapper';
 import { Layout } from '@ui-kitten/components';
-
-// const NOTES_QUERY = gql`
-// query getCollection
-// `
 
 type Params = {
     id: string;
@@ -66,11 +68,11 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     // Queries
     const {
         isInCollection,
+        instanceId,
         releases,
         isInCollectionLoading,
         refetchIsInCollection
     } = useIsInCollection({ releaseId: +id });
-    const instanceId = +releases?.[0]?.instance_id ?? null;
 
     const { data, loading, refetch, error } = useQuery(GET_RELEASE, {
         variables: {
@@ -79,7 +81,12 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         }
     });
 
-    const { folders } = useGetFolders();
+    const {
+        data: fields,
+        loading: fieldsLoading,
+        error: fieldsError
+    } = useQuery(GET_CUSTOM_FIELDS);
+    const { folders, foldersLoading } = useGetFolders();
     const foldersWithoutAll = folders.slice(1);
 
     // Mutations
@@ -164,7 +171,22 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         refetch();
     };
 
-    if (loading) {
+    const isLoading = useIsLoading(
+        foldersLoading,
+        loading,
+        fieldsLoading,
+        isInCollectionLoading
+    );
+
+    const isUpdating = useIsLoading(
+        addToCollectionLoading,
+        isInCollectionLoading,
+        removeFromCollectionLoading,
+        addReleaseLoading,
+        addRatingLoading
+    );
+
+    if (isLoading) {
         return <VRLoading />;
     }
 
@@ -286,12 +308,6 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         })?.name ?? 'Unknown';
 
     const [{ name: artist }] = artists;
-    const isLoading =
-        addToCollectionLoading ||
-        isInCollectionLoading ||
-        removeFromCollectionLoading ||
-        addReleaseLoading ||
-        addRatingLoading;
 
     return (
         <>
@@ -300,7 +316,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                 refreshing={loading}
                 startAnimation={!!getRelease || !!error}
             >
-                {isLoading ? <VRLoading /> : null}
+                {isUpdating ? <VRLoading /> : null}
                 <Layout style={{ paddingBottom: 20, marginTop: 5 }}>
                     <VRReleaseInfoCommon
                         images={images}

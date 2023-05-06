@@ -30,6 +30,7 @@ export const useIsInCollection = ({
 
     return {
         isInCollection: !!data?.getReleaseInCollection?.isInCollection,
+        instanceId: +data?.getReleaseInCollection?.releases[0]?.instance_id,
         releases: data?.getReleaseInCollection?.releases,
         isInCollectionLoading: loading,
         isInCollectionError: error,
