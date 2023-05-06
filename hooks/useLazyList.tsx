@@ -107,11 +107,7 @@ export const useLazyList = ({
         const delayDebounceFn = setTimeout(() => {
             const lastCharacter = searchTerm[searchTerm.length - 1];
 
-            if (
-                searchTerm.length > 2 &&
-                lastCharacter !== ' ' &&
-                searchTerm[searchTerm.length - 2]
-            ) {
+            if (searchTerm.length && lastCharacter !== ' ') {
                 search({ variables: { search: searchTerm } });
             }
         }, 500);

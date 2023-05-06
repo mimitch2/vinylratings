@@ -118,7 +118,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     />
                 ) : null}
 
-                {!called || (called && isTyping) || !searchTerm.length ? (
+                {!called || !searchTerm.length ? (
                     <VRError
                         message="Enter a search term"
                         level="info"
@@ -128,7 +128,7 @@ const Search = ({ navigation }: { navigation: Nav }) => {
                     />
                 ) : null}
 
-                {called && results?.length && !isTyping && searchTerm.length ? (
+                {called && results?.length && searchTerm.length ? (
                     <VRReleasesList
                         innerRef={scrollViewRef}
                         data={results ?? []}
