@@ -69,6 +69,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const {
         isInCollection,
         instanceId,
+        customFieldsValues,
         releases,
         isInCollectionLoading,
         refetchIsInCollection
@@ -87,6 +88,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         error: fieldsError
     } = useQuery(GET_CUSTOM_FIELDS);
     const { folders, foldersLoading } = useGetFolders();
+    console.log('🚀 ~ file: Release.tsx:91 ~ Release ~ folders:', folders);
     const foldersWithoutAll = folders.slice(1);
 
     // Mutations
@@ -282,6 +284,19 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             component: <Identifiers identifiers={identifiers} />
         }
     ];
+
+    const FieldData = () => {
+        return customFieldsValues.map((field, idx) => {
+            return <VRText>{fields[idx].name}</VRText>;
+        });
+    };
+
+    if (instanceId) {
+        segmentedData.push({
+            label: 'My copy',
+            component: <FieldData />
+        });
+    }
 
     const getReleaseDate = () => {
         const isJustYear =

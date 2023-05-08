@@ -1,15 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const GET_FOLDERS = gql`
-    query GetFolders {
-        getFolders {
-            id
-            name
-            count
-        }
-    }
-`;
-
 export const GET_COLLECTION = gql`
     query GetCollection(
         $folder: Int

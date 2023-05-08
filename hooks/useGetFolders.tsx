@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-import { Folder } from '../types';
+import { Folder } from 'types';
 
 export const GET_FOLDERS = gql`
     query GetFolders {
