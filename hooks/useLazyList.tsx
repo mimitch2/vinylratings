@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import type { FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { useLazyQuery, DocumentNode } from '@apollo/client';
 
 import { Pagination, SortOrder, Releases } from 'types';
@@ -41,7 +41,7 @@ export const useLazyList = ({
     type = 'release',
     searchTerm = ''
 }: {
-    scrollViewRef: React.RefObject<FlatList<Releases>>;
+    scrollViewRef: React.RefObject<FlashList<number> | null>;
     QUERY: DocumentNode;
     lazy?: boolean;
     sortDefault?: string;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-    FlatList,
     View,
     ActivityIndicator,
     RefreshControl,
     StyleSheet
 } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { useTheme } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
 
@@ -57,7 +57,7 @@ const VRReleasesList = ({
     navigation: Nav;
     onRefresh: VoidFuncNoParams;
     onLoadMore: VoidFuncNoParams;
-    innerRef: React.RefObject<FlatList<any>>;
+    innerRef: React.LegacyRef<FlashList<Item> | null>;
     sort: string;
     artist?: string | null;
     perPage?: number;
@@ -193,30 +193,33 @@ const VRReleasesList = ({
         );
 
     return (
-        <FlatList
-            ref={innerRef}
-            style={{ marginBottom: 60 }}
-            showsVerticalScrollIndicator={false}
-            data={inWantList ? getDataWithHeaders() : data}
-            renderItem={renderCard}
-            keyExtractor={(item, idx) => `${item.id}-${idx}`}
-            ListFooterComponent={ListFooterComponent}
-            refreshing={loadingMore}
-            onEndReached={onLoadMore}
-            // onEndReachedThreshold={0.5}
-            initialNumToRender={perPage}
-            removeClippedSubviews
-            // scrollEnabled={!loading}
-            stickyHeaderIndices={stickyHeaderIndices}
-            refreshControl={
-                <RefreshControl
-                    refreshing={reloading}
-                    onRefresh={onRefresh}
-                    colors={[colors.grey]}
-                    tintColor={colors.grey}
-                />
-            }
-        />
+        <Layout style={{ height: '100%', width: '100%', marginBottom: 260 }}>
+            <FlashList
+                ref={innerRef}
+                // style={{ marginBottom: 60 }}
+                showsVerticalScrollIndicator={false}
+                data={inWantList ? getDataWithHeaders() : data}
+                renderItem={renderCard}
+                keyExtractor={(item, idx) => `${item.id}-${idx}`}
+                ListFooterComponent={ListFooterComponent}
+                refreshing={loadingMore}
+                onEndReached={onLoadMore}
+                // onEndReachedThreshold={0.5}
+                // initialNumToRender={perPage}
+                removeClippedSubviews
+                // scrollEnabled={!loading}
+                stickyHeaderIndices={stickyHeaderIndices}
+                estimatedItemSize={127}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={reloading}
+                        onRefresh={onRefresh}
+                        colors={[colors.grey]}
+                        tintColor={colors.grey}
+                    />
+                }
+            />
+        </Layout>
     );
 };
 

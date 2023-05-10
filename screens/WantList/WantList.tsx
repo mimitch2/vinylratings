@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { FlatList } from 'react-native';
-
+import { FlashList } from '@shopify/flash-list';
 import {
     VRContainer,
     VRLoading,
@@ -15,7 +14,7 @@ import { GET_WANT_LIST } from './wantListQueries';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const WantList = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlatList>(null);
+    const scrollViewRef = useRef<FlashList<number> | null>(null);
 
     const {
         initialLoading,

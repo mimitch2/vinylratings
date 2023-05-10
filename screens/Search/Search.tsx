@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import type { FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { Layout } from '@ui-kitten/components';
 
 import { useLazyList } from 'hooks';
@@ -24,7 +24,7 @@ import {
 import { GET_SEARCH } from './searchQueries';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlatList>(null);
+    const scrollViewRef = useRef<FlashList<number> | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState<SearchTypes>(
         SearchTypes.RELEASE

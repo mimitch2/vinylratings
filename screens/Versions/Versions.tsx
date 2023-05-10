@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { FlatList } from 'react-native';
-
+import { FlashList } from '@shopify/flash-list';
 import { useList } from 'hooks';
 import {
     VRContainer,
@@ -26,7 +25,7 @@ const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     const {
         params: { masterId, artist }
     } = route;
-    const scrollViewRef = useRef<FlatList>(null);
+    const scrollViewRef = useRef<FlashList<number> | null>(null);
 
     const {
         initialLoading,

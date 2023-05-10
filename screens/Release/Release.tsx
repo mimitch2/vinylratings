@@ -88,7 +88,6 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         error: fieldsError
     } = useQuery(GET_CUSTOM_FIELDS);
     const { folders, foldersLoading } = useGetFolders();
-    console.log('🚀 ~ file: Release.tsx:91 ~ Release ~ folders:', folders);
     const foldersWithoutAll = folders.slice(1);
 
     // Mutations

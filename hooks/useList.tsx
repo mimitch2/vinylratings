@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import type { FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { GraphQLError } from 'graphql';
 
 import {
@@ -30,7 +30,7 @@ export const useList = ({
     sortDefault = 'added',
     additionalVariables = {}
 }: {
-    scrollViewRef: React.RefObject<FlatList<any>>;
+    scrollViewRef: React.RefObject<FlashList<any>>;
     QUERY: DocumentNode;
     queryKey: QueryKey;
     folder?: Folder | null;

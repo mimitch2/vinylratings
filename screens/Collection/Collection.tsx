@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 
 import { useList, useGetFolders } from 'hooks';
 import {
@@ -15,7 +15,7 @@ import { GET_COLLECTION } from './collectionQueries';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const Collection = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlatList>(null);
+    const scrollViewRef = useRef<FlashList<number> | null>(null);
     const { folders, folder, setFolder, foldersLoading } = useGetFolders();
 
     const {
