@@ -193,7 +193,13 @@ const VRReleasesList = ({
         );
 
     return (
-        <Layout style={{ height: '87%', width: '100%', marginBottom: 60 }}>
+        <Layout
+            style={{
+                height: '87%',
+                width: '100%',
+                marginBottom: 60
+            }}
+        >
             <FlashList
                 ref={innerRef}
                 showsVerticalScrollIndicator={false}

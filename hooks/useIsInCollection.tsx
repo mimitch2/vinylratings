@@ -1,4 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
+import { Data } from 'types';
 
 export const IS_IN_COLLECTION = gql`
     query IsInCollection($id: Int!) {

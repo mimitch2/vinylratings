@@ -1,9 +1,10 @@
-import { Releases, Pagination, SortOrder } from '../../types';
+import { Releases, Pagination, SortOrder } from 'types';
 
 export type QueryKey =
     | 'getCollection'
     | 'getMasterReleaseVersions'
-    | 'getWantList';
+    | 'getWantList'
+    | 'getReleaseInCollection';
 
 export type QueriedData = {
     pagination: Pagination;
@@ -14,7 +15,7 @@ export type QueriedData = {
 };
 
 export type Data = {
-    [key in QueryKey]?: QueriedData;
+    [key in QueryKey]: QueriedData;
 };
 
 export type Variables = {

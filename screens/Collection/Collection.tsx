@@ -57,6 +57,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
     }
 
     const releases = data?.getCollection?.releases ?? [];
+
     return (
         <VRContainer
             startAnimation={!!data || !!error}
@@ -79,7 +80,6 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
             {(loading || foldersLoading) && !loadingMore && !reloading && (
                 <VRLoading />
             )}
-
             <VRReleaseOptionsModal
                 sort={sort}
                 setSort={setSort}
@@ -89,8 +89,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                 folder={folder}
                 setFolder={setFolder}
             />
-
-            {releases?.length && (
+            {releases?.length ? (
                 <VRReleasesList
                     innerRef={scrollViewRef}
                     data={releases}
@@ -102,8 +101,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                     navigation={navigation}
                     sort={sort}
                 />
-            )}
-
+            ) : null}
             {!releases.length && !error ? (
                 <VRError
                     message="There do not seem to be any items here"
