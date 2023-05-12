@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { FlashList } from '@shopify/flash-list';
+import { useEffect, useState } from 'react';
 import { useLazyQuery, DocumentNode } from '@apollo/client';
 
-import { Pagination, SortOrder, Releases } from 'types';
+import { Pagination, SortOrder, Releases, FlashListRef } from 'types';
 import { runHapticFeedback } from 'helpers';
 
 const PER_PAGE = 25;
@@ -41,7 +40,7 @@ export const useLazyList = ({
     type = 'release',
     searchTerm = ''
 }: {
-    scrollViewRef: React.RefObject<FlashList<number> | null>;
+    scrollViewRef: FlashListRef;
     QUERY: DocumentNode;
     lazy?: boolean;
     sortDefault?: string;

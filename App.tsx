@@ -80,7 +80,8 @@ const App = () => {
 
 const styles = StyleSheet.create({
     flex: {
-        flex: 1
+        flex: 1,
+        marginBottom: -5
     }
 });
 

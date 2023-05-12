@@ -84,7 +84,7 @@ const TabBar = ({ navigation, disabled }: TabBarProps) => {
                     setSelectedIndex(index);
                     navigation.navigate(ROUTES[index].routeName);
                 }}
-                indicatorStyle={{ width: '80%', marginVertical: 8 }}
+                indicatorStyle={{ width: '70%', marginBottom: 5 }}
             >
                 {ROUTES.map(({ routeName, icon, index }) => {
                     const isDisabled = !!(disabled && index);
@@ -155,6 +155,7 @@ const Tabs = () => {
 
 const BackAction = (): React.ReactElement => {
     const navigation = useNavigation();
+
     return (
         <TopNavigationAction
             icon={() => <VRIcon type="chevronLeft" />}

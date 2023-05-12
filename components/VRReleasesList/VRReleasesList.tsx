@@ -57,7 +57,7 @@ const VRReleasesList = ({
     navigation: Nav;
     onRefresh: VoidFuncNoParams;
     onLoadMore: VoidFuncNoParams;
-    innerRef: React.LegacyRef<FlashList<Item> | null>;
+    innerRef: React.LegacyRef<FlashList<Releases>> | null;
     sort: string;
     artist?: string | null;
     perPage?: number;
@@ -193,10 +193,9 @@ const VRReleasesList = ({
         );
 
     return (
-        <Layout style={{ height: '100%', width: '100%', marginBottom: 260 }}>
+        <Layout style={{ height: '87%', width: '100%', marginBottom: 60 }}>
             <FlashList
                 ref={innerRef}
-                // style={{ marginBottom: 60 }}
                 showsVerticalScrollIndicator={false}
                 data={inWantList ? getDataWithHeaders() : data}
                 renderItem={renderCard}
@@ -204,9 +203,6 @@ const VRReleasesList = ({
                 ListFooterComponent={ListFooterComponent}
                 refreshing={loadingMore}
                 onEndReached={onLoadMore}
-                // onEndReachedThreshold={0.5}
-                // initialNumToRender={perPage}
-                removeClippedSubviews
                 // scrollEnabled={!loading}
                 stickyHeaderIndices={stickyHeaderIndices}
                 estimatedItemSize={127}

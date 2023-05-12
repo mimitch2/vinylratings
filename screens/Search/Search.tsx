@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { useLazyList } from 'hooks';
 import { toUpperFirst } from 'helpers';
-import { SearchTypes, Nav } from 'types';
+import { SearchTypes, Nav, Releases } from 'types';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const SEARCH_TYPES = Object.values(SearchTypes).map((type) => ({
@@ -24,7 +24,7 @@ import {
 import { GET_SEARCH } from './searchQueries';
 
 const Search = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlashList<number> | null>(null);
+    const scrollViewRef = useRef<FlashList<Releases> | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState<SearchTypes>(
         SearchTypes.RELEASE

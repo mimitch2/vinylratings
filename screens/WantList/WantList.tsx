@@ -9,12 +9,12 @@ import {
     VRError
 } from 'components';
 import { useList } from 'hooks';
-import { Nav } from 'types';
+import { Nav, Releases } from 'types';
 import { GET_WANT_LIST } from './wantListQueries';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const WantList = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlashList<number> | null>(null);
+    const scrollViewRef = useRef<FlashList<Releases> | null>(null);
 
     const {
         initialLoading,

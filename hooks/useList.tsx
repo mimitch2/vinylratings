@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { FlashList } from '@shopify/flash-list';
+import { useEffect, useState } from 'react';
 import { GraphQLError } from 'graphql';
 
 import {
@@ -8,8 +7,10 @@ import {
     SortOrder,
     QueryKey,
     Data,
-    Variables
-} from '../types';
+    Variables,
+    Releases,
+    FlashListRef
+} from 'types';
 import { runHapticFeedback } from '../helpers';
 import { useQuery, DocumentNode } from '@apollo/client';
 
@@ -30,7 +31,7 @@ export const useList = ({
     sortDefault = 'added',
     additionalVariables = {}
 }: {
-    scrollViewRef: React.RefObject<FlashList<any>>;
+    scrollViewRef: FlashListRef;
     QUERY: DocumentNode;
     queryKey: QueryKey;
     folder?: Folder | null;

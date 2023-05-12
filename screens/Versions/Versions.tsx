@@ -8,7 +8,7 @@ import {
     VRLoading,
     VRReleasesList
 } from 'components';
-import { Nav } from 'types';
+import { Nav, Releases } from 'types';
 import { GET_VERSIONS } from './versionsQueries';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
@@ -25,7 +25,7 @@ const Versions = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     const {
         params: { masterId, artist }
     } = route;
-    const scrollViewRef = useRef<FlashList<number> | null>(null);
+    const scrollViewRef = useRef<FlashList<Releases> | null>(null);
 
     const {
         initialLoading,

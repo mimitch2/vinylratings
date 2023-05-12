@@ -1,5 +1,10 @@
+import { MutableRefObject } from 'react';
+import { FlashList } from '@shopify/flash-list';
+
 import { User } from './user';
 import { SearchTypes } from './global';
+
+export type FlashListRef = MutableRefObject<FlashList<Releases> | null>;
 
 export type DiscogsImage = {
     resource_url: string;

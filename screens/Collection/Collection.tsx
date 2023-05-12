@@ -10,12 +10,12 @@ import {
     VRReleasesList,
     VRText
 } from 'components';
-import { Nav } from 'types';
+import { Nav, Releases } from 'types';
 import { GET_COLLECTION } from './collectionQueries';
 import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const Collection = ({ navigation }: { navigation: Nav }) => {
-    const scrollViewRef = useRef<FlashList<number> | null>(null);
+    const scrollViewRef = useRef<FlashList<Releases> | null>(null);
     const { folders, folder, setFolder, foldersLoading } = useGetFolders();
 
     const {
