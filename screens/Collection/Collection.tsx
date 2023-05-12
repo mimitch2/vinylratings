@@ -50,11 +50,11 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
         return <VRLoading />;
     }
 
-    if (!data || error) {
-        return (
-            <VRText>{`${error?.message || 'Something went wrong!'}`}</VRText>
-        );
-    }
+    // if (!data || error) {
+    //     return (
+    //         <VRText>{`${error?.message || 'Something went wrong!'}`}</VRText>
+    //     );
+    // }
 
     const releases = data?.getCollection?.releases ?? [];
 
@@ -80,6 +80,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
             {(loading || foldersLoading) && !loadingMore && !reloading && (
                 <VRLoading />
             )}
+
             <VRReleaseOptionsModal
                 sort={sort}
                 setSort={setSort}
