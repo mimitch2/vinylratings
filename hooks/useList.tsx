@@ -60,24 +60,28 @@ export const useList = ({
         variables.folder = folder.id;
     }
 
-    const { data, fetchMore, refetch, error, loading } = useQuery(QUERY, {
-        variables,
-        // fetchPolicy: 'cache-and-network',
-        onCompleted: (returnedData: Data) => {
-            setPagination(
-                returnedData?.[queryKey]?.pagination ?? PAGINATION_DEFAULT
-            );
+    const { data, fetchMore, refetch, error, loading, previousData } = useQuery(
+        QUERY,
+        {
+            variables,
+            // fetchPolicy: 'cache-and-network',
+            onCompleted: (returnedData: Data) => {
+                setPagination(
+                    returnedData?.[queryKey]?.pagination ?? PAGINATION_DEFAULT
+                );
 
-            setInitialLoading(false);
-        },
-        onError(err) {
-            setInitialLoading(false);
-            throw new GraphQLError(`useList-useQuery: ${err}`);
+                setInitialLoading(false);
+            },
+            onError(err) {
+                setInitialLoading(false);
+                throw new GraphQLError(`useList-useQuery: ${err}`);
+            }
         }
-    });
+    );
 
     useEffect(() => {
         const asyncRefresh = async () => {
+            setPagination(PAGINATION_DEFAULT);
             await refetch();
             scrollViewRef?.current?.scrollToIndex({
                 index: 0,
@@ -134,6 +138,7 @@ export const useList = ({
         reloading,
         loadingMore,
         data,
+        previousData,
         error,
         sort,
         setSort,

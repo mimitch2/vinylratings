@@ -60,6 +60,7 @@ export const getReleaseTags = ({
     );
 
     const [{ descriptions }] = formats;
+
     const tagsArray = limit && year ? [year.toString()] : [];
 
     if (country) {

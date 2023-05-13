@@ -24,6 +24,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
         reloading,
         loadingMore,
         data,
+        previousData,
         error,
         sort,
         setSort,
@@ -50,13 +51,23 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
         return <VRLoading />;
     }
 
-    // if (!data || error) {
-    //     return (
-    //         <VRText>{`${error?.message || 'Something went wrong!'}`}</VRText>
-    //     );
+    // {
+    //     error ? (
+    //         <VRError
+    //             error={error}
+    //             trackID="collection_screen-error"
+    //             level="error"
+    //             styleOverride={{
+    //                 opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1
+    //             }}
+    //         />
+    //     ) : null;
     // }
 
-    const releases = data?.getCollection?.releases ?? [];
+    const releases =
+        data?.getCollection?.releases ??
+        previousData?.getCollection?.releases ??
+        [];
 
     return (
         <VRContainer
@@ -77,10 +88,6 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                 />
             )}
 
-            {(loading || foldersLoading) && !loadingMore && !reloading && (
-                <VRLoading />
-            )}
-
             <VRReleaseOptionsModal
                 sort={sort}
                 setSort={setSort}
@@ -94,7 +101,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                 <VRReleasesList
                     innerRef={scrollViewRef}
                     data={releases}
-                    loading={loading || false}
+                    loading={loading}
                     reloading={reloading}
                     loadingMore={loadingMore}
                     onRefresh={onRefresh}
@@ -103,7 +110,7 @@ const Collection = ({ navigation }: { navigation: Nav }) => {
                     sort={sort}
                 />
             ) : null}
-            {!releases.length && !error ? (
+            {!releases.length && !error && !loading ? (
                 <VRError
                     message="There do not seem to be any items here"
                     level="warning"

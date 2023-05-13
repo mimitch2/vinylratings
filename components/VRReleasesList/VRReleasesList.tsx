@@ -10,7 +10,13 @@ import { useTheme } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
 
 import { Theme } from 'constants/index';
-import { VRArtistCard, VRReleaseCard, VRIcon, VRText } from 'components';
+import {
+    VRArtistCard,
+    VRReleaseCard,
+    VRIcon,
+    VRText,
+    VRLoading
+} from 'components';
 import {
     SearchTypes,
     ArtistSearch,
@@ -193,34 +199,38 @@ const VRReleasesList = ({
         );
 
     return (
-        <Layout
-            style={{
-                height: '87%',
-                width: '100%',
-                marginBottom: 60
-            }}
-        >
-            <FlashList
-                ref={innerRef}
-                showsVerticalScrollIndicator={false}
-                data={inWantList ? getDataWithHeaders() : data}
-                renderItem={renderCard}
-                keyExtractor={(item, idx) => `${item.id}-${idx}`}
-                ListFooterComponent={ListFooterComponent}
-                refreshing={loadingMore}
-                onEndReached={onLoadMore}
-                // scrollEnabled={!loading}
-                stickyHeaderIndices={stickyHeaderIndices}
-                estimatedItemSize={127}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={reloading}
-                        onRefresh={onRefresh}
-                        colors={[colors.grey]}
-                        tintColor={colors.grey}
-                    />
-                }
-            />
+        <Layout style={{ height: '100%' }}>
+            {loading && <VRLoading />}
+            <Layout
+                style={{
+                    opacity: loading ? 0.6 : 1,
+                    height: '87%',
+                    width: '100%',
+                    marginBottom: 60
+                }}
+            >
+                <FlashList
+                    ref={innerRef}
+                    showsVerticalScrollIndicator={false}
+                    data={inWantList ? getDataWithHeaders() : data}
+                    renderItem={renderCard}
+                    keyExtractor={(item, idx) => `${item.id}-${idx}`}
+                    ListFooterComponent={ListFooterComponent}
+                    refreshing={loadingMore}
+                    onEndReached={onLoadMore}
+                    // scrollEnabled={!loading}
+                    stickyHeaderIndices={stickyHeaderIndices}
+                    estimatedItemSize={127}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={reloading}
+                            onRefresh={onRefresh}
+                            colors={[colors.grey]}
+                            tintColor={colors.grey}
+                        />
+                    }
+                />
+            </Layout>
         </Layout>
     );
 };
