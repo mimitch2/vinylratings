@@ -9,7 +9,7 @@ import { FlashList } from '@shopify/flash-list';
 import { useTheme } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
 
-import { Theme } from 'constants/index';
+import { Theme, PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 import {
     VRArtistCard,
     VRReleaseCard,
@@ -203,7 +203,7 @@ const VRReleasesList = ({
             {loading && <VRLoading />}
             <Layout
                 style={{
-                    opacity: loading ? 0.6 : 1,
+                    opacity: loading ? PRESSED_OR_DISABLED_OPACITY : 1,
                     height: '87%',
                     width: '100%',
                     marginBottom: 60
