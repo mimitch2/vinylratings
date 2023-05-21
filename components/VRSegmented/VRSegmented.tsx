@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginVertical: 6
     },
     indicator: {
-        width: '68%'
+        // width: '68%'
     }
 });
 

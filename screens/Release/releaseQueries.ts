@@ -131,6 +131,8 @@ export const ADD_TO_COLLECTION = gql`
     mutation AddToCollection($releaseId: Int!, $folderId: Int!) {
         addToCollection(releaseId: $releaseId, folderId: $folderId) {
             instance_id
+            folder_id
+            id
         }
     }
 `;
@@ -146,7 +148,7 @@ export const REMOVE_FROM_COLLECTION = gql`
             releaseId: $releaseId
             instanceId: $instanceId
         ) {
-            isGood
+            success
         }
     }
 `;

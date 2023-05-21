@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 import { FolderModalContent } from 'components/VRReleaseOptionsModal/components';
 import {
@@ -47,6 +47,8 @@ type Params = {
     id: string;
     inWantList: boolean;
     isFromVersions: boolean;
+    instanceId: string;
+    folderId: string;
 };
 
 export type Route = {
@@ -62,23 +64,29 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const [discogsReviewsModalOpen, setDiscogsReviewsModalOpen] =
         useState(false);
     const {
-        params: { id, inWantList, isFromVersions }
+        params: { id, inWantList, isFromVersions, instanceId, folderId }
     } = route;
 
+    // useCallback(() => {
+    //     if (folderId) {
+    //         setFolderId(+folderId);
+    //     }
+    // }, [folderId]);
+
     // Queries
-    const {
-        isInCollection,
-        instanceId,
-        customFieldsValues,
-        releases,
-        isInCollectionLoading,
-        refetchIsInCollection
-    } = useIsInCollection({ releaseId: +id });
+    // const {
+    //     isInCollection,
+    //     releases,
+    //     isInCollectionLoading,
+    //     refetchIsInCollection
+    // } = useIsInCollection({
+    //     releaseId: +id
+    // });
 
     const { data, loading, refetch, error } = useQuery(GET_RELEASE, {
         variables: {
             id: +id,
-            instanceId
+            instanceId: +instanceId
         }
     });
 
@@ -112,21 +120,36 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         setFolderModalOpen((prevState) => !prevState);
     };
 
-    const optimisticallyUpdateIsInCollection = (value: boolean) => {
-        client.writeQuery({
-            query: IS_IN_COLLECTION,
-            data: {
-                getReleaseInCollection: {
-                    __typename: 'IsInCollectionResponse',
-                    isInCollection: value,
-                    releases: value ? releases : []
-                }
-            },
-            variables: {
-                id: +id
-            }
-        });
+    const thisCollectionInstance = {
+        __typename: 'CollectionInstance',
+        instance_id: instanceId?.toString() ?? ''
     };
+
+    const instance = client.readFragment({
+        id: client.cache.identify(thisCollectionInstance), // The value of the to-do item's cache ID
+        fragment: gql`
+            fragment MyCollectionInstance on CollectionInstance {
+                id
+                instance_id
+            }
+        `
+    });
+
+    // const optimisticallyUpdateIsInCollection = (value: boolean) => {
+    //     client.writeQuery({
+    //         query: IS_IN_COLLECTION,
+    //         data: {
+    //             getReleaseInCollection: {
+    //                 __typename: 'IsInCollectionResponse',
+    //                 isInCollection: value,
+    //                 releases: value ? releases : []
+    //             }
+    //         },
+    //         variables: {
+    //             id: +id
+    //         }
+    //     });
+    // };
 
     const addToCollection = async (folderItem: Folder) => {
         try {
@@ -135,9 +158,13 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     folderId: +folderItem.id,
                     releaseId: +id
                 },
-                onCompleted: () => {
-                    optimisticallyUpdateIsInCollection(true);
-                    refetchIsInCollection();
+                onCompleted: ({
+                    addToCollection: { instance_id, folder_id }
+                }) => {
+                    // optimisticallyUpdateIsInCollection(true);
+                    route.params.instanceId = instance_id;
+                    route.params.folderId = folder_id;
+                    // setFolderId(folder_id);
                 }
             });
         } catch (err: any) {
@@ -146,19 +173,23 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             setFolderModalOpen(false);
         }
     };
+    console.log(
+        '🚀 ~ file: Release.tsx:185 ~ removeFromCollection ~ folderId:',
+        folderId
+    );
 
     const removeFromCollection = async () => {
         try {
             await removeFromCollectionMutation({
                 variables: {
-                    folderId: +releases.length && +releases[0].folder_id,
+                    folderId: +folderId,
                     releaseId: +id,
                     instanceId
                 },
                 onCompleted: (response) => {
-                    if (response?.removeFromCollection?.isGood) {
-                        optimisticallyUpdateIsInCollection(false);
-                        refetchIsInCollection();
+                    if (response?.removeFromCollection?.success) {
+                        route.params.instanceId = '';
+                        route.params.folderId = '';
                     }
                 }
             });
@@ -168,20 +199,13 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     };
 
     const refetchRelease = () => {
-        refetchIsInCollection();
         refetch();
     };
 
-    const isLoading = useIsLoading(
-        foldersLoading,
-        loading,
-        fieldsLoading,
-        isInCollectionLoading
-    );
+    const isLoading = useIsLoading(foldersLoading, loading, fieldsLoading);
 
     const isUpdating = useIsLoading(
         addToCollectionLoading,
-        isInCollectionLoading,
         removeFromCollectionLoading,
         addReleaseLoading,
         addRatingLoading
@@ -267,7 +291,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             )
         },
         {
-            label: 'Tracklist',
+            label: 'Tracks',
             component: <VRTrackList tracklist={tracklist} />
         },
         {
@@ -279,23 +303,23 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
             )
         },
         {
-            label: 'Identifiers',
+            label: 'IDs',
             component: <Identifiers identifiers={identifiers} />
         }
     ];
 
-    const FieldData = () => {
-        return customFieldsValues.map((field, idx) => {
-            return <VRText>{fields[idx].name}</VRText>;
-        });
-    };
+    // const FieldData = () => {
+    //     return customFieldsValues.map((field, idx) => {
+    //         return <VRText>{fields[idx].name}</VRText>;
+    //     });
+    // };
 
-    if (instanceId) {
-        segmentedData.push({
-            label: 'My copy',
-            component: <FieldData />
-        });
-    }
+    // if (instanceId) {
+    //     segmentedData.push({
+    //         label: 'My copy',
+    //         component: <FieldData />
+    //     });
+    // }
 
     const getReleaseDate = () => {
         const isJustYear =
@@ -316,10 +340,10 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         return newDate;
     };
 
-    const folderName =
-        folders?.find((folder) => {
-            return +releases?.[0]?.folder_id === folder?.id ?? false;
-        })?.name ?? 'Unknown';
+    // const folderName =
+    //     folders?.find((folder) => {
+    //         return +releases?.[0]?.folder_id === folder?.id ?? false;
+    //     })?.name ?? 'Unknown';
 
     const [{ name: artist }] = artists;
 
@@ -335,23 +359,23 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     <VRReleaseInfoCommon
                         images={images}
                         tags={tags}
-                        isInCollection={isInCollection}
+                        isInCollection={!!instanceId}
                         inWantList={inWantList}
                         title={title}
                         artist={artist}
                         releasedDate={getReleaseDate()}
                     />
-                    {isInCollection ? (
+                    {/* {isInCollection || instanceId ? (
                         <VRText>Folder: {folderName}</VRText>
-                    ) : null}
+                    ) : null} */}
 
                     <Layout style={styles.buttonRow}>
                         <VRButton
                             title={`${
-                                isInCollection ? 'Remove from' : 'Add to'
+                                instanceId ? 'Remove from' : 'Add to'
                             } collection`}
                             onPress={
-                                isInCollection
+                                instanceId
                                     ? removeFromCollection
                                     : () => setFolderModalOpen(true)
                             }
@@ -360,7 +384,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             variant="basic"
                             stacked={false}
                         />
-                        {isInCollection ? (
+                        {instanceId ? (
                             <VRButton
                                 title={
                                     washedOn
@@ -412,6 +436,24 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             setCalendarModalOpen(false);
                         }}
                     />
+                    <VRPressable
+                        trackID="release_screen-see_my_copies"
+                        onPress={() => {
+                            navigation.navigate({
+                                name: 'Copies',
+                                params: {
+                                    id
+                                }
+                            });
+                        }}
+                    >
+                        <VRDivider />
+                        <Layout style={[styles.versions]}>
+                            <VRText>My Copies</VRText>
+                            <VRIcon type="chevronRight" size="sm" />
+                        </Layout>
+                        <VRDivider />
+                    </VRPressable>
                     {!isFromVersions ? (
                         <VRPressable
                             trackID="release_screen-see_all_versions"

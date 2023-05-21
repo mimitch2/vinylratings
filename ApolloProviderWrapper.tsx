@@ -31,6 +31,9 @@ export const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache({
         typePolicies: {
+            CollectionInstance: {
+                keyFields: ['instance_id']
+            },
             Query: {
                 fields: {
                     getCollection: {

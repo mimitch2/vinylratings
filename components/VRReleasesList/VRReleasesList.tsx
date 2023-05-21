@@ -77,12 +77,16 @@ const VRReleasesList = ({
 
     const onCardPress = ({
         id,
+        instanceId,
         userData,
-        type
+        type,
+        folderId
     }: {
         id: number;
+        instanceId?: number;
         userData: any;
         type: string;
+        folderId?: string;
     }) => {
         const isInCollection = !!userData?.in_collection;
         const isInWantList = !!userData?.in_wantlist;
@@ -91,9 +95,11 @@ const VRReleasesList = ({
             name: type === SearchTypes.MASTER ? 'Master' : nextRoute,
             params: {
                 id,
+                instanceId,
                 inCollection: isInCollection ?? inCollection,
                 inWantList: isInWantList ?? inWantList,
-                isFromVersions: nextRoute === 'VersionRelease'
+                isFromVersions: nextRoute === 'VersionRelease',
+                folderId
             }
         });
     };
@@ -147,8 +153,10 @@ const VRReleasesList = ({
                 onPress={() =>
                     onCardPress({
                         id: +item.id,
+                        instanceId: item.instance_id,
                         userData,
-                        type
+                        type,
+                        folderId: item.folder_id
                     })
                 }
                 release={item}

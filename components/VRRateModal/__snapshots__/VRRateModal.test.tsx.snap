@@ -240,14 +240,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                 vbHeight={512}
                 vbWidth={320}
               >
-                <RNSVGGroup
-                  fill={
-                    {
-                      "payload": 4278190080,
-                      "type": 0,
-                    }
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGGroup
                     fill={
                       {
@@ -263,12 +256,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                   >
                     <RNSVGPath
                       d="M315.3 411.3c-6.253 6.253-16.37 6.253-22.63 0L160 278.6l-132.7 132.7c-6.253 6.253-16.37 6.253-22.63 0c-6.253-6.253-6.253-16.37 0-22.63L137.4 256L4.69 123.3c-6.253-6.253-6.253-16.37 0-22.63c6.253-6.253 16.37-6.253 22.63 0L160 233.4l132.7-132.7c6.253-6.253 16.37-6.253 22.63 0c6.253 6.253 6.253 16.37 0 22.63L182.6 256l132.7 132.7C321.6 394.9 321.6 405.1 315.3 411.3z"
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
                     />
                   </RNSVGGroup>
                 </RNSVGGroup>
@@ -445,14 +432,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -468,12 +448,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m11.65 44 3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -565,14 +539,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -588,12 +555,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m11.65 44 3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -685,14 +646,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -708,12 +662,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m11.65 44 3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -805,14 +753,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -828,12 +769,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -925,14 +860,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -948,12 +876,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1102,14 +1024,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1125,12 +1040,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1222,14 +1131,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1245,12 +1147,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1342,14 +1238,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1365,12 +1254,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1462,14 +1345,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1485,12 +1361,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1582,14 +1452,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1605,12 +1468,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1759,14 +1616,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1782,12 +1632,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1879,14 +1723,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -1902,12 +1739,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -1999,14 +1830,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -2022,12 +1846,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -2119,14 +1937,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -2142,12 +1953,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>
@@ -2239,14 +2044,7 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                     vbHeight={48}
                     vbWidth={48}
                   >
-                    <RNSVGGroup
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGGroup
                         fill={
                           {
@@ -2262,12 +2060,6 @@ exports[`VRRateModal should render stars as full after tapping 1`] = `
                       >
                         <RNSVGPath
                           d="m16.15 37.75 7.85-4.7 7.85 4.75-2.1-8.9 6.9-6-9.1-.8L24 13.7l-3.55 8.35-9.1.8 6.9 6ZM11.65 44l3.25-14.05L4 20.5l14.4-1.25L24 6l5.6 13.25L44 20.5l-10.9 9.45L36.35 44 24 36.55ZM24 26.25Z"
-                          fill={
-                            {
-                              "payload": 4278190080,
-                              "type": 0,
-                            }
-                          }
                         />
                       </RNSVGGroup>
                     </RNSVGGroup>

@@ -83,9 +83,9 @@ export interface Releases {
     header?: boolean;
     basic_information: BasicInformation;
     date_added?: string;
-    folder_id?: number;
-    id: number | string;
-    instance_id?: number | string;
+    folder_id?: string;
+    id: number;
+    instance_id?: number;
     rating?: number;
 }
 

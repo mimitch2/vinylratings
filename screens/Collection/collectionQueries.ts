@@ -30,6 +30,7 @@ export const GET_COLLECTION = gql`
                 date_added
                 instance_id
                 rating
+                folder_id
                 notes {
                     field_id
                     value

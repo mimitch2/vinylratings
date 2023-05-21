@@ -19,6 +19,7 @@ import { VRIcon, VRText, VRDivider } from 'components';
 import {
     ArtistDetails,
     Collection,
+    Copies,
     Home,
     MasterRelease,
     Release,
@@ -238,6 +239,14 @@ const VRTabs = () => {
                     options={{
                         headerMode: 'screen',
                         header: () => <HeaderBar title="Master" />
+                    }}
+                />
+                <Stack.Screen
+                    name="Copies"
+                    component={Copies}
+                    options={{
+                        headerMode: 'screen',
+                        header: () => <HeaderBar title="My Copies" />
                     }}
                 />
             </Stack.Navigator>

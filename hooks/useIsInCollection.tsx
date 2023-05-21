@@ -1,4 +1,4 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useLazyQuery, gql } from '@apollo/client';
 import { Data } from 'types';
 
 export const IS_IN_COLLECTION = gql`
@@ -34,9 +34,7 @@ export const useIsInCollection = ({
     });
 
     return {
-        isInCollection: !!data?.getReleaseInCollection?.isInCollection,
-        instanceId: +data?.getReleaseInCollection?.releases[0]?.instance_id,
-        customFieldsValues: data?.getReleaseInCollection?.releases[0]?.notes,
+        isInCollection: !!data?.getReleaseInCollection?.isInCollection ?? false,
         releases: data?.getReleaseInCollection?.releases,
         isInCollectionLoading: loading,
         isInCollectionError: error,
