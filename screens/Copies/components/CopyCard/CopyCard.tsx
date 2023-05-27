@@ -1,20 +1,66 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, Image } from 'react-native';
+import {
+    IndexPath,
+    Layout,
+    Select,
+    SelectItem,
+    Card
+} from '@ui-kitten/components';
 
-import { VRText, VRContainer, VRButton, VRCalendarModal } from 'components';
+import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
 
-const CopyCard = ({ release, addWashedOn, removeFromCollection }) => {
-    const { instanceId } = release;
-
+const CopyCard = ({
+    release,
+    addWashedOn,
+    removeFromCollection,
+    washedOnLoading,
+    customFields
+}) => {
     const [washedOn, setWashedOn] = useState('');
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>(
         new IndexPath(0)
     );
 
+    const getCustomFiledValues = useCallback(() => {
+        return customFields?.getCustomFields?.fields?.map((field) => {
+            return {
+                ...field,
+                value: release?.notes?.find(
+                    (note) => note.field_id === field.id
+                )?.value
+            };
+        });
+    }, [release?.notes, customFields]);
+
     return (
-        <Layout style={styles.container}>
+        <Card style={styles.container}>
+            <Layout
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Layout>
+                    {getCustomFiledValues().map((field) => {
+                        return (
+                            <Layout key={field.id}>
+                                <Layout style={{ flexDirection: 'row' }}>
+                                    <VRText fontType="bold">
+                                        {field.name}:{' '}
+                                    </VRText>
+                                    <VRText>{field.value ?? 'Not set'}</VRText>
+                                </Layout>
+                            </Layout>
+                        );
+                    })}
+                </Layout>
+                <Image
+                    source={{ uri: release?.basic_information?.thumb }}
+                    style={{ height: 75, width: 75 }}
+                />
+            </Layout>
             {/* <Select
                 selectedIndex={selectedIndex}
                 onSelect={(index) => setSelectedIndex(index)}
@@ -36,32 +82,42 @@ const CopyCard = ({ release, addWashedOn, removeFromCollection }) => {
                 <SelectItem title="Option 15" />
                 <SelectItem title="Option 16" />
             </Select> */}
-            <VRButton
-                title={
-                    washedOn ? `Washed on: ${washedOn}` : 'Set washed on date'
-                }
-                onPress={() => setCalendarModalOpen(true)}
-                trackID="release_screen-wash_now"
-                size="tiny"
-                variant="basic"
-                stacked={false}
-                containerStyle={{
-                    marginLeft: 10
-                }}
-            />
+            <Layout style={{ flexDirection: 'row', marginTop: 20 }}>
+                <VRButton
+                    title="Edit"
+                    onPress={() => setCalendarModalOpen(true)}
+                    trackID="copy_card-wash_now"
+                    size="small"
+                    variant="basic"
+                    stacked={false}
+                    // containerStyle={{
+                    //     marginLeft: 10
+                    // }}
+                />
+                <VRButton
+                    title="Remove"
+                    onPress={() => setCalendarModalOpen(true)}
+                    trackID="copy_card-wash_now"
+                    size="small"
+                    variant="basic"
+                    stacked={false}
+                    containerStyle={{
+                        marginLeft: 10
+                    }}
+                />
+            </Layout>
 
-            <VRCalendarModal
+            <VREditCopyModal
                 setModalOpen={setCalendarModalOpen}
                 modalOpen={calendarModalOpen}
                 loading={washedOnLoading}
+                washedOn={washedOn}
                 onDatePress={async (date) => {
                     const washedOnResponse = await addWashedOn({
                         variables: {
-                            releaseId: +id,
-                            instanceId,
+                            releaseId: +release?.id,
+                            instanceId: +release?.instance_id,
                             washedOn: date
-                            // title,
-                            // artist: artists[0].name
                         }
                     });
 
@@ -71,7 +127,7 @@ const CopyCard = ({ release, addWashedOn, removeFromCollection }) => {
                     setCalendarModalOpen(false);
                 }}
             />
-        </Layout>
+        </Card>
     );
 };
 const styles = StyleSheet.create({

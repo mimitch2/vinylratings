@@ -14,6 +14,23 @@ export const IS_IN_COLLECTION = gql`
                     field_id
                     value
                 }
+                basic_information {
+                    title
+                    thumb
+                    year
+                    artists {
+                        name
+                    }
+                    type
+                    genres
+                    styles
+                    formats {
+                        name
+                        qty
+                        text
+                        descriptions
+                    }
+                }
             }
         }
     }

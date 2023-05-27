@@ -1,5 +1,36 @@
 import { gql } from '@apollo/client';
 
+export const RELEASES_FRAGMENT = gql`
+    fragment ReleasesFragment on Release {
+        id
+        date_added
+        instance_id
+        rating
+        folder_id
+        notes {
+            field_id
+            value
+        }
+        basic_information {
+            title
+            thumb
+            year
+            artists {
+                name
+            }
+            type
+            genres
+            styles
+            formats {
+                name
+                qty
+                text
+                descriptions
+            }
+        }
+    }
+`;
+
 export const GET_COLLECTION = gql`
     query GetCollection(
         $folder: Int

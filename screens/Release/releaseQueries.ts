@@ -209,16 +209,12 @@ export const ADD_WASHED_ON = gql`
     mutation AddWashedOn(
         $releaseId: Int!
         $instanceId: Int!
-        $washedOn: String!
-        $title: String!
-        $artist: String!
+        $washedOn: String! # $title: String! # $artist: String!
     ) {
         addWashedOn(
             releaseId: $releaseId
             instanceId: $instanceId
-            washedOn: $washedOn
-            title: $title
-            artist: $artist
+            washedOn: $washedOn # title: $title # artist: $artist
         ) {
             washedOn
             releaseId

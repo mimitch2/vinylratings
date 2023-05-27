@@ -19,7 +19,8 @@ import {
     useIsInCollection,
     useGetFolders,
     IS_IN_COLLECTION,
-    useIsLoading
+    useIsLoading,
+    useCustomFields
 } from 'hooks';
 
 type Params = {
@@ -38,6 +39,12 @@ const Copies = ({ route }: { route: Route }) => {
         useIsInCollection({
             releaseId: +id
         });
+
+    const {
+        data: customFields,
+        loading: customFieldsLoading,
+        error: customFieldsError
+    } = useCustomFields();
 
     const [
         removeFromCollectionMutation,
@@ -116,7 +123,23 @@ const Copies = ({ route }: { route: Route }) => {
     return (
         <VRContainer styleOverride={{ flex: 1, height: '100%' }} startAnimation>
             <VRText>Copies</VRText>
-            <CopyCard />
+            {releases?.map((release, idx) => (
+                <Layout
+                    key={release.instance_id}
+                    style={{
+                        marginBottom: idx !== releases.length - 1 ? 15 : 0
+                    }}
+                >
+                    <CopyCard
+                        release={release}
+                        removeFromCollection={removeFromCollection}
+                        addToCollection={addToCollection}
+                        addWashedOn={addWashedOn}
+                        washedOnLoading={washedOnLoading}
+                        customFields={customFields}
+                    />
+                </Layout>
+            ))}
         </VRContainer>
     );
 };

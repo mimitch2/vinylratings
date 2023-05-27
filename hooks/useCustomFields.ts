@@ -16,7 +16,7 @@ export const GET_CUSTOM_FIELDS = gql`
     }
 `;
 
-const useCustomFields = ({ fieldValues }) => {
+export const useCustomFields = () => {
     const { data, loading, error } = useQuery(GET_CUSTOM_FIELDS);
 
     return {
@@ -25,5 +25,3 @@ const useCustomFields = ({ fieldValues }) => {
         error
     };
 };
-
-export default useCustomFields;

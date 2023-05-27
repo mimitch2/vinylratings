@@ -4,6 +4,7 @@ export { default as VRCalendarModal } from './VRCalendarModal/VRCalendarModal';
 export { default as VRContainer } from './VRContainer/VRContainer';
 export { default as VRError } from './VRError/VRError';
 export { default as VRDivider } from './VRDivider/VRDivider';
+export { default as VREditCopyModal } from './VREditCopyModal/VREditCopyModal';
 export { default as VRFooter } from './VRFooter/VRFooter';
 export { default as VRIcon } from './VRIcon/VRIcon';
 export { default as VRImageModal } from './VRImageModal/VRImageModal';
