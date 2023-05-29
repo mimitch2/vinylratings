@@ -7,6 +7,7 @@ import {
     SelectItem,
     Card
 } from '@ui-kitten/components';
+import { Releases, CustomFields, Folder } from 'types';
 
 import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
 
@@ -15,27 +16,62 @@ const CopyCard = ({
     addWashedOn,
     removeFromCollection,
     washedOnLoading,
-    customFields
+    customFields,
+    folders,
+    updateCustomField
+}: {
+    release: Releases;
+    addWashedOn: any;
+    removeFromCollection: () => void;
+    washedOnLoading: boolean;
+    customFields: CustomFields;
+    folders: Folder[];
+    updateCustomField: any;
 }) => {
     const [washedOn, setWashedOn] = useState('');
-    const [calendarModalOpen, setCalendarModalOpen] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>(
-        new IndexPath(0)
-    );
+    const [copyModalOpen, setCopyModalOpen] = useState(false);
 
-    const getCustomFiledValues = useCallback(() => {
-        return customFields?.getCustomFields?.fields?.map((field) => {
-            return {
-                ...field,
-                value: release?.notes?.find(
-                    (note) => note.field_id === field.id
-                )?.value
-            };
-        });
+    const folderName =
+        folders?.find((folder) => {
+            return +release?.folder_id === folder?.id ?? false;
+        })?.name ?? 'Unknown';
+
+    const getCustomFieldValues = useCallback(() => {
+        return (
+            customFields?.getCustomFields?.fields?.map((field) => {
+                return {
+                    ...field,
+                    value: release?.notes?.find(
+                        (note) => note.field_id === field.id
+                    )?.value
+                };
+            }) ?? []
+        );
     }, [release?.notes, customFields]);
 
     return (
-        <Card style={styles.container}>
+        <Card style={styles.container} disabled>
+            <VRButton
+                title="Filed"
+                onPress={() =>
+                    updateCustomField({
+                        variables: {
+                            releaseId: +release?.id,
+                            fieldId: 3,
+                            value: 'test',
+                            folderId: +release?.folder_id,
+                            instanceId: +release?.instance_id
+                        }
+                    })
+                }
+                trackID="copy_card-wash_now"
+                size="small"
+                variant="basic"
+                stacked={false}
+                // containerStyle={{
+                //     marginLeft: 10
+                // }}
+            />
             <Layout
                 style={{
                     flexDirection: 'row',
@@ -43,23 +79,26 @@ const CopyCard = ({
                 }}
             >
                 <Layout>
-                    {getCustomFiledValues().map((field) => {
+                    <Layout style={{ flexDirection: 'row' }}>
+                        <VRText fontType="bold">Folder: </VRText>
+                        <VRText>{folderName}</VRText>
+                    </Layout>
+                    {getCustomFieldValues().map((field) => {
                         return (
-                            <Layout key={field.id}>
-                                <Layout style={{ flexDirection: 'row' }}>
-                                    <VRText fontType="bold">
-                                        {field.name}:{' '}
-                                    </VRText>
-                                    <VRText>{field.value ?? 'Not set'}</VRText>
-                                </Layout>
+                            <Layout
+                                key={field.id}
+                                style={{ flexDirection: 'row' }}
+                            >
+                                <VRText fontType="bold">{field.name}: </VRText>
+                                <VRText>{field.value ?? 'Not set'}</VRText>
                             </Layout>
                         );
                     })}
                 </Layout>
-                <Image
+                {/* <Image
                     source={{ uri: release?.basic_information?.thumb }}
                     style={{ height: 75, width: 75 }}
-                />
+                /> */}
             </Layout>
             {/* <Select
                 selectedIndex={selectedIndex}
@@ -85,7 +124,7 @@ const CopyCard = ({
             <Layout style={{ flexDirection: 'row', marginTop: 20 }}>
                 <VRButton
                     title="Edit"
-                    onPress={() => setCalendarModalOpen(true)}
+                    onPress={() => setCopyModalOpen(true)}
                     trackID="copy_card-wash_now"
                     size="small"
                     variant="basic"
@@ -96,7 +135,7 @@ const CopyCard = ({
                 />
                 <VRButton
                     title="Remove"
-                    onPress={() => setCalendarModalOpen(true)}
+                    onPress={() => setCopyModalOpen(true)}
                     trackID="copy_card-wash_now"
                     size="small"
                     variant="basic"
@@ -108,8 +147,8 @@ const CopyCard = ({
             </Layout>
 
             <VREditCopyModal
-                setModalOpen={setCalendarModalOpen}
-                modalOpen={calendarModalOpen}
+                setModalOpen={setCopyModalOpen}
+                modalOpen={copyModalOpen}
                 loading={washedOnLoading}
                 washedOn={washedOn}
                 onDatePress={async (date) => {
@@ -124,7 +163,7 @@ const CopyCard = ({
                     if (washedOnResponse?.data) {
                         setWashedOn(date);
                     }
-                    setCalendarModalOpen(false);
+                    setCopyModalOpen(false);
                 }}
             />
         </Card>

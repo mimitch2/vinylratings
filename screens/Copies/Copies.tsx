@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
 
 import { CopyCard } from './components';
-import { VRText, VRContainer } from 'components';
+import { VRText, VRContainer, VRLoading } from 'components';
 import {
     GET_RELEASE,
     ADD_RELEASE,
@@ -13,6 +13,7 @@ import {
     ADD_WASHED_ON,
     GET_CUSTOM_FIELDS
 } from 'screens/Release/releaseQueries';
+import { Releases } from 'types';
 import { client } from '../../ApolloProviderWrapper';
 
 import {
@@ -20,7 +21,8 @@ import {
     useGetFolders,
     IS_IN_COLLECTION,
     useIsLoading,
-    useCustomFields
+    useCustomFields,
+    useUpdateCustomField
 } from 'hooks';
 
 type Params = {
@@ -39,6 +41,9 @@ const Copies = ({ route }: { route: Route }) => {
         useIsInCollection({
             releaseId: +id
         });
+
+    const { folders, foldersLoading } = useGetFolders();
+    const { updateCustomField, data, loading, error } = useUpdateCustomField();
 
     const {
         data: customFields,
@@ -122,24 +127,29 @@ const Copies = ({ route }: { route: Route }) => {
 
     return (
         <VRContainer styleOverride={{ flex: 1, height: '100%' }} startAnimation>
-            <VRText>Copies</VRText>
-            {releases?.map((release, idx) => (
-                <Layout
-                    key={release.instance_id}
-                    style={{
-                        marginBottom: idx !== releases.length - 1 ? 15 : 0
-                    }}
-                >
-                    <CopyCard
-                        release={release}
-                        removeFromCollection={removeFromCollection}
-                        addToCollection={addToCollection}
-                        addWashedOn={addWashedOn}
-                        washedOnLoading={washedOnLoading}
-                        customFields={customFields}
-                    />
-                </Layout>
-            ))}
+            {isInCollectionLoading || foldersLoading || customFieldsLoading ? (
+                <VRLoading />
+            ) : (
+                releases?.map((release, idx) => (
+                    <Layout
+                        key={release.instance_id}
+                        style={{
+                            marginBottom: idx !== releases.length - 1 ? 15 : 0
+                        }}
+                    >
+                        <CopyCard
+                            release={release}
+                            removeFromCollection={removeFromCollection}
+                            addToCollection={addToCollection}
+                            addWashedOn={addWashedOn}
+                            washedOnLoading={washedOnLoading}
+                            customFields={customFields}
+                            folders={folders}
+                            updateCustomField={updateCustomField}
+                        />
+                    </Layout>
+                ))
+            )}
         </VRContainer>
     );
 };

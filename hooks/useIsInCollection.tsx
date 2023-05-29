@@ -1,36 +1,14 @@
 import { useQuery, useLazyQuery, gql } from '@apollo/client';
 import { Data } from 'types';
+import { COLLECTION_INSTANCE_FRAGMENT } from 'screens/Collection/collectionQueries';
 
 export const IS_IN_COLLECTION = gql`
+    ${COLLECTION_INSTANCE_FRAGMENT}
     query IsInCollection($id: Int!) {
         getReleaseInCollection(id: $id) {
             isInCollection
             releases {
-                id
-                date_added
-                instance_id
-                folder_id
-                notes {
-                    field_id
-                    value
-                }
-                basic_information {
-                    title
-                    thumb
-                    year
-                    artists {
-                        name
-                    }
-                    type
-                    genres
-                    styles
-                    formats {
-                        name
-                        qty
-                        text
-                        descriptions
-                    }
-                }
+                ...CollectionInstanceFragment
             }
         }
     }

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const RELEASES_FRAGMENT = gql`
-    fragment ReleasesFragment on Release {
+export const COLLECTION_INSTANCE_FRAGMENT = gql`
+    fragment CollectionInstanceFragment on CollectionInstance {
         id
         date_added
         instance_id
@@ -32,6 +32,7 @@ export const RELEASES_FRAGMENT = gql`
 `;
 
 export const GET_COLLECTION = gql`
+    ${COLLECTION_INSTANCE_FRAGMENT}
     query GetCollection(
         $folder: Int
         $page: Int
@@ -57,32 +58,7 @@ export const GET_COLLECTION = gql`
                 per_page
             }
             releases {
-                id
-                date_added
-                instance_id
-                rating
-                folder_id
-                notes {
-                    field_id
-                    value
-                }
-                basic_information {
-                    title
-                    thumb
-                    year
-                    artists {
-                        name
-                    }
-                    type
-                    genres
-                    styles
-                    formats {
-                        name
-                        qty
-                        text
-                        descriptions
-                    }
-                }
+                ...CollectionInstanceFragment
             }
         }
     }

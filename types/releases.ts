@@ -79,6 +79,10 @@ export type DiscogsVersion = {
     user_data: UserData;
 };
 
+export interface Notes {
+    field_id: number;
+    value: string;
+}
 export interface Releases {
     header?: boolean;
     basic_information: BasicInformation;
@@ -87,6 +91,21 @@ export interface Releases {
     id: number;
     instance_id?: number;
     rating?: number;
+    notes?: Notes[];
+}
+
+export interface CustomFields {
+    getCustomFields: {
+        fields: {
+            id: number;
+            name: string;
+            type: string;
+            options: string[] | null;
+            position: number;
+            lines: number | null;
+            public: boolean;
+        }[];
+    };
 }
 
 export interface UserData {

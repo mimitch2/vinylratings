@@ -92,11 +92,11 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         }
     });
 
-    const {
-        data: fields,
-        loading: fieldsLoading,
-        error: fieldsError
-    } = useQuery(GET_CUSTOM_FIELDS);
+    // const {
+    //     data: fields,
+    //     loading: fieldsLoading,
+    //     error: fieldsError
+    // } = useQuery(GET_CUSTOM_FIELDS);
     const { folders, foldersLoading } = useGetFolders();
     const foldersWithoutAll = folders.slice(1);
 
@@ -185,7 +185,6 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     const isLoading = useIsLoading(
         foldersLoading,
         loading,
-        fieldsLoading,
         isInCollectionLoading
     );
 
@@ -326,10 +325,10 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
         return newDate;
     };
 
-    const folderName =
-        folders?.find((folder) => {
-            return +releases?.[0]?.folder_id === folder?.id ?? false;
-        })?.name ?? 'Unknown';
+    // const folderName =
+    //     folders?.find((folder) => {
+    //         return +releases?.[0]?.folder_id === folder?.id ?? false;
+    //     })?.name ?? 'Unknown';
 
     const [{ name: artist }] = artists;
 
@@ -351,9 +350,9 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         artist={artist}
                         releasedDate={getReleaseDate()}
                     />
-                    {isInCollection ? (
+                    {/* {isInCollection ? (
                         <VRText>Folder: {folderName}</VRText>
-                    ) : null}
+                    ) : null} */}
 
                     <Layout style={styles.buttonRow}>
                         <VRButton
