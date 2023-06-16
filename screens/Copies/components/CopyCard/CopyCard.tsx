@@ -1,15 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { StyleSheet, Image } from 'react-native';
+import { Layout, Card } from '@ui-kitten/components';
 import {
-    IndexPath,
-    Layout,
-    Select,
-    SelectItem,
-    Card
-} from '@ui-kitten/components';
-import { Releases, CustomFields, Folder } from 'types';
+    CollectionInstance,
+    CustomFields,
+    Folder,
+    CustomFieldsValues
+} from 'types';
 
 import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
+
+const useSelectState = (initialState = undefined) => {
+    const [selectedIndex, setSelectedIndex] = useState(initialState);
+    return { selectedIndex, onSelect: setSelectedIndex };
+};
 
 const CopyCard = ({
     release,
@@ -20,9 +24,13 @@ const CopyCard = ({
     folders,
     updateCustomField
 }: {
-    release: Releases;
+    release: CollectionInstance;
     addWashedOn: any;
-    removeFromCollection: () => void;
+    removeFromCollection: ({
+        instanceId
+    }: {
+        instanceId: string;
+    }) => Promise<void>;
     washedOnLoading: boolean;
     customFields: CustomFields;
     folders: Folder[];
@@ -36,7 +44,9 @@ const CopyCard = ({
             return +release?.folder_id === folder?.id ?? false;
         })?.name ?? 'Unknown';
 
-    const getCustomFieldValues = useCallback(() => {
+    const dateAdded = new Date(release?.date_added).toLocaleDateString();
+
+    const getCustomFieldValues = useMemo((): CustomFieldsValues => {
         return (
             customFields?.getCustomFields?.fields?.map((field) => {
                 return {
@@ -47,31 +57,14 @@ const CopyCard = ({
                 };
             }) ?? []
         );
-    }, [release?.notes, customFields]);
+    }, [customFields, release?.notes]);
+
+    // const submit = () => {
+
+    // }
 
     return (
         <Card style={styles.container} disabled>
-            <VRButton
-                title="Filed"
-                onPress={() =>
-                    updateCustomField({
-                        variables: {
-                            releaseId: +release?.id,
-                            fieldId: 3,
-                            value: 'test',
-                            folderId: +release?.folder_id,
-                            instanceId: +release?.instance_id
-                        }
-                    })
-                }
-                trackID="copy_card-wash_now"
-                size="small"
-                variant="basic"
-                stacked={false}
-                // containerStyle={{
-                //     marginLeft: 10
-                // }}
-            />
             <Layout
                 style={{
                     flexDirection: 'row',
@@ -80,10 +73,15 @@ const CopyCard = ({
             >
                 <Layout>
                     <Layout style={{ flexDirection: 'row' }}>
+                        <VRText fontType="bold">Date added: </VRText>
+                        <VRText>{dateAdded}</VRText>
+                    </Layout>
+                    <Layout style={{ flexDirection: 'row' }}>
                         <VRText fontType="bold">Folder: </VRText>
                         <VRText>{folderName}</VRText>
                     </Layout>
-                    {getCustomFieldValues().map((field) => {
+
+                    {getCustomFieldValues.map((field) => {
                         return (
                             <Layout
                                 key={field.id}
@@ -100,27 +98,6 @@ const CopyCard = ({
                     style={{ height: 75, width: 75 }}
                 /> */}
             </Layout>
-            {/* <Select
-                selectedIndex={selectedIndex}
-                onSelect={(index) => setSelectedIndex(index)}
-            >
-                <SelectItem title="Option 1" />
-                <SelectItem title="Option 2" />
-                <SelectItem title="Option 3" />
-                <SelectItem title="Option 4" />
-                <SelectItem title="Option 5" />
-                <SelectItem title="Option 6" />
-                <SelectItem title="Option 7" />
-                <SelectItem title="Option 8" />
-                <SelectItem title="Option 9" />
-                <SelectItem title="Option 10" />
-                <SelectItem title="Option 11" />
-                <SelectItem title="Option 12" />
-                <SelectItem title="Option 13" />
-                <SelectItem title="Option 14" />
-                <SelectItem title="Option 15" />
-                <SelectItem title="Option 16" />
-            </Select> */}
             <Layout style={{ flexDirection: 'row', marginTop: 20 }}>
                 <VRButton
                     title="Edit"
@@ -135,7 +112,11 @@ const CopyCard = ({
                 />
                 <VRButton
                     title="Remove"
-                    onPress={() => setCopyModalOpen(true)}
+                    onPress={() =>
+                        removeFromCollection({
+                            instanceId: release?.instance_id
+                        })
+                    }
                     trackID="copy_card-wash_now"
                     size="small"
                     variant="basic"
@@ -148,13 +129,13 @@ const CopyCard = ({
 
             <VREditCopyModal
                 setModalOpen={setCopyModalOpen}
+                customFields={getCustomFieldValues}
                 modalOpen={copyModalOpen}
                 loading={washedOnLoading}
                 washedOn={washedOn}
                 onDatePress={async (date) => {
                     const washedOnResponse = await addWashedOn({
                         variables: {
-                            releaseId: +release?.id,
                             instanceId: +release?.instance_id,
                             washedOn: date
                         }

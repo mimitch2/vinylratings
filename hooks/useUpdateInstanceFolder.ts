@@ -1,18 +1,17 @@
 import { gql, useMutation } from '@apollo/client';
 
-type UpdateCustomFieldData = {
+type UpdateInstanceFolderData = {
     success: boolean;
 };
 
-type UpdateCustomFieldVariables = {
+type UpdateInstanceFolderVariables = {
     releaseId: number;
     instanceId: number;
-    folderId: number;
     fieldId: number;
     value: string;
 };
 
-const UPDATE_CUSTOM_FIELD = gql`
+const UPDATE_INSTANCE_FOLDER = gql`
     mutation UpdateCustomField(
         $releaseId: Int!
         $fieldId: Int!
@@ -32,14 +31,14 @@ const UPDATE_CUSTOM_FIELD = gql`
     }
 `;
 
-export const useUpdateCustomField = () => {
-    const [updateCustomField, { data, loading, error }] = useMutation<
-        UpdateCustomFieldData,
-        UpdateCustomFieldVariables
-    >(UPDATE_CUSTOM_FIELD);
+export const useUpdateInstanceFolder = () => {
+    const [updateInstanceFolder, { data, loading, error }] = useMutation<
+        UpdateInstanceFolderData,
+        UpdateInstanceFolderVariables
+    >(UPDATE_INSTANCE_FOLDER);
 
     return {
-        updateCustomField,
+        updateInstanceFolder,
         data,
         loading,
         error

@@ -86,15 +86,18 @@ export interface Notes {
 export interface Releases {
     header?: boolean;
     basic_information: BasicInformation;
-    date_added?: string;
-    folder_id?: string;
     id: number;
-    instance_id?: number;
     rating?: number;
-    notes?: Notes[];
 }
 
-export interface CustomFields {
+export interface CollectionInstance extends Releases {
+    date_added: string;
+    folder_id: string;
+    instance_id: string;
+    notes: Notes[];
+}
+
+export interface CustomFieldsResponse {
     getCustomFields: {
         fields: {
             id: number;
@@ -107,6 +110,19 @@ export interface CustomFields {
         }[];
     };
 }
+
+export type CustomFields = CustomFieldsResponse | undefined;
+export type CustomFieldsValue = {
+    value: string | undefined;
+    id: number;
+    name: string;
+    type: string;
+    options: string[] | null;
+    position: number;
+    lines: number | null;
+    public: boolean;
+};
+export type CustomFieldsValues = CustomFieldsValue[];
 
 export interface UserData {
     in_collection: boolean;

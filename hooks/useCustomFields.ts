@@ -1,5 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 
+import { CustomFields } from 'types';
+
 export const GET_CUSTOM_FIELDS = gql`
     query CustomFields {
         getCustomFields {
@@ -17,7 +19,7 @@ export const GET_CUSTOM_FIELDS = gql`
 `;
 
 export const useCustomFields = () => {
-    const { data, loading, error } = useQuery(GET_CUSTOM_FIELDS);
+    const { data, loading, error } = useQuery<CustomFields>(GET_CUSTOM_FIELDS);
 
     return {
         data,

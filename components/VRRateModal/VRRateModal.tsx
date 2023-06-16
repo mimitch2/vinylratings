@@ -135,7 +135,7 @@ const VRRateModal = ({
                         }
                         multiline
                         containerStyleOverride={{ marginTop: 10 }}
-                        label="Notes:"
+                        label="Notes"
                         showLength
                     />
                 </View>

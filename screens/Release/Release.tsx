@@ -55,10 +55,6 @@ export type Route = {
 };
 
 const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
-    const [segmentedIdx, setSegmentedIdx] = useState(0);
-    const [washedOn, setWashedOn] = useState('');
-    const [calendarModalOpen, setCalendarModalOpen] = useState(false);
-    const [folderModalOpen, setFolderModalOpen] = useState(false);
     const [rateModalOpen, setRateModalOpen] = useState(false);
     const [discogsReviewsModalOpen, setDiscogsReviewsModalOpen] =
         useState(false);
@@ -97,101 +93,25 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
     //     loading: fieldsLoading,
     //     error: fieldsError
     // } = useQuery(GET_CUSTOM_FIELDS);
-    const { folders, foldersLoading } = useGetFolders();
-    const foldersWithoutAll = folders.slice(1);
+    // const { folders, foldersLoading } = useGetFolders();
+    // const foldersWithoutAll = folders.slice(1);
 
     // Mutations
-    const [addToCollectionMutation, { loading: addToCollectionLoading }] =
-        useMutation(ADD_TO_COLLECTION);
-    const [
-        removeFromCollectionMutation,
-        { loading: removeFromCollectionLoading }
-    ] = useMutation(REMOVE_FROM_COLLECTION);
     const [addRelease, { loading: addReleaseLoading }] =
         useMutation(ADD_RELEASE);
     const [addRating, { loading: addRatingLoading }] = useMutation(ADD_RATING, {
         refetchQueries: [{ query: GET_RELEASE }, 'GetRelease']
     });
-    const [addWashedOn, { loading: washedOnLoading }] = useMutation(
-        ADD_WASHED_ON,
-        {
-            refetchQueries: [{ query: GET_RELEASE }, 'GetRelease']
-        }
-    );
-    const toggleFolderModal = () => {
-        setFolderModalOpen((prevState) => !prevState);
-    };
-
-    const optimisticallyUpdateIsInCollection = (value: boolean) => {
-        client.writeQuery({
-            query: IS_IN_COLLECTION,
-            data: {
-                getReleaseInCollection: {
-                    __typename: 'IsInCollectionResponse',
-                    isInCollection: value,
-                    releases: value ? releases : []
-                }
-            },
-            variables: {
-                id: +id
-            }
-        });
-    };
-
-    const addToCollection = async (folderItem: Folder) => {
-        try {
-            await addToCollectionMutation({
-                variables: {
-                    folderId: +folderItem.id,
-                    releaseId: +id
-                },
-                onCompleted: () => {
-                    optimisticallyUpdateIsInCollection(true);
-                    refetchIsInCollection();
-                }
-            });
-        } catch (err: any) {
-            throw new Error(err);
-        } finally {
-            setFolderModalOpen(false);
-        }
-    };
-
-    const removeFromCollection = async () => {
-        try {
-            await removeFromCollectionMutation({
-                variables: {
-                    folderId: +releases[0].folder_id,
-                    releaseId: +id,
-                    instanceId: getInstanceId()
-                },
-                onCompleted: (response) => {
-                    if (response?.removeFromCollection?.success) {
-                        optimisticallyUpdateIsInCollection(false);
-                        refetchIsInCollection();
-                    }
-                }
-            });
-        } catch (err: any) {
-            throw new Error(err);
-        }
-    };
 
     const refetchRelease = () => {
         refetchIsInCollection();
         refetch();
     };
 
-    const isLoading = useIsLoading(
-        foldersLoading,
-        loading,
-        isInCollectionLoading
-    );
+    const isLoading = useIsLoading(loading, isInCollectionLoading);
 
     const isUpdating = useIsLoading(
-        addToCollectionLoading,
         isInCollectionLoading,
-        removeFromCollectionLoading,
         addReleaseLoading,
         addRatingLoading
     );
@@ -354,7 +274,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         <VRText>Folder: {folderName}</VRText>
                     ) : null} */}
 
-                    <Layout style={styles.buttonRow}>
+                    {/* <Layout style={styles.buttonRow}>
                         <VRButton
                             title={`${
                                 isInCollection ? 'Remove from' : 'Add to'
@@ -386,9 +306,9 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                                 }}
                             />
                         ) : null}
-                    </Layout>
+                    </Layout> */}
 
-                    <VRModal
+                    {/* <VRModal
                         modalOpen={folderModalOpen}
                         setModalOpen={setFolderModalOpen}
                         title="Add To Collection"
@@ -398,9 +318,9 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             folders={foldersWithoutAll}
                             setFolder={addToCollection}
                         />
-                    </VRModal>
+                    </VRModal> */}
 
-                    <VRCalendarModal
+                    {/* <VRCalendarModal
                         setModalOpen={setCalendarModalOpen}
                         modalOpen={calendarModalOpen}
                         loading={washedOnLoading}
@@ -420,7 +340,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                             }
                             setCalendarModalOpen(false);
                         }}
-                    />
+                    /> */}
                     {isInCollection ? (
                         <VRPressable
                             trackID="release_screen-see_all_versions"
@@ -480,7 +400,7 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                     />
                 </Layout>
             </VRContainer>
-            <VRFooter styleOverride={{ paddingBottom: 0 }}>
+            <VRFooter>
                 <VRButton
                     trackID="release_screen-rate"
                     title="Rate this release"

@@ -1,5 +1,5 @@
 {
     "workbench.colorCustomizations": {},
-    "cSpell.words": ["haptics", "svgs", "vinylratings"],
+    "cSpell.words": ["Datepicker", "haptics", "svgs", "vinylratings"],
     "typescript.tsdk": "node_modules/typescript/lib"
 }

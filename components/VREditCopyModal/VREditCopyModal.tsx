@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import { Calendar, Layout, Datepicker } from '@ui-kitten/components';
+import {
+    Calendar,
+    Layout,
+    Datepicker,
+    Select,
+    SelectItem
+} from '@ui-kitten/components';
 
-import { VRModal, VRButton } from 'components';
+import {
+    VRModal,
+    VRButton,
+    VRFooter,
+    VRText,
+    VRSelect,
+    VRInput
+} from 'components';
 import { HEIGHT } from 'constants/index';
+import { CustomFieldsValue, CustomFieldsValues } from 'types';
 
 const VREditCopyModal = ({
     onDatePress,
@@ -11,7 +25,8 @@ const VREditCopyModal = ({
     setModalOpen,
     loading,
     animationType = 'slide',
-    washedOn
+    washedOn,
+    customFields
 }: {
     onDatePress: (value: string) => void;
     modalOpen: boolean;
@@ -19,44 +34,68 @@ const VREditCopyModal = ({
     loading: boolean;
     animationType?: 'slide' | 'fade' | 'none';
     washedOn: string;
+    customFields: CustomFieldsValues;
 }) => {
+    console.log(
+        '🚀 ~ file: VREditCopyModal.tsx:39 ~ customFields:',
+        customFields
+    );
     return (
         <VRModal
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            title="Pick a date"
+            title="Edit Your Copy"
             animationType={animationType}
+            centerContent={false}
         >
             <Layout
                 style={{
                     flex: 1,
-                    justifyContent: 'space-between'
+                    padding: 20
                 }}
             >
-                <Layout>
-                    <Datepicker
-                        onSelect={(pickedDate) => {
-                            onDatePress(pickedDate.toLocaleDateString());
-                        }}
-                        placeholder={washedOn || 'Never'}
-                        max={new Date()}
-                        style={{
-                            marginTop: 20
-                        }}
-                    />
-                </Layout>
-                <VRButton
-                    containerStyle={{
-                        marginBottom: 65
-                    }}
-                    title="Reset"
-                    onPress={() => {
-                        onDatePress('');
-                        setModalOpen(false);
-                    }}
-                    trackID="calendar-modal-reset-button"
-                    variant="primary"
-                />
+                {customFields.map((field: CustomFieldsValue) => {
+                    if (field.type === 'dropdown') {
+                        return <VRSelect field={field} key={field.id} />;
+                    }
+
+                    if (field.type === 'textarea') {
+                        if (field.name === 'Washed On') {
+                            return (
+                                <Datepicker
+                                    label={() => (
+                                        <VRText
+                                            styleOverride={{ marginBottom: 5 }}
+                                        >
+                                            field.name
+                                        </VRText>
+                                    )}
+                                    onSelect={(pickedDate) => {
+                                        onDatePress(
+                                            pickedDate.toLocaleDateString()
+                                        );
+                                    }}
+                                    placeholder={field.value || 'Not set'}
+                                    max={new Date()}
+                                    style={{
+                                        marginTop: 20,
+                                        flex: 1
+                                    }}
+                                />
+                            );
+                        } else {
+                            return (
+                                <VRInput
+                                    value={field.value || 'Not set'}
+                                    label={field.name}
+                                    handleTextChange={(value) => {
+                                        console.log('value', value);
+                                    }}
+                                />
+                            );
+                        }
+                    }
+                })}
             </Layout>
             {loading && (
                 <Layout
@@ -77,6 +116,18 @@ const VREditCopyModal = ({
                     />
                 </Layout>
             )}
+            <VRFooter styleOverride={{ marginBottom: 60 }}>
+                <VRButton
+                    containerStyle={{ width: '100%' }}
+                    title="Save"
+                    onPress={() => {
+                        onDatePress('');
+                        setModalOpen(false);
+                    }}
+                    trackID="calendar-modal-reset-button"
+                    variant="primary"
+                />
+            </VRFooter>
         </VRModal>
     );
 };

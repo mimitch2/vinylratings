@@ -22,6 +22,7 @@ export { default as VRReleaseOptionsModal } from './VRReleaseOptionsModal/VRRele
 export { default as VRReleasesList } from './VRReleasesList/VRReleasesList';
 export { default as VRSearchInput } from './VRSearchInput/VRSearchInput';
 export { default as VRSegmented } from './VRSegmented/VRSegmented';
+export { default as VRSelect } from './VRSelect/VRSelect';
 export { default as VRTag } from './VRTag/VRTag';
 export { default as VRText } from './VRText/VRText';
 export { default as VRTrackList } from './VRTrackList/VRTrackList';

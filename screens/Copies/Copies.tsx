@@ -13,7 +13,7 @@ import {
     ADD_WASHED_ON,
     GET_CUSTOM_FIELDS
 } from 'screens/Release/releaseQueries';
-import { Releases } from 'types';
+import { CollectionInstance, Folder } from 'types';
 import { client } from '../../ApolloProviderWrapper';
 
 import {
@@ -43,6 +43,7 @@ const Copies = ({ route }: { route: Route }) => {
         });
 
     const { folders, foldersLoading } = useGetFolders();
+    const foldersWithoutAll = folders.slice(1);
     const { updateCustomField, data, loading, error } = useUpdateCustomField();
 
     const {
@@ -130,25 +131,28 @@ const Copies = ({ route }: { route: Route }) => {
             {isInCollectionLoading || foldersLoading || customFieldsLoading ? (
                 <VRLoading />
             ) : (
-                releases?.map((release, idx) => (
-                    <Layout
-                        key={release.instance_id}
-                        style={{
-                            marginBottom: idx !== releases.length - 1 ? 15 : 0
-                        }}
-                    >
-                        <CopyCard
-                            release={release}
-                            removeFromCollection={removeFromCollection}
-                            addToCollection={addToCollection}
-                            addWashedOn={addWashedOn}
-                            washedOnLoading={washedOnLoading}
-                            customFields={customFields}
-                            folders={folders}
-                            updateCustomField={updateCustomField}
-                        />
-                    </Layout>
-                ))
+                releases
+                    ?.map((release: CollectionInstance, idx: number) => (
+                        <Layout
+                            key={release.instance_id}
+                            style={{
+                                marginBottom:
+                                    idx === releases.length - 1 ? 15 : 0
+                            }}
+                        >
+                            <CopyCard
+                                release={release}
+                                removeFromCollection={removeFromCollection}
+                                addToCollection={addToCollection}
+                                addWashedOn={addWashedOn}
+                                washedOnLoading={washedOnLoading}
+                                customFields={customFields}
+                                folders={folders}
+                                updateCustomField={updateCustomField}
+                            />
+                        </Layout>
+                    ))
+                    .reverse()
             )}
         </VRContainer>
     );

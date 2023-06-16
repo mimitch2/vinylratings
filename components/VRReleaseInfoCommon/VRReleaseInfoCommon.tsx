@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, StatusBar } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 
 import { WIDTH } from 'constants/index';
 import {
@@ -37,8 +38,8 @@ const VRReleaseInfoCommon = ({
     const [imageModalOpen, setImageModalOpen] = useState(false);
 
     return (
-        <>
-            <View style={styles.upperContainer}>
+        <Layout style={styles.container}>
+            <Layout style={styles.upperContainer}>
                 <VRPressable
                     trackID="release_info_common_image_modal--open"
                     onPress={() => {
@@ -46,22 +47,22 @@ const VRReleaseInfoCommon = ({
                         StatusBar.setHidden(true);
                     }}
                 >
-                    <View>
+                    <Layout>
                         {images?.length ? (
-                            <View>
+                            <Layout>
                                 <Image
                                     style={IMAGE_STYLE}
                                     source={{
                                         uri: images[0].resource_url
                                     }}
                                 />
-                            </View>
+                            </Layout>
                         ) : (
-                            <View style={IMAGE_STYLE}>
+                            <Layout style={IMAGE_STYLE}>
                                 <Vinyl />
-                            </View>
+                            </Layout>
                         )}
-                    </View>
+                    </Layout>
                 </VRPressable>
                 {images && images.length ? (
                     <VRImageModal
@@ -70,9 +71,9 @@ const VRReleaseInfoCommon = ({
                         setModalOpen={setImageModalOpen}
                     />
                 ) : null}
-            </View>
-            <View>
-                <View style={styles.title}>
+            </Layout>
+            <Layout>
+                <Layout style={styles.title}>
                     <VRText fontType="h4">{title}</VRText>
                     <VRListIndicator
                         userData={{
@@ -81,20 +82,23 @@ const VRReleaseInfoCommon = ({
                         }}
                         size="lg"
                     />
-                </View>
+                </Layout>
                 <VRText fontType="italic">{artist}</VRText>
-            </View>
-            <View style={styles.tags}>
+            </Layout>
+            <Layout style={styles.tags}>
                 {tags.map((tag) => (
                     <VRTag key={tag} tag={tag} size="lg" />
                 ))}
-            </View>
+            </Layout>
             <VRText>{`Released: ${releasedDate}`}</VRText>
-        </>
+        </Layout>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        marginBottom: 20
+    },
     upperContainer: {
         left: -20,
         top: -20
