@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 import { VRText } from 'components';
@@ -27,6 +27,8 @@ const VRInput = ({
     showLength?: boolean;
     accessoryRight?: React.ReactElement;
 }) => {
+    const [localValue, setLocalValue] = useState<string>(value);
+
     return (
         <Layout style={containerStyleOverride}>
             <Input
@@ -47,8 +49,11 @@ const VRInput = ({
                 accessibilityLabel={label}
                 testID="input"
                 style={styleOverride}
-                onChangeText={handleTextChange}
-                value={value}
+                onChangeText={(newValue) => {
+                    setLocalValue(newValue);
+                    handleTextChange(newValue);
+                }}
+                value={localValue}
                 placeholder={placeholder}
                 multiline={multiline}
                 maxLength={maxLength}

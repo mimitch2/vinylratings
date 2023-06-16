@@ -36,10 +36,6 @@ const VREditCopyModal = ({
     washedOn: string;
     customFields: CustomFieldsValues;
 }) => {
-    console.log(
-        '🚀 ~ file: VREditCopyModal.tsx:39 ~ customFields:',
-        customFields
-    );
     return (
         <VRModal
             modalOpen={modalOpen}
@@ -61,13 +57,15 @@ const VREditCopyModal = ({
 
                     if (field.type === 'textarea') {
                         if (field.name === 'Washed On') {
+                            console.log(field.name);
+
                             return (
                                 <Datepicker
                                     label={() => (
                                         <VRText
                                             styleOverride={{ marginBottom: 5 }}
                                         >
-                                            field.name
+                                            {field.name}
                                         </VRText>
                                     )}
                                     onSelect={(pickedDate) => {
