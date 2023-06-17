@@ -13,7 +13,7 @@ const VRSelect = ({ field }) => {
     );
     const initialSelectedIdx =
         valueToOptionIndex === -1 ? 0 : valueToOptionIndex;
-    const [selectedIndex, setSelectedIndex] = useState<IndexPath>(
+    const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>(
         new IndexPath(initialSelectedIdx)
     );
 
@@ -26,11 +26,13 @@ const VRSelect = ({ field }) => {
                 </VRText>
             )}
             selectedIndex={selectedIndex}
-            onSelect={(idx: IndexPath) => setSelectedIndex(idx)}
+            onSelect={(idx) => setSelectedIndex(idx)}
             value={() => (
                 <VRText>
                     {selectedIndex
-                        ? fieldWithNotSetOption.options[selectedIndex.row]
+                        ? fieldWithNotSetOption.options[
+                              (selectedIndex as IndexPath).row
+                          ]
                         : 'Not set'}
                 </VRText>
             )}

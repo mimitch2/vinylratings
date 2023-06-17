@@ -36,7 +36,6 @@ const CopyCard = ({
     folders: Folder[];
     updateCustomField: any;
 }) => {
-    const [washedOn, setWashedOn] = useState('');
     const [copyModalOpen, setCopyModalOpen] = useState(false);
 
     const folderName =
@@ -132,20 +131,6 @@ const CopyCard = ({
                 customFields={getCustomFieldValues}
                 modalOpen={copyModalOpen}
                 loading={washedOnLoading}
-                washedOn={washedOn}
-                onDatePress={async (date) => {
-                    const washedOnResponse = await addWashedOn({
-                        variables: {
-                            instanceId: +release?.instance_id,
-                            washedOn: date
-                        }
-                    });
-
-                    if (washedOnResponse?.data) {
-                        setWashedOn(date);
-                    }
-                    setCopyModalOpen(false);
-                }}
             />
         </Card>
     );

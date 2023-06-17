@@ -37,8 +37,10 @@ const VRInput = ({
                         ? () => {
                               return (
                                   <VRText
-                                      fontType="h6"
-                                      styleOverride={{ marginBottom: 8 }}
+                                      styleOverride={{
+                                          marginBottom: 5,
+                                          marginTop: 10
+                                      }}
                                   >
                                       {label}
                                   </VRText>
