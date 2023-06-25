@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import { useMutation, gql } from '@apollo/client';
 
 import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
@@ -9,10 +10,12 @@ import {
     VRDivider,
     VRLoading,
     VRFooter,
-    VRButton
+    VRButton,
+    VRInfo
 } from 'components';
 import { globalStyles } from 'styles';
 import { useCustomFields } from 'hooks';
+import { User } from 'types';
 
 const UPDATE_USER_MUTATION = gql`
     mutation UpdateUser($key: String!, $value: String!) {
@@ -37,7 +40,7 @@ const Settings = () => {
     const [washedOnSelectedIdx, setWashedOnSelectedIdx] = useState<IndexPath>(
         new IndexPath(0)
     );
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const {
         data: customFields,
         loading: customFieldsLoading,
@@ -69,14 +72,21 @@ const Settings = () => {
         }
     }, [initialWashedOnIdx, customFieldsLoading]);
 
-    const handleUpdateUser = () => {
-        updateUser({
-            variables: {
-                key: 'washedOnField',
-                value: washedOnSelectedIdx.row
-                    ? textAreaFieldNames[washedOnSelectedIdx.row]
-                    : ''
-            }
+    const handleUpdateUser = async () => {
+        const variables = {
+            key: 'washedOnField',
+            value: washedOnSelectedIdx.row
+                ? textAreaFieldNames[washedOnSelectedIdx.row]
+                : ''
+        };
+        await updateUser({
+            variables,
+            refetchQueries: ['GetUser']
+        });
+
+        setUser({
+            ...(user as User),
+            [variables.key]: variables.value
         });
     };
 
@@ -87,7 +97,19 @@ const Settings = () => {
                     <VRLoading />
                 ) : (
                     <SettingsRow>
-                        <VRText fontType="h5">Washed on field name</VRText>
+                        <Layout style={styles.title}>
+                            <VRText
+                                fontType="h6"
+                                styleOverride={{ marginRight: 3 }}
+                            >
+                                Washed on field name
+                            </VRText>
+                            <VRInfo
+                                onPress={() => {
+                                    console.log('info pressed');
+                                }}
+                            />
+                        </Layout>
                         <Select
                             selectedIndex={washedOnSelectedIdx}
                             onSelect={(idx) =>
@@ -123,5 +145,12 @@ const Settings = () => {
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    title: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
+});
 
 export default Settings;

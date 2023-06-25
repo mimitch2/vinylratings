@@ -7,6 +7,7 @@ export { default as VRDivider } from './VRDivider/VRDivider';
 export { default as VREditCopyModal } from './VREditCopyModal/VREditCopyModal';
 export { default as VRFooter } from './VRFooter/VRFooter';
 export { default as VRIcon } from './VRIcon/VRIcon';
+export { default as VRInfo } from './VRInfo/VRInfo';
 export { default as VRImageModal } from './VRImageModal/VRImageModal';
 export { default as VRInput } from './VRInput/VRInput';
 export { default as VRListIndicator } from './VRListIndicator/VRListIndicator';
