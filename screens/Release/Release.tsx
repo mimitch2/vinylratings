@@ -29,7 +29,8 @@ import {
     VRText,
     VRTrackList,
     VRWebViewModal,
-    VRCalendarModal
+    VRCalendarModal,
+    VRNavRow
 } from 'components';
 import type { DiscogsRelease, Folder, Nav, RatingPayload } from 'types';
 import { getReleaseTags } from 'helpers';
@@ -342,47 +343,26 @@ const Release = ({ route, navigation }: { route: Route; navigation: Nav }) => {
                         }}
                     /> */}
                     {isInCollection ? (
-                        <VRPressable
+                        <VRNavRow
                             trackID="release_screen-see_all_versions"
-                            onPress={() => {
-                                navigation.navigate({
-                                    name: 'Copies',
-                                    params: {
-                                        id
-                                    }
-                                });
-                            }}
-                        >
-                            <VRDivider />
-                            <Layout style={[styles.versions]}>
-                                <VRText>
-                                    My Copies {`(${releases.length})`}
-                                </VRText>
-                                <VRIcon type="chevronRight" size="sm" />
-                            </Layout>
-                            <VRDivider />
-                        </VRPressable>
+                            navigation={navigation}
+                            label={`My Copies (${releases.length})`}
+                            params={{ id: id }}
+                            route={'Copies'}
+                            renderBottomDivider={isFromVersions}
+                        />
                     ) : null}
                     {!isFromVersions ? (
-                        <VRPressable
+                        <VRNavRow
                             trackID="release_screen-see_all_versions"
-                            onPress={() => {
-                                navigation.navigate({
-                                    name: 'Versions',
-                                    params: {
-                                        masterId: master_id,
-                                        artist: artists[0]?.name ?? 'Unknown'
-                                    }
-                                });
+                            navigation={navigation}
+                            label="See all pressings"
+                            params={{
+                                masterId: master_id,
+                                artist: artists[0]?.name ?? 'Unknown'
                             }}
-                        >
-                            <VRDivider />
-                            <Layout style={[styles.versions]}>
-                                <VRText>See all pressings</VRText>
-                                <VRIcon type="chevronRight" size="sm" />
-                            </Layout>
-                            <VRDivider />
-                        </VRPressable>
+                            route={'Versions'}
+                        />
                     ) : null}
 
                     <VRRateModal

@@ -12,6 +12,7 @@ export { default as VRInput } from './VRInput/VRInput';
 export { default as VRListIndicator } from './VRListIndicator/VRListIndicator';
 export { default as VRLoading } from './VRLoading/VRLoading';
 export { default as VRModal } from './VRModal/VRModal';
+export { default as VRNavRow } from './VRNavRow/VRNavRow';
 export { default as VRPressable } from './VRPressable/VRPressable';
 export { default as VRRatings } from './VRRatings/VRRatings';
 export { default as VRRatingsStars } from './VRRatingsStars/VRRatingsStars';

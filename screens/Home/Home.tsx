@@ -4,7 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 // @ts-ignore
 import { REACT_APP_SERVER_ENDPOINT } from '@env';
-import { VRContainer, VRLoading, VRText, VRButton, VRFooter } from 'components';
+import {
+    VRContainer,
+    VRLoading,
+    VRText,
+    VRButton,
+    VRFooter,
+    VRNavRow
+} from 'components';
 import { DisabledContext } from 'context';
 import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
@@ -87,6 +94,12 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                             style={{ height: 300, width: 300 }}
                         /> */}
                 </View>
+                <VRNavRow
+                    trackID="home_screen-settings"
+                    navigation={navigation}
+                    label="Settings"
+                    route={'Settings'}
+                />
             </VRContainer>
             <VRFooter>
                 {isLoggedIn ? (

@@ -25,7 +25,8 @@ import {
     Release,
     Search,
     Versions,
-    WantList
+    WantList,
+    Settings
 } from 'screens';
 import { DisabledContext } from 'context';
 import { Colors } from 'types';
@@ -247,6 +248,14 @@ const VRTabs = () => {
                     options={{
                         headerMode: 'screen',
                         header: () => <HeaderBar title="My Copies" />
+                    }}
+                />
+                <Stack.Screen
+                    name="Settings"
+                    component={Settings}
+                    options={{
+                        headerMode: 'screen',
+                        header: () => <HeaderBar title="Settings" />
                     }}
                 />
             </Stack.Navigator>
