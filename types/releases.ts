@@ -212,3 +212,13 @@ export type Folder = {
 };
 
 export type SortOrder = 'asc' | 'desc';
+
+export type KeyValuePair = {
+    [key: number]: string;
+};
+
+export interface AddOrUpdateCopyArgs {
+    customFieldsValues?: KeyValuePair[];
+    releaseId: string | number;
+    folderId: string | number;
+}

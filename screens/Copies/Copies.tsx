@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Alert, BackHandler } from 'react-native';
 import { useMutation } from '@apollo/client';
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
 
 import { CopyCard } from './components';
-import { VRText, VRContainer, VRLoading } from 'components';
+import { VRText, VRContainer, VRLoading, VRButton, VRFooter } from 'components';
 import {
     GET_RELEASE,
     ADD_RELEASE,
@@ -22,7 +23,7 @@ import {
     IS_IN_COLLECTION,
     useIsLoading,
     useCustomFields,
-    useUpdateCustomField
+    useAddCopy
 } from 'hooks';
 
 type Params = {
@@ -44,7 +45,6 @@ const Copies = ({ route }: { route: Route }) => {
 
     const { folders, foldersLoading } = useGetFolders();
     const foldersWithoutAll = folders.slice(1);
-    const { updateCustomField, data, loading, error } = useUpdateCustomField();
 
     const {
         data: customFields,
@@ -60,12 +60,11 @@ const Copies = ({ route }: { route: Route }) => {
     const [addToCollectionMutation, { loading: addToCollectionLoading }] =
         useMutation(ADD_TO_COLLECTION);
 
-    const [addWashedOn, { loading: washedOnLoading }] = useMutation(
-        ADD_WASHED_ON
-        // {
-        //     refetchQueries: [{ query: GET_RELEASE }, 'GetRelease']
-        // }
-    );
+    const { addToCollection } = useAddCopy({
+        releaseId: +id,
+        customFieldsValues: [],
+        folderId: 0
+    });
 
     const optimisticallyUpdateIsInCollection = (value: boolean) => {
         client.writeQuery({
@@ -81,25 +80,6 @@ const Copies = ({ route }: { route: Route }) => {
                 id: +id
             }
         });
-    };
-
-    const addToCollection = async (folderItem: Folder) => {
-        try {
-            await addToCollectionMutation({
-                variables: {
-                    folderId: +folderItem.id,
-                    releaseId: +id
-                },
-                onCompleted: () => {
-                    optimisticallyUpdateIsInCollection(true);
-                    refetchIsInCollection();
-                }
-            });
-        } catch (err: any) {
-            throw new Error(err);
-        } finally {
-            // setFolderModalOpen(false);
-        }
     };
 
     const removeFromCollection = async ({
@@ -126,35 +106,67 @@ const Copies = ({ route }: { route: Route }) => {
         }
     };
 
+    const handleRemoveFromCollection = ({
+        instanceId
+    }: {
+        instanceId: string;
+    }) => {
+        Alert.alert('Remove from collection?', '', [
+            {
+                text: 'Cancel'
+            },
+            {
+                text: 'Yes',
+                onPress: () => removeFromCollection({ instanceId })
+            }
+        ]);
+    };
+
     return (
-        <VRContainer styleOverride={{ flex: 1, height: '100%' }} startAnimation>
-            {isInCollectionLoading || foldersLoading || customFieldsLoading ? (
-                <VRLoading />
-            ) : (
-                releases
-                    ?.map((release: CollectionInstance, idx: number) => (
-                        <Layout
-                            key={release.instance_id}
-                            style={{
-                                marginBottom:
-                                    idx === releases.length - 1 ? 15 : 0
-                            }}
-                        >
-                            <CopyCard
-                                release={release}
-                                removeFromCollection={removeFromCollection}
-                                addToCollection={addToCollection}
-                                addWashedOn={addWashedOn}
-                                washedOnLoading={washedOnLoading}
-                                customFields={customFields}
-                                folders={folders}
-                                updateCustomField={updateCustomField}
-                            />
-                        </Layout>
-                    ))
-                    .reverse()
-            )}
-        </VRContainer>
+        <>
+            <VRContainer startAnimation>
+                <Layout style={{ flex: 1 }}>
+                    {isInCollectionLoading ||
+                    foldersLoading ||
+                    customFieldsLoading ? (
+                        <VRLoading />
+                    ) : (
+                        releases
+                            ?.map(
+                                (release: CollectionInstance, idx: number) => (
+                                    <Layout
+                                        key={release.instance_id}
+                                        style={{
+                                            marginBottom:
+                                                idx === releases.length - 1
+                                                    ? 15
+                                                    : 0
+                                        }}
+                                    >
+                                        <CopyCard
+                                            release={release}
+                                            removeFromCollection={
+                                                handleRemoveFromCollection
+                                            }
+                                            customFields={customFields}
+                                            folders={foldersWithoutAll}
+                                            updateCustomField={() => {}}
+                                        />
+                                    </Layout>
+                                )
+                            )
+                            .reverse()
+                    )}
+                </Layout>
+            </VRContainer>
+
+            <VRFooter>
+                <VRButton
+                    title="Add another copy"
+                    onPress={console.log('pressed')}
+                />
+            </VRFooter>
+        </>
     );
 };
 

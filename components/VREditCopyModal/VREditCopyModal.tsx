@@ -30,22 +30,25 @@ import { CustomFieldsValue, CustomFieldsValues } from 'types';
 const VREditCopyModal = ({
     modalOpen,
     setModalOpen,
-    loading,
+    loading = false,
     animationType = 'slide',
-    customFields
+    customFields,
+    isEdit = false
 }: {
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
-    loading: boolean;
+    loading?: boolean;
     animationType?: 'slide' | 'fade' | 'none';
     customFields: CustomFieldsValues;
+    isEdit?: boolean;
 }) => {
     const [showCalendarModal, setShowCalendarModal] = useState(false);
+
     return (
         <VRModal
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            title="Edit Your Copy"
+            title={isEdit ? 'Edit Your Copy' : 'Add to Collection'}
             animationType={animationType}
             centerContent={false}
         >
@@ -95,7 +98,7 @@ const VREditCopyModal = ({
                                 return (
                                     <VRInput
                                         key={field.id}
-                                        value={field.value || 'Not set'}
+                                        value={field.value || ''}
                                         label={field.name}
                                         handleTextChange={(value) => {
                                             console.log('value', value);

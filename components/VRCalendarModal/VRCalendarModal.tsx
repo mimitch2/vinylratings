@@ -7,9 +7,8 @@ import { VRButton } from 'components';
 import { WIDTH, HEIGHT } from 'constants/index';
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
-
 const ANIMATED_DURATION = 250;
-const SLIDE_START = -470;
+const SLIDE_START = -400;
 
 const VRCalendarModal = ({
     onDatePress,
@@ -31,6 +30,7 @@ const VRCalendarModal = ({
             if (isOpening) {
                 setRenderBlurView(true);
             } else {
+                // wait for animation to finish before removing blur view
                 setTimeout(() => {
                     setRenderBlurView(false);
                 }, ANIMATED_DURATION);
@@ -43,7 +43,7 @@ const VRCalendarModal = ({
                     useNativeDriver: false
                 }),
                 Animated.timing(slide, {
-                    toValue: isOpening ? 0 : SLIDE_START,
+                    toValue: isOpening ? 50 : SLIDE_START,
                     duration: ANIMATED_DURATION,
                     useNativeDriver: false
                 })
@@ -104,30 +104,16 @@ const VRCalendarModal = ({
                     />
                 </Layout>
 
-                <Layout>
+                <Layout style={{ padding: 20 }}>
                     <VRButton
-                        title="Reset"
-                        containerStyle={{
-                            marginBottom: 10
-                        }}
+                        title="Remove Date"
                         onPress={() => {
                             onDatePress('');
                             setModalOpen(false);
                         }}
                         trackID="calendar-modal-reset-button"
                         variant="primary"
-                    />
-
-                    <VRButton
-                        containerStyle={{
-                            marginBottom: 65
-                        }}
-                        title="Cancel"
-                        onPress={() => {
-                            setModalOpen(false);
-                        }}
-                        trackID="calendar-modal-reset-button"
-                        variant="info"
+                        size="small"
                     />
                 </Layout>
             </Animated.View>

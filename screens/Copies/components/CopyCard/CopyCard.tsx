@@ -7,6 +7,7 @@ import {
     Folder,
     CustomFieldsValues
 } from 'types';
+import { useAddCopy } from 'hooks';
 
 import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
 
@@ -17,33 +18,31 @@ const useSelectState = (initialState = undefined) => {
 
 const CopyCard = ({
     release,
-    addWashedOn,
     removeFromCollection,
-    washedOnLoading,
     customFields,
     folders,
     updateCustomField
 }: {
     release: CollectionInstance;
-    addWashedOn: any;
-    removeFromCollection: ({
-        instanceId
-    }: {
-        instanceId: string;
-    }) => Promise<void>;
-    washedOnLoading: boolean;
+    removeFromCollection: ({ instanceId }: { instanceId: string }) => void;
     customFields: CustomFields;
     folders: Folder[];
     updateCustomField: any;
 }) => {
     const [copyModalOpen, setCopyModalOpen] = useState(false);
 
+    const {
+        instance_id: instanceId,
+        date_added,
+        folder_id: folderId,
+        id: releaseId
+    } = release;
     const folderName =
         folders?.find((folder) => {
-            return +release?.folder_id === folder?.id ?? false;
+            return +folderId === folder?.id ?? false;
         })?.name ?? 'Unknown';
 
-    const dateAdded = new Date(release?.date_added).toLocaleDateString();
+    const dateAdded = new Date(date_added).toLocaleDateString();
 
     const getCustomFieldValues = useMemo((): CustomFieldsValues => {
         return (
@@ -59,8 +58,11 @@ const CopyCard = ({
     }, [customFields, release?.notes]);
 
     // const submit = () => {
-
-    // }
+    //     addToCollection({
+    //         instanceId,
+    //         customFields: getCustomFieldValues
+    //     });
+    // };
 
     return (
         <Card style={styles.container} disabled>
@@ -130,7 +132,6 @@ const CopyCard = ({
                 setModalOpen={setCopyModalOpen}
                 customFields={getCustomFieldValues}
                 modalOpen={copyModalOpen}
-                loading={washedOnLoading}
             />
         </Card>
     );

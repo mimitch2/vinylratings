@@ -1,3 +1,4 @@
+export * from './useAddCopy';
 export * from './useAuth';
 export * from './useColorTheme';
 export * from './useCustomFields';
@@ -8,5 +9,5 @@ export * from './useIsLoading';
 export * from './useLazyList';
 export * from './useList';
 export * from './usePlatform';
-export * from './useUpdateCustomField';
+export * from './useUpdateCustomFields';
 export * from './useUpdateInstanceFolder';
