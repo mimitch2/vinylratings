@@ -13,6 +13,7 @@ export const GET_USER = gql`
             avatarUrl
             discogsUserId
             releasesRated
+            washedOnField
             vinylRatings {
                 updatedAt
             }

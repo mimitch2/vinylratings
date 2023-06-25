@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useMutation, gql } from '@apollo/client';
 
 import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
-
+import { UserContext } from 'context';
 import {
     VRContainer,
     VRText,
@@ -37,6 +37,7 @@ const Settings = () => {
     const [washedOnSelectedIdx, setWashedOnSelectedIdx] = useState<IndexPath>(
         new IndexPath(0)
     );
+    const { user } = useContext(UserContext);
     const {
         data: customFields,
         loading: customFieldsLoading,
@@ -57,6 +58,16 @@ const Settings = () => {
                   .map((mappedField) => mappedField.name)
           ]
         : [];
+    const washedOnFieldIdx = textAreaFieldNames.indexOf(
+        user?.washedOnField as string
+    );
+    const initialWashedOnIdx = washedOnFieldIdx === -1 ? 0 : washedOnFieldIdx;
+
+    useEffect(() => {
+        if (!customFieldsLoading) {
+            setWashedOnSelectedIdx(new IndexPath(initialWashedOnIdx));
+        }
+    }, [initialWashedOnIdx, customFieldsLoading]);
 
     const handleUpdateUser = () => {
         updateUser({

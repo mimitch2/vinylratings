@@ -28,7 +28,7 @@ import {
     WantList,
     Settings
 } from 'screens';
-import { DisabledContext } from 'context';
+import { DisabledContext, UserContext } from 'context';
 import { Colors } from 'types';
 
 type Routes = 'Collection' | 'Home' | 'Search' | 'Want';
@@ -185,8 +185,9 @@ export const HeaderBar = ({
 
 const VRTabs = () => {
     const [disabled, setDisabled] = useState(true);
+    const [user, setUser] = useState(null);
 
-    const value = useMemo(
+    const disabledContext = useMemo(
         () => ({
             disabled,
             setDisabled
@@ -194,72 +195,82 @@ const VRTabs = () => {
         [disabled]
     );
 
+    const userContext = useMemo(
+        () => ({
+            user,
+            setUser
+        }),
+        [user]
+    );
+
     return (
-        <DisabledContext.Provider value={value}>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Tabs"
-                    component={Tabs}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Artist"
-                    component={ArtistDetails}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Artist" />
-                    }}
-                />
-                <Stack.Screen
-                    name="Versions"
-                    component={Versions}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Pressings" />
-                    }}
-                />
-                <Stack.Screen
-                    name="VersionRelease"
-                    component={Release}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Pressings" />
-                    }}
-                />
-                <Stack.Screen
-                    name="Release"
-                    component={Release}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Release" />
-                    }}
-                />
-                <Stack.Screen
-                    name="Master"
-                    component={MasterRelease}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Master" />
-                    }}
-                />
-                <Stack.Screen
-                    name="Copies"
-                    component={Copies}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="My Copies" />
-                    }}
-                />
-                <Stack.Screen
-                    name="Settings"
-                    component={Settings}
-                    options={{
-                        headerMode: 'screen',
-                        header: () => <HeaderBar title="Settings" />
-                    }}
-                />
-            </Stack.Navigator>
-        </DisabledContext.Provider>
+        <UserContext.Provider value={userContext}>
+            <DisabledContext.Provider value={disabledContext}>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Tabs"
+                        component={Tabs}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Artist"
+                        component={ArtistDetails}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Artist" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Versions"
+                        component={Versions}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Pressings" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="VersionRelease"
+                        component={Release}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Pressings" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Release"
+                        component={Release}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Release" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Master"
+                        component={MasterRelease}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Master" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Copies"
+                        component={Copies}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="My Copies" />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Settings"
+                        component={Settings}
+                        options={{
+                            headerMode: 'screen',
+                            header: () => <HeaderBar title="Settings" />
+                        }}
+                    />
+                </Stack.Navigator>
+            </DisabledContext.Provider>
+        </UserContext.Provider>
     );
 };
 

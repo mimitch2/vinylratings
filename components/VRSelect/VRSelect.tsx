@@ -15,7 +15,7 @@ const VRSelect = ({
         ...field,
         options: ['Not set', ...(field.options as string[])]
     };
-    const valueToOptionIndex: number = fieldWithNotSetOption.options.indexOf(
+    const valueToOptionIndex = fieldWithNotSetOption.options.indexOf(
         field.value as string
     );
     const initialSelectedIdx =

@@ -8,4 +8,8 @@ export interface User {
     discogsUserId: number;
     releasesRated: number;
     vinylRatings: VinylRating[] | null;
+    createdAt: string;
+    updatedAt: string;
+    washedOnField: string;
+    discogsReleasesRated: number;
 }

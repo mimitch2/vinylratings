@@ -12,7 +12,7 @@ import {
     VRFooter,
     VRNavRow
 } from 'components';
-import { DisabledContext } from 'context';
+import { DisabledContext, UserContext } from 'context';
 import { useAuth } from 'hooks/useAuth';
 import { client } from '../../ApolloProviderWrapper';
 import { useFetch } from 'hooks';
@@ -32,13 +32,16 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
         getAuth
     } = useAuth(route, navigation);
     const { setDisabled } = useContext(DisabledContext);
+    const { setUser } = useContext(UserContext);
+
     const { getFetchResponse } = useFetch();
 
     useEffect(() => {
-        if (data?.username && setDisabled) {
+        if (data?.username && setDisabled && setUser) {
             setDisabled(false);
+            setUser(data);
         }
-    }, [setDisabled, data?.username]);
+    }, [setDisabled, data, setUser]);
 
     if (loading) {
         return <VRLoading />;
@@ -58,7 +61,8 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
     const logout = async () => {
         await AsyncStorage.removeItem('auth');
         await getAuth();
-        setDisabled && setDisabled(true);
+        setDisabled?.(true);
+        setUser?.(null);
 
         await client.clearStore();
         client.cache.gc();
@@ -90,9 +94,9 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
                         {'VINYL\nRATINGS'}
                     </VRText>
                     {/* <Image
-                            source={require('../../images/home_logo.png')}
-                            style={{ height: 300, width: 300 }}
-                        /> */}
+                        source={require('../../images/home_logo.png')}
+                        style={{ height: 300, width: 300 }}
+                    /> */}
                 </View>
                 <VRNavRow
                     trackID="home_screen-settings"
