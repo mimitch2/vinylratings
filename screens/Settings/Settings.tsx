@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { useMutation, gql } from '@apollo/client';
+
 import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import {
     VRContainer,
     VRText,
-    VRSelect,
     VRDivider,
-    VRLoading
+    VRLoading,
+    VRFooter,
+    VRButton
 } from 'components';
 import { globalStyles } from 'styles';
 import { useCustomFields } from 'hooks';
-import { CustomFields } from 'types';
+
+const UPDATE_USER_MUTATION = gql`
+    mutation UpdateUser($key: String!, $value: String!) {
+        updateUser(key: $key, value: $value) {
+            username
+            washedOnField
+        }
+    }
+`;
 
 const SettingsRow = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -24,14 +34,19 @@ const SettingsRow = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Settings = () => {
-    const [washedOnSelectedIdx, setWashedOnSelectedIdx] = useState<
-        IndexPath | IndexPath[]
-    >(new IndexPath(0));
+    const [washedOnSelectedIdx, setWashedOnSelectedIdx] = useState<IndexPath>(
+        new IndexPath(0)
+    );
     const {
         data: customFields,
         loading: customFieldsLoading,
         error: customFieldsError
     } = useCustomFields();
+
+    const [
+        updateUser,
+        { data: updateUserReturnedData, loading: updateUserLoading }
+    ] = useMutation(UPDATE_USER_MUTATION);
 
     const fields = customFields?.getCustomFields?.fields;
     const textAreaFieldNames = fields
@@ -43,33 +58,58 @@ const Settings = () => {
           ]
         : [];
 
+    const handleUpdateUser = () => {
+        updateUser({
+            variables: {
+                key: 'washedOnField',
+                value: washedOnSelectedIdx.row
+                    ? textAreaFieldNames[washedOnSelectedIdx.row]
+                    : ''
+            }
+        });
+    };
+
     return (
-        <VRContainer>
-            {customFieldsLoading ? (
-                <VRLoading />
-            ) : (
-                <SettingsRow>
-                    <VRText fontType="h5">Washed on field name</VRText>
-                    <Select
-                        selectedIndex={washedOnSelectedIdx}
-                        onSelect={(idx) => setWashedOnSelectedIdx(idx)}
-                        value={() => (
-                            <VRText>
-                                {washedOnSelectedIdx
-                                    ? textAreaFieldNames[
-                                          (washedOnSelectedIdx as IndexPath).row
-                                      ]
-                                    : 'Not set'}
-                            </VRText>
-                        )}
-                    >
-                        {textAreaFieldNames.map((mappedField) => (
-                            <SelectItem key={mappedField} title={mappedField} />
-                        ))}
-                    </Select>
-                </SettingsRow>
-            )}
-        </VRContainer>
+        <>
+            <VRContainer>
+                {customFieldsLoading ? (
+                    <VRLoading />
+                ) : (
+                    <SettingsRow>
+                        <VRText fontType="h5">Washed on field name</VRText>
+                        <Select
+                            selectedIndex={washedOnSelectedIdx}
+                            onSelect={(idx) =>
+                                setWashedOnSelectedIdx(idx as IndexPath)
+                            }
+                            value={() => (
+                                <VRText>
+                                    {washedOnSelectedIdx
+                                        ? textAreaFieldNames[
+                                              washedOnSelectedIdx.row
+                                          ]
+                                        : 'Not set'}
+                                </VRText>
+                            )}
+                        >
+                            {textAreaFieldNames.map((mappedField) => (
+                                <SelectItem
+                                    key={mappedField}
+                                    title={mappedField}
+                                />
+                            ))}
+                        </Select>
+                    </SettingsRow>
+                )}
+            </VRContainer>
+            <VRFooter>
+                <VRButton
+                    trackID="settings_screen-update"
+                    title="Update"
+                    onPress={handleUpdateUser}
+                />
+            </VRFooter>
+        </>
     );
 };
 
