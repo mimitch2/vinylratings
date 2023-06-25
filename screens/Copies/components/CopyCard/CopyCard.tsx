@@ -44,7 +44,7 @@ const CopyCard = ({
 
     const dateAdded = new Date(date_added).toLocaleDateString();
 
-    const getCustomFieldValues = useMemo((): CustomFieldsValues => {
+    const customFieldValues = useMemo((): CustomFieldsValues => {
         return (
             customFields?.getCustomFields?.fields?.map((field) => {
                 return {
@@ -60,7 +60,7 @@ const CopyCard = ({
     // const submit = () => {
     //     addToCollection({
     //         instanceId,
-    //         customFields: getCustomFieldValues
+    //         customFields: customFieldValues
     //     });
     // };
 
@@ -82,7 +82,7 @@ const CopyCard = ({
                         <VRText>{folderName}</VRText>
                     </Layout>
 
-                    {getCustomFieldValues.map((field) => {
+                    {customFieldValues.map((field) => {
                         return (
                             <Layout
                                 key={field.id}
@@ -130,7 +130,7 @@ const CopyCard = ({
 
             <VREditCopyModal
                 setModalOpen={setCopyModalOpen}
-                customFields={getCustomFieldValues}
+                customFields={customFieldValues}
                 modalOpen={copyModalOpen}
             />
         </Card>

@@ -23,5 +23,11 @@ export const globalStyles = StyleSheet.create({
     rowJustifyCenter: {
         flexDirection: 'row',
         justifyContent: 'center'
+    },
+    row: {
+        paddingVertical: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     }
 });

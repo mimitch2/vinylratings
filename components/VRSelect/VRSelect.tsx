@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import { VRText } from 'components';
+import { CustomFieldsValue } from 'types';
 
-const VRSelect = ({ field }) => {
+const VRSelect = ({
+    field,
+    renderLabel = true
+}: {
+    field: CustomFieldsValue;
+    renderLabel?: boolean;
+}) => {
     const fieldWithNotSetOption = {
         ...field,
-        options: ['Not set', ...field.options]
+        options: ['Not set', ...(field.options as string[])]
     };
     const valueToOptionIndex: number = fieldWithNotSetOption.options.indexOf(
-        field.value
+        field.value as string
     );
     const initialSelectedIdx =
         valueToOptionIndex === -1 ? 0 : valueToOptionIndex;
@@ -20,11 +27,17 @@ const VRSelect = ({ field }) => {
     return (
         <Select
             placeholder="Not set"
-            label={() => (
-                <VRText styleOverride={{ marginBottom: 5, marginTop: 10 }}>
-                    {fieldWithNotSetOption.name}
-                </VRText>
-            )}
+            label={
+                renderLabel
+                    ? () => (
+                          <VRText
+                              styleOverride={{ marginBottom: 5, marginTop: 10 }}
+                          >
+                              {fieldWithNotSetOption.name}
+                          </VRText>
+                      )
+                    : undefined
+            }
             selectedIndex={selectedIndex}
             onSelect={(idx) => setSelectedIndex(idx)}
             value={() => (

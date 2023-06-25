@@ -84,7 +84,7 @@ const Home = ({ navigation, route }: { navigation: Nav; route: Route }) => {
 
     return (
         <>
-            <VRContainer startAnimation scrollable={false}>
+            <VRContainer startAnimation>
                 <View>
                     <VRText fontType="h1" styleOverride={{ fontSize: 50 }}>
                         {'VINYL\nRATINGS'}
