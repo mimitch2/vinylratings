@@ -13,7 +13,9 @@ export const useColorTheme = (color: Colors) => {
         danger: theme['color-danger-default'],
         text: theme['text-basic-color'],
         textFaded: theme['text-disabled-color'],
-        background: theme['background-basic-color-1']
+        background: theme['background-basic-color-1'],
+        backgroundDark: theme['background-basic-color-2'],
+        border: theme['color-basic-1100']
     };
 
     return COLOR_MAP[color];

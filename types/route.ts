@@ -11,6 +11,7 @@ type SetOptionsArguments = {
 
 export type Nav = {
     navigate: (value: NavigateObject | string) => void;
+    goBack: () => void;
     setOptions: (value: SetOptionsArguments) => void;
     setParams: (value: SetOptionsArguments) => void;
     dispatch: (value: any) => void;

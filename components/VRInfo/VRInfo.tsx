@@ -4,6 +4,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { VRText } from 'components';
 import { useColorTheme } from 'hooks';
 import { Colors } from 'types';
+import { PRESSED_OR_DISABLED_OPACITY } from 'constants/index';
 
 const VRInfo = ({ onPress }: { onPress: (value?: any) => void }) => {
     const backgroundColor = useColorTheme(Colors.warning);
@@ -13,7 +14,7 @@ const VRInfo = ({ onPress }: { onPress: (value?: any) => void }) => {
             onPress={onPress}
             style={({ pressed }) => [
                 {
-                    opacity: pressed ? 0.5 : 1,
+                    opacity: pressed ? PRESSED_OR_DISABLED_OPACITY : 1,
                     backgroundColor
                 },
                 styles.view

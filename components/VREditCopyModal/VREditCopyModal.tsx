@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
     Keyboard,
-    View
+    View,
+    Pressable
 } from 'react-native';
 import {
     Calendar,
     Layout,
+    Card,
     Datepicker,
     Select,
     SelectItem,
@@ -25,7 +27,9 @@ import {
     VRCalendarModal
 } from 'components';
 import { HEIGHT } from 'constants/index';
-import { CustomFieldsValue, CustomFieldsValues } from 'types';
+import { CustomFieldsValue, CustomFieldsValues, Colors } from 'types';
+import { UserContext } from 'context';
+import { useColorTheme } from 'hooks';
 
 const VREditCopyModal = ({
     modalOpen,
@@ -43,6 +47,13 @@ const VREditCopyModal = ({
     isEdit?: boolean;
 }) => {
     const [showCalendarModal, setShowCalendarModal] = useState(false);
+    const [renderDatePicker, setRenderDatePicker] = useState(true);
+    const [datePickerPressed, setDatePickerPressed] = useState(false);
+    const { user } = useContext(UserContext);
+
+    const darkBackground = useColorTheme(Colors.backgroundDark);
+    const backgroundColor = useColorTheme(Colors.background);
+    const borderColor = useColorTheme(Colors.border);
 
     return (
         <VRModal
@@ -60,39 +71,53 @@ const VREditCopyModal = ({
                         }
 
                         if (field.type === 'textarea') {
-                            if (field.name === 'Washed On') {
-                                return (
-                                    <Button
+                            if (field.name === user?.washedOnField) {
+                                return renderDatePicker ? (
+                                    <Layout
                                         key={field.id}
-                                        onPress={() =>
-                                            setShowCalendarModal(true)
-                                        }
+                                        style={{
+                                            marginTop: 10
+                                        }}
                                     >
-                                        {field.value || 'Not set'}
-                                    </Button>
-                                    // <Datepicker
-                                    //     date={new Date()}
-                                    //     key={field.id}
-                                    //     label={() => (
-                                    //         <VRText
-                                    //             styleOverride={{
-                                    //                 marginBottom: 5
-                                    //             }}
-                                    //         >
-                                    //             {field.name}
-                                    //         </VRText>
-                                    //     )}
-                                    //     onSelect={(pickedDate) => {
-                                    //         console.log(
-                                    //             pickedDate.toLocaleDateString()
-                                    //         );
-                                    //     }}
-                                    //     placeholder={field.value || 'Not set'}
-                                    //     max={new Date()}
-                                    //     style={{
-                                    //         marginTop: 20
-                                    //     }}
-                                    // />
+                                        <VRText
+                                            styleOverride={{
+                                                marginBottom: 6
+                                            }}
+                                        >
+                                            {field.name}
+                                        </VRText>
+                                        <Pressable
+                                            key={field.id}
+                                            onPressIn={() => {
+                                                setDatePickerPressed(true);
+                                            }}
+                                            onPressOut={() => {
+                                                setDatePickerPressed(false);
+                                                setShowCalendarModal(true);
+                                            }}
+                                            style={{
+                                                height: 40,
+                                                backgroundColor:
+                                                    datePickerPressed
+                                                        ? backgroundColor
+                                                        : darkBackground,
+                                                borderWidth: 1,
+                                                padding: 10,
+                                                borderColor: borderColor
+                                            }}
+                                        >
+                                            <VRText>Hello</VRText>
+                                        </Pressable>
+                                    </Layout>
+                                ) : (
+                                    <VRInput
+                                        key={field.id}
+                                        value={field.value || ''}
+                                        label={field.name}
+                                        handleTextChange={(value) => {
+                                            console.log('value', value);
+                                        }}
+                                    />
                                 );
                             } else {
                                 return (

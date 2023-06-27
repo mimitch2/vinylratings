@@ -163,7 +163,7 @@ const Copies = ({ route }: { route: Route }) => {
             <VRFooter>
                 <VRButton
                     title="Add another copy"
-                    onPress={console.log('pressed')}
+                    onPress={() => console.log('pressed')}
                 />
             </VRFooter>
         </>

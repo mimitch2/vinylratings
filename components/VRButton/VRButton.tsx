@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Text } from '@ui-kitten/components';
+import { ActivityIndicator } from 'react-native';
+import { Button, Text, Spinner } from '@ui-kitten/components';
 
 import { VoidFuncNoParams } from 'types';
 
@@ -44,7 +45,8 @@ const VRButton = ({
     containerStyle = {},
     disabled = false,
     stacked = true,
-    accessoryRight = undefined
+    accessoryRight = undefined,
+    loading = false
 }: {
     onPress: VoidFuncNoParams;
     title: string;
@@ -55,6 +57,7 @@ const VRButton = ({
     disabled?: boolean;
     stacked?: boolean;
     accessoryRight?: React.ReactElement | undefined;
+    loading?: boolean;
 }) => {
     return (
         <Button
@@ -80,7 +83,9 @@ const VRButton = ({
             accessoryRight={accessoryRight}
         >
             {(evaProps) => {
-                return (
+                return loading ? (
+                    <Spinner status="basic" />
+                ) : (
                     <Text
                         {...evaProps}
                         style={{

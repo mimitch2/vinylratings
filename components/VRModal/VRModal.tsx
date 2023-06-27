@@ -49,7 +49,7 @@ const VRModal = ({
 const styles = StyleSheet.create({
     modalContent: {
         height: HEIGHT,
-        marginTop: 30
+        marginTop: 50
     }
 });
 

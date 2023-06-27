@@ -14,7 +14,8 @@ const VRInput = ({
     label = '',
     maxLength = 250,
     showLength = false,
-    accessoryRight = undefined
+    accessoryRight = undefined,
+    disabled = false
 }: {
     handleTextChange: (value: string) => void;
     value: string;
@@ -26,6 +27,7 @@ const VRInput = ({
     maxLength?: number;
     showLength?: boolean;
     accessoryRight?: React.ReactElement;
+    disabled?: boolean;
 }) => {
     const [localValue, setLocalValue] = useState<string>(value);
 
@@ -63,6 +65,7 @@ const VRInput = ({
                 textStyle={{
                     minHeight: multiline ? 80 : 0
                 }}
+                disabled={disabled}
             />
             {showLength ? (
                 <VRText

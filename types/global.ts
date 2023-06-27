@@ -13,7 +13,9 @@ export enum Colors {
     danger = 'danger',
     text = 'text',
     textFaded = 'textFaded',
-    background = 'background'
+    background = 'background',
+    backgroundDark = 'backgroundDark',
+    border = 'border'
 }
 
 export type IconSize = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg' | 'xxxlg';

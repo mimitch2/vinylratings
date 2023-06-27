@@ -15,7 +15,7 @@ import {
 } from 'components';
 import { globalStyles } from 'styles';
 import { useCustomFields } from 'hooks';
-import { User } from 'types';
+import { User, Nav } from 'types';
 
 const UPDATE_USER_MUTATION = gql`
     mutation UpdateUser($key: String!, $value: String!) {
@@ -36,7 +36,8 @@ const SettingsRow = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-const Settings = () => {
+const Settings = ({ navigation }: { navigation: Nav }) => {
+    const [hasChanged, setHasChanged] = useState(false);
     const [washedOnSelectedIdx, setWashedOnSelectedIdx] = useState<IndexPath>(
         new IndexPath(0)
     );
@@ -49,7 +50,7 @@ const Settings = () => {
 
     const [
         updateUser,
-        { data: updateUserReturnedData, loading: updateUserLoading }
+        { data: updateUserReturnedData, loading: userUpdating }
     ] = useMutation(UPDATE_USER_MUTATION);
 
     const fields = customFields?.getCustomFields?.fields;
@@ -88,6 +89,7 @@ const Settings = () => {
             ...(user as User),
             [variables.key]: variables.value
         });
+        navigation.goBack();
     };
 
     return (
@@ -112,9 +114,13 @@ const Settings = () => {
                         </Layout>
                         <Select
                             selectedIndex={washedOnSelectedIdx}
-                            onSelect={(idx) =>
-                                setWashedOnSelectedIdx(idx as IndexPath)
-                            }
+                            onSelect={(idx) => {
+                                setWashedOnSelectedIdx(idx as IndexPath);
+                                setHasChanged(
+                                    (idx as IndexPath).row !==
+                                        initialWashedOnIdx
+                                );
+                            }}
                             value={() => (
                                 <VRText>
                                     {washedOnSelectedIdx
@@ -140,6 +146,8 @@ const Settings = () => {
                     trackID="settings_screen-update"
                     title="Update"
                     onPress={handleUpdateUser}
+                    disabled={!hasChanged || userUpdating}
+                    loading={userUpdating}
                 />
             </VRFooter>
         </>
