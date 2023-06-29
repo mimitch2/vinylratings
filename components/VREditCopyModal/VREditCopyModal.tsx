@@ -6,15 +6,7 @@ import {
     View,
     Pressable
 } from 'react-native';
-import {
-    Calendar,
-    Layout,
-    Card,
-    Datepicker,
-    Select,
-    SelectItem,
-    Button
-} from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 
 import {
     VRModal,
@@ -24,12 +16,51 @@ import {
     VRSelect,
     VRInput,
     VRContainer,
-    VRCalendarModal
+    VRCalendarModal,
+    VRIcon
 } from 'components';
 import { HEIGHT } from 'constants/index';
 import { CustomFieldsValue, CustomFieldsValues, Colors } from 'types';
 import { UserContext } from 'context';
 import { useColorTheme } from 'hooks';
+
+const DatePickerSwitch = ({
+    onPress,
+    renderDatePicker
+}: {
+    onPress: React.Dispatch<React.SetStateAction<boolean>>;
+    renderDatePicker: boolean;
+}) => {
+    const activeColor = useColorTheme(Colors.primary);
+
+    return (
+        <Layout
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: 12
+            }}
+        >
+            <Pressable
+                onPress={() => {
+                    onPress(true);
+                }}
+                style={{
+                    marginHorizontal: 10
+                }}
+            >
+                <VRIcon type="calendar" size="sm" />
+            </Pressable>
+            <Pressable
+                onPress={() => {
+                    onPress(false);
+                }}
+            >
+                <VRIcon type="edit" size="sm" />
+            </Pressable>
+        </Layout>
+    );
+};
 
 const VREditCopyModal = ({
     modalOpen,
@@ -81,33 +112,47 @@ const VREditCopyModal = ({
                                     >
                                         <VRText
                                             styleOverride={{
-                                                marginBottom: 6
+                                                marginBottom: 5
                                             }}
                                         >
                                             {field.name}
                                         </VRText>
-                                        <Pressable
-                                            key={field.id}
-                                            onPressIn={() => {
-                                                setDatePickerPressed(true);
-                                            }}
-                                            onPressOut={() => {
-                                                setDatePickerPressed(false);
-                                                setShowCalendarModal(true);
-                                            }}
+                                        <Layout
                                             style={{
-                                                height: 40,
-                                                backgroundColor:
-                                                    datePickerPressed
-                                                        ? backgroundColor
-                                                        : darkBackground,
-                                                borderWidth: 1,
-                                                padding: 10,
-                                                borderColor: borderColor
+                                                flexDirection: 'row',
+                                                alignItems: 'flex-end'
                                             }}
                                         >
-                                            <VRText>Hello</VRText>
-                                        </Pressable>
+                                            <Pressable
+                                                key={field.id}
+                                                onPressIn={() => {
+                                                    setDatePickerPressed(true);
+                                                }}
+                                                onPressOut={() => {
+                                                    setDatePickerPressed(false);
+                                                    setShowCalendarModal(true);
+                                                }}
+                                                style={{
+                                                    height: 40,
+                                                    backgroundColor:
+                                                        datePickerPressed
+                                                            ? backgroundColor
+                                                            : darkBackground,
+                                                    borderWidth: 1,
+                                                    padding: 10,
+                                                    borderColor: borderColor,
+                                                    flex: 1
+                                                }}
+                                            >
+                                                <VRText>Hello</VRText>
+                                            </Pressable>
+                                            <DatePickerSwitch
+                                                onPress={setRenderDatePicker}
+                                                renderDatePicker={
+                                                    renderDatePicker
+                                                }
+                                            />
+                                        </Layout>
                                     </Layout>
                                 ) : (
                                     <VRInput
@@ -117,6 +162,14 @@ const VREditCopyModal = ({
                                         handleTextChange={(value) => {
                                             console.log('value', value);
                                         }}
+                                        controlRight={
+                                            <DatePickerSwitch
+                                                onPress={setRenderDatePicker}
+                                                renderDatePicker={
+                                                    renderDatePicker
+                                                }
+                                            />
+                                        }
                                     />
                                 );
                             } else {

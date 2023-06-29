@@ -15,7 +15,8 @@ const VRInput = ({
     maxLength = 250,
     showLength = false,
     accessoryRight = undefined,
-    disabled = false
+    disabled = false,
+    controlRight = undefined
 }: {
     handleTextChange: (value: string) => void;
     value: string;
@@ -28,45 +29,56 @@ const VRInput = ({
     showLength?: boolean;
     accessoryRight?: React.ReactElement;
     disabled?: boolean;
+    controlRight?: React.ReactElement;
 }) => {
     const [localValue, setLocalValue] = useState<string>(value);
 
     return (
         <Layout style={containerStyleOverride}>
-            <Input
-                label={
-                    label
-                        ? () => {
-                              return (
-                                  <VRText
-                                      styleOverride={{
-                                          marginBottom: 5,
-                                          marginTop: 10
-                                      }}
-                                  >
-                                      {label}
-                                  </VRText>
-                              );
-                          }
-                        : ''
-                }
-                accessibilityLabel={label}
-                testID="input"
-                style={styleOverride}
-                onChangeText={(newValue) => {
-                    setLocalValue(newValue);
-                    handleTextChange(newValue);
+            <Layout
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    flexDirection: 'row',
+                    alignItems: 'flex-end'
                 }}
-                value={localValue}
-                placeholder={placeholder}
-                multiline={multiline}
-                maxLength={maxLength}
-                accessoryRight={accessoryRight}
-                textStyle={{
-                    minHeight: multiline ? 80 : 0
-                }}
-                disabled={disabled}
-            />
+            >
+                <Input
+                    label={
+                        label
+                            ? () => {
+                                  return (
+                                      <VRText
+                                          styleOverride={{
+                                              marginBottom: 5,
+                                              marginTop: 10
+                                          }}
+                                      >
+                                          {label}
+                                      </VRText>
+                                  );
+                              }
+                            : ''
+                    }
+                    accessibilityLabel={label}
+                    testID="input"
+                    style={[{ flex: 1 }, styleOverride]}
+                    onChangeText={(newValue) => {
+                        setLocalValue(newValue);
+                        handleTextChange(newValue);
+                    }}
+                    value={localValue}
+                    placeholder={placeholder}
+                    multiline={multiline}
+                    maxLength={maxLength}
+                    accessoryRight={accessoryRight}
+                    textStyle={{
+                        minHeight: multiline ? 80 : 0
+                    }}
+                    disabled={disabled}
+                />
+                {controlRight}
+            </Layout>
             {showLength ? (
                 <VRText
                     styleOverride={{ opacity: 0.7, alignSelf: 'flex-end' }}
