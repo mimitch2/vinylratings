@@ -88,7 +88,7 @@ const CopyCard = ({
                                 key={field.id}
                                 style={{ flexDirection: 'row' }}
                             >
-                                <VRText fontType="bold">{field.name}: </VRText>
+                                <VRText fontType="bold">{`${field.name}: `}</VRText>
                                 <VRText>{field.value ?? 'Not set'}</VRText>
                             </Layout>
                         );
@@ -132,6 +132,7 @@ const CopyCard = ({
                 setModalOpen={setCopyModalOpen}
                 customFields={customFieldValues}
                 modalOpen={copyModalOpen}
+                isEdit
             />
         </Card>
     );

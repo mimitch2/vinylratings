@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
+import { Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import { VRText } from 'components';
 import { CustomFieldsValue } from 'types';
 
 const VRSelect = ({
     field,
-    renderLabel = true
+    renderLabel = true,
+    onSelect
 }: {
     field: CustomFieldsValue;
     renderLabel?: boolean;
+    onSelect: (value: string) => void;
 }) => {
     const fieldWithNotSetOption = {
         ...field,
@@ -39,7 +41,13 @@ const VRSelect = ({
                     : undefined
             }
             selectedIndex={selectedIndex}
-            onSelect={(idx) => setSelectedIndex(idx)}
+            onSelect={(idx) => {
+                setSelectedIndex(idx);
+                onSelect(
+                    fieldWithNotSetOption.options?.[(idx as IndexPath).row] ??
+                        ''
+                );
+            }}
             value={() => (
                 <VRText>
                     {selectedIndex

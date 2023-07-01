@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
-    Keyboard,
-    View,
     Pressable
 } from 'react-native';
 import { Layout } from '@ui-kitten/components';
@@ -24,6 +22,41 @@ import { CustomFieldsValue, CustomFieldsValues, Colors } from 'types';
 import { UserContext } from 'context';
 import { useColorTheme } from 'hooks';
 
+const createInitialState = (customFields: CustomFieldsValues) => {
+    const initialState: { [key: string]: string | undefined } = {};
+    customFields.forEach((field) => {
+        initialState[field.name] = field.value;
+    });
+
+    return initialState;
+};
+
+const copyReducer = (
+    state: { [key: string]: string | undefined },
+    action: {
+        type: string;
+        payload?: {
+            name: string;
+            value: string | undefined;
+        };
+    }
+) => {
+    switch (action.type) {
+        case 'UPDATE':
+            return (
+                (action.payload && {
+                    ...state,
+                    [action.payload.name]: action.payload.value
+                }) ||
+                {}
+            );
+        case 'RESET':
+            return {};
+        default:
+            return state;
+    }
+};
+
 const DatePickerSwitch = ({
     onPress,
     renderDatePicker
@@ -31,8 +64,6 @@ const DatePickerSwitch = ({
     onPress: React.Dispatch<React.SetStateAction<boolean>>;
     renderDatePicker: boolean;
 }) => {
-    const activeColor = useColorTheme(Colors.primary);
-
     return (
         <Layout
             style={{
@@ -49,14 +80,22 @@ const DatePickerSwitch = ({
                     marginHorizontal: 10
                 }}
             >
-                <VRIcon type="calendar" size="sm" />
+                <VRIcon
+                    type="calendar"
+                    size="sm"
+                    color={renderDatePicker ? Colors.primary : Colors.basic}
+                />
             </Pressable>
             <Pressable
                 onPress={() => {
                     onPress(false);
                 }}
             >
-                <VRIcon type="edit" size="sm" />
+                <VRIcon
+                    type="edit"
+                    size="sm"
+                    color={renderDatePicker ? Colors.basic : Colors.primary}
+                />
             </Pressable>
         </Layout>
     );
@@ -77,6 +116,12 @@ const VREditCopyModal = ({
     customFields: CustomFieldsValues;
     isEdit?: boolean;
 }) => {
+    const [copyState, dispatch] = useReducer(
+        copyReducer,
+        customFields,
+        createInitialState
+    );
+
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [renderDatePicker, setRenderDatePicker] = useState(true);
     const [datePickerPressed, setDatePickerPressed] = useState(false);
@@ -86,10 +131,23 @@ const VREditCopyModal = ({
     const backgroundColor = useColorTheme(Colors.background);
     const borderColor = useColorTheme(Colors.border);
 
+    const handleChange = (name: string, value: string) => {
+        dispatch({
+            type: 'UPDATE',
+            payload: {
+                name,
+                value
+            }
+        });
+    };
+
     return (
         <VRModal
             modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
+            setModalOpen={(value) => {
+                dispatch({ type: 'RESET' });
+                setModalOpen(value);
+            }}
             title={isEdit ? 'Edit Your Copy' : 'Add to Collection'}
             animationType={animationType}
             centerContent={false}
@@ -98,7 +156,15 @@ const VREditCopyModal = ({
                 <KeyboardAvoidingView style={{ flex: 1 }}>
                     {customFields.map((field: CustomFieldsValue) => {
                         if (field.type === 'dropdown') {
-                            return <VRSelect field={field} key={field.id} />;
+                            return (
+                                <VRSelect
+                                    field={field}
+                                    key={field.id}
+                                    onSelect={(value) => {
+                                        handleChange(field.name, value);
+                                    }}
+                                />
+                            );
                         }
 
                         if (field.type === 'textarea') {
@@ -144,7 +210,11 @@ const VREditCopyModal = ({
                                                     flex: 1
                                                 }}
                                             >
-                                                <VRText>Hello</VRText>
+                                                <VRText>
+                                                    {copyState[field.name] ??
+                                                        field.value ??
+                                                        ''}
+                                                </VRText>
                                             </Pressable>
                                             <DatePickerSwitch
                                                 onPress={setRenderDatePicker}
@@ -160,7 +230,7 @@ const VREditCopyModal = ({
                                         value={field.value || ''}
                                         label={field.name}
                                         handleTextChange={(value) => {
-                                            console.log('value', value);
+                                            handleChange(field.name, value);
                                         }}
                                         controlRight={
                                             <DatePickerSwitch
@@ -179,7 +249,7 @@ const VREditCopyModal = ({
                                         value={field.value || ''}
                                         label={field.name}
                                         handleTextChange={(value) => {
-                                            console.log('value', value);
+                                            handleChange(field.name, value);
                                         }}
                                         multiline={
                                             field?.lines && field.lines > 1
@@ -213,11 +283,16 @@ const VREditCopyModal = ({
                     />
                 </Layout>
             )}
-            <VRCalendarModal
-                modalOpen={showCalendarModal}
-                setModalOpen={setShowCalendarModal}
-                onDatePress={(date) => console.log(date)}
-            />
+            {user?.washedOnField && (
+                <VRCalendarModal
+                    date={new Date()}
+                    modalOpen={showCalendarModal}
+                    setModalOpen={setShowCalendarModal}
+                    onDatePress={(date) => {
+                        handleChange(user.washedOnField, date);
+                    }}
+                />
+            )}
             <VRFooter styleOverride={{ marginBottom: 60 }}>
                 <VRButton
                     containerStyle={{ width: '100%' }}
@@ -233,4 +308,4 @@ const VREditCopyModal = ({
     );
 };
 
-export default VREditCopyModal;
+export default React.memo(VREditCopyModal);

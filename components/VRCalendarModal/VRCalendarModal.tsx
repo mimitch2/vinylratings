@@ -12,10 +12,12 @@ const SLIDE_START = -400;
 
 const VRCalendarModal = ({
     onDatePress,
+    date,
     modalOpen,
     setModalOpen
 }: {
     onDatePress: (value: string) => void;
+    date: Date;
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
 }) => {
@@ -97,6 +99,7 @@ const VRCalendarModal = ({
                             onDatePress(pickedDate.toLocaleDateString());
                             setModalOpen(false);
                         }}
+                        date={date}
                         max={new Date()}
                         style={{
                             width: '100%'

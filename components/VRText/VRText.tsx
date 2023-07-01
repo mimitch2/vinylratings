@@ -13,7 +13,7 @@ export const VRText = ({
     appearance = 'default',
     fontType = 'normal'
 }: {
-    children: string | string[] | number;
+    children: string | number;
     textAlign?: 'left' | 'center' | 'right';
     styleOverride?: TextStyle;
     numberOfLines?: number | undefined;
