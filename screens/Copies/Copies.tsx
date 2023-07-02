@@ -162,6 +162,7 @@ const Copies = ({ route }: { route: Route }) => {
 
             <VRFooter>
                 <VRButton
+                    trackID="copies_screen-add_another_copy"
                     title="Add another copy"
                     onPress={() => console.log('pressed')}
                 />

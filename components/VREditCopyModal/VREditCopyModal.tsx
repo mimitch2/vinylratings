@@ -4,7 +4,7 @@ import {
     KeyboardAvoidingView,
     Pressable
 } from 'react-native';
-import { Layout } from '@ui-kitten/components';
+import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import {
     VRModal,
@@ -18,44 +18,9 @@ import {
     VRIcon
 } from 'components';
 import { HEIGHT } from 'constants/index';
-import { CustomFieldsValue, CustomFieldsValues, Colors } from 'types';
+import { CustomFieldsValue, CustomFieldsValues, Colors, Folder } from 'types';
 import { UserContext } from 'context';
 import { useColorTheme } from 'hooks';
-
-const createInitialState = (customFields: CustomFieldsValues) => {
-    const initialState: { [key: string]: string | undefined } = {};
-    customFields.forEach((field) => {
-        initialState[field.name] = field.value;
-    });
-
-    return initialState;
-};
-
-const copyReducer = (
-    state: { [key: string]: string | undefined },
-    action: {
-        type: string;
-        payload?: {
-            name: string;
-            value: string | undefined;
-        };
-    }
-) => {
-    switch (action.type) {
-        case 'UPDATE':
-            return (
-                (action.payload && {
-                    ...state,
-                    [action.payload.name]: action.payload.value
-                }) ||
-                {}
-            );
-        case 'RESET':
-            return {};
-        default:
-            return state;
-    }
-};
 
 const DatePickerSwitch = ({
     onPress,
@@ -107,7 +72,11 @@ const VREditCopyModal = ({
     loading = false,
     animationType = 'slide',
     customFields,
-    isEdit = false
+    isEdit = false,
+    folders,
+    folderName,
+    copyState,
+    dispatch
 }: {
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
@@ -115,13 +84,24 @@ const VREditCopyModal = ({
     animationType?: 'slide' | 'fade' | 'none';
     customFields: CustomFieldsValues;
     isEdit?: boolean;
+    folders: Folder[];
+    folderName: string;
+    copyState: { [key: string]: string | number | undefined };
+    dispatch: React.Dispatch<{
+        type: string;
+        payload?: {
+            name: string;
+            value: string | undefined | number;
+        };
+    }>;
 }) => {
-    const [copyState, dispatch] = useReducer(
-        copyReducer,
-        customFields,
-        createInitialState
+    console.log('🚀 ~ file: VREditCopyModal.tsx:98 ~ copyState:', copyState);
+    const valueToOptionIndex = folders.findIndex(
+        (folder) => folder.name === folderName
     );
-
+    const [selectedFolderIdx, setSelectedFolderIdx] = useState<
+        IndexPath | IndexPath[]
+    >(new IndexPath(valueToOptionIndex));
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [renderDatePicker, setRenderDatePicker] = useState(true);
     const [datePickerPressed, setDatePickerPressed] = useState(false);
@@ -131,7 +111,7 @@ const VREditCopyModal = ({
     const backgroundColor = useColorTheme(Colors.background);
     const borderColor = useColorTheme(Colors.border);
 
-    const handleChange = (name: string, value: string) => {
+    const handleChange = (name: string, value: string | number) => {
         dispatch({
             type: 'UPDATE',
             payload: {
@@ -146,6 +126,7 @@ const VREditCopyModal = ({
             modalOpen={modalOpen}
             setModalOpen={(value) => {
                 dispatch({ type: 'RESET' });
+                setSelectedFolderIdx(new IndexPath(valueToOptionIndex));
                 setModalOpen(value);
             }}
             title={isEdit ? 'Edit Your Copy' : 'Add to Collection'}
@@ -154,6 +135,39 @@ const VREditCopyModal = ({
         >
             <VRContainer>
                 <KeyboardAvoidingView style={{ flex: 1 }}>
+                    <Select
+                        selectedIndex={selectedFolderIdx}
+                        onSelect={(index) => {
+                            setSelectedFolderIdx(index);
+                            handleChange(
+                                'folderId',
+                                folders[(index as IndexPath).row].id
+                            );
+                        }}
+                        label={() => (
+                            <VRText
+                                styleOverride={{
+                                    marginBottom: 5,
+                                    marginTop: 10
+                                }}
+                            >
+                                Folder
+                            </VRText>
+                        )}
+                        value={() => (
+                            <VRText>
+                                {
+                                    folders[
+                                        (selectedFolderIdx as IndexPath).row
+                                    ].name
+                                }
+                            </VRText>
+                        )}
+                    >
+                        {folders.map((folder) => (
+                            <SelectItem key={folder.id} title={folder.name} />
+                        ))}
+                    </Select>
                     {customFields.map((field: CustomFieldsValue) => {
                         if (field.type === 'dropdown') {
                             return (
@@ -227,9 +241,13 @@ const VREditCopyModal = ({
                                 ) : (
                                     <VRInput
                                         key={field.id}
-                                        value={field.value || ''}
+                                        value={
+                                            (copyState[field.name] as string) ??
+                                            field.value ??
+                                            ''
+                                        }
                                         label={field.name}
-                                        handleTextChange={(value) => {
+                                        onChange={(value) => {
                                             handleChange(field.name, value);
                                         }}
                                         controlRight={
@@ -246,15 +264,17 @@ const VREditCopyModal = ({
                                 return (
                                     <VRInput
                                         key={field.id}
-                                        value={field.value || ''}
+                                        value={
+                                            (copyState[field.name] as string) ??
+                                            field.value ??
+                                            ''
+                                        }
                                         label={field.name}
-                                        handleTextChange={(value) => {
+                                        onChange={(value) => {
                                             handleChange(field.name, value);
                                         }}
                                         multiline={
-                                            field?.lines && field.lines > 1
-                                                ? true
-                                                : false
+                                            !!(field?.lines && field.lines > 1)
                                         }
                                     />
                                 );

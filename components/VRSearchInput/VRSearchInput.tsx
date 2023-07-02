@@ -114,7 +114,7 @@ const VRSearchInput = ({
     return (
         <Layout style={styles.container}>
             <VRInput
-                handleTextChange={(value) => setSearchTerm(value)}
+                onChange={(value) => setSearchTerm(value)}
                 value={searchTerm}
                 placeholder="Search"
                 accessoryRight={

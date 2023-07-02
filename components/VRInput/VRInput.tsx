@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 import { VRText } from 'components';
 import { Layout, Input } from '@ui-kitten/components';
 
 const VRInput = ({
-    handleTextChange,
+    onChange,
     value,
     placeholder = '',
     multiline = false,
@@ -18,7 +18,7 @@ const VRInput = ({
     disabled = false,
     controlRight = undefined
 }: {
-    handleTextChange: (value: string) => void;
+    onChange: (value: string) => void;
     value: string;
     placeholder?: string;
     multiline?: boolean;
@@ -31,8 +31,6 @@ const VRInput = ({
     disabled?: boolean;
     controlRight?: React.ReactElement;
 }) => {
-    const [localValue, setLocalValue] = useState<string>(value);
-
     return (
         <Layout style={containerStyleOverride}>
             <Layout
@@ -64,17 +62,16 @@ const VRInput = ({
                     testID="input"
                     style={[{ flex: 1 }, styleOverride]}
                     onChangeText={(newValue) => {
-                        setLocalValue(newValue);
-                        handleTextChange(newValue);
+                        onChange(newValue);
                     }}
-                    value={localValue}
+                    value={value as string}
                     placeholder={placeholder}
                     multiline={multiline}
                     maxLength={maxLength}
                     accessoryRight={accessoryRight}
-                    textStyle={{
-                        minHeight: multiline ? 80 : 0
-                    }}
+                    // textStyle={{
+                    //     minHeight: multiline ? 80 : 0
+                    // }}
                     disabled={disabled}
                 />
                 {controlRight}

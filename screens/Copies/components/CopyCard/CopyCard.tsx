@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useReducer } from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Layout, Card } from '@ui-kitten/components';
 import {
@@ -11,9 +11,38 @@ import { useAddCopy } from 'hooks';
 
 import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
 
-const useSelectState = (initialState = undefined) => {
-    const [selectedIndex, setSelectedIndex] = useState(initialState);
-    return { selectedIndex, onSelect: setSelectedIndex };
+// const createInitialState = (customFields: CustomFieldsValues) => {
+//     const initialState: { [key: string]: string | number | undefined } = {};
+//     customFields.forEach((field) => {
+//         initialState[field.name] = field.value;
+//     });
+
+//     return initialState;
+// };
+
+const copyReducer = (
+    state: { [key: string]: string | number | undefined },
+    action: {
+        type: string;
+        payload?: {
+            name: string;
+            value: string | number | undefined;
+        };
+    }
+) => {
+    switch (action.type) {
+        case 'UPDATE':
+            return action.payload
+                ? {
+                      ...state,
+                      [action.payload.name]: action.payload.value
+                  }
+                : {};
+        case 'RESET':
+            return {};
+        default:
+            return state;
+    }
 };
 
 const CopyCard = ({
@@ -39,7 +68,7 @@ const CopyCard = ({
     } = release;
     const folderName =
         folders?.find((folder) => {
-            return +folderId === folder?.id ?? false;
+            return +folderId === folder?.id;
         })?.name ?? 'Unknown';
 
     const dateAdded = new Date(date_added).toLocaleDateString();
@@ -56,6 +85,8 @@ const CopyCard = ({
             }) ?? []
         );
     }, [customFields, release?.notes]);
+
+    const [copyState, dispatch] = useReducer(copyReducer, {});
 
     // const submit = () => {
     //     addToCollection({
@@ -129,10 +160,14 @@ const CopyCard = ({
             </Layout>
 
             <VREditCopyModal
+                copyState={copyState}
+                dispatch={dispatch}
                 setModalOpen={setCopyModalOpen}
                 customFields={customFieldValues}
                 modalOpen={copyModalOpen}
                 isEdit
+                folders={folders}
+                folderName={folderName}
             />
         </Card>
     );
