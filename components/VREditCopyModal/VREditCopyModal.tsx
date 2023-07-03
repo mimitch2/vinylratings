@@ -90,7 +90,8 @@ const VREditCopyModal = ({
     dispatch,
     setNewFolderId,
     handleSubmitUpdateCopy,
-    newFolderId
+    newFolderId,
+    heading
 }: {
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
@@ -105,6 +106,7 @@ const VREditCopyModal = ({
     setNewFolderId: React.Dispatch<React.SetStateAction<number | null>>;
     handleSubmitUpdateCopy: () => Promise<void>;
     newFolderId: number | null;
+    heading: string;
 }) => {
     const disabled = !Object.keys(copyState).length && !newFolderId;
     const valueToOptionIndex = folders.findIndex(
@@ -157,6 +159,15 @@ const VREditCopyModal = ({
             centerContent={false}
         >
             <VRContainer>
+                <VRText
+                    fontType="h4"
+                    styleOverride={{
+                        textAlign: 'center',
+                        marginBottom: 10
+                    }}
+                >
+                    {heading}
+                </VRText>
                 <KeyboardAvoidingView style={{ flex: 1 }}>
                     <Select
                         selectedIndex={selectedFolderIdx}

@@ -10,6 +10,7 @@ import {
     CopyAction
 } from 'types';
 import { useUpdateCustomFields } from 'hooks';
+import { getArtistAndTitle } from 'helpers';
 
 import { VRText, VRButton, VREditCopyModal } from 'components';
 
@@ -55,13 +56,16 @@ const CopyCard = ({
         instance_id: instanceId,
         date_added,
         folder_id: folderId,
-        id: releaseId
+        id: releaseId,
+        basic_information
     } = release;
 
     const folderName =
         folders?.find((folder) => {
             return +folderId === folder?.id;
         })?.name ?? 'Unknown';
+
+    const heading = getArtistAndTitle(basic_information);
 
     const dateAdded = new Date(date_added).toLocaleDateString();
 
@@ -92,8 +96,10 @@ const CopyCard = ({
 
     return (
         <Card style={styles.container} disabled>
+            <VRText fontType="h5">{heading}</VRText>
             <Layout
                 style={{
+                    marginTop: 10,
                     flexDirection: 'row',
                     justifyContent: 'space-between'
                 }}
@@ -167,6 +173,7 @@ const CopyCard = ({
                 newFolderId={newFolderId}
                 setNewFolderId={setNewFolderId}
                 handleSubmitUpdateCopy={handleSubmitUpdateCopy}
+                heading={heading}
             />
         </Card>
     );
