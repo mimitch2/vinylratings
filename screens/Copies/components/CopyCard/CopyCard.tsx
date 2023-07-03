@@ -204,7 +204,9 @@ const CopyCard = ({
                 folderName={folderName}
                 setNewFolderId={setNewFolderId}
                 submitUpdateCopy={submitUpdateCopy}
-                updateCustomFieldsLoading={updateCustomFieldsLoading}
+                updateCustomFieldsLoading={
+                    updateCustomFieldsLoading || updateInstanceFolderLoading
+                }
                 newFolderId={newFolderId}
             />
         </Card>
