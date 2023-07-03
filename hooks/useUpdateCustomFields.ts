@@ -30,11 +30,7 @@ const UPDATE_CUSTOM_FIELD = gql`
     }
 `;
 
-export const useUpdateCustomFields = (newFolderId: null | number) => {
-    console.log(
-        '🚀 ~ file: useUpdateCustomFields.ts:33 ~ useUpdateCustomFields ~ newFolderId:',
-        newFolderId
-    );
+export const useUpdateCustomFields = () => {
     const [updateCustomFields, { data, loading, error }] = useMutation<
         UpdateCustomFieldData,
         UpdateCustomFieldVariables

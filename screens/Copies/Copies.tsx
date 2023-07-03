@@ -21,7 +21,6 @@ import {
     useIsInCollection,
     useGetFolders,
     IS_IN_COLLECTION,
-    useIsLoading,
     useCustomFields,
     useAddCopy
 } from 'hooks';

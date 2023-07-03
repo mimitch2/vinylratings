@@ -9,9 +9,9 @@ import {
     CopyState,
     CopyAction
 } from 'types';
-import { useUpdateCustomFields } from 'hooks';
+import { useUpdateCustomFields, useUpdateInstanceFolder } from 'hooks';
 
-import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
+import { VRText, VRButton, VREditCopyModal } from 'components';
 
 const copyReducer = (state: CopyState, action: CopyAction) => {
     switch (action.type) {
@@ -49,7 +49,12 @@ const CopyCard = ({
         updateCustomFields,
         loading: updateCustomFieldsLoading,
         error: updateCustomFieldsError
-    } = useUpdateCustomFields(newFolderId);
+    } = useUpdateCustomFields();
+    const {
+        updateInstanceFolder,
+        loading: updateInstanceFolderLoading,
+        error: updateInstanceFolderError
+    } = useUpdateInstanceFolder();
 
     const {
         instance_id: instanceId,
@@ -57,6 +62,7 @@ const CopyCard = ({
         folder_id: folderId,
         id: releaseId
     } = release;
+
     const folderName =
         folders?.find((folder) => {
             return +folderId === folder?.id;
@@ -79,21 +85,48 @@ const CopyCard = ({
 
     const [copyState, dispatch] = useReducer(copyReducer, {});
 
-    const submitCustomFields = async () => {
+    const submitUpdateCopy = async () => {
+        const promises = [];
         const values = Object.values(copyState).map((field) => ({
             fieldId: field.fieldId,
             value: field.value
         }));
 
-        await updateCustomFields({
-            variables: {
-                folderId: +folderId,
-                instanceId: +instanceId,
-                releaseId: +releaseId,
-                values
-            },
-            refetchQueries: ['IsInCollection']
-        });
+        if (values.length) {
+            promises.push(
+                updateCustomFields({
+                    variables: {
+                        folderId: +folderId,
+                        instanceId: +instanceId,
+                        releaseId: +releaseId,
+                        values
+                    },
+                    refetchQueries: !newFolderId
+                        ? ['IsInCollection']
+                        : undefined
+                })
+            );
+        }
+
+        if (newFolderId) {
+            promises.push(
+                updateInstanceFolder({
+                    variables: {
+                        instanceId: +instanceId,
+                        folderId: +newFolderId,
+                        releaseId: +releaseId,
+                        newFolderId: +newFolderId
+                    },
+                    refetchQueries: ['IsInCollection']
+                })
+            );
+        }
+
+        if (!promises.length) {
+            return;
+        }
+
+        await Promise.all(promises);
     };
 
     return (
@@ -170,8 +203,9 @@ const CopyCard = ({
                 folders={folders}
                 folderName={folderName}
                 setNewFolderId={setNewFolderId}
-                submitCustomFields={submitCustomFields}
+                submitUpdateCopy={submitUpdateCopy}
                 updateCustomFieldsLoading={updateCustomFieldsLoading}
+                newFolderId={newFolderId}
             />
         </Card>
     );

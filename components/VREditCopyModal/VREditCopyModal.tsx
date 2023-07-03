@@ -88,8 +88,9 @@ const VREditCopyModal = ({
     copyState,
     dispatch,
     setNewFolderId,
-    submitCustomFields,
-    updateCustomFieldsLoading
+    submitUpdateCopy,
+    updateCustomFieldsLoading,
+    newFolderId
 }: {
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
@@ -102,10 +103,11 @@ const VREditCopyModal = ({
     copyState: CopyState;
     dispatch: React.Dispatch<CopyAction>;
     setNewFolderId: React.Dispatch<React.SetStateAction<number | null>>;
-    submitCustomFields: () => Promise<void>;
+    submitUpdateCopy: () => Promise<void>;
     updateCustomFieldsLoading: boolean;
+    newFolderId: number | null;
 }) => {
-    const disabled = !Object.keys(copyState).length;
+    const disabled = !Object.keys(copyState).length && !newFolderId;
     const valueToOptionIndex = folders.findIndex(
         (folder) => folder.name === folderName
     );
@@ -141,7 +143,8 @@ const VREditCopyModal = ({
             modalOpen={modalOpen}
             setModalOpen={(value) => {
                 dispatch({ type: 'RESET' });
-                setSelectedFolderIdx(new IndexPath(valueToOptionIndex));
+                setNewFolderId(null);
+                // setSelectedFolderIdx(new IndexPath(valueToOptionIndex));
                 setModalOpen(value);
             }}
             title={isEdit ? 'Edit Your Copy' : 'Add to Collection'}
@@ -170,11 +173,8 @@ const VREditCopyModal = ({
                         )}
                         value={() => (
                             <VRText>
-                                {
-                                    folders[
-                                        (selectedFolderIdx as IndexPath).row
-                                    ].name
-                                }
+                                {folders[(selectedFolderIdx as IndexPath).row]
+                                    ?.name ?? folderName}
                             </VRText>
                         )}
                     >
@@ -356,7 +356,7 @@ const VREditCopyModal = ({
                     containerStyle={{ width: '100%' }}
                     title="Save"
                     onPress={async () => {
-                        await submitCustomFields();
+                        await submitUpdateCopy();
                         setModalOpen(false);
                     }}
                     trackID="calendar-modal-reset-button"

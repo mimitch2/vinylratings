@@ -7,24 +7,22 @@ type UpdateInstanceFolderData = {
 type UpdateInstanceFolderVariables = {
     releaseId: number;
     instanceId: number;
-    fieldId: number;
-    value: string;
+    folderId: number;
+    newFolderId: number;
 };
 
 const UPDATE_INSTANCE_FOLDER = gql`
-    mutation UpdateCustomField(
+    mutation UpdateInstanceFolder(
         $releaseId: Int!
-        $fieldId: Int!
-        $value: String!
-        $folderId: Int!
         $instanceId: Int!
+        $folderId: Int!
+        $newFolderId: Int!
     ) {
-        updateCustomField(
+        updateInstanceFolder(
             releaseId: $releaseId
-            fieldId: $fieldId
-            value: $value
-            folderId: $folderId
             instanceId: $instanceId
+            folderId: $folderId
+            newFolderId: $newFolderId
         ) {
             success
         }
