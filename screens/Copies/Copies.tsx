@@ -21,8 +21,8 @@ import {
     useIsInCollection,
     useGetFolders,
     IS_IN_COLLECTION,
-    useCustomFields,
-    useAddCopy
+    useCustomFields
+    // useAddCopy
 } from 'hooks';
 
 type Params = {
@@ -59,11 +59,11 @@ const Copies = ({ route }: { route: Route }) => {
     const [addToCollectionMutation, { loading: addToCollectionLoading }] =
         useMutation(ADD_TO_COLLECTION);
 
-    const { addToCollection } = useAddCopy({
-        releaseId: +id,
-        customFieldsValues: [],
-        folderId: 0
-    });
+    // const { addToCollection } = useAddCopy({
+    //     releaseId: +id,
+    //     customFieldsValues: [],
+    //     folderId: 0
+    // });
 
     const optimisticallyUpdateIsInCollection = (value: boolean) => {
         client.writeQuery({

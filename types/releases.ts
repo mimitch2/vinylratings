@@ -4,6 +4,14 @@ import { FlashList } from '@shopify/flash-list';
 import { User } from './user';
 import { SearchTypes } from './global';
 
+export interface SubmitUpdateCopyArgs {
+    copyState: CopyState;
+    folderId: string;
+    instanceId: string;
+    releaseId: number;
+    newFolderId?: number | null;
+}
+
 export interface CopyStateValue {
     fieldId: number;
     value: string | number | undefined;

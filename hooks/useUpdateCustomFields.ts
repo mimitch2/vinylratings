@@ -1,6 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
-import { CopyStateValue } from 'types';
 
+import { CopyStateValue, SubmitUpdateCopyArgs } from 'types';
+import { useUpdateInstanceFolder } from 'hooks';
 export type UpdateCustomFieldData = {
     success: boolean;
 };
@@ -35,11 +36,66 @@ export const useUpdateCustomFields = () => {
         UpdateCustomFieldData,
         UpdateCustomFieldVariables
     >(UPDATE_CUSTOM_FIELD);
+    const {
+        updateInstanceFolder,
+        loading: updateInstanceFolderLoading,
+        error: updateInstanceFolderError
+    } = useUpdateInstanceFolder();
+
+    const submitUpdateCopy = async ({
+        copyState,
+        folderId,
+        instanceId,
+        releaseId,
+        newFolderId
+    }: SubmitUpdateCopyArgs) => {
+        const promises = [];
+        const values = Object.values(copyState).map((field) => ({
+            fieldId: field.fieldId,
+            value: field.value
+        }));
+
+        if (values.length) {
+            promises.push(
+                updateCustomFields({
+                    variables: {
+                        folderId: +folderId,
+                        instanceId: +instanceId,
+                        releaseId: +releaseId,
+                        values
+                    },
+                    refetchQueries: !newFolderId
+                        ? ['IsInCollection']
+                        : undefined
+                })
+            );
+        }
+
+        if (newFolderId) {
+            promises.push(
+                updateInstanceFolder({
+                    variables: {
+                        instanceId: +instanceId,
+                        folderId: +newFolderId,
+                        releaseId: +releaseId,
+                        newFolderId: +newFolderId
+                    },
+                    refetchQueries: ['IsInCollection']
+                })
+            );
+        }
+
+        if (!promises.length) {
+            return;
+        }
+
+        await Promise.all(promises);
+    };
 
     return {
-        updateCustomFields,
+        submitUpdateCopy,
         data,
-        loading,
+        loading: updateInstanceFolderLoading || loading,
         error
     };
 };

@@ -9,7 +9,7 @@ import {
     CopyState,
     CopyAction
 } from 'types';
-import { useUpdateCustomFields, useUpdateInstanceFolder } from 'hooks';
+import { useUpdateCustomFields } from 'hooks';
 
 import { VRText, VRButton, VREditCopyModal } from 'components';
 
@@ -46,15 +46,10 @@ const CopyCard = ({
     const [copyModalOpen, setCopyModalOpen] = useState(false);
     const [newFolderId, setNewFolderId] = useState<number | null>(null);
     const {
-        updateCustomFields,
+        submitUpdateCopy,
         loading: updateCustomFieldsLoading,
         error: updateCustomFieldsError
     } = useUpdateCustomFields();
-    const {
-        updateInstanceFolder,
-        loading: updateInstanceFolderLoading,
-        error: updateInstanceFolderError
-    } = useUpdateInstanceFolder();
 
     const {
         instance_id: instanceId,
@@ -85,48 +80,14 @@ const CopyCard = ({
 
     const [copyState, dispatch] = useReducer(copyReducer, {});
 
-    const submitUpdateCopy = async () => {
-        const promises = [];
-        const values = Object.values(copyState).map((field) => ({
-            fieldId: field.fieldId,
-            value: field.value
-        }));
-
-        if (values.length) {
-            promises.push(
-                updateCustomFields({
-                    variables: {
-                        folderId: +folderId,
-                        instanceId: +instanceId,
-                        releaseId: +releaseId,
-                        values
-                    },
-                    refetchQueries: !newFolderId
-                        ? ['IsInCollection']
-                        : undefined
-                })
-            );
-        }
-
-        if (newFolderId) {
-            promises.push(
-                updateInstanceFolder({
-                    variables: {
-                        instanceId: +instanceId,
-                        folderId: +newFolderId,
-                        releaseId: +releaseId,
-                        newFolderId: +newFolderId
-                    },
-                    refetchQueries: ['IsInCollection']
-                })
-            );
-        }
-
-        if (!promises.length) {
-            return;
-        }
-
-        await Promise.all(promises);
+    const handleSubmitUpdateCopy = async () => {
+        await submitUpdateCopy({
+            copyState,
+            folderId,
+            instanceId,
+            releaseId,
+            newFolderId
+        });
     };
 
     return (
@@ -168,7 +129,7 @@ const CopyCard = ({
                 <VRButton
                     title="Edit"
                     onPress={() => setCopyModalOpen(true)}
-                    trackID="copy_card-wash_now"
+                    trackID="copy_card-edit_copy"
                     size="small"
                     variant="basic"
                     stacked={false}
@@ -183,7 +144,7 @@ const CopyCard = ({
                             instanceId: release?.instance_id
                         })
                     }
-                    trackID="copy_card-wash_now"
+                    trackID="copy_card-remove_copy"
                     size="small"
                     variant="basic"
                     stacked={false}
@@ -194,20 +155,18 @@ const CopyCard = ({
             </Layout>
 
             <VREditCopyModal
+                loading={updateCustomFieldsLoading}
                 copyState={copyState}
                 dispatch={dispatch}
+                modalOpen={copyModalOpen}
                 setModalOpen={setCopyModalOpen}
                 customFields={customFieldValues}
-                modalOpen={copyModalOpen}
                 isEdit
                 folders={folders}
                 folderName={folderName}
-                setNewFolderId={setNewFolderId}
-                submitUpdateCopy={submitUpdateCopy}
-                updateCustomFieldsLoading={
-                    updateCustomFieldsLoading || updateInstanceFolderLoading
-                }
                 newFolderId={newFolderId}
+                setNewFolderId={setNewFolderId}
+                handleSubmitUpdateCopy={handleSubmitUpdateCopy}
             />
         </Card>
     );

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, gql } from '@apollo/client';
 
-import { useUpdateCustomFields } from './useUpdateCustomFields';
+import { useUpdateCustomFields, useUpdateInstanceFolder } from 'hooks';
 import { AddOrUpdateCopyArgs } from 'types';
 
 export const ADD_TO_COLLECTION = gql`
@@ -13,17 +13,21 @@ export const ADD_TO_COLLECTION = gql`
     }
 `;
 
-export const useAddCopy = ({
+export const useAddOrUpdateCopy = ({
     releaseId,
     customFieldsValues,
     folderId
 }: AddOrUpdateCopyArgs) => {
     const {
         updateCustomFields,
-        data: updateFieldsData,
-        loading: updateFieldsLoading,
-        error: updateFieldsError
+        loading: updateCustomFieldsLoading,
+        error: updateCustomFieldsError
     } = useUpdateCustomFields();
+    const {
+        updateInstanceFolder,
+        loading: updateInstanceFolderLoading,
+        error: updateInstanceFolderError
+    } = useUpdateInstanceFolder();
 
     const [
         addToCollection,
@@ -50,7 +54,13 @@ export const useAddCopy = ({
 
     return {
         addToCollection,
-        loading: addToCollectionLoading || updateFieldsLoading,
-        error: addToCollectionError || updateFieldsError
+        loading:
+            addToCollectionLoading ||
+            updateCustomFieldsLoading ||
+            updateInstanceFolderLoading,
+        error:
+            addToCollectionError ||
+            updateInstanceFolderError ||
+            updateCustomFieldsError
     };
 };

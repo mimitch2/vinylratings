@@ -24,7 +24,8 @@ import {
     Colors,
     Folder,
     CopyState,
-    CopyAction
+    CopyAction,
+    SubmitUpdateCopyArgs
 } from 'types';
 import { useColorTheme } from 'hooks';
 import { UserContext } from 'context';
@@ -88,8 +89,7 @@ const VREditCopyModal = ({
     copyState,
     dispatch,
     setNewFolderId,
-    submitUpdateCopy,
-    updateCustomFieldsLoading,
+    handleSubmitUpdateCopy,
     newFolderId
 }: {
     modalOpen: boolean;
@@ -103,8 +103,7 @@ const VREditCopyModal = ({
     copyState: CopyState;
     dispatch: React.Dispatch<CopyAction>;
     setNewFolderId: React.Dispatch<React.SetStateAction<number | null>>;
-    submitUpdateCopy: () => Promise<void>;
-    updateCustomFieldsLoading: boolean;
+    handleSubmitUpdateCopy: () => Promise<void>;
     newFolderId: number | null;
 }) => {
     const disabled = !Object.keys(copyState).length && !newFolderId;
@@ -138,14 +137,20 @@ const VREditCopyModal = ({
         });
     };
 
+    const closeModal = useCallback(
+        (value: boolean) => {
+            dispatch({ type: 'RESET' });
+            setNewFolderId(null);
+            setModalOpen(value);
+        },
+        [dispatch, setNewFolderId, setModalOpen]
+    );
+
     return (
         <VRModal
             modalOpen={modalOpen}
             setModalOpen={(value) => {
-                dispatch({ type: 'RESET' });
-                setNewFolderId(null);
-                // setSelectedFolderIdx(new IndexPath(valueToOptionIndex));
-                setModalOpen(value);
+                closeModal(value);
             }}
             title={isEdit ? 'Edit Your Copy' : 'Add to Collection'}
             animationType={animationType}
@@ -356,13 +361,13 @@ const VREditCopyModal = ({
                     containerStyle={{ width: '100%' }}
                     title="Save"
                     onPress={async () => {
-                        await submitUpdateCopy();
-                        setModalOpen(false);
+                        await handleSubmitUpdateCopy();
+                        closeModal(false);
                     }}
                     trackID="calendar-modal-reset-button"
                     variant="primary"
-                    disabled={disabled || loading}
-                    loading={loading || updateCustomFieldsLoading}
+                    disabled={disabled}
+                    loading={loading}
                 />
             </VRFooter>
         </VRModal>

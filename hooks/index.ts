@@ -1,4 +1,4 @@
-export * from './useAddCopy';
+export * from './useAddOrUpdateCopy';
 export * from './useAuth';
 export * from './useColorTheme';
 export * from './useCustomFields';

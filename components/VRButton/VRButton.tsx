@@ -1,5 +1,4 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
 import { Button, Text, Spinner } from '@ui-kitten/components';
 
 import { VoidFuncNoParams } from 'types';
@@ -62,7 +61,7 @@ const VRButton = ({
     return (
         <Button
             onPress={onPress}
-            disabled={disabled}
+            disabled={disabled || loading}
             style={[
                 {
                     flex: stacked ? 0 : 1
