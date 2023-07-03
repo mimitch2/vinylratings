@@ -4,6 +4,26 @@ import { FlashList } from '@shopify/flash-list';
 import { User } from './user';
 import { SearchTypes } from './global';
 
+export interface CopyStateValue {
+    fieldId: number;
+    value: string | number | undefined;
+}
+
+export interface CopyState {
+    [key: string]: CopyStateValue;
+}
+
+export interface CopyStatePayload {
+    fieldName: string;
+    value: string | number | undefined;
+    fieldId: number;
+}
+
+export interface CopyAction {
+    type: 'UPDATE' | 'RESET';
+    payload?: CopyStatePayload;
+}
+
 export type FlashListRef = MutableRefObject<FlashList<Releases> | null>;
 
 export type DiscogsImage = {

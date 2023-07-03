@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
@@ -18,9 +18,19 @@ import {
     VRIcon
 } from 'components';
 import { HEIGHT } from 'constants/index';
-import { CustomFieldsValue, CustomFieldsValues, Colors, Folder } from 'types';
-import { UserContext } from 'context';
+import {
+    CustomFieldsValue,
+    CustomFieldsValues,
+    Colors,
+    Folder,
+    CopyState,
+    CopyAction
+} from 'types';
 import { useColorTheme } from 'hooks';
+import { UserContext } from 'context';
+
+let washedOnId: number | null = null;
+let washedOnName: string | null = null;
 
 const DatePickerSwitch = ({
     onPress,
@@ -76,7 +86,10 @@ const VREditCopyModal = ({
     folders,
     folderName,
     copyState,
-    dispatch
+    dispatch,
+    setNewFolderId,
+    submitCustomFields,
+    updateCustomFieldsLoading
 }: {
     modalOpen: boolean;
     setModalOpen: (value: boolean) => void;
@@ -86,16 +99,13 @@ const VREditCopyModal = ({
     isEdit?: boolean;
     folders: Folder[];
     folderName: string;
-    copyState: { [key: string]: string | number | undefined };
-    dispatch: React.Dispatch<{
-        type: string;
-        payload?: {
-            name: string;
-            value: string | undefined | number;
-        };
-    }>;
+    copyState: CopyState;
+    dispatch: React.Dispatch<CopyAction>;
+    setNewFolderId: React.Dispatch<React.SetStateAction<number | null>>;
+    submitCustomFields: () => Promise<void>;
+    updateCustomFieldsLoading: boolean;
 }) => {
-    console.log('🚀 ~ file: VREditCopyModal.tsx:98 ~ copyState:', copyState);
+    const disabled = !Object.keys(copyState).length;
     const valueToOptionIndex = folders.findIndex(
         (folder) => folder.name === folderName
     );
@@ -111,11 +121,16 @@ const VREditCopyModal = ({
     const backgroundColor = useColorTheme(Colors.background);
     const borderColor = useColorTheme(Colors.border);
 
-    const handleChange = (name: string, value: string | number) => {
+    const handleChange = (
+        fieldName: string,
+        fieldId: number,
+        value: string | number
+    ) => {
         dispatch({
             type: 'UPDATE',
             payload: {
-                name,
+                fieldName,
+                fieldId,
                 value
             }
         });
@@ -139,8 +154,7 @@ const VREditCopyModal = ({
                         selectedIndex={selectedFolderIdx}
                         onSelect={(index) => {
                             setSelectedFolderIdx(index);
-                            handleChange(
-                                'folderId',
+                            setNewFolderId(
                                 folders[(index as IndexPath).row].id
                             );
                         }}
@@ -175,7 +189,11 @@ const VREditCopyModal = ({
                                     field={field}
                                     key={field.id}
                                     onSelect={(value) => {
-                                        handleChange(field.name, value);
+                                        handleChange(
+                                            field.name,
+                                            field.id,
+                                            value
+                                        );
                                     }}
                                 />
                             );
@@ -183,6 +201,9 @@ const VREditCopyModal = ({
 
                         if (field.type === 'textarea') {
                             if (field.name === user?.washedOnField) {
+                                washedOnId = field.id;
+                                washedOnName = field.name;
+
                                 return renderDatePicker ? (
                                     <Layout
                                         key={field.id}
@@ -225,7 +246,8 @@ const VREditCopyModal = ({
                                                 }}
                                             >
                                                 <VRText>
-                                                    {copyState[field.name] ??
+                                                    {copyState[field.name]
+                                                        ?.value ??
                                                         field.value ??
                                                         ''}
                                                 </VRText>
@@ -242,13 +264,18 @@ const VREditCopyModal = ({
                                     <VRInput
                                         key={field.id}
                                         value={
-                                            (copyState[field.name] as string) ??
+                                            (copyState[field.name]
+                                                ?.value as string) ??
                                             field.value ??
                                             ''
                                         }
                                         label={field.name}
                                         onChange={(value) => {
-                                            handleChange(field.name, value);
+                                            handleChange(
+                                                field.name,
+                                                field.id,
+                                                value
+                                            );
                                         }}
                                         controlRight={
                                             <DatePickerSwitch
@@ -265,17 +292,24 @@ const VREditCopyModal = ({
                                     <VRInput
                                         key={field.id}
                                         value={
-                                            (copyState[field.name] as string) ??
+                                            (copyState[field.name]
+                                                ?.value as string) ??
                                             field.value ??
                                             ''
                                         }
                                         label={field.name}
                                         onChange={(value) => {
-                                            handleChange(field.name, value);
+                                            handleChange(
+                                                field.name,
+                                                field.id,
+                                                value
+                                            );
                                         }}
-                                        multiline={
-                                            !!(field?.lines && field.lines > 1)
-                                        }
+                                        // TODO: uncomment when multiline is fixed
+                                        //  https://github.com/facebook/react-native/pull/37958
+                                        // multiline={
+                                        //     !!(field?.lines && field.lines > 1)
+                                        // }
                                     />
                                 );
                             }
@@ -309,7 +343,11 @@ const VREditCopyModal = ({
                     modalOpen={showCalendarModal}
                     setModalOpen={setShowCalendarModal}
                     onDatePress={(date) => {
-                        handleChange(user.washedOnField, date);
+                        handleChange(
+                            washedOnName as string,
+                            washedOnId as number,
+                            date
+                        );
                     }}
                 />
             )}
@@ -317,11 +355,14 @@ const VREditCopyModal = ({
                 <VRButton
                     containerStyle={{ width: '100%' }}
                     title="Save"
-                    onPress={() => {
+                    onPress={async () => {
+                        await submitCustomFields();
                         setModalOpen(false);
                     }}
                     trackID="calendar-modal-reset-button"
                     variant="primary"
+                    disabled={disabled || loading}
+                    loading={loading || updateCustomFieldsLoading}
                 />
             </VRFooter>
         </VRModal>

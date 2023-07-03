@@ -1,31 +1,27 @@
 import { gql, useMutation } from '@apollo/client';
+import { CopyStateValue } from 'types';
 
-import { AddOrUpdateCopyArgs } from 'types';
-
-type UpdateCustomFieldData = {
+export type UpdateCustomFieldData = {
     success: boolean;
 };
 
-type UpdateCustomFieldVariables = {
+export type UpdateCustomFieldVariables = {
+    values: CopyStateValue[];
     releaseId: number;
     instanceId: number;
     folderId: number;
-    fieldId: number;
-    value: string;
 };
 
 const UPDATE_CUSTOM_FIELD = gql`
     mutation UpdateCustomField(
+        $values: [CustomFieldValuesInput!]!
         $releaseId: Int!
-        $fieldId: Int!
-        $value: String!
         $folderId: Int!
         $instanceId: Int!
     ) {
         updateCustomField(
+            values: $values
             releaseId: $releaseId
-            fieldId: $fieldId
-            value: $value
             folderId: $folderId
             instanceId: $instanceId
         ) {
@@ -34,35 +30,15 @@ const UPDATE_CUSTOM_FIELD = gql`
     }
 `;
 
-export const useUpdateCustomFields = () => {
-    const [updateCustomField, { data, loading, error }] = useMutation<
+export const useUpdateCustomFields = (newFolderId: null | number) => {
+    console.log(
+        '🚀 ~ file: useUpdateCustomFields.ts:33 ~ useUpdateCustomFields ~ newFolderId:',
+        newFolderId
+    );
+    const [updateCustomFields, { data, loading, error }] = useMutation<
         UpdateCustomFieldData,
         UpdateCustomFieldVariables
     >(UPDATE_CUSTOM_FIELD);
-
-    const updateCustomFields = async ({
-        customFieldsValues,
-        releaseId,
-        instanceId,
-        folderId
-    }: AddOrUpdateCopyArgs & { instanceId: number }) => {
-        if (customFieldsValues) {
-            const success = await Promise.all(
-                customFieldsValues.map(async ({ fieldId, value }) => {
-                    await updateCustomField({
-                        variables: {
-                            releaseId: +releaseId,
-                            fieldId: +fieldId,
-                            value: value,
-                            folderId: +folderId,
-                            instanceId
-                        }
-                    });
-                })
-            );
-            return success;
-        }
-    };
 
     return {
         updateCustomFields,

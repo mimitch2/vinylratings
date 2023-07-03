@@ -150,7 +150,6 @@ const Copies = ({ route }: { route: Route }) => {
                                             }
                                             customFields={customFields}
                                             folders={foldersWithoutAll}
-                                            updateCustomField={() => {}}
                                         />
                                     </Layout>
                                 )

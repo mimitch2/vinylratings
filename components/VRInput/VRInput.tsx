@@ -64,7 +64,7 @@ const VRInput = ({
                     onChangeText={(newValue) => {
                         onChange(newValue);
                     }}
-                    value={value as string}
+                    value={value}
                     placeholder={placeholder}
                     multiline={multiline}
                     maxLength={maxLength}

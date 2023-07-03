@@ -5,37 +5,24 @@ import {
     CollectionInstance,
     CustomFields,
     Folder,
-    CustomFieldsValues
+    CustomFieldsValues,
+    CopyState,
+    CopyAction
 } from 'types';
-import { useAddCopy } from 'hooks';
+import { useUpdateCustomFields } from 'hooks';
 
 import { VRText, VRContainer, VRButton, VREditCopyModal } from 'components';
 
-// const createInitialState = (customFields: CustomFieldsValues) => {
-//     const initialState: { [key: string]: string | number | undefined } = {};
-//     customFields.forEach((field) => {
-//         initialState[field.name] = field.value;
-//     });
-
-//     return initialState;
-// };
-
-const copyReducer = (
-    state: { [key: string]: string | number | undefined },
-    action: {
-        type: string;
-        payload?: {
-            name: string;
-            value: string | number | undefined;
-        };
-    }
-) => {
+const copyReducer = (state: CopyState, action: CopyAction) => {
     switch (action.type) {
         case 'UPDATE':
             return action.payload
                 ? {
                       ...state,
-                      [action.payload.name]: action.payload.value
+                      [action.payload.fieldName]: {
+                          fieldId: action.payload.fieldId,
+                          value: action.payload.value
+                      }
                   }
                 : {};
         case 'RESET':
@@ -49,16 +36,20 @@ const CopyCard = ({
     release,
     removeFromCollection,
     customFields,
-    folders,
-    updateCustomField
+    folders
 }: {
     release: CollectionInstance;
     removeFromCollection: ({ instanceId }: { instanceId: string }) => void;
     customFields: CustomFields;
     folders: Folder[];
-    updateCustomField: any;
 }) => {
     const [copyModalOpen, setCopyModalOpen] = useState(false);
+    const [newFolderId, setNewFolderId] = useState<number | null>(null);
+    const {
+        updateCustomFields,
+        loading: updateCustomFieldsLoading,
+        error: updateCustomFieldsError
+    } = useUpdateCustomFields(newFolderId);
 
     const {
         instance_id: instanceId,
@@ -88,12 +79,22 @@ const CopyCard = ({
 
     const [copyState, dispatch] = useReducer(copyReducer, {});
 
-    // const submit = () => {
-    //     addToCollection({
-    //         instanceId,
-    //         customFields: customFieldValues
-    //     });
-    // };
+    const submitCustomFields = async () => {
+        const values = Object.values(copyState).map((field) => ({
+            fieldId: field.fieldId,
+            value: field.value
+        }));
+
+        await updateCustomFields({
+            variables: {
+                folderId: +folderId,
+                instanceId: +instanceId,
+                releaseId: +releaseId,
+                values
+            },
+            refetchQueries: ['IsInCollection']
+        });
+    };
 
     return (
         <Card style={styles.container} disabled>
@@ -168,6 +169,9 @@ const CopyCard = ({
                 isEdit
                 folders={folders}
                 folderName={folderName}
+                setNewFolderId={setNewFolderId}
+                submitCustomFields={submitCustomFields}
+                updateCustomFieldsLoading={updateCustomFieldsLoading}
             />
         </Card>
     );
